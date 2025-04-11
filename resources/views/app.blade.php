@@ -13,9 +13,10 @@
 
   <!-- Scripts -->
   @routes
-  <!-- Webpackで生成されたスタイルとスクリプト -->
-  <link href="{{ asset('assets/app.392a756b8c7009f4cfc6.css') }}" rel="stylesheet">
-  <script src="{{ asset('assets/app.7e395b106125f6b6c806.js') }}" defer></script>
+  <!-- アセットの読み込み -->
+  <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+  <link href="{{ mix('/css/style.css') }}" rel="stylesheet">
+  <script src="{{ mix('/js/app.js') }}" defer></script>
   @inertiaHead
 </head>
 

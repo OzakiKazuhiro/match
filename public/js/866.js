@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[866],{9866:(e,r,s)=>{s.r(r),s.d(r,{default:()=>h});var n=s(3589),l=s(4848);function h(e){e.auth,e.laravelVersion,e.phpVersion;return(0,l.jsxs)(l.Fragment,{children:[(0,l.jsx)(n.p3,{title:"Welcome"}),(0,l.jsx)("div",{children:(0,l.jsx)("h1",{children:"はろー"})})]})}}}]);
