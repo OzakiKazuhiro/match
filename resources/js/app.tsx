@@ -1,25 +1,33 @@
-import '../css/app.css';
-import './bootstrap';
+import "../css/app.css";
+import "../scss/style.scss";
+import "./bootstrap";
 
-import { createInertiaApp } from '@inertiajs/react';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createRoot } from 'react-dom/client';
+import { createInertiaApp } from "@inertiajs/react";
+import { createRoot } from "react-dom/client";
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+// @ts-ignore - この行はLaravelのルート関数をグローバルに利用できるようにするため
+declare global {
+    interface Window {
+        route: any;
+    }
+}
 
+const appName =
+    window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
+
+// @ts-ignore - Webpackとの互換性のため
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
-        resolvePageComponent(
-            `./Pages/${name}.tsx`,
-            import.meta.glob('./Pages/**/*.tsx'),
-        ),
+    resolve: async (name: string) => {
+        // 動的インポートを使用
+        const page = await import(`./Pages/${name}.tsx`);
+        return page.default;
+    },
     setup({ el, App, props }) {
         const root = createRoot(el);
-
         root.render(<App {...props} />);
     },
     progress: {
-        color: '#4B5563',
+        color: "#4B5563",
     },
 });
