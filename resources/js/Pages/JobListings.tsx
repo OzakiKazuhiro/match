@@ -11,7 +11,7 @@ interface JobType {
     budget?: string;
     date: string;
     author: string;
-    tags: string[];
+    category: string;
 }
 
 // サンプルデータ
@@ -25,7 +25,7 @@ const sampleJobs: JobType[] = [
         budget: "¥50,000 〜 ¥100,000",
         date: "3日前",
         author: "田中太郎",
-        tags: ["React", "TypeScript", "フロントエンド"],
+        category: "ウェブ開発",
     },
     {
         id: 2,
@@ -35,7 +35,7 @@ const sampleJobs: JobType[] = [
         type: "revenue",
         date: "1週間前",
         author: "佐藤健太",
-        tags: ["Laravel", "バックエンド", "レベニューシェア"],
+        category: "サービス開発",
     },
     {
         id: 3,
@@ -46,7 +46,7 @@ const sampleJobs: JobType[] = [
         budget: "¥200,000 〜 ¥300,000",
         date: "2日前",
         author: "鈴木一郎",
-        tags: ["Laravel", "ECサイト", "PHP"],
+        category: "ECサイト",
     },
     {
         id: 4,
@@ -57,7 +57,7 @@ const sampleJobs: JobType[] = [
         budget: "¥100,000 〜 ¥150,000",
         date: "4日前",
         author: "山田花子",
-        tags: ["デザイン", "UI/UX", "Figma"],
+        category: "デザイン",
     },
     {
         id: 5,
@@ -67,7 +67,7 @@ const sampleJobs: JobType[] = [
         type: "revenue",
         date: "2週間前",
         author: "伊藤誠",
-        tags: ["モバイルアプリ", "iOS", "Android"],
+        category: "アプリ開発",
     },
     {
         id: 6,
@@ -78,7 +78,7 @@ const sampleJobs: JobType[] = [
         budget: "¥150,000 〜 ¥250,000",
         date: "1週間前",
         author: "高橋洋子",
-        tags: ["AWS", "インフラ", "DevOps"],
+        category: "インフラ構築",
     },
 ];
 
@@ -96,7 +96,8 @@ export default function JobListings({ auth }: PageProps) {
         const matchesQuery =
             searchQuery === "" ||
             job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            job.description.toLowerCase().includes(searchQuery.toLowerCase());
+            job.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            job.category.toLowerCase().includes(searchQuery.toLowerCase());
 
         // タイプのフィルタリング
         const matchesType = activeFilter === "all" || job.type === activeFilter;
@@ -120,7 +121,7 @@ export default function JobListings({ auth }: PageProps) {
                 <div className="p-job-listings__header-inner">
                     <h1 className="p-job-listings__title">案件を探す</h1>
                     <p className="p-job-listings__subtitle">
-                        エンジニア向けの単発案件やレベニューシェア案件を探してみましょう。
+                        単発案件やレベニューシェア案件を探してみましょう。
                         あなたのスキルや希望に合った案件が見つかります。
                     </p>
 
@@ -132,7 +133,7 @@ export default function JobListings({ auth }: PageProps) {
                             <input
                                 type="text"
                                 className="p-job-listings__search-input"
-                                placeholder="キーワードで検索（技術、職種など）"
+                                placeholder="キーワードで検索（案件名、内容など）"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -235,17 +236,8 @@ export default function JobListings({ auth }: PageProps) {
                                     </div>
                                 </div>
                                 <div className="p-job-listings__card-footer">
-                                    <div className="p-job-listings__card-tags">
-                                        {job.tags
-                                            .slice(0, 3)
-                                            .map((tag, index) => (
-                                                <span
-                                                    key={index}
-                                                    className="p-job-listings__card-tag"
-                                                >
-                                                    {tag}
-                                                </span>
-                                            ))}
+                                    <div className="p-job-listings__card-category">
+                                        {job.category}
                                     </div>
                                     <Link
                                         href={`/job/${job.id}`}

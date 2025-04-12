@@ -23,6 +23,13 @@ Route::get('/job-listings', function () {
     return Inertia::render('JobListings');
 })->name('job-listings');
 
+// 案件詳細ページ
+Route::get('/job/{id}', function ($id) {
+    return Inertia::render('JobDetail', [
+        'jobId' => $id,
+    ]);
+})->name('job.detail');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

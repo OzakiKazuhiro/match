@@ -294,7 +294,7 @@ var sampleJobs = [{
   budget: "¥50,000 〜 ¥100,000",
   date: "3日前",
   author: "田中太郎",
-  tags: ["React", "TypeScript", "フロントエンド"]
+  category: "ウェブ開発"
 }, {
   id: 2,
   title: "飲食店向けマッチングサービスの開発パートナー募集",
@@ -302,7 +302,7 @@ var sampleJobs = [{
   type: "revenue",
   date: "1週間前",
   author: "佐藤健太",
-  tags: ["Laravel", "バックエンド", "レベニューシェア"]
+  category: "サービス開発"
 }, {
   id: 3,
   title: "Laravelを使用したECサイトの構築",
@@ -311,7 +311,7 @@ var sampleJobs = [{
   budget: "¥200,000 〜 ¥300,000",
   date: "2日前",
   author: "鈴木一郎",
-  tags: ["Laravel", "ECサイト", "PHP"]
+  category: "ECサイト"
 }, {
   id: 4,
   title: "教育系アプリのUI/UXデザイン",
@@ -320,7 +320,7 @@ var sampleJobs = [{
   budget: "¥100,000 〜 ¥150,000",
   date: "4日前",
   author: "山田花子",
-  tags: ["デザイン", "UI/UX", "Figma"]
+  category: "デザイン"
 }, {
   id: 5,
   title: "健康管理アプリの開発パートナー",
@@ -328,7 +328,7 @@ var sampleJobs = [{
   type: "revenue",
   date: "2週間前",
   author: "伊藤誠",
-  tags: ["モバイルアプリ", "iOS", "Android"]
+  category: "アプリ開発"
 }, {
   id: 6,
   title: "AWS環境構築と運用サポート",
@@ -337,7 +337,7 @@ var sampleJobs = [{
   budget: "¥150,000 〜 ¥250,000",
   date: "1週間前",
   author: "高橋洋子",
-  tags: ["AWS", "インフラ", "DevOps"]
+  category: "インフラ構築"
 }];
 function JobListings(_ref) {
   var auth = _ref.auth;
@@ -358,7 +358,7 @@ function JobListings(_ref) {
   // フィルタリングされた案件リスト
   var filteredJobs = sampleJobs.filter(function (job) {
     // 検索クエリのフィルタリング
-    var matchesQuery = searchQuery === "" || job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.description.toLowerCase().includes(searchQuery.toLowerCase());
+    var matchesQuery = searchQuery === "" || job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.description.toLowerCase().includes(searchQuery.toLowerCase()) || job.category.toLowerCase().includes(searchQuery.toLowerCase());
 
     // タイプのフィルタリング
     var matchesType = activeFilter === "all" || job.type === activeFilter;
@@ -386,7 +386,7 @@ function JobListings(_ref) {
           children: "\u6848\u4EF6\u3092\u63A2\u3059"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
           className: "p-job-listings__subtitle",
-          children: "\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u306E\u5358\u767A\u6848\u4EF6\u3084\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u3092\u63A2\u3057\u3066\u307F\u307E\u3057\u3087\u3046\u3002 \u3042\u306A\u305F\u306E\u30B9\u30AD\u30EB\u3084\u5E0C\u671B\u306B\u5408\u3063\u305F\u6848\u4EF6\u304C\u898B\u3064\u304B\u308A\u307E\u3059\u3002"
+          children: "\u5358\u767A\u6848\u4EF6\u3084\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u3092\u63A2\u3057\u3066\u307F\u307E\u3057\u3087\u3046\u3002 \u3042\u306A\u305F\u306E\u30B9\u30AD\u30EB\u3084\u5E0C\u671B\u306B\u5408\u3063\u305F\u6848\u4EF6\u304C\u898B\u3064\u304B\u308A\u307E\u3059\u3002"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "p-job-listings__search-box",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
@@ -397,7 +397,7 @@ function JobListings(_ref) {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
               type: "text",
               className: "p-job-listings__search-input",
-              placeholder: "\u30AD\u30FC\u30EF\u30FC\u30C9\u3067\u691C\u7D22\uFF08\u6280\u8853\u3001\u8077\u7A2E\u306A\u3069\uFF09",
+              placeholder: "\u30AD\u30FC\u30EF\u30FC\u30C9\u3067\u691C\u7D22\uFF08\u6848\u4EF6\u540D\u3001\u5185\u5BB9\u306A\u3069\uFF09",
               value: searchQuery,
               onChange: function onChange(e) {
                 return setSearchQuery(e.target.value);
@@ -490,13 +490,8 @@ function JobListings(_ref) {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               className: "p-job-listings__card-footer",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "p-job-listings__card-tags",
-                children: job.tags.slice(0, 3).map(function (tag, index) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                    className: "p-job-listings__card-tag",
-                    children: tag
-                  }, index);
-                })
+                className: "p-job-listings__card-category",
+                children: job.category
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
                 href: "/job/".concat(job.id),
                 className: "p-job-listings__card-link",
