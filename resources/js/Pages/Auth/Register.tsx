@@ -1,87 +1,96 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import GuestLayout from "@/Layouts/GuestLayout";
+import { Head, Link, useForm } from "@inertiajs/react";
+import { FormEventHandler } from "react";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('register'), {
-            onFinish: () => reset('password', 'password_confirmation'),
+        post(route("register"), {
+            onFinish: () => reset("password", "password_confirmation"),
         });
     };
 
     return (
-        <GuestLayout>
-            <Head title="Register" />
+        <GuestLayout title="会員登録">
+            <Head title="会員登録 - Match" />
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+            <form onSubmit={submit} className="p-auth__form">
+                <div className="p-auth__form-group">
+                    <InputLabel htmlFor="name" value="お名前" />
 
                     <TextInput
                         id="name"
                         name="name"
                         value={data.name}
-                        className="mt-1 block w-full"
+                        className="p-auth__input"
                         autoComplete="name"
                         isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
+                        onChange={(e) => setData("name", e.target.value)}
                         required
                     />
 
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError
+                        message={errors.name}
+                        className="p-auth__error"
+                    />
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                <div className="p-auth__form-group">
+                    <InputLabel htmlFor="email" value="メールアドレス" />
 
                     <TextInput
                         id="email"
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="p-auth__input"
                         autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e) => setData("email", e.target.value)}
                         required
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError
+                        message={errors.email}
+                        className="p-auth__error"
+                    />
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                <div className="p-auth__form-group">
+                    <InputLabel htmlFor="password" value="パスワード" />
 
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="p-auth__input"
                         autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
+                        onChange={(e) => setData("password", e.target.value)}
                         required
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError
+                        message={errors.password}
+                        className="p-auth__error"
+                    />
                 </div>
 
-                <div className="mt-4">
+                <div className="p-auth__form-group">
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value="パスワード（確認用）"
                     />
 
                     <TextInput
@@ -89,31 +98,31 @@ export default function Register() {
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
-                        className="mt-1 block w-full"
+                        className="p-auth__input"
                         autoComplete="new-password"
                         onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
+                            setData("password_confirmation", e.target.value)
                         }
                         required
                     />
 
                     <InputError
                         message={errors.password_confirmation}
-                        className="mt-2"
+                        className="p-auth__error"
                     />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                        Already registered?
+                <div className="p-auth__actions">
+                    <Link href={route("login")} className="p-auth__forgot-link">
+                        すでにアカウントをお持ちの方
                     </Link>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
+                    <button
+                        className="p-auth__button p-auth__button--primary"
+                        disabled={processing}
+                    >
+                        会員登録
+                    </button>
                 </div>
             </form>
         </GuestLayout>

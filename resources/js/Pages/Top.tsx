@@ -371,7 +371,7 @@ export default function Top({
 
                     {/* 人気の案件セクション */}
                     <section className="p-top__popular-jobs">
-                        <h2 className="p-top__section-title">人気の案件</h2>
+                        <h2 className="p-top__section-title">人気の案件例</h2>
                         <div className="p-top__job-list">
                             {/* 案件カード1 */}
                             <div className="p-top__job-card">

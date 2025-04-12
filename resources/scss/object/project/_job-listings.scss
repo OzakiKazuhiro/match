@@ -1,0 +1,411 @@
+.p-job-listings {
+    &__container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    &__header {
+        background: linear-gradient(135deg, #6cc3e0 0%, #8bc34a 100%);
+        color: #fff;
+        padding: 40px 0;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    &__header-inner {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    &__title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    &__subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 20px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &__search-box {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    &__search-form {
+        display: flex;
+        gap: 10px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
+    }
+
+    &__search-input {
+        flex: 1;
+        height: 50px;
+        padding: 0 20px;
+        border-radius: 25px;
+        border: none;
+        font-size: 1rem;
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.5);
+        }
+    }
+
+    &__search-button {
+        height: 50px;
+        padding: 0 30px;
+        background-color: #ff6b6b;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+            background-color: darken(#ff6b6b, 10%);
+            transform: translateY(-2px);
+        }
+    }
+
+    &__filter-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    &__filter-tabs {
+        display: flex;
+        gap: 10px;
+    }
+
+    &__filter-tab {
+        padding: 8px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+
+        &--active {
+            background-color: #6cc3e0;
+            color: white;
+        }
+
+        &:not(&--active):hover {
+            background-color: #f0f0f0;
+        }
+    }
+
+    &__sort-dropdown {
+        position: relative;
+    }
+
+    &__sort-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        color: #666;
+        font-weight: 500;
+        transition: color 0.3s;
+
+        &:hover {
+            color: #333;
+        }
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border: 1px solid #eee;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    &__card-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__card-type {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+
+        &--onetime {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+
+        &--revenue {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+    }
+
+    &__card-budget {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    &__card-content {
+        padding: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    &__card-desc {
+        font-size: 0.95rem;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        flex-grow: 1;
+    }
+
+    &__card-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: auto;
+    }
+
+    &__card-date {
+        font-size: 0.85rem;
+        color: #888;
+    }
+
+    &__card-author {
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    &__card-footer {
+        padding: 15px 20px;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__card-tags {
+        display: flex;
+        gap: 8px;
+    }
+
+    &__card-tag {
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        color: #666;
+    }
+
+    &__card-link {
+        color: #6cc3e0;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+
+        &:hover {
+            color: darken(#6cc3e0, 15%);
+            text-decoration: underline;
+        }
+    }
+
+    &__pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+        margin-bottom: 60px;
+    }
+
+    &__pagination-button {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: transparent;
+        border: none;
+        margin: 0 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: #666;
+
+        &:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        &--active {
+            background-color: #6cc3e0;
+            color: white;
+
+            &:hover {
+                background-color: darken(#6cc3e0, 10%);
+                color: white;
+            }
+        }
+
+        &--disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+
+            &:hover {
+                background-color: transparent;
+                color: #666;
+            }
+        }
+    }
+
+    &__no-results {
+        text-align: center;
+        padding: 60px 0;
+        color: #666;
+    }
+
+    &__no-results-icon {
+        font-size: 4rem;
+        color: #ddd;
+        margin-bottom: 20px;
+    }
+
+    &__no-results-text {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    &__no-results-button {
+        display: inline-block;
+        padding: 10px 25px;
+        background-color: #6cc3e0;
+        color: white;
+        border-radius: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            background-color: darken(#6cc3e0, 10%);
+            transform: translateY(-2px);
+            color: white;
+        }
+    }
+
+    &__features {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+        margin-top: 60px;
+    }
+
+    &__features-title {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 40px;
+        color: #333;
+    }
+
+    &__features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__feature {
+        text-align: center;
+        padding: 30px 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    &__feature-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e3f2fd;
+        border-radius: 50%;
+        color: #1565c0;
+    }
+
+    &__feature-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    &__feature-text {
+        font-size: 0.95rem;
+        color: #666;
+        line-height: 1.6;
+    }
+}

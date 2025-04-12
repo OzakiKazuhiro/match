@@ -1,19 +1,41 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import { Link } from '@inertiajs/react';
-import { PropsWithChildren } from 'react';
+import ApplicationLogo from "@/Components/ApplicationLogo";
+import { Link } from "@inertiajs/react";
+import { PropsWithChildren } from "react";
 
-export default function Guest({ children }: PropsWithChildren) {
+interface GuestProps extends PropsWithChildren {
+    title?: string;
+}
+
+export default function Guest({ children, title = "ログイン" }: GuestProps) {
     return (
-        <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
-            <div>
-                <Link href="/">
-                    <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
-                </Link>
-            </div>
+        <div className="min-h-screen bg-f5f7fa">
+            {/* ヘッダー */}
+            <header className="l-header">
+                <div className="l-header__inner">
+                    <Link href="/" className="l-header__logo">
+                        <span className="l-header__logo-accent">match</span>
+                    </Link>
+                </div>
+            </header>
 
-            <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
-                {children}
-            </div>
+            <main className="main-content">
+                <div className="p-auth__container">
+                    <div className="p-auth__box">
+                        <h1 className="p-auth__title">{title}</h1>
+                        {children}
+                    </div>
+                </div>
+            </main>
+
+            {/* フッター */}
+            <footer className="l-footer">
+                <div className="l-footer__container">
+                    <div className="l-footer__copyright">
+                        &copy; {new Date().getFullYear()} match. All rights
+                        reserved.
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }

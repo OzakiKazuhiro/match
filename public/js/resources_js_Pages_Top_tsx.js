@@ -406,7 +406,7 @@ function Top(_ref) {
           className: "p-top__popular-jobs",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h2", {
             className: "p-top__section-title",
-            children: "\u4EBA\u6C17\u306E\u6848\u4EF6"
+            children: "\u4EBA\u6C17\u306E\u6848\u4EF6\u4F8B"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
             className: "p-top__job-list",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {

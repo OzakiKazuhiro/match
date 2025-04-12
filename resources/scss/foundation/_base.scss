@@ -65,6 +65,11 @@ textarea {
     line-height: inherit;
 }
 
+// bg colors
+.bg-f5f7fa {
+    background-color: #f5f7fa;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -73,6 +78,7 @@ textarea {
 
 .main-content {
     padding: 30px 0;
+    min-height: calc(100vh - 180px); // ヘッダーとフッターの高さを考慮
 }
 
 // 共通のアニメーション

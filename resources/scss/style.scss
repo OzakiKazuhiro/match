@@ -11,10 +11,14 @@
 // Component
 @forward "object/component/button";
 @forward "object/component/form";
+@forward "object/component/input";
 
 // Project
 @forward "object/project/project";
 @forward "object/project/top";
+@forward "object/project/auth";
+@forward "object/project/dashboard";
+@forward "object/project/job-listings";
 
 // Utility
 @forward "object/utility/utility";

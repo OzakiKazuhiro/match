@@ -1,0 +1,90 @@
+.c-label {
+    display: block;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.c-input {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #fff;
+
+    &:focus {
+        border-color: #6cc3e0;
+        box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.25);
+        outline: none;
+    }
+
+    &--error {
+        border-color: #ff6b6b;
+    }
+}
+
+.c-checkbox {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+
+    &:checked {
+        background-color: #6cc3e0;
+        border-color: #6cc3e0;
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.25);
+        outline: none;
+    }
+
+    &:hover {
+        border-color: #6cc3e0;
+    }
+}
+
+.c-error {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+
+    &::before {
+        content: "!";
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 6px;
+        width: 16px;
+        height: 16px;
+        background-color: #ff6b6b;
+        color: white;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: bold;
+    }
+}

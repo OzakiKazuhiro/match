@@ -1,16 +1,15 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes } from "react";
 
 export default function InputError({
     message,
-    className = '',
-    ...props
-}: HTMLAttributes<HTMLParagraphElement> & { message?: string }) {
-    return message ? (
-        <p
-            {...props}
-            className={'text-sm text-red-600 ' + className}
-        >
-            {message}
-        </p>
-    ) : null;
+    className = "",
+}: {
+    message?: string;
+    className?: string;
+}) {
+    if (!message) {
+        return null;
+    }
+
+    return <div className={`c-error ${className}`}>{message}</div>;
 }

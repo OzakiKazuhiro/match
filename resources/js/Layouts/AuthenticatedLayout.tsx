@@ -1,179 +1,245 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link, usePage } from '@inertiajs/react';
-import { PropsWithChildren, ReactNode, useState } from 'react';
+import { Link, usePage } from "@inertiajs/react";
+import { PropsWithChildren, ReactNode, useState } from "react";
 
 export default function Authenticated({
     header,
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
     const user = usePage().props.auth.user;
-
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="border-b border-gray-100 bg-white">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 justify-between">
-                        <div className="flex">
-                            <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
-                            </div>
+        <div className="min-h-screen bg-f5f7fa">
+            {/* ヘッダー */}
+            <header className="l-header">
+                <div className="l-header__inner">
+                    <Link href="/" className="l-header__logo">
+                        <span className="l-header__logo-accent">match</span>
+                    </Link>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
-                                >
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div className="hidden sm:ms-6 sm:flex sm:items-center">
-                            <div className="relative ms-3">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="-me-0.5 ms-2 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link
-                                            href={route('profile.edit')}
-                                        >
-                                            Profile
-                                        </Dropdown.Link>
-                                        <Dropdown.Link
-                                            href={route('logout')}
-                                            method="post"
-                                            as="button"
-                                        >
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
+                    <nav className="l-header__nav">
+                        <Link
+                            href="/job-listings"
+                            className="l-header__nav-link"
+                        >
+                            案件一覧
+                        </Link>
+                        <Link href="/post-job" className="l-header__nav-link">
+                            案件を投稿
+                        </Link>
+                        <div className="l-header__user-menu">
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
-                                        (previousState) => !previousState,
+                                        !showingNavigationDropdown
                                     )
                                 }
-                                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
+                                className="l-header__user-button"
                             >
+                                <span className="l-header__user-name">
+                                    {user.name}
+                                </span>
                                 <svg
-                                    className="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
                                     viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
                                 >
-                                    <path
-                                        className={
-                                            !showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={
-                                            showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
+                                    <path d="M6 9l6 6 6-6" />
                                 </svg>
                             </button>
-                        </div>
-                    </div>
-                </div>
 
-                <div
-                    className={
-                        (showingNavigationDropdown ? 'block' : 'hidden') +
-                        ' sm:hidden'
-                    }
-                >
-                    <div className="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            {showingNavigationDropdown && (
+                                <div className="l-header__dropdown">
+                                    <Link
+                                        href={route("dashboard")}
+                                        className="l-header__dropdown-item"
+                                    >
+                                        マイページ
+                                    </Link>
+                                    <Link
+                                        href={route("profile.edit")}
+                                        className="l-header__dropdown-item"
+                                    >
+                                        プロフィール編集
+                                    </Link>
+                                    <Link
+                                        href={route("logout")}
+                                        method="post"
+                                        as="button"
+                                        className="l-header__dropdown-item l-header__dropdown-item--danger"
+                                    >
+                                        ログアウト
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                    </nav>
+
+                    <button
+                        className="l-header__mobile-button"
+                        onClick={() =>
+                            setShowingNavigationDropdown(
+                                !showingNavigationDropdown
+                            )
+                        }
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         >
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
-                    <div className="border-t border-gray-200 pb-1 pt-4">
-                        <div className="px-4">
-                            <div className="text-base font-medium text-gray-800">
-                                {user.name}
-                            </div>
-                            <div className="text-sm font-medium text-gray-500">
-                                {user.email}
-                            </div>
-                        </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>
-                                Profile
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                method="post"
-                                href={route('logout')}
-                                as="button"
-                            >
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
                 </div>
-            </nav>
+
+                {/* モバイルメニュー */}
+                {showingNavigationDropdown && (
+                    <div className="l-header__mobile-menu">
+                        <Link
+                            href="/job-listings"
+                            className="l-header__mobile-link"
+                        >
+                            案件一覧
+                        </Link>
+                        <Link
+                            href="/post-job"
+                            className="l-header__mobile-link"
+                        >
+                            案件を投稿
+                        </Link>
+                        <Link
+                            href={route("dashboard")}
+                            className="l-header__mobile-link"
+                        >
+                            マイページ
+                        </Link>
+                        <Link
+                            href={route("profile.edit")}
+                            className="l-header__mobile-link"
+                        >
+                            プロフィール編集
+                        </Link>
+                        <Link
+                            href={route("logout")}
+                            method="post"
+                            as="button"
+                            className="l-header__mobile-link l-header__mobile-link--danger"
+                        >
+                            ログアウト
+                        </Link>
+                    </div>
+                )}
+            </header>
 
             {header && (
-                <header className="bg-white shadow">
-                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
-                </header>
+                <div className="p-dashboard__header">
+                    <div className="p-dashboard__header-inner">{header}</div>
+                </div>
             )}
 
-            <main>{children}</main>
+            <main className="main-content">{children}</main>
+
+            {/* フッター */}
+            <footer className="l-footer">
+                <div className="l-footer__container">
+                    <div className="l-footer__content">
+                        <div>
+                            <Link href="/" className="l-footer__logo">
+                                <span className="l-footer__logo-accent">
+                                    match
+                                </span>
+                            </Link>
+                            <p className="l-footer__description">
+                                エンジニア向けの案件マッチングサービス。
+                                単発案件からレベニューシェア案件まで、
+                                シンプルに探せて、すぐに応募できます。
+                            </p>
+                            <div className="l-footer__social">
+                                <a href="#" className="l-footer__social-icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="l-footer__heading">案件を探す</h3>
+                            <ul className="l-footer__links">
+                                <li className="l-footer__link-item">
+                                    <Link
+                                        href="/job-listings?type=onetime"
+                                        className="l-footer__link"
+                                    >
+                                        単発案件
+                                    </Link>
+                                </li>
+                                <li className="l-footer__link-item">
+                                    <Link
+                                        href="/job-listings?type=revenue"
+                                        className="l-footer__link"
+                                    >
+                                        レベニューシェア案件
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 className="l-footer__heading">アカウント</h3>
+                            <ul className="l-footer__links">
+                                <li className="l-footer__link-item">
+                                    <Link
+                                        href={route("dashboard")}
+                                        className="l-footer__link"
+                                    >
+                                        マイページ
+                                    </Link>
+                                </li>
+                                <li className="l-footer__link-item">
+                                    <Link
+                                        href={route("profile.edit")}
+                                        className="l-footer__link"
+                                    >
+                                        プロフィール編集
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className="l-footer__copyright">
+                        &copy; {new Date().getFullYear()} match. All rights
+                        reserved.
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }
