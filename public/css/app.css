@@ -777,9 +777,6 @@ select {
 .z-50 {
   z-index: 50;
 }
-.\!row-span-1 {
-  grid-row: span 1 / span 1 !important;
-}
 .mx-5 {
   margin-left: 1.25rem;
   margin-right: 1.25rem;
@@ -884,9 +881,6 @@ select {
 }
 .grid {
   display: grid;
-}
-.\!hidden {
-  display: none !important;
 }
 .hidden {
   display: none;
@@ -1016,9 +1010,6 @@ select {
 }
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-.\!flex-row {
-  flex-direction: row !important;
 }
 .flex-col {
   flex-direction: column;
