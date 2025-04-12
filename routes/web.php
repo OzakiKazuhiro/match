@@ -30,6 +30,11 @@ Route::get('/job/{id}', function ($id) {
     ]);
 })->name('job.detail');
 
+// 案件投稿ページ
+Route::get('/post-job', function () {
+    return Inertia::render('PostJob');
+})->middleware(['auth'])->name('post-job');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
