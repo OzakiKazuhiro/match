@@ -46272,9 +46272,9 @@ var map = {
 		"./resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.tsx",
 		"resources_js_Pages_Profile_Partials_UpdateProfileInformationForm_tsx"
 	],
-	"./Welcome.tsx": [
-		"./resources/js/Pages/Welcome.tsx",
-		"resources_js_Pages_Welcome_tsx"
+	"./Top.tsx": [
+		"./resources/js/Pages/Top.tsx",
+		"resources_js_Pages_Top_tsx"
 	]
 };
 function webpackAsyncContext(req) {
@@ -46547,7 +46547,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Auth_ConfirmPassword_tsx":"1258284a90d007fc","resources_js_Pages_Auth_ForgotPassword_tsx":"f5adbe23952cf8e0","resources_js_Pages_Auth_Login_tsx":"d5ea239d91988d12","resources_js_Pages_Auth_Register_tsx":"01cea6813c665e51","resources_js_Pages_Auth_ResetPassword_tsx":"f7b8e5c262449319","resources_js_Pages_Auth_VerifyEmail_tsx":"1b84133051ed5b54","resources_js_Pages_Dashboard_tsx":"35a592eaa472ef0b","resources_js_Pages_Profile_Edit_tsx":"f928dab6250f8e17","resources_js_Pages_Profile_Partials_DeleteUserForm_tsx":"6f7d1b8b886cdb78","resources_js_Pages_Profile_Partials_UpdatePasswordForm_tsx":"67bca23700cc19d9","resources_js_Pages_Profile_Partials_UpdateProfileInformationForm_tsx":"ddcd639ee6014669","resources_js_Pages_Welcome_tsx":"de331cd621bcc8f2"}[chunkId] + "";
+/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Auth_ConfirmPassword_tsx":"1258284a90d007fc","resources_js_Pages_Auth_ForgotPassword_tsx":"f5adbe23952cf8e0","resources_js_Pages_Auth_Login_tsx":"d5ea239d91988d12","resources_js_Pages_Auth_Register_tsx":"01cea6813c665e51","resources_js_Pages_Auth_ResetPassword_tsx":"f7b8e5c262449319","resources_js_Pages_Auth_VerifyEmail_tsx":"1b84133051ed5b54","resources_js_Pages_Dashboard_tsx":"35a592eaa472ef0b","resources_js_Pages_Profile_Edit_tsx":"f928dab6250f8e17","resources_js_Pages_Profile_Partials_DeleteUserForm_tsx":"6f7d1b8b886cdb78","resources_js_Pages_Profile_Partials_UpdatePasswordForm_tsx":"67bca23700cc19d9","resources_js_Pages_Profile_Partials_UpdateProfileInformationForm_tsx":"ddcd639ee6014669","resources_js_Pages_Top_tsx":"6eee0fa592081aeb"}[chunkId] + "";
 /******/ 		};
 /******/ 	})();
 /******/ 	

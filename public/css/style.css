@@ -108,3 +108,17 @@ p {
 .mb-5 {
   margin-bottom: 5rem;
 }
+.p-top__container {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 50px auto;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.p-top__title {
+  color: blue;
+  font-size: 2rem;
+  font-weight: bold;
+}
