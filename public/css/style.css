@@ -748,6 +748,12 @@ textarea {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 25px;
+  margin-bottom: 40px;
+}
+@media (max-width: 768px) {
+  .p-top__job-list {
+    grid-template-columns: 1fr;
+  }
 }
 .p-top__job-card {
   background: #fff;
@@ -755,6 +761,9 @@ textarea {
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .p-top__job-card:hover {
   transform: translateY(-5px);
@@ -788,6 +797,9 @@ textarea {
 }
 .p-top__job-content {
   padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .p-top__job-title {
   font-size: 1.2rem;
@@ -805,6 +817,7 @@ textarea {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  flex: 1;
 }
 .p-top__job-footer {
   display: flex;
@@ -812,10 +825,19 @@ textarea {
   align-items: center;
   padding-top: 15px;
   border-top: 1px solid #eee;
+  height: 40px;
+}
+@media (max-width: 480px) {
+  .p-top__job-footer {
+    height: auto;
+    padding: 15px 0 5px;
+  }
 }
 .p-top__job-date {
   font-size: 0.85rem;
   color: #888;
+  flex: 0 0 auto;
+  min-width: 65px;
 }
 .p-top__job-link {
   font-size: 0.9rem;
@@ -833,10 +855,15 @@ textarea {
   border-radius: 8px;
 }
 .p-top__testimonial-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 30px;
   margin-top: 30px;
+}
+@media (max-width: 992px) {
+  .p-top__testimonial-list {
+    flex-direction: column;
+  }
 }
 .p-top__testimonial {
   background: #fff;
@@ -844,6 +871,16 @@ textarea {
   padding: 30px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   position: relative;
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media (max-width: 992px) {
+  .p-top__testimonial {
+    min-width: 100%;
+  }
 }
 .p-top__testimonial-quote {
   font-size: 3rem;
@@ -856,13 +893,17 @@ textarea {
   font-size: 1rem;
   color: #555;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   position: relative;
   z-index: 1;
+  flex: 1;
 }
 .p-top__testimonial-author {
   display: flex;
   align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f0;
+  margin-top: auto;
 }
 .p-top__testimonial-avatar {
   width: 50px;

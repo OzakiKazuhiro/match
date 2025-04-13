@@ -217,6 +217,11 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 25px;
+        margin-bottom: 40px;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
     }
 
     &__job-card {
@@ -225,6 +230,9 @@
         overflow: hidden;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
 
         &:hover {
             transform: translateY(-5px);
@@ -265,6 +273,9 @@
 
     &__job-content {
         padding: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
     }
 
     &__job-title {
@@ -284,6 +295,7 @@
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        flex: 1;
     }
 
     &__job-footer {
@@ -292,11 +304,19 @@
         align-items: center;
         padding-top: 15px;
         border-top: 1px solid #eee;
+        height: 40px;
+
+        @media (max-width: 480px) {
+            height: auto;
+            padding: 15px 0 5px;
+        }
     }
 
     &__job-date {
         font-size: 0.85rem;
         color: #888;
+        flex: 0 0 auto;
+        min-width: 65px;
     }
 
     &__job-link {
@@ -318,10 +338,14 @@
     }
 
     &__testimonial-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        display: flex;
+        flex-wrap: wrap;
         gap: 30px;
         margin-top: 30px;
+
+        @media (max-width: 992px) {
+            flex-direction: column;
+        }
     }
 
     &__testimonial {
@@ -330,6 +354,15 @@
         padding: 30px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         position: relative;
+        flex: 1;
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @media (max-width: 992px) {
+            min-width: 100%;
+        }
     }
 
     &__testimonial-quote {
@@ -344,14 +377,18 @@
         font-size: 1rem;
         color: #555;
         line-height: 1.6;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         position: relative;
         z-index: 1;
+        flex: 1;
     }
 
     &__testimonial-author {
         display: flex;
         align-items: center;
+        padding-top: 10px;
+        border-top: 1px solid #f0f0f0;
+        margin-top: auto;
     }
 
     &__testimonial-avatar {
