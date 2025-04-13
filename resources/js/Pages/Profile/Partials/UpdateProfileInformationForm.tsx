@@ -20,17 +20,9 @@ export default function UpdateProfileInformation({
         user.avatar || null
     );
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [recentlySuccessful, setRecentlySuccessful] = useState(false);
 
-    const {
-        data,
-        setData,
-        post,
-        patch,
-        errors,
-        processing,
-        recentlySuccessful,
-        reset,
-    } = useForm({
+    const { data, setData, post, patch, errors, processing, reset } = useForm({
         name: user.name,
         email: user.email,
         avatar: null as File | null,
@@ -77,6 +69,8 @@ export default function UpdateProfileInformation({
                 if (previewUrl && previewUrl.startsWith("blob:")) {
                     URL.revokeObjectURL(previewUrl);
                 }
+                setRecentlySuccessful(true);
+                setTimeout(() => setRecentlySuccessful(false), 2000);
             },
         });
     };
@@ -218,7 +212,9 @@ export default function UpdateProfileInformation({
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">保存しました。</p>
+                        <p className="text-sm font-medium text-blue-600">
+                            保存しました。
+                        </p>
                     </Transition>
                 </div>
             </form>

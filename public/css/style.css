@@ -172,6 +172,38 @@ textarea {
 .l-header__logo-accent {
   color: #6cc3e0;
 }
+.l-header__login-status {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+  margin-left: 15px;
+  margin-right: auto;
+}
+.l-header__login-status .l-header__user-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #6cc3e0;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  overflow: hidden;
+  margin-right: 8px;
+}
+.l-header__login-status .l-header__user-avatar img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.l-header__login-status span {
+  display: inline-block;
+}
 .l-header__nav {
   display: flex;
   align-items: center;
@@ -255,11 +287,6 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-.l-header__login-status {
-  font-size: 0.7rem;
-  color: #888;
-  margin-bottom: -2px;
 }
 .l-header__user-name {
   max-width: 150px;

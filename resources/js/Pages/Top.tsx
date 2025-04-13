@@ -17,6 +17,22 @@ export default function Top({
                         <span className="l-header__logo-accent">match</span>
                     </Link>
 
+                    {auth?.user && (
+                        <div className="l-header__login-status">
+                            <div className="l-header__user-avatar">
+                                {auth.user.avatar ? (
+                                    <img
+                                        src={auth.user.avatar}
+                                        alt={`${auth.user.name}のアバター`}
+                                    />
+                                ) : (
+                                    auth.user.name.charAt(0).toUpperCase()
+                                )}
+                            </div>
+                            <span>{auth.user.name}</span>
+                        </div>
+                    )}
+
                     <nav className="l-header__nav">
                         <Link
                             href="/job-listings"

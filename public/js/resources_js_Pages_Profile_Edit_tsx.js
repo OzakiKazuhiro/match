@@ -2047,6 +2047,10 @@ function UpdateProfileInformation(_ref) {
     previewUrl = _useState2[0],
     setPreviewUrl = _useState2[1];
   var fileInputRef = (0,react__WEBPACK_IMPORTED_MODULE_5__.useRef)(null);
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    recentlySuccessful = _useState4[0],
+    setRecentlySuccessful = _useState4[1];
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.useForm)({
       name: user.name,
       email: user.email,
@@ -2058,7 +2062,6 @@ function UpdateProfileInformation(_ref) {
     patch = _useForm.patch,
     errors = _useForm.errors,
     processing = _useForm.processing,
-    recentlySuccessful = _useForm.recentlySuccessful,
     reset = _useForm.reset;
   var handleAvatarChange = function handleAvatarChange(e) {
     var _e$target$files;
@@ -2101,6 +2104,10 @@ function UpdateProfileInformation(_ref) {
         if (previewUrl && previewUrl.startsWith("blob:")) {
           URL.revokeObjectURL(previewUrl);
         }
+        setRecentlySuccessful(true);
+        setTimeout(function () {
+          return setRecentlySuccessful(false);
+        }, 2000);
       }
     });
   };
@@ -2230,7 +2237,7 @@ function UpdateProfileInformation(_ref) {
           leave: "transition ease-in-out",
           leaveTo: "opacity-0",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-            className: "text-sm text-gray-600",
+            className: "text-sm font-medium text-blue-600",
             children: "\u4FDD\u5B58\u3057\u307E\u3057\u305F\u3002"
           })
         })]
