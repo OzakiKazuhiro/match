@@ -331,15 +331,47 @@ textarea {
   background-color: #fff2f2;
 }
 .l-header__mobile-menu {
-  display: none;
-  padding: 10px 20px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   background-color: #fff;
-  flex-direction: column;
+  padding: 10px 20px;
   border-top: 1px solid #eee;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
 }
 @media (max-width: 768px) {
   .l-header__mobile-menu {
     display: flex;
+  }
+}
+.l-header__mobile-menu.menu-fade-in {
+  animation: fadeInMenu 0.3s ease-in-out forwards;
+}
+.l-header__mobile-menu.menu-fade-out {
+  animation: fadeOutMenu 0.3s ease-in-out forwards;
+}
+@keyframes fadeInMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeOutMenu {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 }
 .l-header__mobile-user {

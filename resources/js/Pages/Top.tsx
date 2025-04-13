@@ -1,11 +1,59 @@
 import { PageProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Top({
     auth,
     laravelVersion,
     phpVersion,
 }: PageProps<{ laravelVersion: string; phpVersion: string }>) {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [menuVisible, setMenuVisible] = useState(false);
+    const [animating, setAnimating] = useState(false);
+    const mobileMenuRef = useRef<HTMLDivElement>(null);
+    const mobileButtonRef = useRef<HTMLButtonElement>(null);
+
+    // メニューの表示状態が変更されたときの処理
+    useEffect(() => {
+        if (mobileMenuOpen) {
+            setMenuVisible(true);
+            setAnimating(true);
+            setTimeout(() => setAnimating(false), 300);
+        } else if (menuVisible) {
+            setAnimating(true);
+            setTimeout(() => {
+                setMenuVisible(false);
+                setAnimating(false);
+            }, 300);
+        }
+    }, [mobileMenuOpen]);
+
+    // メニュー外のクリックを検出してメニューを閉じる
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            // ボタン自体のクリックは無視（トグル動作は別のハンドラで処理）
+            if (
+                mobileMenuRef.current &&
+                !mobileMenuRef.current.contains(event.target as Node) &&
+                mobileButtonRef.current &&
+                !mobileButtonRef.current.contains(event.target as Node) &&
+                menuVisible &&
+                !animating
+            ) {
+                setMobileMenuOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [menuVisible, animating]);
+
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
+    };
+
     return (
         <>
             <Head title="Match - エンジニア案件マッチングサービス" />
@@ -78,7 +126,12 @@ export default function Top({
                         )}
                     </nav>
 
-                    <button className="l-header__mobile-button">
+                    <button
+                        className="l-header__mobile-button"
+                        onClick={toggleMobileMenu}
+                        aria-label="メニューを開く"
+                        ref={mobileButtonRef}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -96,6 +149,86 @@ export default function Top({
                         </svg>
                     </button>
                 </div>
+
+                {/* モバイルメニュー */}
+                {menuVisible && (
+                    <div
+                        className={`l-header__mobile-menu ${
+                            mobileMenuOpen ? "menu-fade-in" : "menu-fade-out"
+                        }`}
+                        ref={mobileMenuRef}
+                    >
+                        {auth?.user && (
+                            <div className="l-header__mobile-user">
+                                <div className="l-header__user-avatar">
+                                    {auth.user.avatar ? (
+                                        <img
+                                            src={auth.user.avatar}
+                                            alt={`${auth.user.name}のアバター`}
+                                        />
+                                    ) : (
+                                        auth.user.name.charAt(0).toUpperCase()
+                                    )}
+                                </div>
+                                <div className="l-header__mobile-user-info">
+                                    <div className="l-header__mobile-user-name">
+                                        {auth.user.name}
+                                    </div>
+                                    <div className="l-header__mobile-login-status">
+                                        ログイン中
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <Link
+                            href="/job-listings"
+                            className="l-header__mobile-link"
+                        >
+                            案件一覧
+                        </Link>
+                        <Link
+                            href="/post-job"
+                            className="l-header__mobile-link"
+                        >
+                            案件を投稿
+                        </Link>
+
+                        {auth?.user ? (
+                            <>
+                                <Link
+                                    href="/dashboard"
+                                    className="l-header__mobile-link"
+                                >
+                                    マイページ
+                                </Link>
+                                <Link
+                                    href="/logout"
+                                    method="post"
+                                    as="button"
+                                    className="l-header__mobile-link l-header__mobile-link--danger"
+                                >
+                                    ログアウト
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link
+                                    href="/login"
+                                    className="l-header__mobile-link"
+                                >
+                                    ログイン
+                                </Link>
+                                <Link
+                                    href="/register"
+                                    className="l-header__mobile-link"
+                                >
+                                    会員登録
+                                </Link>
+                            </>
+                        )}
+                    </div>
+                )}
             </header>
 
             <main className="main-content">
