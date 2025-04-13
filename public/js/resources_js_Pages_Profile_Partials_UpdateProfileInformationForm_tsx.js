@@ -479,9 +479,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/InputLabel */ "./resources/js/Components/InputLabel.tsx");
 /* harmony import */ var _Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/PrimaryButton */ "./resources/js/Components/PrimaryButton.tsx");
 /* harmony import */ var _Components_TextInput__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/TextInput */ "./resources/js/Components/TextInput.tsx");
-/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/transition/transition.js");
+/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/transition/transition.js");
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -493,99 +502,198 @@ function UpdateProfileInformation(_ref) {
   var mustVerifyEmail = _ref.mustVerifyEmail,
     status = _ref.status,
     _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className;
+    className = _ref$className === void 0 ? "" : _ref$className;
   var user = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.usePage)().props.auth.user;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(user.avatar || null),
+    _useState2 = _slicedToArray(_useState, 2),
+    previewUrl = _useState2[0],
+    setPreviewUrl = _useState2[1];
+  var fileInputRef = (0,react__WEBPACK_IMPORTED_MODULE_5__.useRef)(null);
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.useForm)({
       name: user.name,
-      email: user.email
+      email: user.email,
+      avatar: null
     }),
     data = _useForm.data,
     setData = _useForm.setData,
+    post = _useForm.post,
     patch = _useForm.patch,
     errors = _useForm.errors,
     processing = _useForm.processing,
-    recentlySuccessful = _useForm.recentlySuccessful;
+    recentlySuccessful = _useForm.recentlySuccessful,
+    reset = _useForm.reset;
+  var handleAvatarChange = function handleAvatarChange(e) {
+    var _e$target$files;
+    var file = ((_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0]) || null;
+    if (file) {
+      setData("avatar", file);
+
+      // プレビュー用のURLを作成
+      var url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    }
+  };
+  var handleRemoveAvatar = function handleRemoveAvatar() {
+    setData("avatar", null);
+    setPreviewUrl(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
   var submit = function submit(e) {
     e.preventDefault();
-    patch(route('profile.update'));
+
+    // FormDataオブジェクトを手動で作成
+    var formData = new FormData();
+    formData.append("_method", "PATCH"); // Laravel method spoofing
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+
+    // アバター画像があれば追加
+    if (data.avatar) {
+      formData.append("avatar", data.avatar);
+    }
+
+    // routerを使用して直接送信
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.router.post(route("profile.update"), formData, {
+      forceFormData: true,
+      // マルチパートフォームデータとして送信
+      preserveScroll: true,
+      onSuccess: function onSuccess() {
+        if (previewUrl && previewUrl.startsWith("blob:")) {
+          URL.revokeObjectURL(previewUrl);
+        }
+      }
+    });
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("section", {
     className: className,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("header", {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("header", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
         className: "text-lg font-medium text-gray-900",
-        children: "Profile Information"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+        children: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u60C5\u5831"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
         className: "mt-1 text-sm text-gray-600",
-        children: "Update your account's profile information and email address."
+        children: "\u30A2\u30AB\u30A6\u30F3\u30C8\u306E\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u60C5\u5831\u3068\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u66F4\u65B0\u3057\u307E\u3059\u3002"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: submit,
       className: "mt-6 space-y-6",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      encType: "multipart/form-data",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          htmlFor: "avatar",
+          value: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u753B\u50CF"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+          className: "mt-2 flex items-center gap-4",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            className: "avatar-preview",
+            children: previewUrl ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+              src: previewUrl,
+              alt: "\u30A2\u30D0\u30BF\u30FC\u30D7\u30EC\u30D3\u30E5\u30FC",
+              className: "h-20 w-20 rounded-full object-cover"
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              className: "flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 text-xl font-bold text-gray-600",
+              children: user.name.charAt(0).toUpperCase()
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            className: "flex flex-col",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
+              type: "file",
+              id: "avatar",
+              ref: fileInputRef,
+              onChange: handleAvatarChange,
+              className: "hidden",
+              accept: "image/*"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              className: "flex gap-2",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                type: "button",
+                onClick: function onClick() {
+                  var _fileInputRef$current;
+                  return (_fileInputRef$current = fileInputRef.current) === null || _fileInputRef$current === void 0 ? void 0 : _fileInputRef$current.click();
+                },
+                className: "rounded bg-gray-200 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-300",
+                children: "\u753B\u50CF\u3092\u9078\u629E"
+              }), previewUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                type: "button",
+                onClick: handleRemoveAvatar,
+                className: "rounded bg-red-100 px-3 py-1 text-sm font-medium text-red-600 hover:bg-red-200",
+                children: "\u524A\u9664"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+              className: "mt-1 text-xs text-gray-500",
+              children: "JPG\u3001PNG\u3001GIF\u3001WEBP \u5F62\u5F0F\u3002\u6700\u59272MB\u3002"
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          className: "mt-2",
+          message: errors.avatar
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "name",
-          value: "Name"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          value: "\u540D\u524D"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "name",
           className: "mt-1 block w-full",
           value: data.name,
           onChange: function onChange(e) {
-            return setData('name', e.target.value);
+            return setData("name", e.target.value);
           },
           required: true,
           isFocused: true,
           autoComplete: "name"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           className: "mt-2",
           message: errors.name
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "email",
-          value: "Email"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          value: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "email",
           type: "email",
           className: "mt-1 block w-full",
           value: data.email,
           onChange: function onChange(e) {
-            return setData('email', e.target.value);
+            return setData("email", e.target.value);
           },
           required: true,
           autoComplete: "username"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           className: "mt-2",
           message: errors.email
         })]
-      }), mustVerifyEmail && user.email_verified_at === null && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+      }), mustVerifyEmail && user.email_verified_at === null && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("p", {
           className: "mt-2 text-sm text-gray-800",
-          children: ["Your email address is unverified.", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Link, {
-            href: route('verification.send'),
+          children: ["\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u304C\u672A\u78BA\u8A8D\u3067\u3059\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Link, {
+            href: route("verification.send"),
             method: "post",
             as: "button",
             className: "rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
-            children: "Click here to re-send the verification email."
+            children: "\u3053\u3061\u3089\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u78BA\u8A8D\u30E1\u30FC\u30EB\u3092\u518D\u9001\u4FE1\u3057\u307E\u3059\u3002"
           })]
-        }), status === 'verification-link-sent' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        }), status === "verification-link-sent" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: "mt-2 text-sm font-medium text-green-600",
-          children: "A new verification link has been sent to your email address."
+          children: "\u65B0\u3057\u3044\u78BA\u8A8D\u30EA\u30F3\u30AF\u304C\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306B\u9001\u4FE1\u3055\u308C\u307E\u3057\u305F\u3002"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         className: "flex items-center gap-4",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
           disabled: processing,
-          children: "Save"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_headlessui_react__WEBPACK_IMPORTED_MODULE_6__.Transition, {
+          children: "\u4FDD\u5B58"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_headlessui_react__WEBPACK_IMPORTED_MODULE_7__.Transition, {
           show: recentlySuccessful,
           enter: "transition ease-in-out",
           enterFrom: "opacity-0",
           leave: "transition ease-in-out",
           leaveTo: "opacity-0",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
             className: "text-sm text-gray-600",
-            children: "Saved."
+            children: "\u4FDD\u5B58\u3057\u307E\u3057\u305F\u3002"
           })
         })]
       })]

@@ -97,9 +97,21 @@ function Authenticated(_ref) {
                 return setShowingUserDropdown(!showingUserDropdown);
               },
               className: "l-header__user-button",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                className: "l-header__user-name",
-                children: user.name
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "l-header__user-avatar",
+                children: user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: user.avatar,
+                  alt: "".concat(user.name, "\u306E\u30A2\u30D0\u30BF\u30FC")
+                }) : user.name.charAt(0).toUpperCase()
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                className: "l-header__user-info",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  className: "l-header__login-status",
+                  children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                  className: "l-header__user-name",
+                  children: [user.name, "\u3055\u3093"]
+                })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
                 width: "16",
@@ -170,7 +182,25 @@ function Authenticated(_ref) {
       }), showingMobileMenu && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "l-header__mobile-menu",
         ref: mobileMenuRef,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "l-header__mobile-user",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "l-header__user-avatar",
+            children: user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+              src: user.avatar,
+              alt: "".concat(user.name, "\u306E\u30A2\u30D0\u30BF\u30FC")
+            }) : user.name.charAt(0).toUpperCase()
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "l-header__mobile-user-info",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+              className: "l-header__mobile-user-name",
+              children: [user.name, "\u3055\u3093"]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "l-header__mobile-login-status",
+              children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
           href: "/job-listings",
           className: "l-header__mobile-link",
           children: "\u6848\u4EF6\u4E00\u89A7"

@@ -32,10 +32,10 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-    // return redirect()->intended(route('dashboard',
-    // absolute: false));
-    // ログイン後のリダイレクト先を指定
-        return redirect()->route('dashboard');
+    return redirect()->intended(route('dashboard',
+    absolute: false));
+    // ログイン後のリダイレクト先をdashboardに指定
+        // return redirect()->route('dashboard');
     }
 
     /**

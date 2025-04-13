@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -29,13 +30,33 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        
+        // 基本情報の更新
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // メールアドレス変更時は確認ステータスをリセット
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+        
+        // アバター画像の処理
+        if ($request->hasFile('avatar')) {
+            // 古いアバターを削除
+            if ($user->avatar) {
+                // public/ から始まるパスの場合、先頭を削除
+                $oldPath = str_replace('storage/', '', $user->avatar);
+                if (Storage::disk('public')->exists($oldPath)) {
+                    Storage::disk('public')->delete($oldPath);
+                }
+            }
+            
+            // 新しいアバターを保存
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = 'storage/' . $path;
         }
 
-        $request->user()->save();
+        $user->save();
 
         return Redirect::route('profile.edit');
     }

@@ -86,9 +86,24 @@ export default function Authenticated({
                                 }
                                 className="l-header__user-button"
                             >
-                                <span className="l-header__user-name">
-                                    {user.name}
-                                </span>
+                                <div className="l-header__user-avatar">
+                                    {user.avatar ? (
+                                        <img
+                                            src={user.avatar}
+                                            alt={`${user.name}のアバター`}
+                                        />
+                                    ) : (
+                                        user.name.charAt(0).toUpperCase()
+                                    )}
+                                </div>
+                                <div className="l-header__user-info">
+                                    <span className="l-header__login-status">
+                                        ログイン中
+                                    </span>
+                                    <span className="l-header__user-name">
+                                        {user.name}さん
+                                    </span>
+                                </div>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="16"
@@ -157,6 +172,26 @@ export default function Authenticated({
                 {/* モバイルメニュー */}
                 {showingMobileMenu && (
                     <div className="l-header__mobile-menu" ref={mobileMenuRef}>
+                        <div className="l-header__mobile-user">
+                            <div className="l-header__user-avatar">
+                                {user.avatar ? (
+                                    <img
+                                        src={user.avatar}
+                                        alt={`${user.name}のアバター`}
+                                    />
+                                ) : (
+                                    user.name.charAt(0).toUpperCase()
+                                )}
+                            </div>
+                            <div className="l-header__mobile-user-info">
+                                <span className="l-header__mobile-user-name">
+                                    {user.name}さん
+                                </span>
+                                <span className="l-header__mobile-login-status">
+                                    ログイン中
+                                </span>
+                            </div>
+                        </div>
                         <Link
                             href="/job-listings"
                             className="l-header__mobile-link"
