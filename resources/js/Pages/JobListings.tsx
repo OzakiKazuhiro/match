@@ -1,7 +1,174 @@
 import { useState } from "react";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { PropsWithChildren, ReactNode } from "react";
+
+// 共通レイアウトコンポーネント（ログイン不要）
+function Layout({
+    header,
+    children,
+}: PropsWithChildren<{ header?: ReactNode }>) {
+    const { auth } = usePage().props as PageProps;
+    const user = auth?.user;
+
+    return (
+        <div className="min-h-screen bg-f5f7fa">
+            {/* ヘッダー */}
+            <header className="l-header">
+                <div className="l-header__inner">
+                    <Link href="/" className="l-header__logo">
+                        <span className="l-header__logo-accent">match</span>
+                    </Link>
+
+                    <nav className="l-header__nav">
+                        <Link
+                            href="/job-listings"
+                            className="l-header__nav-link"
+                        >
+                            案件一覧
+                        </Link>
+                        <Link href="/post-job" className="l-header__nav-link">
+                            案件を投稿
+                        </Link>
+                        {auth?.user ? (
+                            <>
+                                <Link
+                                    href="/dashboard"
+                                    className="l-header__nav-link"
+                                >
+                                    マイページ
+                                </Link>
+                                <Link
+                                    href="/logout"
+                                    method="post"
+                                    as="button"
+                                    className="l-header__nav-link"
+                                >
+                                    ログアウト
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link
+                                    href="/login"
+                                    className="l-header__nav-link"
+                                >
+                                    ログイン
+                                </Link>
+                                <Link
+                                    href="/register"
+                                    className="l-header__nav-link l-header__nav-link--button"
+                                >
+                                    会員登録
+                                </Link>
+                            </>
+                        )}
+                    </nav>
+                </div>
+            </header>
+
+            {header && (
+                <div className="p-dashboard__header">
+                    <div className="p-dashboard__header-inner">{header}</div>
+                </div>
+            )}
+
+            <main className="main-content">{children}</main>
+
+            {/* フッター */}
+            <footer className="l-footer">
+                <div className="l-footer__container">
+                    <div className="l-footer__content">
+                        <div>
+                            <Link href="/" className="l-footer__logo">
+                                <span className="l-footer__logo-accent">
+                                    match
+                                </span>
+                            </Link>
+                            <p className="l-footer__description">
+                                エンジニア向けの案件マッチングサービス。
+                                単発案件からレベニューシェア案件まで、
+                                シンプルに探せて、すぐに応募できます。
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 className="l-footer__heading">案件を探す</h3>
+                            <ul className="l-footer__links">
+                                <li className="l-footer__link-item">
+                                    <Link
+                                        href="/job-listings?type=onetime"
+                                        className="l-footer__link"
+                                    >
+                                        単発案件
+                                    </Link>
+                                </li>
+                                <li className="l-footer__link-item">
+                                    <Link
+                                        href="/job-listings?type=revenue"
+                                        className="l-footer__link"
+                                    >
+                                        レベニューシェア案件
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 className="l-footer__heading">アカウント</h3>
+                            <ul className="l-footer__links">
+                                {auth?.user ? (
+                                    <>
+                                        <li className="l-footer__link-item">
+                                            <Link
+                                                href="/dashboard"
+                                                className="l-footer__link"
+                                            >
+                                                マイページ
+                                            </Link>
+                                        </li>
+                                        <li className="l-footer__link-item">
+                                            <Link
+                                                href="/profile"
+                                                className="l-footer__link"
+                                            >
+                                                プロフィール編集
+                                            </Link>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li className="l-footer__link-item">
+                                            <Link
+                                                href="/login"
+                                                className="l-footer__link"
+                                            >
+                                                ログイン
+                                            </Link>
+                                        </li>
+                                        <li className="l-footer__link-item">
+                                            <Link
+                                                href="/register"
+                                                className="l-footer__link"
+                                            >
+                                                会員登録
+                                            </Link>
+                                        </li>
+                                    </>
+                                )}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className="l-footer__copyright">
+                        &copy; {new Date().getFullYear()} match. All rights
+                        reserved.
+                    </div>
+                </div>
+            </footer>
+        </div>
+    );
+}
 
 interface JobType {
     id: number;
@@ -112,9 +279,7 @@ export default function JobListings({ auth }: PageProps) {
     };
 
     return (
-        <AuthenticatedLayout
-            header={<div className="p-job-listings__title">案件一覧</div>}
-        >
+        <Layout header={<div className="p-job-listings__title">案件一覧</div>}>
             <Head title="案件一覧 - Match" />
 
             <div className="p-job-listings__header">
@@ -430,6 +595,6 @@ export default function JobListings({ auth }: PageProps) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </Layout>
     );
 }

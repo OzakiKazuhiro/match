@@ -1,13 +1,61 @@
 import { Link, usePage } from "@inertiajs/react";
-import { PropsWithChildren, ReactNode, useState } from "react";
+import {
+    PropsWithChildren,
+    ReactNode,
+    useState,
+    useRef,
+    useEffect,
+} from "react";
 
 export default function Authenticated({
     header,
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
     const user = usePage().props.auth.user;
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
+    const [showingUserDropdown, setShowingUserDropdown] = useState(false);
+    const [showingMobileMenu, setShowingMobileMenu] = useState(false);
+    const userDropdownRef = useRef<HTMLDivElement>(null);
+    const mobileMenuRef = useRef<HTMLDivElement>(null);
+    const mobileButtonRef = useRef<HTMLButtonElement>(null);
+
+    // ユーザードロップダウン外のクリックを検出
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                userDropdownRef.current &&
+                !userDropdownRef.current.contains(event.target as Node)
+            ) {
+                setShowingUserDropdown(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    // モバイルメニュー外のクリックを検出
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            // ボタン自体は例外（ボタンクリックはトグル動作のため）
+            if (
+                mobileMenuRef.current &&
+                !mobileMenuRef.current.contains(event.target as Node) &&
+                mobileButtonRef.current &&
+                !mobileButtonRef.current.contains(event.target as Node)
+            ) {
+                setShowingMobileMenu(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <div className="min-h-screen bg-f5f7fa">
@@ -28,12 +76,13 @@ export default function Authenticated({
                         <Link href="/post-job" className="l-header__nav-link">
                             案件を投稿
                         </Link>
-                        <div className="l-header__user-menu">
+                        <div
+                            className="l-header__user-menu"
+                            ref={userDropdownRef}
+                        >
                             <button
                                 onClick={() =>
-                                    setShowingNavigationDropdown(
-                                        !showingNavigationDropdown
-                                    )
+                                    setShowingUserDropdown(!showingUserDropdown)
                                 }
                                 className="l-header__user-button"
                             >
@@ -55,7 +104,7 @@ export default function Authenticated({
                                 </svg>
                             </button>
 
-                            {showingNavigationDropdown && (
+                            {showingUserDropdown && (
                                 <div className="l-header__dropdown">
                                     <Link
                                         href={route("dashboard")}
@@ -84,11 +133,8 @@ export default function Authenticated({
 
                     <button
                         className="l-header__mobile-button"
-                        onClick={() =>
-                            setShowingNavigationDropdown(
-                                !showingNavigationDropdown
-                            )
-                        }
+                        onClick={() => setShowingMobileMenu(!showingMobileMenu)}
+                        ref={mobileButtonRef}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -109,8 +155,8 @@ export default function Authenticated({
                 </div>
 
                 {/* モバイルメニュー */}
-                {showingNavigationDropdown && (
-                    <div className="l-header__mobile-menu">
+                {showingMobileMenu && (
+                    <div className="l-header__mobile-menu" ref={mobileMenuRef}>
                         <Link
                             href="/job-listings"
                             className="l-header__mobile-link"

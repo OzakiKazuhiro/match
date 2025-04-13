@@ -789,12 +789,6 @@ select {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
-.-me-0\.5 {
-  margin-inline-end: -0.125rem;
-}
-.-me-2 {
-  margin-inline-end: -0.5rem;
-}
 .-ml-px {
   margin-left: -1px;
 }
@@ -836,9 +830,6 @@ select {
 }
 .mr-2 {
   margin-right: 0.5rem;
-}
-.ms-2 {
-  margin-inline-start: 0.5rem;
 }
 .ms-3 {
   margin-inline-start: 0.75rem;
@@ -899,9 +890,6 @@ select {
 }
 .h-8 {
   height: 2rem;
-}
-.h-9 {
-  height: 2.25rem;
 }
 .h-\[32\.5rem\] {
   height: 32.5rem;
@@ -1041,16 +1029,6 @@ select {
 .gap-6 {
   gap: 1.5rem;
 }
-.space-x-8 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(2rem * var(--tw-space-x-reverse));
-  margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
-}
-.space-y-1 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
-}
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1107,9 +1085,6 @@ select {
 .border {
   border-width: 1px;
 }
-.border-b {
-  border-bottom-width: 1px;
-}
 .border-b-2 {
   border-bottom-width: 2px;
 }
@@ -1127,10 +1102,6 @@ select {
 }
 .border-t {
   border-top-width: 1px;
-}
-.border-gray-100 {
-  --tw-border-opacity: 1;
-  border-color: rgb(243 244 246 / var(--tw-border-opacity, 1));
 }
 .border-gray-200 {
   --tw-border-opacity: 1;
@@ -1187,9 +1158,6 @@ select {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-.fill-current {
-  fill: currentColor;
 }
 .fill-red-500 {
   fill: #ef4444;
@@ -1254,14 +1222,8 @@ select {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
-.pb-1 {
-  padding-bottom: 0.25rem;
-}
 .pb-12 {
   padding-bottom: 3rem;
-}
-.pb-3 {
-  padding-bottom: 0.75rem;
 }
 .pe-4 {
   padding-inline-end: 1rem;
@@ -1271,9 +1233,6 @@ select {
 }
 .pt-1 {
   padding-top: 0.25rem;
-}
-.pt-2 {
-  padding-top: 0.5rem;
 }
 .pt-4 {
   padding-top: 1rem;
@@ -1337,9 +1296,6 @@ select {
 }
 .uppercase {
   text-transform: uppercase;
-}
-.leading-4 {
-  line-height: 1rem;
 }
 .leading-5 {
   line-height: 1.25rem;
@@ -1668,22 +1624,9 @@ select {
     grid-column: span 2 / span 2;
   }
 
-  .sm\:-my-px {
-    margin-top: -1px;
-    margin-bottom: -1px;
-  }
-
   .sm\:mx-auto {
     margin-left: auto;
     margin-right: auto;
-  }
-
-  .sm\:ms-10 {
-    margin-inline-start: 2.5rem;
-  }
-
-  .sm\:ms-6 {
-    margin-inline-start: 1.5rem;
   }
 
   .sm\:mt-10 {

@@ -30,8 +30,42 @@ function Authenticated(_ref) {
   var user = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.auth.user;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
-    showingNavigationDropdown = _useState2[0],
-    setShowingNavigationDropdown = _useState2[1];
+    showingUserDropdown = _useState2[0],
+    setShowingUserDropdown = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    showingMobileMenu = _useState4[0],
+    setShowingMobileMenu = _useState4[1];
+  var userDropdownRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  var mobileMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  var mobileButtonRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+
+  // ユーザードロップダウン外のクリックを検出
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var handleClickOutside = function handleClickOutside(event) {
+      if (userDropdownRef.current && !userDropdownRef.current.contains(event.target)) {
+        setShowingUserDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return function () {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // モバイルメニュー外のクリックを検出
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var handleClickOutside = function handleClickOutside(event) {
+      // ボタン自体は例外（ボタンクリックはトグル動作のため）
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && mobileButtonRef.current && !mobileButtonRef.current.contains(event.target)) {
+        setShowingMobileMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return function () {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     className: "min-h-screen bg-f5f7fa",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("header", {
@@ -57,9 +91,10 @@ function Authenticated(_ref) {
             children: "\u6848\u4EF6\u3092\u6295\u7A3F"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "l-header__user-menu",
+            ref: userDropdownRef,
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
               onClick: function onClick() {
-                return setShowingNavigationDropdown(!showingNavigationDropdown);
+                return setShowingUserDropdown(!showingUserDropdown);
               },
               className: "l-header__user-button",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
@@ -79,7 +114,7 @@ function Authenticated(_ref) {
                   d: "M6 9l6 6 6-6"
                 })
               })]
-            }), showingNavigationDropdown && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            }), showingUserDropdown && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
               className: "l-header__dropdown",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
                 href: route("dashboard"),
@@ -101,8 +136,9 @@ function Authenticated(_ref) {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
           className: "l-header__mobile-button",
           onClick: function onClick() {
-            return setShowingNavigationDropdown(!showingNavigationDropdown);
+            return setShowingMobileMenu(!showingMobileMenu);
           },
+          ref: mobileButtonRef,
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             width: "24",
@@ -131,8 +167,9 @@ function Authenticated(_ref) {
             })]
           })
         })]
-      }), showingNavigationDropdown && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      }), showingMobileMenu && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "l-header__mobile-menu",
+        ref: mobileMenuRef,
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
           href: "/job-listings",
           className: "l-header__mobile-link",
