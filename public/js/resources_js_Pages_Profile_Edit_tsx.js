@@ -1419,8 +1419,15 @@ function Authenticated(_ref) {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                 className: "l-header__user-avatar",
                 children: user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                  src: user.avatar,
-                  alt: "".concat(user.name, "\u306E\u30A2\u30D0\u30BF\u30FC")
+                  src: user.avatar.startsWith("/") ? user.avatar : "/".concat(user.avatar),
+                  alt: "".concat(user.name, "\u306E\u30A2\u30D0\u30BF\u30FC"),
+                  onError: function onError(e) {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "";
+                    if (e.currentTarget.parentElement) {
+                      e.currentTarget.parentElement.innerHTML = user.name.charAt(0).toUpperCase();
+                    }
+                  }
                 }) : user.name.charAt(0).toUpperCase()
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                 className: "l-header__user-info",
@@ -1506,8 +1513,15 @@ function Authenticated(_ref) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "l-header__user-avatar",
             children: user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-              src: user.avatar,
-              alt: "".concat(user.name, "\u306E\u30A2\u30D0\u30BF\u30FC")
+              src: user.avatar.startsWith("/") ? user.avatar : "/".concat(user.avatar),
+              alt: "".concat(user.name, "\u306E\u30A2\u30D0\u30BF\u30FC"),
+              onError: function onError(e) {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = "";
+                if (e.currentTarget.parentElement) {
+                  e.currentTarget.parentElement.innerHTML = user.name.charAt(0).toUpperCase();
+                }
+              }
             }) : user.name.charAt(0).toUpperCase()
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "l-header__mobile-user-info",

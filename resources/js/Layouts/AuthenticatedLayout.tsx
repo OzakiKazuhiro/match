@@ -89,8 +89,25 @@ export default function Authenticated({
                                 <div className="l-header__user-avatar">
                                     {user.avatar ? (
                                         <img
-                                            src={user.avatar}
+                                            src={
+                                                user.avatar.startsWith("/")
+                                                    ? user.avatar
+                                                    : `/${user.avatar}`
+                                            }
                                             alt={`${user.name}のアバター`}
+                                            onError={(e) => {
+                                                e.currentTarget.onerror = null;
+                                                e.currentTarget.src = "";
+                                                if (
+                                                    e.currentTarget
+                                                        .parentElement
+                                                ) {
+                                                    e.currentTarget.parentElement.innerHTML =
+                                                        user.name
+                                                            .charAt(0)
+                                                            .toUpperCase();
+                                                }
+                                            }}
                                         />
                                     ) : (
                                         user.name.charAt(0).toUpperCase()
@@ -176,8 +193,22 @@ export default function Authenticated({
                             <div className="l-header__user-avatar">
                                 {user.avatar ? (
                                     <img
-                                        src={user.avatar}
+                                        src={
+                                            user.avatar.startsWith("/")
+                                                ? user.avatar
+                                                : `/${user.avatar}`
+                                        }
                                         alt={`${user.name}のアバター`}
+                                        onError={(e) => {
+                                            e.currentTarget.onerror = null;
+                                            e.currentTarget.src = "";
+                                            if (e.currentTarget.parentElement) {
+                                                e.currentTarget.parentElement.innerHTML =
+                                                    user.name
+                                                        .charAt(0)
+                                                        .toUpperCase();
+                                            }
+                                        }}
                                     />
                                 ) : (
                                     user.name.charAt(0).toUpperCase()

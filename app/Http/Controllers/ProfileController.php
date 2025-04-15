@@ -44,7 +44,7 @@ class ProfileController extends Controller
         if ($request->hasFile('avatar')) {
             // 古いアバターを削除
             if ($user->avatar) {
-                // public/ から始まるパスの場合、先頭を削除
+                // storage/ から始まるパスの場合、先頭を削除
                 $oldPath = str_replace('storage/', '', $user->avatar);
                 if (Storage::disk('public')->exists($oldPath)) {
                     Storage::disk('public')->delete($oldPath);
@@ -53,7 +53,7 @@ class ProfileController extends Controller
             
             // 新しいアバターを保存
             $path = $request->file('avatar')->store('avatars', 'public');
-            $user->avatar = 'storage/' . $path;
+            $user->avatar = 'storage/' . $path; // 先頭のスラッシュを削除
         }
 
         $user->save();
