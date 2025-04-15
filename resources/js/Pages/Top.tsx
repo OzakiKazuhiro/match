@@ -330,23 +330,13 @@ export default function Top({
                         </h2>
                         <div className="p-top__solution-list">
                             <div className="p-top__solution-item">
-                                <div className="p-top__solution-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="32"
-                                        height="32"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                    </svg>
+                                <div className="p-top__solution-image">
+                                    <img
+                                        src="/images/features/apply-for-projects.webp"
+                                        alt="エンジニアでなくても案件に応募可能"
+                                        width="280"
+                                        height="200"
+                                    />
                                 </div>
                                 <h3 className="p-top__solution-title">
                                     エンジニアでなくても案件の応募可能！
@@ -357,21 +347,13 @@ export default function Top({
                             </div>
 
                             <div className="p-top__solution-item">
-                                <div className="p-top__solution-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="32"
-                                        height="32"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                    </svg>
+                                <div className="p-top__solution-image">
+                                    <img
+                                        src="/images/features/find-projects-quickly.webp"
+                                        alt="エンジニアは希望の案件がすぐに見つかる"
+                                        width="280"
+                                        height="200"
+                                    />
                                 </div>
                                 <h3 className="p-top__solution-title">
                                     エンジニアは希望の案件がすぐに見つかる！
@@ -380,6 +362,27 @@ export default function Top({
                                     シンプルな作りのおかげで、案件をすぐに見つけることが可能！案件に関する質問もアプリ内で気軽に解決！
                                 </p>
                             </div>
+                        </div>
+                    </section>
+
+                    {/* CTAセクション（お悩み解決の後） */}
+                    <section className="p-top__hero">
+                        <h2 className="p-top__title">
+                            今すぐ案件を応募してみましょう
+                        </h2>
+                        <p className="p-top__subtitle">
+                            会員登録は無料です。案件投稿や応募もすぐに始められます。
+                        </p>
+                        <div className="p-top__buttons">
+                            <Link
+                                href="/register"
+                                className="p-top__button p-top__button--primary"
+                            >
+                                無料で会員登録する
+                            </Link>
+                            <Link href="/job-post" className="p-top__button">
+                                案件を投稿する
+                            </Link>
                         </div>
                     </section>
 
@@ -678,46 +681,11 @@ export default function Top({
                                         "
                                     </div>
                                     <p className="p-top__testimonial-content">
-                                        matchは使いやすさが魅力です。複雑な入力項目がなく、直感的に操作できるので、エンジニアとして初めて案件を受注する際も安心して利用できました。
-                                    </p>
-                                    <div className="p-top__testimonial-author">
-                                        <div className="p-top__testimonial-avatar">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="50"
-                                                height="50"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="1"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            >
-                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                                <circle
-                                                    cx="12"
-                                                    cy="7"
-                                                    r="4"
-                                                ></circle>
-                                            </svg>
-                                        </div>
-                                        <div className="p-top__testimonial-info">
-                                            <div className="p-top__testimonial-name">
-                                                田中 健太
-                                            </div>
-                                            <div className="p-top__testimonial-role">
-                                                フロントエンドエンジニア
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="p-top__testimonial">
-                                    <div className="p-top__testimonial-quote">
-                                        "
-                                    </div>
-                                    <p className="p-top__testimonial-content">
-                                        レベニューシェア案件で開発パートナーを見つけることができました。一対一のダイレクトメッセージ機能が特に便利で、スムーズなコミュニケーションが取れています。
+                                        作りたかったWebアプリの開発パートナーを見つけることができました。
+                                        <span className="highlight">
+                                            一対一のダイレクトメッセージ機能が特に便利
+                                        </span>
+                                        で、スムーズなコミュニケーションが取れています。
                                     </p>
                                     <div className="p-top__testimonial-author">
                                         <div className="p-top__testimonial-avatar">
@@ -756,7 +724,54 @@ export default function Top({
                                         "
                                     </div>
                                     <p className="p-top__testimonial-content">
-                                        シンプルな操作性が気に入っています。他のマッチングサービスと違って、必要な情報だけが表示されるので、効率良く案件を探すことができます。
+                                        matchは使いやすさが魅力です。
+                                        <span className="highlight">
+                                            複雑な入力項目がなく、直感的に操作できる
+                                        </span>
+                                        ので、エンジニアとして初めて案件を受注する際も安心して利用できました。
+                                    </p>
+                                    <div className="p-top__testimonial-author">
+                                        <div className="p-top__testimonial-avatar">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="50"
+                                                height="50"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="1"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            >
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle
+                                                    cx="12"
+                                                    cy="7"
+                                                    r="4"
+                                                ></circle>
+                                            </svg>
+                                        </div>
+                                        <div className="p-top__testimonial-info">
+                                            <div className="p-top__testimonial-name">
+                                                田中 健太
+                                            </div>
+                                            <div className="p-top__testimonial-role">
+                                                フロントエンドエンジニア
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="p-top__testimonial">
+                                    <div className="p-top__testimonial-quote">
+                                        "
+                                    </div>
+                                    <p className="p-top__testimonial-content">
+                                        シンプルな操作性が気に入っています。{" "}
+                                        <span className="highlight">
+                                            他のマッチングサービスと違って、必要な情報だけが表示
+                                        </span>
+                                        されるので、効率良く案件を探すことができます。
                                     </p>
                                     <div className="p-top__testimonial-author">
                                         <div className="p-top__testimonial-avatar">

@@ -316,28 +316,12 @@ function Top(_ref) {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
               className: "p-top__solution-item",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                className: "p-top__solution-icon",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  width: "32",
-                  height: "32",
-                  viewBox: "0 0 24 24",
-                  fill: "none",
-                  stroke: "currentColor",
-                  strokeWidth: "2",
-                  strokeLinecap: "round",
-                  strokeLinejoin: "round",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
-                    d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
-                    cx: "9",
-                    cy: "7",
-                    r: "4"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
-                    d: "M22 21v-2a4 4 0 0 0-3-3.87"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
-                    d: "M16 3.13a4 4 0 0 1 0 7.75"
-                  })]
+                className: "p-top__solution-image",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: "/images/features/apply-for-projects.webp",
+                  alt: "\u30A8\u30F3\u30B8\u30CB\u30A2\u3067\u306A\u304F\u3066\u3082\u6848\u4EF6\u306B\u5FDC\u52DF\u53EF\u80FD",
+                  width: "280",
+                  height: "200"
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
                 className: "p-top__solution-title",
@@ -349,22 +333,12 @@ function Top(_ref) {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
               className: "p-top__solution-item",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                className: "p-top__solution-icon",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  width: "32",
-                  height: "32",
-                  viewBox: "0 0 24 24",
-                  fill: "none",
-                  stroke: "currentColor",
-                  strokeWidth: "2",
-                  strokeLinecap: "round",
-                  strokeLinejoin: "round",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
-                    d: "M22 11.08V12a10 10 0 1 1-5.93-9.14"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("polyline", {
-                    points: "22 4 12 14.01 9 11.01"
-                  })]
+                className: "p-top__solution-image",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: "/images/features/find-projects-quickly.webp",
+                  alt: "\u30A8\u30F3\u30B8\u30CB\u30A2\u306F\u5E0C\u671B\u306E\u6848\u4EF6\u304C\u3059\u3050\u306B\u898B\u3064\u304B\u308B",
+                  width: "280",
+                  height: "200"
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
                 className: "p-top__solution-title",
@@ -373,6 +347,26 @@ function Top(_ref) {
                 className: "p-top__solution-text",
                 children: "\u30B7\u30F3\u30D7\u30EB\u306A\u4F5C\u308A\u306E\u304A\u304B\u3052\u3067\u3001\u6848\u4EF6\u3092\u3059\u3050\u306B\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u53EF\u80FD\uFF01\u6848\u4EF6\u306B\u95A2\u3059\u308B\u8CEA\u554F\u3082\u30A2\u30D7\u30EA\u5185\u3067\u6C17\u8EFD\u306B\u89E3\u6C7A\uFF01"
               })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
+          className: "p-top__hero",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+            className: "p-top__title",
+            children: "\u4ECA\u3059\u3050\u6848\u4EF6\u3092\u5FDC\u52DF\u3057\u3066\u307F\u307E\u3057\u3087\u3046"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+            className: "p-top__subtitle",
+            children: "\u4F1A\u54E1\u767B\u9332\u306F\u7121\u6599\u3067\u3059\u3002\u6848\u4EF6\u6295\u7A3F\u3084\u5FDC\u52DF\u3082\u3059\u3050\u306B\u59CB\u3081\u3089\u308C\u307E\u3059\u3002"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "p-top__buttons",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+              href: "/register",
+              className: "p-top__button p-top__button--primary",
+              children: "\u7121\u6599\u3067\u4F1A\u54E1\u767B\u9332\u3059\u308B"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+              href: "/job-post",
+              className: "p-top__button",
+              children: "\u6848\u4EF6\u3092\u6295\u7A3F\u3059\u308B"
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
@@ -682,50 +676,12 @@ function Top(_ref) {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                   className: "p-top__testimonial-quote",
                   children: "\""
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
                   className: "p-top__testimonial-content",
-                  children: "match\u306F\u4F7F\u3044\u3084\u3059\u3055\u304C\u9B45\u529B\u3067\u3059\u3002\u8907\u96D1\u306A\u5165\u529B\u9805\u76EE\u304C\u306A\u304F\u3001\u76F4\u611F\u7684\u306B\u64CD\u4F5C\u3067\u304D\u308B\u306E\u3067\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u3057\u3066\u521D\u3081\u3066\u6848\u4EF6\u3092\u53D7\u6CE8\u3059\u308B\u969B\u3082\u5B89\u5FC3\u3057\u3066\u5229\u7528\u3067\u304D\u307E\u3057\u305F\u3002"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                  className: "p-top__testimonial-author",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                    className: "p-top__testimonial-avatar",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      width: "50",
-                      height: "50",
-                      viewBox: "0 0 24 24",
-                      fill: "none",
-                      stroke: "currentColor",
-                      strokeWidth: "1",
-                      strokeLinecap: "round",
-                      strokeLinejoin: "round",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
-                        d: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
-                        cx: "12",
-                        cy: "7",
-                        r: "4"
-                      })]
-                    })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                    className: "p-top__testimonial-info",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                      className: "p-top__testimonial-name",
-                      children: "\u7530\u4E2D \u5065\u592A"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                      className: "p-top__testimonial-role",
-                      children: "\u30D5\u30ED\u30F3\u30C8\u30A8\u30F3\u30C9\u30A8\u30F3\u30B8\u30CB\u30A2"
-                    })]
-                  })]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                className: "p-top__testimonial",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                  className: "p-top__testimonial-quote",
-                  children: "\""
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-                  className: "p-top__testimonial-content",
-                  children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u3067\u958B\u767A\u30D1\u30FC\u30C8\u30CA\u30FC\u3092\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3057\u305F\u3002\u4E00\u5BFE\u4E00\u306E\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u6A5F\u80FD\u304C\u7279\u306B\u4FBF\u5229\u3067\u3001\u30B9\u30E0\u30FC\u30BA\u306A\u30B3\u30DF\u30E5\u30CB\u30B1\u30FC\u30B7\u30E7\u30F3\u304C\u53D6\u308C\u3066\u3044\u307E\u3059\u3002"
+                  children: ["\u4F5C\u308A\u305F\u304B\u3063\u305FWeb\u30A2\u30D7\u30EA\u306E\u958B\u767A\u30D1\u30FC\u30C8\u30CA\u30FC\u3092\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3057\u305F\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                    className: "highlight",
+                    children: "\u4E00\u5BFE\u4E00\u306E\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u6A5F\u80FD\u304C\u7279\u306B\u4FBF\u5229"
+                  }), "\u3067\u3001\u30B9\u30E0\u30FC\u30BA\u306A\u30B3\u30DF\u30E5\u30CB\u30B1\u30FC\u30B7\u30E7\u30F3\u304C\u53D6\u308C\u3066\u3044\u307E\u3059\u3002"]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "p-top__testimonial-author",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -764,9 +720,56 @@ function Top(_ref) {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                   className: "p-top__testimonial-quote",
                   children: "\""
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
                   className: "p-top__testimonial-content",
-                  children: "\u30B7\u30F3\u30D7\u30EB\u306A\u64CD\u4F5C\u6027\u304C\u6C17\u306B\u5165\u3063\u3066\u3044\u307E\u3059\u3002\u4ED6\u306E\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3068\u9055\u3063\u3066\u3001\u5FC5\u8981\u306A\u60C5\u5831\u3060\u3051\u304C\u8868\u793A\u3055\u308C\u308B\u306E\u3067\u3001\u52B9\u7387\u826F\u304F\u6848\u4EF6\u3092\u63A2\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002"
+                  children: ["match\u306F\u4F7F\u3044\u3084\u3059\u3055\u304C\u9B45\u529B\u3067\u3059\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                    className: "highlight",
+                    children: "\u8907\u96D1\u306A\u5165\u529B\u9805\u76EE\u304C\u306A\u304F\u3001\u76F4\u611F\u7684\u306B\u64CD\u4F5C\u3067\u304D\u308B"
+                  }), "\u306E\u3067\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u3057\u3066\u521D\u3081\u3066\u6848\u4EF6\u3092\u53D7\u6CE8\u3059\u308B\u969B\u3082\u5B89\u5FC3\u3057\u3066\u5229\u7528\u3067\u304D\u307E\u3057\u305F\u3002"]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "p-top__testimonial-author",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                    className: "p-top__testimonial-avatar",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "50",
+                      height: "50",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      strokeWidth: "1",
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+                        d: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
+                        cx: "12",
+                        cy: "7",
+                        r: "4"
+                      })]
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                    className: "p-top__testimonial-info",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                      className: "p-top__testimonial-name",
+                      children: "\u7530\u4E2D \u5065\u592A"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                      className: "p-top__testimonial-role",
+                      children: "\u30D5\u30ED\u30F3\u30C8\u30A8\u30F3\u30C9\u30A8\u30F3\u30B8\u30CB\u30A2"
+                    })]
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                className: "p-top__testimonial",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                  className: "p-top__testimonial-quote",
+                  children: "\""
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+                  className: "p-top__testimonial-content",
+                  children: ["\u30B7\u30F3\u30D7\u30EB\u306A\u64CD\u4F5C\u6027\u304C\u6C17\u306B\u5165\u3063\u3066\u3044\u307E\u3059\u3002", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                    className: "highlight",
+                    children: "\u4ED6\u306E\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3068\u9055\u3063\u3066\u3001\u5FC5\u8981\u306A\u60C5\u5831\u3060\u3051\u304C\u8868\u793A"
+                  }), "\u3055\u308C\u308B\u306E\u3067\u3001\u52B9\u7387\u826F\u304F\u6848\u4EF6\u3092\u63A2\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002"]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "p-top__testimonial-author",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
