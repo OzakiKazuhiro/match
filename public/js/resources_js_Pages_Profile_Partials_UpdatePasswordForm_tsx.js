@@ -494,13 +494,13 @@ __webpack_require__.r(__webpack_exports__);
 
 function UpdatePasswordForm(_ref) {
   var _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className;
+    className = _ref$className === void 0 ? "" : _ref$className;
   var passwordInput = (0,react__WEBPACK_IMPORTED_MODULE_5__.useRef)(null);
   var currentPasswordInput = (0,react__WEBPACK_IMPORTED_MODULE_5__.useRef)(null);
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.useForm)({
-      current_password: '',
-      password: '',
-      password_confirmation: ''
+      current_password: "",
+      password: "",
+      password_confirmation: ""
     }),
     data = _useForm.data,
     setData = _useForm.setData,
@@ -511,7 +511,7 @@ function UpdatePasswordForm(_ref) {
     recentlySuccessful = _useForm.recentlySuccessful;
   var updatePassword = function updatePassword(e) {
     e.preventDefault();
-    put(route('password.update'), {
+    put(route("password.update"), {
       preserveScroll: true,
       onSuccess: function onSuccess() {
         return reset();
@@ -519,12 +519,12 @@ function UpdatePasswordForm(_ref) {
       onError: function onError(errors) {
         if (errors.password) {
           var _passwordInput$curren;
-          reset('password', 'password_confirmation');
+          reset("password", "password_confirmation");
           (_passwordInput$curren = passwordInput.current) === null || _passwordInput$curren === void 0 || _passwordInput$curren.focus();
         }
         if (errors.current_password) {
           var _currentPasswordInput;
-          reset('current_password');
+          reset("current_password");
           (_currentPasswordInput = currentPasswordInput.current) === null || _currentPasswordInput === void 0 || _currentPasswordInput.focus();
         }
       }
@@ -535,10 +535,10 @@ function UpdatePasswordForm(_ref) {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("header", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
         className: "text-lg font-medium text-gray-900",
-        children: "Update Password"
+        children: "\u30D1\u30B9\u30EF\u30FC\u30C9\u5909\u66F4"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
         className: "mt-1 text-sm text-gray-600",
-        children: "Ensure your account is using a long, random password to stay secure."
+        children: "\u5B89\u5168\u6027\u3092\u4FDD\u3064\u305F\u3081\u3001\u9577\u304F\u3066\u30E9\u30F3\u30C0\u30E0\u306A\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: updatePassword,
@@ -546,13 +546,13 @@ function UpdatePasswordForm(_ref) {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "current_password",
-          value: "Current Password"
+          value: "\u73FE\u5728\u306E\u30D1\u30B9\u30EF\u30FC\u30C9"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "current_password",
           ref: currentPasswordInput,
           value: data.current_password,
           onChange: function onChange(e) {
-            return setData('current_password', e.target.value);
+            return setData("current_password", e.target.value);
           },
           type: "password",
           className: "mt-1 block w-full",
@@ -564,13 +564,13 @@ function UpdatePasswordForm(_ref) {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password",
-          value: "New Password"
+          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "password",
           ref: passwordInput,
           value: data.password,
           onChange: function onChange(e) {
-            return setData('password', e.target.value);
+            return setData("password", e.target.value);
           },
           type: "password",
           className: "mt-1 block w-full",
@@ -582,12 +582,12 @@ function UpdatePasswordForm(_ref) {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password_confirmation",
-          value: "Confirm Password"
+          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9\uFF08\u78BA\u8A8D\uFF09"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "password_confirmation",
           value: data.password_confirmation,
           onChange: function onChange(e) {
-            return setData('password_confirmation', e.target.value);
+            return setData("password_confirmation", e.target.value);
           },
           type: "password",
           className: "mt-1 block w-full",
@@ -600,7 +600,7 @@ function UpdatePasswordForm(_ref) {
         className: "flex items-center gap-4",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
           disabled: processing,
-          children: "Save"
+          children: "\u4FDD\u5B58"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_headlessui_react__WEBPACK_IMPORTED_MODULE_7__.Transition, {
           show: recentlySuccessful,
           enter: "transition ease-in-out",
@@ -609,7 +609,7 @@ function UpdatePasswordForm(_ref) {
           leaveTo: "opacity-0",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
             className: "text-sm text-gray-600",
-            children: "Saved."
+            children: "\u4FDD\u5B58\u3057\u307E\u3057\u305F"
           })
         })]
       })]

@@ -1,14 +1,14 @@
-import DangerButton from '@/Components/DangerButton';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import Modal from '@/Components/Modal';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
-import { useForm } from '@inertiajs/react';
-import { FormEventHandler, useRef, useState } from 'react';
+import DangerButton from "@/Components/DangerButton";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import Modal from "@/Components/Modal";
+import SecondaryButton from "@/Components/SecondaryButton";
+import TextInput from "@/Components/TextInput";
+import { useForm } from "@inertiajs/react";
+import { FormEventHandler, useRef, useState } from "react";
 
 export default function DeleteUserForm({
-    className = '',
+    className = "",
 }: {
     className?: string;
 }) {
@@ -24,7 +24,7 @@ export default function DeleteUserForm({
         errors,
         clearErrors,
     } = useForm({
-        password: '',
+        password: "",
     });
 
     const confirmUserDeletion = () => {
@@ -34,7 +34,7 @@ export default function DeleteUserForm({
     const deleteUser: FormEventHandler = (e) => {
         e.preventDefault();
 
-        destroy(route('profile.destroy'), {
+        destroy(route("profile.destroy"), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordInput.current?.focus(),
@@ -52,39 +52,29 @@ export default function DeleteUserForm({
     return (
         <section className={`space-y-6 ${className}`}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Delete Account
-                </h2>
+                <h2 className="text-lg font-medium text-gray-900">退会する</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Once your account is deleted, all of its resources and data
-                    will be permanently deleted. Before deleting your account,
-                    please download any data or information that you wish to
-                    retain.
+                    退会すると、すべてのデータが完全に削除されます。
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>
-                Delete Account
-            </DangerButton>
+            <DangerButton onClick={confirmUserDeletion}>退会する</DangerButton>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
                     <h2 className="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete your account?
+                        本当に退会しますか？
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-600">
-                        Once your account is deleted, all of its resources and
-                        data will be permanently deleted. Please enter your
-                        password to confirm you would like to permanently delete
-                        your account.
+                        退会すると、すべてのデータが完全に削除されます。本当に退会する場合は、確認のためパスワードを入力してください。
                     </p>
 
                     <div className="mt-6">
                         <InputLabel
                             htmlFor="password"
-                            value="Password"
+                            value="パスワード"
                             className="sr-only"
                         />
 
@@ -95,11 +85,11 @@ export default function DeleteUserForm({
                             ref={passwordInput}
                             value={data.password}
                             onChange={(e) =>
-                                setData('password', e.target.value)
+                                setData("password", e.target.value)
                             }
                             className="mt-1 block w-3/4"
                             isFocused
-                            placeholder="Password"
+                            placeholder="パスワード"
                         />
 
                         <InputError
@@ -110,11 +100,11 @@ export default function DeleteUserForm({
 
                     <div className="mt-6 flex justify-end">
                         <SecondaryButton onClick={closeModal}>
-                            Cancel
+                            キャンセル
                         </SecondaryButton>
 
                         <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
+                            退会する
                         </DangerButton>
                     </div>
                 </form>

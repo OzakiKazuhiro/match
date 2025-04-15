@@ -1321,14 +1321,14 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 function DeleteUserForm(_ref) {
   var _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className;
+    className = _ref$className === void 0 ? "" : _ref$className;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_7__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     confirmingUserDeletion = _useState2[0],
     setConfirmingUserDeletion = _useState2[1];
   var passwordInput = (0,react__WEBPACK_IMPORTED_MODULE_7__.useRef)(null);
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_6__.useForm)({
-      password: ''
+      password: ""
     }),
     data = _useForm.data,
     setData = _useForm.setData,
@@ -1342,7 +1342,7 @@ function DeleteUserForm(_ref) {
   };
   var deleteUser = function deleteUser(e) {
     e.preventDefault();
-    destroy(route('profile.destroy'), {
+    destroy(route("profile.destroy"), {
       preserveScroll: true,
       onSuccess: function onSuccess() {
         return closeModal();
@@ -1366,14 +1366,14 @@ function DeleteUserForm(_ref) {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("header", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
         className: "text-lg font-medium text-gray-900",
-        children: "Delete Account"
+        children: "\u9000\u4F1A\u3059\u308B"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
         className: "mt-1 text-sm text-gray-600",
-        children: "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain."
+        children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30C7\u30FC\u30BF\u304C\u5B8C\u5168\u306B\u524A\u9664\u3055\u308C\u307E\u3059\u3002"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_DangerButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
       onClick: confirmUserDeletion,
-      children: "Delete Account"
+      children: "\u9000\u4F1A\u3059\u308B"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
       show: confirmingUserDeletion,
       onClose: closeModal,
@@ -1382,15 +1382,15 @@ function DeleteUserForm(_ref) {
         className: "p-6",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
           className: "text-lg font-medium text-gray-900",
-          children: "Are you sure you want to delete your account?"
+          children: "\u672C\u5F53\u306B\u9000\u4F1A\u3057\u307E\u3059\u304B\uFF1F"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
           className: "mt-1 text-sm text-gray-600",
-          children: "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account."
+          children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30C7\u30FC\u30BF\u304C\u5B8C\u5168\u306B\u524A\u9664\u3055\u308C\u307E\u3059\u3002\u672C\u5F53\u306B\u9000\u4F1A\u3059\u308B\u5834\u5408\u306F\u3001\u78BA\u8A8D\u306E\u305F\u3081\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "mt-6",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
             htmlFor: "password",
-            value: "Password",
+            value: "\u30D1\u30B9\u30EF\u30FC\u30C9",
             className: "sr-only"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_5__["default"], {
             id: "password",
@@ -1399,11 +1399,11 @@ function DeleteUserForm(_ref) {
             ref: passwordInput,
             value: data.password,
             onChange: function onChange(e) {
-              return setData('password', e.target.value);
+              return setData("password", e.target.value);
             },
             className: "mt-1 block w-3/4",
             isFocused: true,
-            placeholder: "Password"
+            placeholder: "\u30D1\u30B9\u30EF\u30FC\u30C9"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_1__["default"], {
             message: errors.password,
             className: "mt-2"
@@ -1412,11 +1412,11 @@ function DeleteUserForm(_ref) {
           className: "mt-6 flex justify-end",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_SecondaryButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
             onClick: closeModal,
-            children: "Cancel"
+            children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_DangerButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
             className: "ms-3",
             disabled: processing,
-            children: "Delete Account"
+            children: "\u9000\u4F1A\u3059\u308B"
           })]
         })]
       })

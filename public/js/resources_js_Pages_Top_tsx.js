@@ -249,7 +249,7 @@ function Top(_ref) {
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
           className: "p-top__section-title p-top__section-title--catchphrase",
-          children: ["\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u30A2\u30A4\u30C7\u30A2\u3001", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {
+          children: ["\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u30A2\u30A4\u30C7\u30A2\u30FB", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {
             className: "p-top__catchphrase-break"
           }), "\u8AB0\u3067\u3082\u7C21\u5358\u306B\u3064\u306A\u304C\u308B"]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
@@ -325,10 +325,10 @@ function Top(_ref) {
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
                 className: "p-top__solution-title",
-                children: "\u30A8\u30F3\u30B8\u30CB\u30A2\u3067\u306A\u304F\u3066\u3082\u6848\u4EF6\u306E\u5FDC\u52DF\u53EF\u80FD\uFF01"
+                children: "\u30A8\u30F3\u30B8\u30CB\u30A2\u3067\u306A\u304F\u3066\u3082\u6848\u4EF6\u306E\u6295\u7A3F\u53EF\u80FD\uFF01"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                 className: "p-top__solution-text",
-                children: "\u30A2\u30A4\u30C7\u30A2\u3092Web\u3067\u5F62\u306B\u3057\u305F\u3044\u4EBA\u3067\u3042\u308C\u3070\u3001\u4E3B\u5A66\u3067\u3082\u8AB0\u3067\u3082\u6C17\u8EFD\u306B\u3001\u4F1A\u54E1\u767B\u9332\u3057\u3066\u5FDC\u52DF\u53EF\u80FD\uFF01"
+                children: "\u30A2\u30A4\u30C7\u30A2\u3092Web\u3067\u5F62\u306B\u3057\u305F\u3044\u4EBA\u3067\u3042\u308C\u3070\u3001\u4E3B\u5A66\u3067\u3082\u8AB0\u3067\u3082\u6C17\u8EFD\u306B\u3001\u4F1A\u54E1\u767B\u9332\u3057\u3066\u6295\u7A3F\u53EF\u80FD\uFF01"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
               className: "p-top__solution-item",
@@ -353,7 +353,7 @@ function Top(_ref) {
           className: "p-top__hero",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
             className: "p-top__title",
-            children: "\u4ECA\u3059\u3050\u6848\u4EF6\u3092\u5FDC\u52DF\u3057\u3066\u307F\u307E\u3057\u3087\u3046"
+            children: "\u4ECA\u3059\u3050\u6848\u4EF6\u3092\u6295\u7A3F\u3057\u3066\u307F\u307E\u3057\u3087\u3046"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             className: "p-top__subtitle",
             children: "\u4F1A\u54E1\u767B\u9332\u306F\u7121\u6599\u3067\u3059\u3002\u6848\u4EF6\u6295\u7A3F\u3084\u5FDC\u52DF\u3082\u3059\u3050\u306B\u59CB\u3081\u3089\u308C\u307E\u3059\u3002"

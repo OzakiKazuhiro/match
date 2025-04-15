@@ -261,7 +261,7 @@ export default function Top({
 
                     {/* キャッチフレーズ */}
                     <h2 className="p-top__section-title p-top__section-title--catchphrase">
-                        エンジニアとアイデア、
+                        エンジニアとアイデア・
                         <br className="p-top__catchphrase-break" />
                         誰でも簡単につながる
                     </h2>
@@ -339,10 +339,10 @@ export default function Top({
                                     />
                                 </div>
                                 <h3 className="p-top__solution-title">
-                                    エンジニアでなくても案件の応募可能！
+                                    エンジニアでなくても案件の投稿可能！
                                 </h3>
                                 <p className="p-top__solution-text">
-                                    アイデアをWebで形にしたい人であれば、主婦でも誰でも気軽に、会員登録して応募可能！
+                                    アイデアをWebで形にしたい人であれば、主婦でも誰でも気軽に、会員登録して投稿可能！
                                 </p>
                             </div>
 
@@ -368,7 +368,7 @@ export default function Top({
                     {/* CTAセクション（お悩み解決の後） */}
                     <section className="p-top__hero">
                         <h2 className="p-top__title">
-                            今すぐ案件を応募してみましょう
+                            今すぐ案件を投稿してみましょう
                         </h2>
                         <p className="p-top__subtitle">
                             会員登録は無料です。案件投稿や応募もすぐに始められます。
