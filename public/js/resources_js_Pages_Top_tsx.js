@@ -229,6 +229,9 @@ function Top(_ref) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
             className: "p-top__title",
             children: "\u30B7\u30F3\u30D7\u30EB\u306A\u30A8\u30F3\u30B8\u30CB\u30A2\u6848\u4EF6\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "p-top__service-name",
+            children: "match"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             className: "p-top__subtitle",
             children: "\u5358\u767A\u6848\u4EF6\u3084\u30B5\u30FC\u30D3\u30B9\u7ACB\u3061\u4E0A\u3052\u6848\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u7C21\u5358\u306B\u3067\u304D\u308B\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3067\u3059\u3002 \u624B\u8EFD\u306B\u6848\u4EF6\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u3067\u304D\u3001\u30B7\u30F3\u30D7\u30EB\u306A\u64CD\u4F5C\u3067\u6848\u4EF6\u3092\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002"
@@ -244,6 +247,11 @@ function Top(_ref) {
               children: "\u6848\u4EF6\u3092\u63A2\u3059"
             })]
           })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+          className: "p-top__section-title p-top__section-title--catchphrase",
+          children: ["\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u30A2\u30A4\u30C7\u30A2\u3001", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {
+            className: "p-top__catchphrase-break"
+          }), "\u8AB0\u3067\u3082\u7C21\u5358\u306B\u3064\u306A\u304C\u308B"]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
           className: "p-top__features",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -295,7 +303,76 @@ function Top(_ref) {
               children: "\u6C17\u8EFD\u306B\u30B7\u30A7\u30A2"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
               className: "p-top__feature-text",
-              children: "\u6848\u4EF6\u3092Twitter\u306A\u3069\u306ESNS\u3067\u7C21\u5358\u306B\u5171\u6709\u3067\u304D\u307E\u3059\u3002 \u6C17\u306B\u306A\u308B\u6848\u4EF6\u3092\u591A\u304F\u306E\u4EBA\u306B\u5171\u6709\u3057\u3066\u3001\u30DE\u30C3\u30C1\u30F3\u30B0\u306E\u53EF\u80FD\u6027\u3092\u5E83\u3052\u307E\u3057\u3087\u3046\u3002"
+              children: "\u6848\u4EF6\u3092\uFF38\uFF08\u65E7Twitter\uFF09\u306A\u3069\u306ESNS\u3067\u7C21\u5358\u306B\u5171\u6709\u3067\u304D\u307E\u3059\u3002 \u6C17\u306B\u306A\u308B\u6848\u4EF6\u3092\u591A\u304F\u306E\u4EBA\u306B\u5171\u6709\u3057\u3066\u3001\u30DE\u30C3\u30C1\u30F3\u30B0\u306E\u53EF\u80FD\u6027\u3092\u5E83\u3052\u307E\u3057\u3087\u3046\u3002"
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
+          className: "p-top__solutions",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+            className: "p-top__section-title",
+            children: "\u3053\u3093\u306A\u304A\u60A9\u307F\u3092\u89E3\u6C7A\uFF01"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "p-top__solution-list",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "p-top__solution-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "p-top__solution-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "32",
+                  height: "32",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  strokeWidth: "2",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+                    d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
+                    cx: "9",
+                    cy: "7",
+                    r: "4"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+                    d: "M22 21v-2a4 4 0 0 0-3-3.87"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+                    d: "M16 3.13a4 4 0 0 1 0 7.75"
+                  })]
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
+                className: "p-top__solution-title",
+                children: "\u30A8\u30F3\u30B8\u30CB\u30A2\u3067\u306A\u304F\u3066\u3082\u6848\u4EF6\u306E\u5FDC\u52DF\u53EF\u80FD\uFF01"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                className: "p-top__solution-text",
+                children: "\u30A2\u30A4\u30C7\u30A2\u3092Web\u3067\u5F62\u306B\u3057\u305F\u3044\u4EBA\u3067\u3042\u308C\u3070\u3001\u4E3B\u5A66\u3067\u3082\u8AB0\u3067\u3082\u6C17\u8EFD\u306B\u3001\u4F1A\u54E1\u767B\u9332\u3057\u3066\u5FDC\u52DF\u53EF\u80FD\uFF01"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "p-top__solution-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "p-top__solution-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "32",
+                  height: "32",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  strokeWidth: "2",
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+                    d: "M22 11.08V12a10 10 0 1 1-5.93-9.14"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("polyline", {
+                    points: "22 4 12 14.01 9 11.01"
+                  })]
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
+                className: "p-top__solution-title",
+                children: "\u30A8\u30F3\u30B8\u30CB\u30A2\u306F\u5E0C\u671B\u306E\u6848\u4EF6\u304C\u3059\u3050\u306B\u898B\u3064\u304B\u308B\uFF01"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                className: "p-top__solution-text",
+                children: "\u30B7\u30F3\u30D7\u30EB\u306A\u4F5C\u308A\u306E\u304A\u304B\u3052\u3067\u3001\u6848\u4EF6\u3092\u3059\u3050\u306B\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u53EF\u80FD\uFF01\u6848\u4EF6\u306B\u95A2\u3059\u308B\u8CEA\u554F\u3082\u30A2\u30D7\u30EA\u5185\u3067\u6C17\u8EFD\u306B\u89E3\u6C7A\uFF01"
+              })]
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {

@@ -238,6 +238,7 @@ export default function Top({
                         <h1 className="p-top__title">
                             シンプルなエンジニア案件マッチングサービス
                         </h1>
+                        <div className="p-top__service-name">match</div>
                         <p className="p-top__subtitle">
                             単発案件やサービス立ち上げ案の投稿・応募が簡単にできる、エンジニア向けマッチングサービスです。
                             手軽に案件の投稿・応募ができ、シンプルな操作で案件を見つけることができます。
@@ -257,6 +258,13 @@ export default function Top({
                             </Link>
                         </div>
                     </section>
+
+                    {/* キャッチフレーズ */}
+                    <h2 className="p-top__section-title p-top__section-title--catchphrase">
+                        エンジニアとアイデア、
+                        <br className="p-top__catchphrase-break" />
+                        誰でも簡単につながる
+                    </h2>
 
                     {/* 特徴セクション */}
                     <section className="p-top__features">
@@ -309,9 +317,69 @@ export default function Top({
                                 気軽にシェア
                             </h3>
                             <p className="p-top__feature-text">
-                                案件をTwitterなどのSNSで簡単に共有できます。
+                                案件をＸ（旧Twitter）などのSNSで簡単に共有できます。
                                 気になる案件を多くの人に共有して、マッチングの可能性を広げましょう。
                             </p>
+                        </div>
+                    </section>
+
+                    {/* お悩み解決セクション */}
+                    <section className="p-top__solutions">
+                        <h2 className="p-top__section-title">
+                            こんなお悩みを解決！
+                        </h2>
+                        <div className="p-top__solution-list">
+                            <div className="p-top__solution-item">
+                                <div className="p-top__solution-icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="32"
+                                        height="32"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <h3 className="p-top__solution-title">
+                                    エンジニアでなくても案件の応募可能！
+                                </h3>
+                                <p className="p-top__solution-text">
+                                    アイデアをWebで形にしたい人であれば、主婦でも誰でも気軽に、会員登録して応募可能！
+                                </p>
+                            </div>
+
+                            <div className="p-top__solution-item">
+                                <div className="p-top__solution-icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="32"
+                                        height="32"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </div>
+                                <h3 className="p-top__solution-title">
+                                    エンジニアは希望の案件がすぐに見つかる！
+                                </h3>
+                                <p className="p-top__solution-text">
+                                    シンプルな作りのおかげで、案件をすぐに見つけることが可能！案件に関する質問もアプリ内で気軽に解決！
+                                </p>
+                            </div>
                         </div>
                     </section>
 
