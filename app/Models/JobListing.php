@@ -23,7 +23,12 @@ class JobListing extends Model
         'budget_min',
         'budget_max',
         'description',
+        'category',
+        'location',
+        'skills',
+        'preferred_skills',
         'is_closed',
+        'view_count',
     ];
     
     /**
@@ -35,6 +40,9 @@ class JobListing extends Model
         'budget_min' => 'integer',
         'budget_max' => 'integer',
         'is_closed' => 'boolean',
+        'view_count' => 'integer',
+        'skills' => 'array',
+        'preferred_skills' => 'array',
     ];
     
     /**
@@ -83,5 +91,13 @@ class JobListing extends Model
     public function scopeOpen($query)
     {
         return $query->where('is_closed', false);
+    }
+    
+    /**
+     * 閲覧数をインクリメント
+     */
+    public function incrementViewCount(): void
+    {
+        $this->increment('view_count');
     }
 }

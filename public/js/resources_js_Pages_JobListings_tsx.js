@@ -177,90 +177,76 @@ function Layout(_ref) {
     })]
   });
 }
-// サンプルデータ
-var sampleJobs = [{
-  id: 1,
-  title: "ReactとTypeScriptを使用したウェブアプリ開発",
-  description: "既存のウェブアプリケーションをReactとTypeScriptを使用してリニューアルする案件です。レスポンシブ対応必須。アプリケーションは主に管理画面の機能改善が中心です。",
-  type: "onetime",
-  budget: "¥50,000 〜 ¥100,000",
-  date: "3日前",
-  author: "田中太郎",
-  category: "ウェブ開発"
-}, {
-  id: 2,
-  title: "飲食店向けマッチングサービスの開発パートナー募集",
-  description: "飲食店と農家を繋ぐマッチングサービスの開発パートナーを募集しています。バックエンド開発の経験者歓迎。収益は均等分配します。",
-  type: "revenue",
-  date: "1週間前",
-  author: "佐藤健太",
-  category: "サービス開発"
-}, {
-  id: 3,
-  title: "Laravelを使用したECサイトの構築",
-  description: "アパレルブランドのECサイトをLaravelで構築していただきます。決済システムの連携やユーザー管理システムの実装が主な業務内容です。",
-  type: "onetime",
-  budget: "¥200,000 〜 ¥300,000",
-  date: "2日前",
-  author: "鈴木一郎",
-  category: "ECサイト"
-}, {
-  id: 4,
-  title: "教育系アプリのUI/UXデザイン",
-  description: "子供向け教育アプリのUI/UXデザインを担当していただける方を探しています。直感的で使いやすいインターフェースが求められます。",
-  type: "onetime",
-  budget: "¥100,000 〜 ¥150,000",
-  date: "4日前",
-  author: "山田花子",
-  category: "デザイン"
-}, {
-  id: 5,
-  title: "健康管理アプリの開発パートナー",
-  description: "日々の健康管理を支援するアプリケーションの開発パートナーを募集しています。iOSとAndroid両方のネイティブアプリ開発経験者を優遇します。",
-  type: "revenue",
-  date: "2週間前",
-  author: "伊藤誠",
-  category: "アプリ開発"
-}, {
-  id: 6,
-  title: "AWS環境構築と運用サポート",
-  description: "スタートアップ企業向けにAWS環境の構築とその後の運用サポートをお願いします。セキュリティ対策も含めた包括的な提案が可能な方を希望します。",
-  type: "onetime",
-  budget: "¥150,000 〜 ¥250,000",
-  date: "1週間前",
-  author: "高橋洋子",
-  category: "インフラ構築"
-}];
 function JobListings(_ref3) {
-  var auth = _ref3.auth;
+  var auth = _ref3.auth,
+    jobListings = _ref3.jobListings,
+    filters = _ref3.filters;
   // 状態管理
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
     searchQuery = _useState2[0],
     setSearchQuery = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("all"),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(filters.type ? filters.type : "all"),
     _useState4 = _slicedToArray(_useState3, 2),
     activeFilter = _useState4[0],
     setActiveFilter = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
-    _useState6 = _slicedToArray(_useState5, 2),
-    currentPage = _useState6[0],
-    setCurrentPage = _useState6[1];
 
   // フィルタリングされた案件リスト
-  var filteredJobs = sampleJobs.filter(function (job) {
+  var filteredJobs = jobListings.data.filter(function (job) {
     // 検索クエリのフィルタリング
-    var matchesQuery = searchQuery === "" || job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.description.toLowerCase().includes(searchQuery.toLowerCase()) || job.category.toLowerCase().includes(searchQuery.toLowerCase());
+    var matchesQuery = searchQuery === "" || job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.description.toLowerCase().includes(searchQuery.toLowerCase()) || job.category && job.category.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // タイプのフィルタリング
+    // タイプフィルタリング（SPA対応）
     var matchesType = activeFilter === "all" || job.type === activeFilter;
     return matchesQuery && matchesType;
   });
 
   // 案件タイプの表示名
   var jobTypeNames = {
-    onetime: "単発案件",
-    revenue: "レベニューシェア"
+    one_time: "単発案件",
+    revenue_share: "レベニューシェア"
+  };
+
+  // 予算表示のフォーマット
+  var formatBudget = function formatBudget(budgetMin, budgetMax) {
+    if (!budgetMin && !budgetMax) {
+      return null;
+    }
+    if (budgetMin && budgetMax) {
+      return "\xA5".concat(budgetMin.toLocaleString(), " \u301C \xA5").concat(budgetMax.toLocaleString());
+    } else if (budgetMin) {
+      return "\xA5".concat(budgetMin.toLocaleString(), " \u301C");
+    } else if (budgetMax) {
+      return "\u301C \xA5".concat(budgetMax.toLocaleString());
+    }
+  };
+
+  // 日付のフォーマット
+  var formatDate = function formatDate(dateString) {
+    var date = new Date(dateString);
+    var now = new Date();
+    var diffTime = Math.abs(now.getTime() - date.getTime());
+    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (diffDays === 1) {
+      return "今日";
+    } else if (diffDays <= 7) {
+      return "".concat(diffDays, "\u65E5\u524D");
+    } else if (diffDays <= 30) {
+      return "".concat(Math.floor(diffDays / 7), "\u9031\u9593\u524D");
+    } else {
+      return date.toLocaleDateString("ja-JP");
+    }
+  };
+
+  // タイプフィルターの変更（SPA対応）
+  var handleFilterChange = function handleFilterChange(type) {
+    setActiveFilter(type);
+
+    // URL更新（SPA対応：history APIを使用）
+    var url = type === "all" ? route("job-listings.index") : route("job-listings.index", {
+      type: type
+    });
+    window.history.pushState({}, "", url);
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(Layout, {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -345,19 +331,19 @@ function JobListings(_ref3) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "p-job-listings__filter-tab ".concat(activeFilter === "all" ? "p-job-listings__filter-tab--active" : ""),
             onClick: function onClick() {
-              return setActiveFilter("all");
+              return handleFilterChange("all");
             },
             children: "\u3059\u3079\u3066\u306E\u6848\u4EF6"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "p-job-listings__filter-tab ".concat(activeFilter === "onetime" ? "p-job-listings__filter-tab--active" : ""),
+            className: "p-job-listings__filter-tab ".concat(activeFilter === "one_time" ? "p-job-listings__filter-tab--active" : ""),
             onClick: function onClick() {
-              return setActiveFilter("onetime");
+              return handleFilterChange("one_time");
             },
             children: "\u5358\u767A\u6848\u4EF6"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "p-job-listings__filter-tab ".concat(activeFilter === "revenue" ? "p-job-listings__filter-tab--active" : ""),
+            className: "p-job-listings__filter-tab ".concat(activeFilter === "revenue_share" ? "p-job-listings__filter-tab--active" : ""),
             onClick: function onClick() {
-              return setActiveFilter("revenue");
+              return handleFilterChange("revenue_share");
             },
             children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2"
           })]
@@ -389,11 +375,11 @@ function JobListings(_ref3) {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
               className: "p-job-listings__card-header",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                className: "p-job-listings__card-type p-job-listings__card-type--".concat(job.type),
+                className: "p-job-listings__card-type p-job-listings__card-type--".concat(job.type === "one_time" ? "onetime" : "revenue"),
                 children: jobTypeNames[job.type]
-              }), job.budget && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              }), (job.budget_min || job.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                 className: "p-job-listings__card-budget",
-                children: job.budget
+                children: formatBudget(job.budget_min, job.budget_max)
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
               className: "p-job-listings__card-content",
@@ -407,19 +393,21 @@ function JobListings(_ref3) {
                 className: "p-job-listings__card-meta",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                   className: "p-job-listings__card-date",
-                  children: job.date
+                  children: formatDate(job.created_at)
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
                   className: "p-job-listings__card-author",
-                  children: ["\u6295\u7A3F\u8005: ", job.author]
+                  children: ["\u6295\u7A3F\u8005: ", job.user.name]
                 })]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
               className: "p-job-listings__card-footer",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              children: [job.category && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                 className: "p-job-listings__card-category",
                 children: job.category
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-                href: auth !== null && auth !== void 0 && auth.user ? "/job/".concat(job.id) : "/login?redirect=/job/".concat(job.id),
+                href: auth !== null && auth !== void 0 && auth.user ? route("job-listings.show", job.id) : route("login", {
+                  redirect: route("job-listings.show", job.id)
+                }),
                 className: "p-job-listings__card-link",
                 children: "\u8A73\u7D30\u3092\u898B\u308B"
               })]
@@ -468,14 +456,31 @@ function JobListings(_ref3) {
             onClick: function onClick() {
               setSearchQuery("");
               setActiveFilter("all");
+              // URLも更新
+              var url = route("job-listings.index");
+              window.history.pushState({}, "", url);
             },
             children: "\u3059\u3079\u3066\u306E\u6848\u4EF6\u3092\u8868\u793A"
           })
         })]
-      }), filteredJobs.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      })]
+    }), filteredJobs.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "p-job-listings__container",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "p-job-listings__search-result",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+          className: "p-job-listings__search-result-text",
+          children: searchQuery ? "\u300C".concat(searchQuery, "\u300D\u306E\u691C\u7D22\u7D50\u679C: ").concat(filteredJobs.length, "\u4EF6") : "\u5168".concat(jobListings.total, "\u4EF6\u4E2D ").concat(jobListings.from, "\u301C").concat(jobListings.to, "\u4EF6\u3092\u8868\u793A")
+        })
+      })
+    }), jobListings.last_page > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "p-job-listings__container",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "p-job-listings__pagination",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-          className: "p-job-listings__pagination-button p-job-listings__pagination-button--disabled",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+          href: jobListings.links[0].url || "",
+          className: "p-job-listings__pagination-button ".concat(!jobListings.links[0].url ? "p-job-listings__pagination-button--disabled" : ""),
+          preserveScroll: true,
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             width: "20",
@@ -490,17 +495,17 @@ function JobListings(_ref3) {
               points: "15 18 9 12 15 6"
             })
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-          className: "p-job-listings__pagination-button p-job-listings__pagination-button--active",
-          children: "1"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-          className: "p-job-listings__pagination-button",
-          children: "2"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-          className: "p-job-listings__pagination-button",
-          children: "3"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-          className: "p-job-listings__pagination-button",
+        }), jobListings.links.slice(1, -1).map(function (link, i) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+            href: link.url || "",
+            className: "p-job-listings__pagination-button ".concat(link.active ? "p-job-listings__pagination-button--active" : ""),
+            preserveScroll: true,
+            children: link.label
+          }, i);
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+          href: jobListings.links[jobListings.links.length - 1].url || "",
+          className: "p-job-listings__pagination-button ".concat(!jobListings.links[jobListings.links.length - 1].url ? "p-job-listings__pagination-button--disabled" : ""),
+          preserveScroll: true,
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             width: "20",
@@ -516,7 +521,7 @@ function JobListings(_ref3) {
             })
           })
         })]
-      })]
+      })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "p-job-listings__features",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {

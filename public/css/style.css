@@ -1664,10 +1664,18 @@ textarea {
   border-radius: 25px;
   border: none;
   font-size: 1rem;
+  color: #333;
+  background-color: #fff;
 }
 .p-job-listings__search-input:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.5);
+}
+.p-job-listings__search-input::-moz-placeholder {
+  color: #999;
+}
+.p-job-listings__search-input::placeholder {
+  color: #999;
 }
 .p-job-listings__search-button {
   height: 50px;
@@ -1768,11 +1776,11 @@ textarea {
   font-size: 0.8rem;
   font-weight: 500;
 }
-.p-job-listings__card-type--onetime {
+.p-job-listings__card-type--onetime, .p-job-listings__card-type--one_time {
   background-color: #e3f2fd;
   color: #1565c0;
 }
-.p-job-listings__card-type--revenue {
+.p-job-listings__card-type--revenue, .p-job-listings__card-type--revenue_share {
   background-color: #e8f5e9;
   color: #2e7d32;
 }
@@ -1852,8 +1860,9 @@ textarea {
 .p-job-listings__pagination {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
-  margin-bottom: 60px;
+  align-items: center;
+  margin: 30px 0;
+  gap: 8px;
 }
 .p-job-listings__pagination-button {
   width: 40px;
@@ -1862,15 +1871,16 @@ textarea {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: transparent;
+  background-color: #f5f7fa;
   border: none;
-  margin: 0 5px;
   cursor: pointer;
-  transition: all 0.3s;
-  color: #666;
+  transition: all 0.2s ease-in-out;
+  color: #555;
+  font-weight: 500;
+  text-decoration: none;
 }
 .p-job-listings__pagination-button:hover {
-  background-color: #f0f0f0;
+  background-color: #e0e5ea;
   color: #333;
 }
 .p-job-listings__pagination-button--active {
@@ -1882,11 +1892,20 @@ textarea {
   color: white;
 }
 .p-job-listings__pagination-button--disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
+  pointer-events: none;
 }
 .p-job-listings__pagination-button--disabled:hover {
-  background-color: transparent;
+  background-color: #f5f7fa;
+  color: #555;
+}
+.p-job-listings__search-result {
+  text-align: center;
+  margin: 20px 0;
+}
+.p-job-listings__search-result-text {
+  font-size: 0.9rem;
   color: #666;
 }
 .p-job-listings__no-results {
@@ -2353,31 +2372,21 @@ textarea {
 .p-job-detail__author-name {
   font-weight: 600;
   font-size: 1.125rem;
-  margin-bottom: 4px;
   color: #333;
-}
-.p-job-detail__author-rating {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.p-job-detail__author-stars {
-  color: #ffc107;
-  font-size: 1rem;
-}
-.p-job-detail__author-rating-value {
-  font-weight: 600;
-  color: #333;
+  margin-bottom: 0;
 }
 .p-job-detail__author-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
+  margin-top: 8px;
 }
 .p-job-detail__author-stat {
   background-color: #f8f9fa;
   padding: 12px;
   border-radius: 4px;
+  flex: 1;
+  min-width: 140px;
 }
 .p-job-detail__author-stat-label {
   font-size: 0.875rem;
@@ -2460,6 +2469,29 @@ textarea {
 }
 .p-job-detail__related-job-budget {
   color: #666;
+}
+.p-job-detail__message-tabs {
+  display: flex;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+.p-job-detail__message-tab {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.p-job-detail__message-tab:hover {
+  color: #6cc3e0;
+}
+.p-job-detail__message-tab--active {
+  color: #6cc3e0;
+  border-bottom-color: #6cc3e0;
 }
 .p-post-job {
   padding: 24px 0;

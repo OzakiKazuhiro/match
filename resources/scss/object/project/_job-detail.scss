@@ -412,36 +412,23 @@
     &__author-name {
         font-weight: 600;
         font-size: 1.125rem;
-        margin-bottom: 4px;
         color: #333;
-    }
-
-    &__author-rating {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    &__author-stars {
-        color: #ffc107;
-        font-size: 1rem;
-    }
-
-    &__author-rating-value {
-        font-weight: 600;
-        color: #333;
+        margin-bottom: 0;
     }
 
     &__author-stats {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        flex-wrap: wrap;
         gap: 12px;
+        margin-top: 8px;
     }
 
     &__author-stat {
         background-color: #f8f9fa;
         padding: 12px;
         border-radius: 4px;
+        flex: 1;
+        min-width: 140px;
     }
 
     &__author-stat-label {
@@ -542,5 +529,33 @@
 
     &__related-job-budget {
         color: #666;
+    }
+
+    // メッセージタブ
+    &__message-tabs {
+        display: flex;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+    }
+
+    &__message-tab {
+        padding: 12px 24px;
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #666;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+            color: #6cc3e0;
+        }
+
+        &--active {
+            color: #6cc3e0;
+            border-bottom-color: #6cc3e0;
+        }
     }
 }

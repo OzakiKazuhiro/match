@@ -174,99 +174,59 @@ interface JobType {
     id: number;
     title: string;
     description: string;
-    type: "onetime" | "revenue";
-    budget?: string;
-    date: string;
-    author: string;
-    category: string;
+    type: string;
+    budget_min?: number | null;
+    budget_max?: number | null;
+    category?: string | null;
+    created_at: string;
+    updated_at: string;
+    user: {
+        id: number;
+        name: string;
+        email: string;
+        avatar?: string;
+    };
 }
 
-// サンプルデータ
-const sampleJobs: JobType[] = [
-    {
-        id: 1,
-        title: "ReactとTypeScriptを使用したウェブアプリ開発",
-        description:
-            "既存のウェブアプリケーションをReactとTypeScriptを使用してリニューアルする案件です。レスポンシブ対応必須。アプリケーションは主に管理画面の機能改善が中心です。",
-        type: "onetime",
-        budget: "¥50,000 〜 ¥100,000",
-        date: "3日前",
-        author: "田中太郎",
-        category: "ウェブ開発",
-    },
-    {
-        id: 2,
-        title: "飲食店向けマッチングサービスの開発パートナー募集",
-        description:
-            "飲食店と農家を繋ぐマッチングサービスの開発パートナーを募集しています。バックエンド開発の経験者歓迎。収益は均等分配します。",
-        type: "revenue",
-        date: "1週間前",
-        author: "佐藤健太",
-        category: "サービス開発",
-    },
-    {
-        id: 3,
-        title: "Laravelを使用したECサイトの構築",
-        description:
-            "アパレルブランドのECサイトをLaravelで構築していただきます。決済システムの連携やユーザー管理システムの実装が主な業務内容です。",
-        type: "onetime",
-        budget: "¥200,000 〜 ¥300,000",
-        date: "2日前",
-        author: "鈴木一郎",
-        category: "ECサイト",
-    },
-    {
-        id: 4,
-        title: "教育系アプリのUI/UXデザイン",
-        description:
-            "子供向け教育アプリのUI/UXデザインを担当していただける方を探しています。直感的で使いやすいインターフェースが求められます。",
-        type: "onetime",
-        budget: "¥100,000 〜 ¥150,000",
-        date: "4日前",
-        author: "山田花子",
-        category: "デザイン",
-    },
-    {
-        id: 5,
-        title: "健康管理アプリの開発パートナー",
-        description:
-            "日々の健康管理を支援するアプリケーションの開発パートナーを募集しています。iOSとAndroid両方のネイティブアプリ開発経験者を優遇します。",
-        type: "revenue",
-        date: "2週間前",
-        author: "伊藤誠",
-        category: "アプリ開発",
-    },
-    {
-        id: 6,
-        title: "AWS環境構築と運用サポート",
-        description:
-            "スタートアップ企業向けにAWS環境の構築とその後の運用サポートをお願いします。セキュリティ対策も含めた包括的な提案が可能な方を希望します。",
-        type: "onetime",
-        budget: "¥150,000 〜 ¥250,000",
-        date: "1週間前",
-        author: "高橋洋子",
-        category: "インフラ構築",
-    },
-];
-
-export default function JobListings({ auth }: PageProps) {
+export default function JobListings({
+    auth,
+    jobListings,
+    filters,
+}: PageProps<{
+    jobListings: {
+        data: JobType[];
+        current_page: number;
+        last_page: number;
+        links: {
+            url: string | null;
+            label: string;
+            active: boolean;
+        }[];
+        from: number;
+        to: number;
+        total: number;
+    };
+    filters: {
+        type?: string;
+    };
+}>) {
     // 状態管理
     const [searchQuery, setSearchQuery] = useState("");
     const [activeFilter, setActiveFilter] = useState<
-        "all" | "onetime" | "revenue"
-    >("all");
-    const [currentPage, setCurrentPage] = useState(1);
+        "all" | "one_time" | "revenue_share"
+    >(filters.type ? (filters.type as any) : "all");
 
     // フィルタリングされた案件リスト
-    const filteredJobs = sampleJobs.filter((job) => {
+    const filteredJobs = jobListings.data.filter((job) => {
         // 検索クエリのフィルタリング
         const matchesQuery =
             searchQuery === "" ||
             job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             job.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            job.category.toLowerCase().includes(searchQuery.toLowerCase());
+            (job.category &&
+                job.category.toLowerCase().includes(searchQuery.toLowerCase()));
 
-        // タイプのフィルタリング
+        // タイプフィルタリング（SPA対応）
         const matchesType = activeFilter === "all" || job.type === activeFilter;
 
         return matchesQuery && matchesType;
@@ -274,8 +234,57 @@ export default function JobListings({ auth }: PageProps) {
 
     // 案件タイプの表示名
     const jobTypeNames = {
-        onetime: "単発案件",
-        revenue: "レベニューシェア",
+        one_time: "単発案件",
+        revenue_share: "レベニューシェア",
+    };
+
+    // 予算表示のフォーマット
+    const formatBudget = (
+        budgetMin?: number | null,
+        budgetMax?: number | null
+    ) => {
+        if (!budgetMin && !budgetMax) {
+            return null;
+        }
+
+        if (budgetMin && budgetMax) {
+            return `¥${budgetMin.toLocaleString()} 〜 ¥${budgetMax.toLocaleString()}`;
+        } else if (budgetMin) {
+            return `¥${budgetMin.toLocaleString()} 〜`;
+        } else if (budgetMax) {
+            return `〜 ¥${budgetMax.toLocaleString()}`;
+        }
+    };
+
+    // 日付のフォーマット
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now.getTime() - date.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 1) {
+            return "今日";
+        } else if (diffDays <= 7) {
+            return `${diffDays}日前`;
+        } else if (diffDays <= 30) {
+            return `${Math.floor(diffDays / 7)}週間前`;
+        } else {
+            return date.toLocaleDateString("ja-JP");
+        }
+    };
+
+    // タイプフィルターの変更（SPA対応）
+    const handleFilterChange = (type: "all" | "one_time" | "revenue_share") => {
+        setActiveFilter(type);
+
+        // URL更新（SPA対応：history APIを使用）
+        const url =
+            type === "all"
+                ? route("job-listings.index")
+                : route("job-listings.index", { type });
+
+        window.history.pushState({}, "", url);
     };
 
     return (
@@ -352,27 +361,27 @@ export default function JobListings({ auth }: PageProps) {
                                     ? "p-job-listings__filter-tab--active"
                                     : ""
                             }`}
-                            onClick={() => setActiveFilter("all")}
+                            onClick={() => handleFilterChange("all")}
                         >
                             すべての案件
                         </div>
                         <div
                             className={`p-job-listings__filter-tab ${
-                                activeFilter === "onetime"
+                                activeFilter === "one_time"
                                     ? "p-job-listings__filter-tab--active"
                                     : ""
                             }`}
-                            onClick={() => setActiveFilter("onetime")}
+                            onClick={() => handleFilterChange("one_time")}
                         >
                             単発案件
                         </div>
                         <div
                             className={`p-job-listings__filter-tab ${
-                                activeFilter === "revenue"
+                                activeFilter === "revenue_share"
                                     ? "p-job-listings__filter-tab--active"
                                     : ""
                             }`}
-                            onClick={() => setActiveFilter("revenue")}
+                            onClick={() => handleFilterChange("revenue_share")}
                         >
                             レベニューシェア
                         </div>
@@ -404,13 +413,24 @@ export default function JobListings({ auth }: PageProps) {
                             <div key={job.id} className="p-job-listings__card">
                                 <div className="p-job-listings__card-header">
                                     <span
-                                        className={`p-job-listings__card-type p-job-listings__card-type--${job.type}`}
+                                        className={`p-job-listings__card-type p-job-listings__card-type--${
+                                            job.type === "one_time"
+                                                ? "onetime"
+                                                : "revenue"
+                                        }`}
                                     >
-                                        {jobTypeNames[job.type]}
+                                        {
+                                            jobTypeNames[
+                                                job.type as keyof typeof jobTypeNames
+                                            ]
+                                        }
                                     </span>
-                                    {job.budget && (
+                                    {(job.budget_min || job.budget_max) && (
                                         <span className="p-job-listings__card-budget">
-                                            {job.budget}
+                                            {formatBudget(
+                                                job.budget_min,
+                                                job.budget_max
+                                            )}
                                         </span>
                                     )}
                                 </div>
@@ -423,22 +443,32 @@ export default function JobListings({ auth }: PageProps) {
                                     </p>
                                     <div className="p-job-listings__card-meta">
                                         <span className="p-job-listings__card-date">
-                                            {job.date}
+                                            {formatDate(job.created_at)}
                                         </span>
                                         <span className="p-job-listings__card-author">
-                                            投稿者: {job.author}
+                                            投稿者: {job.user.name}
                                         </span>
                                     </div>
                                 </div>
                                 <div className="p-job-listings__card-footer">
-                                    <div className="p-job-listings__card-category">
-                                        {job.category}
-                                    </div>
+                                    {job.category && (
+                                        <div className="p-job-listings__card-category">
+                                            {job.category}
+                                        </div>
+                                    )}
                                     <Link
                                         href={
                                             auth?.user
-                                                ? `/job/${job.id}`
-                                                : `/login?redirect=/job/${job.id}`
+                                                ? route(
+                                                      "job-listings.show",
+                                                      job.id
+                                                  )
+                                                : route("login", {
+                                                      redirect: route(
+                                                          "job-listings.show",
+                                                          job.id
+                                                      ),
+                                                  })
                                         }
                                         className="p-job-listings__card-link"
                                     >
@@ -479,6 +509,9 @@ export default function JobListings({ auth }: PageProps) {
                                 onClick={() => {
                                     setSearchQuery("");
                                     setActiveFilter("all");
+                                    // URLも更新
+                                    const url = route("job-listings.index");
+                                    window.history.pushState({}, "", url);
                                 }}
                             >
                                 すべての案件を表示
@@ -486,11 +519,35 @@ export default function JobListings({ auth }: PageProps) {
                         </div>
                     </div>
                 )}
+            </div>
 
-                {/* ページネーション */}
-                {filteredJobs.length > 0 && (
+            {/* 検索結果のサマリー表示 */}
+            {filteredJobs.length > 0 && (
+                <div className="p-job-listings__container">
+                    <div className="p-job-listings__search-result">
+                        <p className="p-job-listings__search-result-text">
+                            {searchQuery
+                                ? `「${searchQuery}」の検索結果: ${filteredJobs.length}件`
+                                : `全${jobListings.total}件中 ${jobListings.from}〜${jobListings.to}件を表示`}
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {/* ページネーション */}
+            {jobListings.last_page > 1 && (
+                <div className="p-job-listings__container">
                     <div className="p-job-listings__pagination">
-                        <button className="p-job-listings__pagination-button p-job-listings__pagination-button--disabled">
+                        {/* 「前へ」ボタン */}
+                        <Link
+                            href={jobListings.links[0].url || ""}
+                            className={`p-job-listings__pagination-button ${
+                                !jobListings.links[0].url
+                                    ? "p-job-listings__pagination-button--disabled"
+                                    : ""
+                            }`}
+                            preserveScroll
+                        >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
@@ -504,17 +561,38 @@ export default function JobListings({ auth }: PageProps) {
                             >
                                 <polyline points="15 18 9 12 15 6"></polyline>
                             </svg>
-                        </button>
-                        <button className="p-job-listings__pagination-button p-job-listings__pagination-button--active">
-                            1
-                        </button>
-                        <button className="p-job-listings__pagination-button">
-                            2
-                        </button>
-                        <button className="p-job-listings__pagination-button">
-                            3
-                        </button>
-                        <button className="p-job-listings__pagination-button">
+                        </Link>
+
+                        {/* ページ番号ボタン - 最初と最後のリンク（前後のナビゲーション）を除外 */}
+                        {jobListings.links.slice(1, -1).map((link, i) => (
+                            <Link
+                                key={i}
+                                href={link.url || ""}
+                                className={`p-job-listings__pagination-button ${
+                                    link.active
+                                        ? "p-job-listings__pagination-button--active"
+                                        : ""
+                                }`}
+                                preserveScroll
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+
+                        {/* 「次へ」ボタン */}
+                        <Link
+                            href={
+                                jobListings.links[jobListings.links.length - 1]
+                                    .url || ""
+                            }
+                            className={`p-job-listings__pagination-button ${
+                                !jobListings.links[jobListings.links.length - 1]
+                                    .url
+                                    ? "p-job-listings__pagination-button--disabled"
+                                    : ""
+                            }`}
+                            preserveScroll
+                        >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
@@ -528,10 +606,10 @@ export default function JobListings({ auth }: PageProps) {
                             >
                                 <polyline points="9 18 15 12 9 6"></polyline>
                             </svg>
-                        </button>
+                        </Link>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
             {/* 特徴セクション */}
             <div className="p-job-listings__features">

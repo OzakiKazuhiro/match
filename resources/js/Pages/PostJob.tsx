@@ -2,35 +2,23 @@ import { useState } from "react";
 import { Head, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-
-interface PostJobFormData {
-    title: string;
-    type: "onetime" | "revenue";
-    description: string;
-    budget_min?: string;
-    budget_max?: string;
-    category: string;
-    skills: string[];
-    preferred_skills: string[];
-    location: string;
-}
+import InputError from "@/Components/InputError";
 
 export default function PostJob({ auth }: PageProps) {
     const [customSkill, setCustomSkill] = useState("");
     const [customPreferredSkill, setCustomPreferredSkill] = useState("");
 
-    const { data, setData, post, processing, errors, reset } =
-        useForm<PostJobFormData>({
-            title: "",
-            type: "onetime",
-            description: "",
-            budget_min: "",
-            budget_max: "",
-            category: "",
-            skills: [],
-            preferred_skills: [],
-            location: "リモート",
-        });
+    const { data, setData, post, processing, errors, reset } = useForm({
+        title: "",
+        type: "one_time" as "one_time" | "revenue_share",
+        description: "",
+        budget_min: "",
+        budget_max: "",
+        category: "",
+        skills: [] as string[],
+        preferred_skills: [] as string[],
+        location: "リモート",
+    });
 
     // カテゴリーの選択肢
     const categoryOptions = [
@@ -116,14 +104,7 @@ export default function PostJob({ auth }: PageProps) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // 実際はAPIリクエストを送信
-        post("/api/jobs", {
-            onSuccess: () => {
-                reset();
-                // 成功時の処理（リダイレクトなど）
-                alert("案件が投稿されました");
-            },
-        });
+        post(route("job-listings.store"));
     };
 
     return (
@@ -174,9 +155,10 @@ export default function PostJob({ auth }: PageProps) {
                                     required
                                 />
                                 {errors.title && (
-                                    <div className="p-post-job__error">
-                                        {errors.title}
-                                    </div>
+                                    <InputError
+                                        message={errors.title}
+                                        className="mt-1"
+                                    />
                                 )}
                             </div>
 
@@ -192,14 +174,14 @@ export default function PostJob({ auth }: PageProps) {
                                         <input
                                             type="radio"
                                             name="type"
-                                            value="onetime"
-                                            checked={data.type === "onetime"}
+                                            value="one_time"
+                                            checked={data.type === "one_time"}
                                             onChange={() =>
-                                                setData("type", "onetime")
+                                                setData("type", "one_time")
                                             }
                                             className="p-post-job__radio-input"
                                         />
-                                        <span className="p-post-job__radio-label">
+                                        <span className="p-post-job__radio-text">
                                             単発案件
                                         </span>
                                     </label>
@@ -207,21 +189,29 @@ export default function PostJob({ auth }: PageProps) {
                                         <input
                                             type="radio"
                                             name="type"
-                                            value="revenue"
-                                            checked={data.type === "revenue"}
+                                            value="revenue_share"
+                                            checked={
+                                                data.type === "revenue_share"
+                                            }
                                             onChange={() =>
-                                                setData("type", "revenue")
+                                                setData("type", "revenue_share")
                                             }
                                             className="p-post-job__radio-input"
                                         />
-                                        <span className="p-post-job__radio-label">
+                                        <span className="p-post-job__radio-text">
                                             レベニューシェア案件
                                         </span>
                                     </label>
                                 </div>
+                                {errors.type && (
+                                    <InputError
+                                        message={errors.type}
+                                        className="mt-1"
+                                    />
+                                )}
                             </div>
 
-                            {data.type === "onetime" && (
+                            {data.type === "one_time" && (
                                 <div className="p-post-job__form-group">
                                     <label className="p-post-job__label">
                                         予算{" "}

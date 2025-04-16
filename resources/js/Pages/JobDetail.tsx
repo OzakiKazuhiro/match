@@ -1,120 +1,123 @@
 import { useState } from "react";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
 
-interface Message {
+interface User {
     id: number;
-    user: {
-        name: string;
-        avatar: string;
-    };
-    content: string;
-    date: string;
+    name: string;
+    email: string;
+    avatar?: string;
+    created_at?: string;
 }
 
-// サンプルの案件データ
-const jobData = {
-    id: 1,
-    title: "ReactとTypeScriptを使用したウェブアプリ開発",
-    description:
-        "既存のウェブアプリケーションをReactとTypeScriptを使用してリニューアルする案件です。レスポンシブ対応必須。アプリケーションは主に管理画面の機能改善が中心です。\n\n主な作業内容：\n・既存の管理画面のUI改善\n・新機能の追加（ダッシュボード機能、レポート機能）\n・モバイル対応のレスポンシブデザイン実装\n\n納期は相談可能ですが、おおよそ2ヶ月程度での完了を希望しています。定期的な進捗報告をお願いします。",
-    type: "onetime",
-    budget: "¥50,000 〜 ¥100,000",
-    category: "ウェブ開発",
-    date: "2023年5月15日",
-    author: {
-        id: 123,
-        name: "田中太郎",
-        avatar: "/images/avatars/avatar-1.jpg",
-        rating: 4.8,
-        jobsPosted: 12,
-    },
-    status: "open", // 'open', 'in_progress', 'closed'
-    requiredSkills: [
-        "React",
-        "TypeScript",
-        "レスポンシブデザイン",
-        "UI/UX設計",
-    ],
-    preferredSkills: ["Next.js", "Tailwind CSS", "Storybook"],
-    location: "リモート",
-    applicationCount: 5,
-    viewCount: 128,
-};
+interface PublicMessage {
+    id: number;
+    job_listing_id: number;
+    user_id: number;
+    message: string;
+    created_at: string;
+    updated_at: string;
+    user: User;
+}
 
-// サンプルのメッセージデータ
-const messagesData: Message[] = [
-    {
-        id: 1,
-        user: {
-            name: "佐藤健太",
-            avatar: "/images/avatars/avatar-2.jpg",
-        },
-        content:
-            "この案件に興味があります。管理画面のUI改善について、具体的にどのような課題があるか教えていただけますか？",
-        date: "2023年5月16日 10:23",
-    },
-    {
-        id: 2,
-        user: {
-            name: "田中太郎",
-            avatar: "/images/avatars/avatar-1.jpg",
-        },
-        content:
-            "ご質問ありがとうございます。現在の管理画面は機能は充実していますが、UIが直感的でなく、操作が複雑になっています。特にデータ入力フォームの使いやすさと、データ閲覧時の視認性を改善したいと考えています。",
-        date: "2023年5月16日 14:45",
-    },
-    {
-        id: 3,
-        user: {
-            name: "山田花子",
-            avatar: "/images/avatars/avatar-3.jpg",
-        },
-        content:
-            "レスポンシブ対応について質問です。現在のサイトはどの程度モバイル対応されていますか？また、対応が必要なのはどのサイズの画面までですか？",
-        date: "2023年5月17日 09:12",
-    },
-    {
-        id: 4,
-        user: {
-            name: "田中太郎",
-            avatar: "/images/avatars/avatar-1.jpg",
-        },
-        content:
-            "現在のサイトはPC向けのみで、モバイル対応はされていません。スマートフォン（最小幅320px）からデスクトップまでの対応をお願いしたいです。タブレットでの使用も想定しています。",
-        date: "2023年5月17日 11:30",
-    },
-];
+interface JobListingData {
+    id: number;
+    user_id: number;
+    title: string;
+    type: "one_time" | "revenue_share";
+    description: string;
+    budget_min: number | null;
+    budget_max: number | null;
+    category: string | null;
+    location: string;
+    skills: string[] | null;
+    preferred_skills: string[] | null;
+    is_closed: boolean;
+    view_count: number;
+    created_at: string;
+    updated_at: string;
+    user: User;
+    public_messages: PublicMessage[];
+}
 
 export default function JobDetail({
     auth,
-    job = jobData,
-    messages = messagesData,
-}: PageProps & {
-    job?: typeof jobData;
-    messages?: Message[];
-}) {
-    const [messageInput, setMessageInput] = useState("");
+    jobListing,
+    canEdit,
+    canApply,
+}: PageProps<{
+    jobListing: JobListingData;
+    canEdit: boolean;
+    canApply: boolean;
+}>) {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        message: "",
+    });
+
+    // メッセージタブの状態管理（パブリック/ダイレクト）
+    const [activeTab, setActiveTab] = useState<"public" | "direct">("public");
 
     const handleSubmitMessage = (e: React.FormEvent) => {
         e.preventDefault();
-        // メッセージ送信処理（実際はAPIリクエストなど）
-        setMessageInput("");
-        alert("メッセージが送信されました");
+        post(route("job-listings.messages.store", jobListing.id), {
+            onSuccess: () => reset(),
+        });
+    };
+
+    // 予算表示のフォーマット
+    const formatBudget = () => {
+        if (
+            jobListing.type === "revenue_share" ||
+            (!jobListing.budget_min && !jobListing.budget_max)
+        ) {
+            return null;
+        }
+
+        if (jobListing.budget_min && jobListing.budget_max) {
+            return `¥${jobListing.budget_min.toLocaleString()} 〜 ¥${jobListing.budget_max.toLocaleString()}`;
+        } else if (jobListing.budget_min) {
+            return `¥${jobListing.budget_min.toLocaleString()} 〜`;
+        } else if (jobListing.budget_max) {
+            return `〜 ¥${jobListing.budget_max.toLocaleString()}`;
+        }
+    };
+
+    // 作成日のフォーマット
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("ja-JP", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        });
+    };
+
+    // メッセージの日時フォーマット
+    const formatMessageDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("ja-JP", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
     };
 
     return (
         <AuthenticatedLayout
             header={<div className="p-job-detail__title">案件詳細</div>}
         >
-            <Head title={`${job.title} - Match`} />
+            <Head title={`${jobListing.title} - Match`} />
 
             <div className="p-job-detail">
                 <div className="p-job-detail__container">
                     <div className="p-job-detail__breadcrumb">
                         <Link
-                            href="/job-listings"
+                            href={route("job-listings.index")}
                             className="p-job-detail__breadcrumb-link"
                         >
                             案件一覧
@@ -123,7 +126,7 @@ export default function JobDetail({
                             &gt;
                         </span>
                         <span className="p-job-detail__breadcrumb-current">
-                            {job.title}
+                            {jobListing.title}
                         </span>
                     </div>
 
@@ -134,32 +137,39 @@ export default function JobDetail({
                                 <div className="p-job-detail__header">
                                     <div className="p-job-detail__meta">
                                         <span
-                                            className={`p-job-detail__type p-job-detail__type--${job.type}`}
+                                            className={`p-job-detail__type p-job-detail__type--${
+                                                jobListing.type === "one_time"
+                                                    ? "onetime"
+                                                    : "revenue"
+                                            }`}
                                         >
-                                            {job.type === "onetime"
+                                            {jobListing.type === "one_time"
                                                 ? "単発案件"
                                                 : "レベニューシェア"}
                                         </span>
-                                        <span className="p-job-detail__category">
-                                            {job.category}
-                                        </span>
+                                        {jobListing.category && (
+                                            <span className="p-job-detail__category">
+                                                {jobListing.category}
+                                            </span>
+                                        )}
                                         <span className="p-job-detail__date">
-                                            投稿日: {job.date}
+                                            投稿日:{" "}
+                                            {formatDate(jobListing.created_at)}
                                         </span>
                                     </div>
                                     <h1 className="p-job-detail__title">
-                                        {job.title}
+                                        {jobListing.title}
                                     </h1>
-                                    {job.budget && (
+                                    {formatBudget() && (
                                         <div className="p-job-detail__budget">
-                                            予算: {job.budget}
+                                            予算: {formatBudget()}
                                         </div>
                                     )}
                                 </div>
 
                                 <div className="p-job-detail__body">
                                     <div className="p-job-detail__description">
-                                        {job.description
+                                        {jobListing.description
                                             .split("\n")
                                             .map((paragraph, index) => (
                                                 <p
@@ -171,32 +181,36 @@ export default function JobDetail({
                                             ))}
                                     </div>
 
-                                    <div className="p-job-detail__skills">
-                                        <h3 className="p-job-detail__section-title">
-                                            必要なスキル
-                                        </h3>
-                                        <div className="p-job-detail__skill-tags">
-                                            {job.requiredSkills.map(
-                                                (skill, index) => (
-                                                    <span
-                                                        key={index}
-                                                        className="p-job-detail__skill-tag"
-                                                    >
-                                                        {skill}
-                                                    </span>
-                                                )
-                                            )}
-                                        </div>
-                                    </div>
+                                    {jobListing.skills &&
+                                        jobListing.skills.length > 0 && (
+                                            <div className="p-job-detail__skills">
+                                                <h3 className="p-job-detail__section-title">
+                                                    必要なスキル
+                                                </h3>
+                                                <div className="p-job-detail__skill-tags">
+                                                    {jobListing.skills.map(
+                                                        (skill, index) => (
+                                                            <span
+                                                                key={index}
+                                                                className="p-job-detail__skill-tag"
+                                                            >
+                                                                {skill}
+                                                            </span>
+                                                        )
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
 
-                                    {job.preferredSkills &&
-                                        job.preferredSkills.length > 0 && (
+                                    {jobListing.preferred_skills &&
+                                        jobListing.preferred_skills.length >
+                                            0 && (
                                             <div className="p-job-detail__skills">
                                                 <h3 className="p-job-detail__section-title">
                                                     あれば歓迎するスキル
                                                 </h3>
                                                 <div className="p-job-detail__skill-tags">
-                                                    {job.preferredSkills.map(
+                                                    {jobListing.preferred_skills.map(
                                                         (skill, index) => (
                                                             <span
                                                                 key={index}
@@ -210,105 +224,277 @@ export default function JobDetail({
                                             </div>
                                         )}
 
-                                    <div className="p-job-detail__info-grid">
+                                    <div className="p-job-detail__info">
                                         <div className="p-job-detail__info-item">
-                                            <div className="p-job-detail__info-label">
-                                                作業場所
-                                            </div>
-                                            <div className="p-job-detail__info-value">
-                                                {job.location}
-                                            </div>
+                                            <span className="p-job-detail__info-label">
+                                                作業場所:
+                                            </span>
+                                            <span className="p-job-detail__info-value">
+                                                {jobListing.location}
+                                            </span>
                                         </div>
                                         <div className="p-job-detail__info-item">
-                                            <div className="p-job-detail__info-label">
-                                                応募者数
-                                            </div>
-                                            <div className="p-job-detail__info-value">
-                                                {job.applicationCount}人
-                                            </div>
+                                            <span className="p-job-detail__info-label">
+                                                ステータス:
+                                            </span>
+                                            <span
+                                                className={`p-job-detail__info-value p-job-detail__status p-job-detail__status--${
+                                                    jobListing.is_closed
+                                                        ? "closed"
+                                                        : "open"
+                                                }`}
+                                            >
+                                                {jobListing.is_closed
+                                                    ? "募集終了"
+                                                    : "募集中"}
+                                            </span>
                                         </div>
                                         <div className="p-job-detail__info-item">
-                                            <div className="p-job-detail__info-label">
-                                                閲覧数
-                                            </div>
-                                            <div className="p-job-detail__info-value">
-                                                {job.viewCount}
-                                            </div>
+                                            <span className="p-job-detail__info-label">
+                                                閲覧数:
+                                            </span>
+                                            <span className="p-job-detail__info-value">
+                                                {jobListing.view_count}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="p-job-detail__actions">
-                                    <button className="p-job-detail__apply-button">
-                                        この案件に応募する
-                                    </button>
-                                    <button className="p-job-detail__message-button">
-                                        投稿者にメッセージを送る
-                                    </button>
+                                <div className="p-job-detail__footer">
+                                    <div className="p-job-detail__actions">
+                                        {canEdit && (
+                                            <>
+                                                <Link
+                                                    href={route(
+                                                        "job-listings.edit",
+                                                        jobListing.id
+                                                    )}
+                                                    className="p-job-detail__message-button"
+                                                >
+                                                    編集する
+                                                </Link>
+                                                {!jobListing.is_closed && (
+                                                    <Link
+                                                        href={route(
+                                                            "job-listings.close",
+                                                            jobListing.id
+                                                        )}
+                                                        method="patch"
+                                                        as="button"
+                                                        className="p-job-detail__message-button"
+                                                    >
+                                                        募集を終了する
+                                                    </Link>
+                                                )}
+                                            </>
+                                        )}
+                                        {canApply && !jobListing.is_closed && (
+                                            <Link
+                                                href="#"
+                                                className="p-job-detail__apply-button"
+                                            >
+                                                応募する
+                                            </Link>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* パブリックメッセージ */}
+                            {/* メッセージセクション */}
                             <div className="p-job-detail__card p-job-detail__card--messages">
-                                <h2 className="p-job-detail__section-title p-job-detail__messages-title">
-                                    質問と回答
-                                </h2>
-                                <div className="p-job-detail__messages">
-                                    {messages.map((message) => (
-                                        <div
-                                            key={message.id}
-                                            className="p-job-detail__message"
-                                        >
-                                            <div className="p-job-detail__message-header">
-                                                <div className="p-job-detail__message-user">
-                                                    <div className="p-job-detail__message-avatar">
-                                                        {/* アバター画像が存在しない場合のフォールバック */}
-                                                        <div className="p-job-detail__message-avatar-placeholder">
-                                                            {message.user.name.charAt(
-                                                                0
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <div className="p-job-detail__message-name">
-                                                        {message.user.name}
-                                                    </div>
-                                                </div>
-                                                <div className="p-job-detail__message-date">
-                                                    {message.date}
-                                                </div>
-                                            </div>
-                                            <div className="p-job-detail__message-content">
-                                                {message.content}
-                                            </div>
-                                        </div>
-                                    ))}
+                                {/* メッセージタブ */}
+                                <div className="p-job-detail__message-tabs">
+                                    <button
+                                        className={`p-job-detail__message-tab ${
+                                            activeTab === "public"
+                                                ? "p-job-detail__message-tab--active"
+                                                : ""
+                                        }`}
+                                        onClick={() => setActiveTab("public")}
+                                    >
+                                        公開メッセージ
+                                    </button>
+                                    <button
+                                        className={`p-job-detail__message-tab ${
+                                            activeTab === "direct"
+                                                ? "p-job-detail__message-tab--active"
+                                                : ""
+                                        }`}
+                                        onClick={() => setActiveTab("direct")}
+                                    >
+                                        ダイレクトメッセージ
+                                    </button>
                                 </div>
 
-                                <div className="p-job-detail__message-form-wrapper">
-                                    <h3 className="p-job-detail__message-form-title">
-                                        質問を投稿する
-                                    </h3>
-                                    <form
-                                        className="p-job-detail__message-form"
-                                        onSubmit={handleSubmitMessage}
-                                    >
-                                        <textarea
-                                            className="p-job-detail__message-input"
-                                            placeholder="案件に関する質問を入力してください"
-                                            value={messageInput}
-                                            onChange={(e) =>
-                                                setMessageInput(e.target.value)
-                                            }
-                                            required
-                                        ></textarea>
-                                        <button
-                                            type="submit"
-                                            className="p-job-detail__message-submit"
-                                        >
-                                            質問を送信
-                                        </button>
-                                    </form>
-                                </div>
+                                {/* パブリックメッセージ */}
+                                {activeTab === "public" && (
+                                    <>
+                                        <h2 className="p-job-detail__messages-title">
+                                            公開メッセージ
+                                        </h2>
+
+                                        <div className="p-job-detail__messages">
+                                            {jobListing.public_messages &&
+                                            jobListing.public_messages.length >
+                                                0 ? (
+                                                jobListing.public_messages.map(
+                                                    (message) => (
+                                                        <div
+                                                            key={message.id}
+                                                            className="p-job-detail__message"
+                                                        >
+                                                            <div className="p-job-detail__message-header">
+                                                                <div className="p-job-detail__message-user">
+                                                                    {message
+                                                                        .user
+                                                                        .avatar ? (
+                                                                        <img
+                                                                            src={
+                                                                                message
+                                                                                    .user
+                                                                                    .avatar
+                                                                            }
+                                                                            alt={
+                                                                                message
+                                                                                    .user
+                                                                                    .name
+                                                                            }
+                                                                            className="p-job-detail__message-avatar"
+                                                                        />
+                                                                    ) : (
+                                                                        <div className="p-job-detail__message-avatar-placeholder">
+                                                                            {message.user.name.charAt(
+                                                                                0
+                                                                            )}
+                                                                        </div>
+                                                                    )}
+                                                                    <span className="p-job-detail__message-name">
+                                                                        {
+                                                                            message
+                                                                                .user
+                                                                                .name
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                                <span className="p-job-detail__message-date">
+                                                                    {formatMessageDate(
+                                                                        message.created_at
+                                                                    )}
+                                                                </span>
+                                                            </div>
+                                                            <div className="p-job-detail__message-content">
+                                                                {
+                                                                    message.message
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                )
+                                            ) : (
+                                                <div className="p-job-detail__no-messages">
+                                                    まだメッセージはありません。最初のメッセージを投稿しましょう。
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {auth.user && (
+                                            <div className="p-job-detail__message-form-wrapper">
+                                                <h3 className="p-job-detail__message-form-title">
+                                                    メッセージを投稿
+                                                </h3>
+                                                <form
+                                                    onSubmit={
+                                                        handleSubmitMessage
+                                                    }
+                                                    className="p-job-detail__message-form"
+                                                >
+                                                    <textarea
+                                                        id="message"
+                                                        className="p-job-detail__message-input"
+                                                        placeholder="質問や応募の意思などをメッセージしてください"
+                                                        value={data.message}
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                "message",
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        rows={4}
+                                                        required
+                                                    ></textarea>
+                                                    {errors.message && (
+                                                        <InputError
+                                                            message={
+                                                                errors.message
+                                                            }
+                                                            className="mt-2"
+                                                        />
+                                                    )}
+                                                    <button
+                                                        type="submit"
+                                                        className="p-job-detail__message-submit"
+                                                        disabled={processing}
+                                                    >
+                                                        {processing
+                                                            ? "送信中..."
+                                                            : "メッセージを送信"}
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        )}
+
+                                        {!auth.user && (
+                                            <div className="p-job-detail__login-prompt">
+                                                <p>
+                                                    メッセージを投稿するには、ログインしてください。
+                                                </p>
+                                                <Link
+                                                    href={route("login")}
+                                                    className="p-job-detail__apply-button"
+                                                >
+                                                    ログイン
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+
+                                {/* ダイレクトメッセージ */}
+                                {activeTab === "direct" && (
+                                    <>
+                                        <h2 className="p-job-detail__messages-title">
+                                            ダイレクトメッセージ
+                                        </h2>
+
+                                        <div className="p-job-detail__no-messages">
+                                            {auth.user ? (
+                                                <>
+                                                    <p>
+                                                        案件投稿者とのダイレクトメッセージはまだ実装されていません。
+                                                    </p>
+                                                    <p>
+                                                        公開メッセージを通じて連絡を取ることができます。
+                                                    </p>
+                                                </>
+                                            ) : (
+                                                <p>
+                                                    ダイレクトメッセージを表示するには、ログインしてください。
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        {!auth.user && (
+                                            <div className="p-job-detail__login-prompt">
+                                                <Link
+                                                    href={route("login")}
+                                                    className="p-job-detail__apply-button"
+                                                >
+                                                    ログイン
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
                             </div>
                         </div>
 
@@ -321,35 +507,23 @@ export default function JobDetail({
                                 <div className="p-job-detail__author">
                                     <div className="p-job-detail__author-header">
                                         <div className="p-job-detail__author-avatar">
-                                            {/* アバター画像が存在しない場合のフォールバック */}
-                                            <div className="p-job-detail__author-avatar-placeholder">
-                                                {job.author.name.charAt(0)}
-                                            </div>
+                                            {jobListing.user.avatar ? (
+                                                <img
+                                                    src={jobListing.user.avatar}
+                                                    alt={jobListing.user.name}
+                                                    className="p-job-detail__author-image"
+                                                />
+                                            ) : (
+                                                <div className="p-job-detail__author-avatar-placeholder">
+                                                    {jobListing.user.name.charAt(
+                                                        0
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="p-job-detail__author-info">
                                             <div className="p-job-detail__author-name">
-                                                {job.author.name}
-                                            </div>
-                                            <div className="p-job-detail__author-rating">
-                                                <span className="p-job-detail__author-stars">
-                                                    {"★".repeat(
-                                                        Math.floor(
-                                                            job.author.rating
-                                                        )
-                                                    )}
-                                                    {job.author.rating % 1 !==
-                                                        0 && "☆"}
-                                                    {"☆".repeat(
-                                                        5 -
-                                                            Math.ceil(
-                                                                job.author
-                                                                    .rating
-                                                            )
-                                                    )}
-                                                </span>
-                                                <span className="p-job-detail__author-rating-value">
-                                                    {job.author.rating}
-                                                </span>
+                                                {jobListing.user.name}
                                             </div>
                                         </div>
                                     </div>
@@ -359,7 +533,7 @@ export default function JobDetail({
                                                 投稿した案件
                                             </div>
                                             <div className="p-job-detail__author-stat-value">
-                                                {job.author.jobsPosted}件
+                                                5件
                                             </div>
                                         </div>
                                         <div className="p-job-detail__author-stat">
@@ -367,16 +541,14 @@ export default function JobDetail({
                                                 会員登録日
                                             </div>
                                             <div className="p-job-detail__author-stat-value">
-                                                2022年10月
+                                                {formatDate(
+                                                    jobListing.user
+                                                        .created_at ||
+                                                        jobListing.created_at
+                                                )}
                                             </div>
                                         </div>
                                     </div>
-                                    <Link
-                                        href={`/profile/${job.author.id}`}
-                                        className="p-job-detail__author-profile-link"
-                                    >
-                                        プロフィールを見る
-                                    </Link>
                                 </div>
                             </div>
 
@@ -388,7 +560,7 @@ export default function JobDetail({
                                 <div className="p-job-detail__share-buttons">
                                     <a
                                         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                                            job.title
+                                            jobListing.title
                                         )}&url=${encodeURIComponent(
                                             window.location.href
                                         )}`}
@@ -434,60 +606,6 @@ export default function JobDetail({
                                         </svg>
                                         Facebook
                                     </a>
-                                </div>
-                            </div>
-
-                            {/* 関連案件 */}
-                            <div className="p-job-detail__card p-job-detail__card--related">
-                                <h2 className="p-job-detail__section-title">
-                                    関連する案件
-                                </h2>
-                                <div className="p-job-detail__related-jobs">
-                                    <Link
-                                        href="/job/2"
-                                        className="p-job-detail__related-job"
-                                    >
-                                        <div className="p-job-detail__related-job-title">
-                                            Webサイトのレスポンシブ対応
-                                        </div>
-                                        <div className="p-job-detail__related-job-meta">
-                                            <span className="p-job-detail__related-job-type">
-                                                単発案件
-                                            </span>
-                                            <span className="p-job-detail__related-job-budget">
-                                                ¥30,000 〜 ¥50,000
-                                            </span>
-                                        </div>
-                                    </Link>
-                                    <Link
-                                        href="/job/3"
-                                        className="p-job-detail__related-job"
-                                    >
-                                        <div className="p-job-detail__related-job-title">
-                                            ECサイトの機能追加
-                                        </div>
-                                        <div className="p-job-detail__related-job-meta">
-                                            <span className="p-job-detail__related-job-type">
-                                                単発案件
-                                            </span>
-                                            <span className="p-job-detail__related-job-budget">
-                                                ¥100,000 〜 ¥150,000
-                                            </span>
-                                        </div>
-                                    </Link>
-                                    <Link
-                                        href="/job/4"
-                                        className="p-job-detail__related-job"
-                                    >
-                                        <div className="p-job-detail__related-job-title">
-                                            フィットネスアプリ開発パートナー
-                                        </div>
-                                        <div className="p-job-detail__related-job-meta">
-                                            <span className="p-job-detail__related-job-type">
-                                                レベニューシェア
-                                            </span>
-                                        </div>
-                                    </Link>
                                 </div>
                             </div>
                         </div>

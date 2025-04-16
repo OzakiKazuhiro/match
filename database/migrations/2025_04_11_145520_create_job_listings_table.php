@@ -19,7 +19,12 @@ return new class extends Migration
             $table->integer('budget_min')->nullable()->comment('最小予算（単発案件の場合のみ）');
             $table->integer('budget_max')->nullable()->comment('最大予算（単発案件の場合のみ）');
             $table->text('description')->comment('案件内容');
+            $table->string('category')->nullable()->comment('案件カテゴリー');
+            $table->string('location')->default('リモート')->comment('作業場所（リモート/オンサイト/ハイブリッド）');
+            $table->json('skills')->nullable()->comment('必要なスキル');
+            $table->json('preferred_skills')->nullable()->comment('歓迎スキル');
             $table->boolean('is_closed')->default(false)->comment('案件が終了したかどうか');
+            $table->integer('view_count')->default(0)->comment('閲覧数');
             $table->timestamps();
         });
     }
