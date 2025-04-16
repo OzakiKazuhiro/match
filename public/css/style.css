@@ -1973,6 +1973,35 @@ textarea {
   color: #666;
   line-height: 1.6;
 }
+.p-job-listings__login-notice {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.p-job-listings__login-notice svg {
+  flex-shrink: 0;
+  color: #856404;
+}
+.p-job-listings__login-link {
+  color: #0056b3;
+  font-weight: 600;
+  text-decoration: underline;
+  margin: 0 4px;
+  transition: color 0.2s;
+}
+.p-job-listings__login-link:hover {
+  color: #003d7a;
+}
 .p-job-detail {
   padding: 24px 0;
   background-color: #f8f9fa;

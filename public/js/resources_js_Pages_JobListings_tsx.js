@@ -279,6 +279,40 @@ function JobListings(_ref3) {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
           className: "p-job-listings__subtitle",
           children: "\u5358\u767A\u6848\u4EF6\u3084\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u3092\u63A2\u3057\u3066\u307F\u307E\u3057\u3087\u3046\u3002 \u3042\u306A\u305F\u306E\u30B9\u30AD\u30EB\u3084\u5E0C\u671B\u306B\u5408\u3063\u305F\u6848\u4EF6\u304C\u898B\u3064\u304B\u308A\u307E\u3059\u3002"
+        }), !(auth !== null && auth !== void 0 && auth.user) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "p-job-listings__login-notice",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            width: "20",
+            height: "20",
+            viewBox: "0 0 24 24",
+            fill: "none",
+            stroke: "currentColor",
+            strokeWidth: "2",
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("circle", {
+              cx: "12",
+              cy: "12",
+              r: "10"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("line", {
+              x1: "12",
+              y1: "8",
+              x2: "12",
+              y2: "12"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("line", {
+              x1: "12",
+              y1: "16",
+              x2: "12.01",
+              y2: "16"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+            children: ["\u6848\u4EF6\u8A73\u7D30\u306E\u95B2\u89A7\u306B\u306F", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: "/login",
+              className: "p-job-listings__login-link",
+              children: "\u30ED\u30B0\u30A4\u30F3"
+            }), "\u304C\u5FC5\u8981\u3067\u3059"]
+          })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "p-job-listings__search-box",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
@@ -385,7 +419,7 @@ function JobListings(_ref3) {
                 className: "p-job-listings__card-category",
                 children: job.category
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-                href: "/job/".concat(job.id),
+                href: auth !== null && auth !== void 0 && auth.user ? "/job/".concat(job.id) : "/login?redirect=/job/".concat(job.id),
                 className: "p-job-listings__card-link",
                 children: "\u8A73\u7D30\u3092\u898B\u308B"
               })]

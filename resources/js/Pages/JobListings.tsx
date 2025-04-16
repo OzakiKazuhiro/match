@@ -290,6 +290,36 @@ export default function JobListings({ auth }: PageProps) {
                         あなたのスキルや希望に合った案件が見つかります。
                     </p>
 
+                    {!auth?.user && (
+                        <div className="p-job-listings__login-notice">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <span>
+                                案件詳細の閲覧には
+                                <Link
+                                    href="/login"
+                                    className="p-job-listings__login-link"
+                                >
+                                    ログイン
+                                </Link>
+                                が必要です
+                            </span>
+                        </div>
+                    )}
+
                     <div className="p-job-listings__search-box">
                         <form
                             className="p-job-listings__search-form"
@@ -405,7 +435,11 @@ export default function JobListings({ auth }: PageProps) {
                                         {job.category}
                                     </div>
                                     <Link
-                                        href={`/job/${job.id}`}
+                                        href={
+                                            auth?.user
+                                                ? `/job/${job.id}`
+                                                : `/login?redirect=/job/${job.id}`
+                                        }
                                         className="p-job-listings__card-link"
                                     >
                                         詳細を見る
