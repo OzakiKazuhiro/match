@@ -145,6 +145,12 @@
         position: relative;
         overflow: hidden;
         z-index: 1;
+        display: flex;
+        flex-direction: column;
+
+        @media (min-width: 769px) {
+            height: 100%;
+        }
 
         &:hover {
             transform: translateY(-5px);
@@ -224,7 +230,25 @@
         line-height: 1.7;
         position: relative;
         z-index: 2;
-        margin: 0;
+        margin: 0 0 20px;
+    }
+
+    &__solution-button {
+        display: inline-block;
+        background-color: #6cc3e0;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: opacity 0.3s ease;
+        margin-top: auto;
+
+        &:hover {
+            opacity: 0.8;
+            color: #fff;
+        }
     }
 
     &__feature {
