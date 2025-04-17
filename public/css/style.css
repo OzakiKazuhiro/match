@@ -1609,6 +1609,86 @@ textarea {
   font-size: 0.9rem;
   color: #666;
 }
+.p-dashboard__menu-card {
+  display: block;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.p-dashboard__menu-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.p-dashboard__menu-card-content {
+  display: flex;
+  align-items: center;
+}
+.p-dashboard__menu-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+}
+.p-dashboard__menu-card-icon--blue {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+.p-dashboard__menu-card-icon--green {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+.p-dashboard__menu-card-icon--purple {
+  background-color: #f3e8ff;
+  color: #9333ea;
+}
+.p-dashboard__menu-card-icon--yellow {
+  background-color: #fef9c3;
+  color: #ca8a04;
+}
+.p-dashboard__menu-card-icon-svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.p-dashboard__menu-card-text {
+  margin-left: 1rem;
+}
+.p-dashboard__menu-card-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #111827;
+}
+.p-dashboard__menu-card-description {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.p-dashboard__menu-card-action {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #2563eb;
+}
+.p-dashboard__card-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .p-dashboard__card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.p-dashboard__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
 .p-job-listings__container {
   width: 100%;
   max-width: 1200px;
@@ -2355,6 +2435,12 @@ textarea {
   overflow: hidden;
   background-color: #ddd;
 }
+.p-job-detail__author-image {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 .p-job-detail__author-avatar-placeholder {
   width: 100%;
   height: 100%;
@@ -2795,6 +2881,376 @@ textarea {
 }
 .p-post-job__tips-content strong {
   font-weight: 600;
+}
+/*
+  Project: 応募画面
+*/
+.p-apply__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.p-apply__header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+.p-apply__breadcrumb {
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+}
+.p-apply__breadcrumb-link {
+  color: #6cc3e0;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.p-apply__breadcrumb-link:hover {
+  color: #50a9d0;
+  text-decoration: underline;
+}
+.p-apply__breadcrumb-separator {
+  margin: 0 0.5rem;
+  color: #6b7280;
+}
+.p-apply__breadcrumb-current {
+  color: #4b5563;
+}
+.p-apply__card {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.p-apply__card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.p-apply__job-summary {
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+.p-apply__job-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+.p-apply__job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.p-apply__job-type {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.p-apply__job-type--one_time {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+.p-apply__job-type--revenue_share {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+.p-apply__job-budget {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background-color: #f3f4f6;
+  color: #1f2937;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.p-apply__job-poster {
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+.p-apply__status {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+.p-apply__status-label {
+  font-weight: 500;
+  color: #374151;
+}
+.p-apply__status-value {
+  margin-left: 0.5rem;
+  font-weight: 600;
+}
+.p-apply__status-value--pending {
+  color: #d97706;
+}
+.p-apply__status-value--accepted {
+  color: #059669;
+}
+.p-apply__status-value--declined {
+  color: #dc2626;
+}
+.p-apply__message {
+  margin-bottom: 1.5rem;
+}
+.p-apply__message-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+.p-apply__message-content {
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+.p-apply__action {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+.p-apply__back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  color: #374151;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.p-apply__back-button:hover {
+  background-color: #e5e7eb;
+}
+.p-apply__form-group {
+  margin-bottom: 1.5rem;
+}
+.p-apply__form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+.p-apply__required {
+  color: #dc2626;
+  margin-left: 0.25rem;
+}
+.p-apply__form-textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  resize: vertical;
+}
+.p-apply__form-textarea:focus {
+  border-color: #6cc3e0;
+  box-shadow: 0 0 0 3px rgba(108, 195, 224, 0.2);
+  outline: none;
+}
+.p-apply__error {
+  margin-top: 0.5rem;
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+.p-apply__actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.p-apply__cancel-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  color: #374151;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.p-apply__cancel-button:hover {
+  background-color: #f9fafb;
+}
+.p-apply__submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+  background-color: #6cc3e0;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.p-apply__submit-button:hover {
+  background-color: #50a9d0;
+}
+.p-apply__submit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(108, 195, 224, 0.3);
+}
+.p-apply__submit-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+/*
+  メッセージ一覧・詳細画面のスタイル
+*/
+.p-messages__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+.p-messages__card {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+}
+.p-messages__card-body {
+  padding: 1.5rem;
+}
+.p-messages__list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.p-messages__list-item {
+  display: block;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background-color 0.2s;
+}
+.p-messages__list-item:hover {
+  background-color: #f9fafb;
+}
+.p-messages__item-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.p-messages__user-info {
+  display: flex;
+  align-items: center;
+}
+.p-messages__user-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+.p-messages__message-preview {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 350px;
+}
+.p-messages__timestamp {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  background-color: #f3f4f6;
+  color: #374151;
+}
+.p-messages__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.p-messages__back-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #e5e7eb;
+  color: #374151;
+  transition: background-color 0.2s;
+}
+.p-messages__back-button:hover {
+  background-color: #d1d5db;
+}
+.p-messages__conversation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.p-messages__message {
+  display: flex;
+}
+.p-messages__message--sent {
+  justify-content: flex-end;
+}
+.p-messages__message--received {
+  justify-content: flex-start;
+}
+.p-messages__bubble {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  max-width: 80%;
+}
+.p-messages__bubble--sent {
+  background-color: #dbeafe;
+}
+.p-messages__bubble--received {
+  background-color: #f3f4f6;
+}
+.p-messages__message-text {
+  word-break: break-word;
+}
+.p-messages__message-time {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+  text-align: right;
+}
+.p-messages__form {
+  margin-top: 1.5rem;
+}
+.p-messages__textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  min-height: 100px;
+  resize: vertical;
+}
+.p-messages__textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
+}
+.p-messages__submit-container {
+  display: flex;
+  justify-content: flex-end;
 }
 .u-text-center {
   text-align: center !important;

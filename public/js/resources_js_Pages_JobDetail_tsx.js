@@ -395,6 +395,14 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+/**
+ * アバター画像のURLを適切な形式に変換する
+ * URLが"/"で始まっていない場合は先頭に"/"を追加する
+ */
+var getAvatarUrl = function getAvatarUrl(avatarPath) {
+  if (!avatarPath) return "";
+  return avatarPath.startsWith("/") ? avatarPath : "/".concat(avatarPath);
+};
 function JobDetail(_ref) {
   var auth = _ref.auth,
     jobListing = _ref.jobListing,
@@ -596,7 +604,7 @@ function JobDetail(_ref) {
                       children: "\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B"
                     })]
                   }), canApply && !jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-                    href: "#",
+                    href: route("job-listings.apply.create", jobListing.id),
                     className: "p-job-detail__apply-button",
                     children: "\u5FDC\u52DF\u3059\u308B"
                   })]
@@ -633,9 +641,16 @@ function JobDetail(_ref) {
                         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                           className: "p-job-detail__message-user",
                           children: [message.user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
-                            src: message.user.avatar,
+                            src: getAvatarUrl(message.user.avatar),
                             alt: message.user.name,
-                            className: "p-job-detail__message-avatar"
+                            className: "p-job-detail__message-avatar",
+                            onError: function onError(e) {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = "";
+                              if (e.currentTarget.parentElement) {
+                                e.currentTarget.parentElement.innerHTML = message.user.name.charAt(0).toUpperCase();
+                              }
+                            }
                           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                             className: "p-job-detail__message-avatar-placeholder",
                             children: message.user.name.charAt(0)
@@ -733,9 +748,16 @@ function JobDetail(_ref) {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                     className: "p-job-detail__author-avatar",
                     children: jobListing.user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
-                      src: jobListing.user.avatar,
+                      src: getAvatarUrl(jobListing.user.avatar),
                       alt: jobListing.user.name,
-                      className: "p-job-detail__author-image"
+                      className: "p-job-detail__author-image",
+                      onError: function onError(e) {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "";
+                        if (e.currentTarget.parentElement) {
+                          e.currentTarget.parentElement.innerHTML = jobListing.user.name.charAt(0).toUpperCase();
+                        }
+                      }
                     }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                       className: "p-job-detail__author-avatar-placeholder",
                       children: jobListing.user.name.charAt(0)

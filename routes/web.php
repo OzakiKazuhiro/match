@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\JobListingController;
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\DirectMessageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,6 +54,10 @@ Route::prefix('job-listings')->name('job-listings.')->group(function () {
         
         // パブリックメッセージ投稿
         Route::post('/{jobListing}/messages', [JobListingController::class, 'storeMessage'])->name('messages.store');
+        
+        // 案件応募関連
+        Route::get('/{jobListing}/apply', [ApplicationController::class, 'create'])->name('apply.create');
+        Route::post('/{jobListing}/apply', [ApplicationController::class, 'store'])->name('apply.store');
     });
 });
 
@@ -60,11 +66,37 @@ Route::get('/post-job', function () {
     return redirect()->route('job-listings.create');
 })->middleware(['auth'])->name('post-job');
 
+// ダイレクトメッセージ関連ルート
+Route::middleware('auth')->prefix('messages')->name('messages.')->group(function () {
+    // メッセージ一覧
+    Route::get('/', [DirectMessageController::class, 'index'])->name('index');
+    
+    // 特定の会話グループのメッセージ詳細
+    Route::get('/{conversationGroup}', [DirectMessageController::class, 'show'])->name('show');
+    
+    // メッセージ送信
+    Route::post('/{conversationGroup}', [DirectMessageController::class, 'store'])->name('store');
+});
+
 // プロフィール関連ルート
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// 応募関連ルート
+Route::middleware('auth')->prefix('applications')->name('applications.')->group(function () {
+    // 自分が応募した案件一覧
+    Route::get('/', [ApplicationController::class, 'index'])->name('index');
+    
+    // 自分の案件への応募一覧
+    Route::get('/to-my-jobs', [ApplicationController::class, 'showApplicationsToMyJobs'])->name('to-my-jobs');
+    
+    // 応募ステータスの更新（承認/拒否）
+    Route::patch('/{application}/{status}', [ApplicationController::class, 'updateStatus'])
+        ->name('update-status')
+        ->where('status', 'accepted|declined');
 });
 
 require __DIR__.'/auth.php';

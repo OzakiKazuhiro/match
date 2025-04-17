@@ -5,6 +5,15 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 
+/**
+ * アバター画像のURLを適切な形式に変換する
+ * URLが"/"で始まっていない場合は先頭に"/"を追加する
+ */
+const getAvatarUrl = (avatarPath: string | undefined): string => {
+    if (!avatarPath) return "";
+    return avatarPath.startsWith("/") ? avatarPath : `/${avatarPath}`;
+};
+
 interface User {
     id: number;
     name: string;
@@ -290,7 +299,10 @@ export default function JobDetail({
                                         )}
                                         {canApply && !jobListing.is_closed && (
                                             <Link
-                                                href="#"
+                                                href={route(
+                                                    "job-listings.apply.create",
+                                                    jobListing.id
+                                                )}
                                                 className="p-job-detail__apply-button"
                                             >
                                                 応募する
@@ -349,17 +361,37 @@ export default function JobDetail({
                                                                         .user
                                                                         .avatar ? (
                                                                         <img
-                                                                            src={
+                                                                            src={getAvatarUrl(
                                                                                 message
                                                                                     .user
                                                                                     .avatar
-                                                                            }
+                                                                            )}
                                                                             alt={
                                                                                 message
                                                                                     .user
                                                                                     .name
                                                                             }
                                                                             className="p-job-detail__message-avatar"
+                                                                            onError={(
+                                                                                e
+                                                                            ) => {
+                                                                                e.currentTarget.onerror =
+                                                                                    null;
+                                                                                e.currentTarget.src =
+                                                                                    "";
+                                                                                if (
+                                                                                    e
+                                                                                        .currentTarget
+                                                                                        .parentElement
+                                                                                ) {
+                                                                                    e.currentTarget.parentElement.innerHTML =
+                                                                                        message.user.name
+                                                                                            .charAt(
+                                                                                                0
+                                                                                            )
+                                                                                            .toUpperCase();
+                                                                                }
+                                                                            }}
                                                                         />
                                                                     ) : (
                                                                         <div className="p-job-detail__message-avatar-placeholder">
@@ -509,9 +541,26 @@ export default function JobDetail({
                                         <div className="p-job-detail__author-avatar">
                                             {jobListing.user.avatar ? (
                                                 <img
-                                                    src={jobListing.user.avatar}
+                                                    src={getAvatarUrl(
+                                                        jobListing.user.avatar
+                                                    )}
                                                     alt={jobListing.user.name}
                                                     className="p-job-detail__author-image"
+                                                    onError={(e) => {
+                                                        e.currentTarget.onerror =
+                                                            null;
+                                                        e.currentTarget.src =
+                                                            "";
+                                                        if (
+                                                            e.currentTarget
+                                                                .parentElement
+                                                        ) {
+                                                            e.currentTarget.parentElement.innerHTML =
+                                                                jobListing.user.name
+                                                                    .charAt(0)
+                                                                    .toUpperCase();
+                                                        }
+                                                    }}
                                                 />
                                             ) : (
                                                 <div className="p-job-detail__author-avatar-placeholder">

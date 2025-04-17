@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJobListingRequest;
 use App\Http\Requests\UpdateJobListingRequest;
+use App\Http\Requests\StorePublicMessageRequest;
 use App\Models\JobListing;
 use App\Models\PublicMessage;
 use Illuminate\Http\RedirectResponse;
@@ -132,16 +133,12 @@ class JobListingController extends Controller
     /**
      * パブリックメッセージを投稿
      */
-    public function storeMessage(Request $request, JobListing $jobListing): RedirectResponse
+    public function storeMessage(StorePublicMessageRequest $request, JobListing $jobListing): RedirectResponse
     {
-        $request->validate([
-            'message' => 'required|string|max:1000',
-        ]);
-        
         PublicMessage::create([
             'job_listing_id' => $jobListing->id,
             'user_id' => Auth::id(),
-            'message' => $request->message,
+            'message' => $request->validated()['message'],
         ]);
         
         session()->flash('message', 'メッセージを投稿しました');

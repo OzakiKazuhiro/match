@@ -1,5 +1,4 @@
 @import "foundation/reset";
-@import "foundation/variables";
 @import "foundation/base";
 @import "foundation/typography";
 
@@ -20,6 +19,7 @@
 @import "object/project/dashboard";
 @import "object/project/job-listings";
 @import "object/project/job-detail";
+@import "object/project/apply";
 
 @import "object/utility/margin";
 @import "object/utility/text";

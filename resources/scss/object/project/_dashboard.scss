@@ -244,4 +244,100 @@
         font-size: 0.9rem;
         color: #666;
     }
+
+    &__menu-card {
+        display: block;
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+            0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        padding: 1.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    }
+
+    &__menu-card-content {
+        display: flex;
+        align-items: center;
+    }
+
+    &__menu-card-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 9999px;
+
+        &--blue {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+
+        &--green {
+            background-color: #dcfce7;
+            color: #16a34a;
+        }
+
+        &--purple {
+            background-color: #f3e8ff;
+            color: #9333ea;
+        }
+
+        &--yellow {
+            background-color: #fef9c3;
+            color: #ca8a04;
+        }
+    }
+
+    &__menu-card-icon-svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    &__menu-card-text {
+        margin-left: 1rem;
+    }
+
+    &__menu-card-title {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: #111827;
+    }
+
+    &__menu-card-description {
+        margin-top: 0.25rem;
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+
+    &__menu-card-action {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #2563eb;
+    }
+
+    &__card-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1.5rem;
+
+        @media (min-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    &__container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+    }
 }

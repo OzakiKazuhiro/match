@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('conversation_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id_1')->constrained('users')->onDelete('cascade');
-            $table->foreignId('user_id_2')->constrained('users')->onDelete('cascade');
+            $table->foreignId('job_owner_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('applicant_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             
-            // 同じユーザー間で複数の会話グループを作れないようにする
-            $table->unique(['user_id_1', 'user_id_2']);
+            // 同じ組み合わせの会話グループを作れないようにする
+            $table->unique(['job_owner_id', 'applicant_id']);
         });
         
         // direct_messagesテーブルを変更
