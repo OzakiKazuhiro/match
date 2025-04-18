@@ -17,6 +17,11 @@ Route::get('/', function () {
     ]);
 });
 
+// 利用規約ページ
+Route::get('/terms', function () {
+    return Inertia::render('Terms');
+})->name('terms');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
