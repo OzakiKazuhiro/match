@@ -377,6 +377,99 @@ export default function Top({
                         </div>
                     </section>
 
+                    {/* 納品までの流れセクション */}
+                    <section className="p-top__flow">
+                        <h2 className="p-top__section-title">納品までの流れ</h2>
+                        <div className="p-top__flow-container">
+                            <div className="p-top__flow-item">
+                                <div className="p-top__flow-step">step1.</div>
+                                <div className="p-top__flow-title">
+                                    仕事を発注する
+                                </div>
+                                <div className="p-top__flow-image">
+                                    <img
+                                        src="/images/flow/post-job.webp"
+                                        alt="仕事を発注する"
+                                        width="320"
+                                        height="220"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="p-top__flow-arrow">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+
+                            <div className="p-top__flow-item">
+                                <div className="p-top__flow-step">step2.</div>
+                                <div className="p-top__flow-title">
+                                    発注相手を選ぶ
+                                </div>
+                                <div className="p-top__flow-image">
+                                    <img
+                                        src="/images/flow/select-partner.webp"
+                                        alt="発注相手を選ぶ"
+                                        width="320"
+                                        height="220"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="p-top__flow-arrow">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+
+                            <div className="p-top__flow-item">
+                                <div className="p-top__flow-step">step3.</div>
+                                <div className="p-top__flow-title">
+                                    納品を待つ
+                                </div>
+                                <div className="p-top__flow-image">
+                                    <img
+                                        src="/images/flow/wait-delivery.webp"
+                                        alt="納品を待つ"
+                                        width="320"
+                                        height="220"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="p-top__flow-register">
+                            <Link
+                                href="/register"
+                                className="p-top__flow-register-button"
+                            >
+                                無料で登録してはじめる
+                            </Link>
+                        </div>
+                    </section>
+
                     {/* 人気の案件例セクション */}
                     <section className="p-top__popular-jobs">
                         <h2 className="p-top__section-title">人気の案件例</h2>

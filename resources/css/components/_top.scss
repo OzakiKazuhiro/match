@@ -1,0 +1,108 @@
+/* 納品までの流れセクション */
+.p-top__flow {
+    margin: 80px 0;
+
+    &-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 40px auto;
+        max-width: 1200px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
+    }
+
+    &-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 300px;
+        margin: 0 20px;
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 30px 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            width: 100%;
+            max-width: 350px;
+            margin: 0 0 30px;
+        }
+    }
+
+    &-step {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #4a6cf7;
+        margin-bottom: 8px;
+    }
+
+    &-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 24px;
+        text-align: center;
+    }
+
+    &-image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+    }
+
+    &-arrow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #4a6cf7;
+        margin: 0 10px;
+
+        svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        @media (max-width: 768px) {
+            transform: rotate(90deg);
+            margin: -15px 0;
+        }
+    }
+
+    &-register {
+        text-align: center;
+        margin-top: 40px;
+
+        &-button {
+            display: inline-block;
+            background-color: #4a6cf7;
+            color: #fff;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(74, 108, 247, 0.25);
+
+            &:hover {
+                background-color: #3a5bd9;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(74, 108, 247, 0.3);
+            }
+        }
+    }
+}
