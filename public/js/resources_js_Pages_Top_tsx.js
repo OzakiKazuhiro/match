@@ -234,7 +234,7 @@ function Top(_ref) {
             children: "match"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             className: "p-top__subtitle",
-            children: "\u5358\u767A\u6848\u4EF6\u3084\u30B5\u30FC\u30D3\u30B9\u7ACB\u3061\u4E0A\u3052\u6848\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u7C21\u5358\u306B\u3067\u304D\u308B\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3067\u3059\u3002 \u624B\u8EFD\u306B\u6848\u4EF6\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u3067\u304D\u3001\u30B7\u30F3\u30D7\u30EB\u306A\u64CD\u4F5C\u3067\u6848\u4EF6\u3092\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002"
+            children: "\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u30A2\u30A4\u30C7\u30A2\u30FB\u8AB0\u3067\u3082\u7C21\u5358\u306B\u3064\u306A\u304C\u308B"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "p-top__buttons",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
@@ -247,70 +247,137 @@ function Top(_ref) {
               children: "\u6848\u4EF6\u3092\u63A2\u3059"
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
-          className: "p-top__section-title p-top__section-title--catchphrase",
-          children: ["\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u30A2\u30A4\u30C7\u30A2\u30FB", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {
-            className: "p-top__catchphrase-break"
-          }), "\u8AB0\u3067\u3082\u7C21\u5358\u306B\u3064\u306A\u304C\u308B"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
+          className: "p-top__problems",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+            className: "p-top__section-title",
+            children: "\u3053\u3093\u306A\u60A9\u307F\u306F\u3042\u308A\u307E\u305B\u3093\u304B\uFF1F"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "p-top__problem-list",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "p-top__problem-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "p-top__problem-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: "/images/problems/idea-programming.webp",
+                  alt: "\u30A2\u30A4\u30C7\u30A2\u3068\u6280\u8853\u306E\u60A9\u307F",
+                  width: "300",
+                  height: "300"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                className: "p-top__problem-text",
+                children: "\u300C\u30A2\u30A4\u30C7\u30A2\u306F\u3042\u308B\u3051\u3069\u3001\u6280\u8853\u304C\u306A\u304F\u3066\u5F62\u306B\u3067\u304D\u306A\u3044...\u300D"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "p-top__problem-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "p-top__problem-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: "/images/problems/hard-to-use-website.webp",
+                  alt: "\u4F7F\u3044\u3065\u3089\u3044\u30B5\u30A4\u30C8",
+                  width: "300",
+                  height: "300"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                className: "p-top__problem-text",
+                children: "\u300C\u6848\u4EF6\u30B5\u30A4\u30C8\u306F\u8907\u96D1\u3067\u4F7F\u3044\u3065\u3089\u3044...\u300D"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "p-top__problem-item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "p-top__problem-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: "/images/problems/not-found-work.webp",
+                  alt: "\u6848\u4EF6\u304C\u898B\u3064\u304B\u3089\u306A\u3044",
+                  width: "300",
+                  height: "300"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                className: "p-top__problem-text",
+                children: "\u300C\u5E0C\u671B\u306E\u6848\u4EF6\u304C\u306A\u304B\u306A\u304B\u898B\u3064\u304B\u3089\u306A\u3044...\u300D"
+              })]
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
+          className: "p-top__solution",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+            className: "p-top__section-title p-top__section-title--full-underline",
+            children: ["\u305D\u308C\u3092\u89E3\u6C7A\u3067\u304D\u308B\u306E\u304C", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "p-top__service-accent",
+              children: "match"
+            }), "\u3067\u3059"]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+            className: "p-top__solution-description",
+            children: ["match\u306F\u300C\u30B7\u30F3\u30D7\u30EB\u3067\u4F7F\u3044\u3084\u3059\u3044\u300D\u3092\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u3057\u305F\u3001", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), "\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u6848\u4EF6\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3067\u3059\u3002"]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h3", {
+            className: "p-top__section-title p-top__section-title--catchphrase",
+            children: ["\u5358\u767A\u6848\u4EF6\u3084\u30B5\u30FC\u30D3\u30B9\u7ACB\u3061\u4E0A\u3052\u6848\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u7C21\u5358\u306B\u3067\u304D\u308B", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), "\u624B\u8EFD\u306B\u6848\u4EF6\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u3067\u304D\u3001\u30B7\u30F3\u30D7\u30EB\u306A\u64CD\u4F5C\u3067\u6848\u4EF6\u3092\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059"]
+          })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
           className: "p-top__features",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "p-top__feature",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-              className: "p-top__feature-icon",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                src: "/images/features/easy-case-submission.webp",
-                alt: "\u7C21\u5358\u306B\u6848\u4EF6\u6295\u7A3F",
-                width: "60",
-                height: "60"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-              className: "p-top__feature-title",
-              children: "\u7C21\u5358\u306B\u6848\u4EF6\u6295\u7A3F"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-              className: "p-top__feature-text",
-              children: "\u8907\u96D1\u306A\u5165\u529B\u9805\u76EE\u306F\u306A\u304F\u3001\u30B7\u30F3\u30D7\u30EB\u306A\u753B\u9762\u3067\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u306E\u6848\u4EF6\u3092\u6295\u7A3F\u3067\u304D\u307E\u3059\u3002 \u5358\u767A\u6848\u4EF6\u3068\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u306E\u4E21\u65B9\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u3059\u3002"
-            })]
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+            className: "p-top__section-title",
+            children: "match\u3067\u7C21\u5358\u306B\u3067\u304D\u308B\u3053\u3068"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "p-top__feature",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-              className: "p-top__feature-icon",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                src: "/images/features/direct-communication.webp",
-                alt: "\u76F4\u63A5\u30B3\u30DF\u30E5\u30CB\u30B1\u30FC\u30B7\u30E7\u30F3",
-                width: "60",
-                height: "60"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-              className: "p-top__feature-title",
-              children: "\u76F4\u63A5\u30B3\u30DF\u30E5\u30CB\u30B1\u30FC\u30B7\u30E7\u30F3"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-              className: "p-top__feature-text",
-              children: "\u6848\u4EF6\u6295\u7A3F\u8005\u3068\u5FDC\u52DF\u8005\u304C\u76F4\u63A5\u30E1\u30C3\u30BB\u30FC\u30B8\u306E\u3084\u308A\u53D6\u308A\u304C\u3067\u304D\u307E\u3059\u3002 \u30D1\u30D6\u30EA\u30C3\u30AF\u306A\u30E1\u30C3\u30BB\u30FC\u30B8\u3068\u4E00\u5BFE\u4E00\u306E\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u306E\u4E21\u65B9\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u3059\u3002"
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "p-top__feature",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-              className: "p-top__feature-icon",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                src: "/images/features/easy-sharing.webp",
-                alt: "\u6C17\u8EFD\u306B\u30B7\u30A7\u30A2",
-                width: "60",
-                height: "60"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-              className: "p-top__feature-title",
-              children: "\u6C17\u8EFD\u306B\u30B7\u30A7\u30A2"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-              className: "p-top__feature-text",
-              children: "\u6848\u4EF6\u3092\uFF38\uFF08\u65E7Twitter\uFF09\u306A\u3069\u306ESNS\u3067\u7C21\u5358\u306B\u5171\u6709\u3067\u304D\u307E\u3059\u3002 \u6C17\u306B\u306A\u308B\u6848\u4EF6\u3092\u591A\u304F\u306E\u4EBA\u306B\u5171\u6709\u3057\u3066\u3001\u30DE\u30C3\u30C1\u30F3\u30B0\u306E\u53EF\u80FD\u6027\u3092\u5E83\u3052\u307E\u3057\u3087\u3046\u3002"
+            className: "p-top__feature-list",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "p-top__feature",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "p-top__feature-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: "/images/features/easy-case-submission.webp",
+                  alt: "\u7C21\u5358\u306B\u6848\u4EF6\u6295\u7A3F",
+                  width: "60",
+                  height: "60"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
+                className: "p-top__feature-title",
+                children: "\u7C21\u5358\u306B\u6848\u4EF6\u6295\u7A3F"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                className: "p-top__feature-text",
+                children: "\u8907\u96D1\u306A\u5165\u529B\u9805\u76EE\u306F\u306A\u304F\u3001\u30B7\u30F3\u30D7\u30EB\u306A\u753B\u9762\u3067\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u306E\u6848\u4EF6\u3092\u6295\u7A3F\u3067\u304D\u307E\u3059\u3002 \u5358\u767A\u6848\u4EF6\u3068\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u306E\u4E21\u65B9\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u3059\u3002"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "p-top__feature",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "p-top__feature-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: "/images/features/direct-communication.webp",
+                  alt: "\u76F4\u63A5\u30B3\u30DF\u30E5\u30CB\u30B1\u30FC\u30B7\u30E7\u30F3",
+                  width: "60",
+                  height: "60"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
+                className: "p-top__feature-title",
+                children: "\u76F4\u63A5\u30B3\u30DF\u30E5\u30CB\u30B1\u30FC\u30B7\u30E7\u30F3"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                className: "p-top__feature-text",
+                children: "\u6848\u4EF6\u6295\u7A3F\u8005\u3068\u5FDC\u52DF\u8005\u304C\u76F4\u63A5\u30E1\u30C3\u30BB\u30FC\u30B8\u306E\u3084\u308A\u53D6\u308A\u304C\u3067\u304D\u307E\u3059\u3002 \u30D1\u30D6\u30EA\u30C3\u30AF\u306A\u30E1\u30C3\u30BB\u30FC\u30B8\u3068\u4E00\u5BFE\u4E00\u306E\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u306E\u4E21\u65B9\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u3059\u3002"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "p-top__feature",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                className: "p-top__feature-icon",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: "/images/features/easy-sharing.webp",
+                  alt: "\u6C17\u8EFD\u306B\u30B7\u30A7\u30A2",
+                  width: "60",
+                  height: "60"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
+                className: "p-top__feature-title",
+                children: "\u6C17\u8EFD\u306B\u30B7\u30A7\u30A2"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                className: "p-top__feature-text",
+                children: "\u6848\u4EF6\u3092\uFF38\uFF08\u65E7Twitter\uFF09\u306A\u3069\u306ESNS\u3067\u7C21\u5358\u306B\u5171\u6709\u3067\u304D\u307E\u3059\u3002 \u6C17\u306B\u306A\u308B\u6848\u4EF6\u3092\u591A\u304F\u306E\u4EBA\u306B\u5171\u6709\u3057\u3066\u3001\u30DE\u30C3\u30C1\u30F3\u30B0\u306E\u53EF\u80FD\u6027\u3092\u5E83\u3052\u307E\u3057\u3087\u3046\u3002"
+              })]
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
           className: "p-top__solutions",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
             className: "p-top__section-title",
-            children: "\u3053\u3093\u306A\u304A\u60A9\u307F\u3092\u89E3\u6C7A\uFF01"
+            children: "match\u304C\u9078\u3070\u308C\u308B\u7406\u7531"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "p-top__solution-list",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -720,13 +787,13 @@ function Top(_ref) {
             })]
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
-          className: "p-top__hero",
+          className: "p-top__hero p-top__final-cta",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
             className: "p-top__title",
-            children: "\u4ECA\u3059\u3050\u6848\u4EF6\u3092\u6295\u7A3F\u3057\u3066\u307F\u307E\u3057\u3087\u3046"
+            children: "\u3042\u306A\u305F\u3082match\u3067\u7406\u60F3\u306E\u6848\u4EF6\u3092\u898B\u3064\u3051\u307E\u305B\u3093\u304B\uFF1F"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             className: "p-top__subtitle",
-            children: "\u4F1A\u54E1\u767B\u9332\u306F\u7121\u6599\u3067\u3059\u3002\u6848\u4EF6\u6295\u7A3F\u3084\u5FDC\u52DF\u3082\u3059\u3050\u306B\u59CB\u3081\u3089\u308C\u307E\u3059\u3002"
+            children: "\u4F1A\u54E1\u767B\u9332\u306F\u7121\u6599\u3067\u3059\u3002\u4ECA\u3059\u3050\u306F\u3058\u3081\u3066\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u30A2\u30A4\u30C7\u30A2\u3092\u3064\u306A\u3052\u307E\u3057\u3087\u3046\u3002"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "p-top__buttons",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
@@ -734,9 +801,9 @@ function Top(_ref) {
               className: "p-top__button p-top__button--primary",
               children: "\u7121\u6599\u3067\u4F1A\u54E1\u767B\u9332\u3059\u308B"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-              href: "/job-post",
+              href: "/job-listings",
               className: "p-top__button",
-              children: "\u6848\u4EF6\u3092\u6295\u7A3F\u3059\u308B"
+              children: "\u6848\u4EF6\u3092\u63A2\u3059"
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
@@ -922,22 +989,6 @@ function Top(_ref) {
                 children: "\u30C4\u30FC\u30EB\u958B\u767A"
               })]
             })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
-          className: "p-top__hero u-mt-5",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-            className: "p-top__title",
-            children: "\u4ECA\u3059\u3050\u6848\u4EF6\u3092\u63A2\u3057\u3066\u307F\u307E\u3057\u3087\u3046"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-            className: "p-top__subtitle",
-            children: "\u4F1A\u54E1\u767B\u9332\u306F\u7121\u6599\u3067\u3059\u3002\u6848\u4EF6\u6295\u7A3F\u3084\u5FDC\u52DF\u3082\u3059\u3050\u306B\u59CB\u3081\u3089\u308C\u307E\u3059\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "p-top__buttons",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-              href: "/register",
-              className: "p-top__button p-top__button--primary",
-              children: "\u7121\u6599\u3067\u4F1A\u54E1\u767B\u9332\u3059\u308B"
-            })
           })]
         })]
       })

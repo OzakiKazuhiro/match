@@ -240,8 +240,7 @@ export default function Top({
                         </h1>
                         <div className="p-top__service-name">match</div>
                         <p className="p-top__subtitle">
-                            単発案件やサービス立ち上げ案の投稿・応募が簡単にできる、エンジニア向けマッチングサービスです。
-                            手軽に案件の投稿・応募ができ、シンプルな操作で案件を見つけることができます。
+                            エンジニアとアイデア・誰でも簡単につながる
                         </p>
                         <div className="p-top__buttons">
                             <Link
@@ -259,74 +258,142 @@ export default function Top({
                         </div>
                     </section>
 
-                    {/* キャッチフレーズ */}
-                    <h2 className="p-top__section-title p-top__section-title--catchphrase">
-                        エンジニアとアイデア・
-                        <br className="p-top__catchphrase-break" />
-                        誰でも簡単につながる
-                    </h2>
-
-                    {/* 特徴セクション */}
-                    <section className="p-top__features">
-                        <div className="p-top__feature">
-                            <div className="p-top__feature-icon">
-                                <img
-                                    src="/images/features/easy-case-submission.webp"
-                                    alt="簡単に案件投稿"
-                                    width="60"
-                                    height="60"
-                                />
+                    {/* こんな悩みはありませんか？セクション */}
+                    <section className="p-top__problems">
+                        <h2 className="p-top__section-title">
+                            こんな悩みはありませんか？
+                        </h2>
+                        <div className="p-top__problem-list">
+                            <div className="p-top__problem-item">
+                                <div className="p-top__problem-icon">
+                                    <img
+                                        src="/images/problems/idea-programming.webp"
+                                        alt="アイデアと技術の悩み"
+                                        width="300"
+                                        height="300"
+                                    />
+                                </div>
+                                <p className="p-top__problem-text">
+                                    「アイデアはあるけど、技術がなくて形にできない...」
+                                </p>
                             </div>
-                            <h3 className="p-top__feature-title">
-                                簡単に案件投稿
-                            </h3>
-                            <p className="p-top__feature-text">
-                                複雑な入力項目はなく、シンプルな画面でエンジニア向けの案件を投稿できます。
-                                単発案件とレベニューシェア案件の両方に対応しています。
-                            </p>
-                        </div>
-
-                        <div className="p-top__feature">
-                            <div className="p-top__feature-icon">
-                                <img
-                                    src="/images/features/direct-communication.webp"
-                                    alt="直接コミュニケーション"
-                                    width="60"
-                                    height="60"
-                                />
+                            <div className="p-top__problem-item">
+                                <div className="p-top__problem-icon">
+                                    <img
+                                        src="/images/problems/hard-to-use-website.webp"
+                                        alt="使いづらいサイト"
+                                        width="300"
+                                        height="300"
+                                    />
+                                </div>
+                                <p className="p-top__problem-text">
+                                    「案件サイトは複雑で使いづらい...」
+                                </p>
                             </div>
-                            <h3 className="p-top__feature-title">
-                                直接コミュニケーション
-                            </h3>
-                            <p className="p-top__feature-text">
-                                案件投稿者と応募者が直接メッセージのやり取りができます。
-                                パブリックなメッセージと一対一のダイレクトメッセージの両方に対応しています。
-                            </p>
-                        </div>
-
-                        <div className="p-top__feature">
-                            <div className="p-top__feature-icon">
-                                <img
-                                    src="/images/features/easy-sharing.webp"
-                                    alt="気軽にシェア"
-                                    width="60"
-                                    height="60"
-                                />
+                            <div className="p-top__problem-item">
+                                <div className="p-top__problem-icon">
+                                    <img
+                                        src="/images/problems/not-found-work.webp"
+                                        alt="案件が見つからない"
+                                        width="300"
+                                        height="300"
+                                    />
+                                </div>
+                                <p className="p-top__problem-text">
+                                    「希望の案件がなかなか見つからない...」
+                                </p>
                             </div>
-                            <h3 className="p-top__feature-title">
-                                気軽にシェア
-                            </h3>
-                            <p className="p-top__feature-text">
-                                案件をＸ（旧Twitter）などのSNSで簡単に共有できます。
-                                気になる案件を多くの人に共有して、マッチングの可能性を広げましょう。
-                            </p>
                         </div>
                     </section>
 
-                    {/* お悩み解決セクション */}
+                    {/* それを解決できるのがこちらです */}
+                    <section className="p-top__solution">
+                        <h2 className="p-top__section-title p-top__section-title--full-underline">
+                            それを解決できるのが
+                            <span className="p-top__service-accent">match</span>
+                            です
+                        </h2>
+                        <p className="p-top__solution-description">
+                            matchは「シンプルで使いやすい」をコンセプトにした、
+                            <br />
+                            エンジニア向け案件マッチングサービスです。
+                        </p>
+
+                        {/* キャッチフレーズ */}
+                        <h3 className="p-top__section-title p-top__section-title--catchphrase">
+                            単発案件やサービス立ち上げ案の投稿・応募が簡単にできる
+                            <br />
+                            手軽に案件の投稿・応募ができ、シンプルな操作で案件を見つけることができます
+                        </h3>
+                    </section>
+
+                    {/* このサービスを使えばこんなメリットが得られます */}
+                    <section className="p-top__features">
+                        <h2 className="p-top__section-title">
+                            matchで簡単にできること
+                        </h2>
+                        <div className="p-top__feature-list">
+                            <div className="p-top__feature">
+                                <div className="p-top__feature-icon">
+                                    <img
+                                        src="/images/features/easy-case-submission.webp"
+                                        alt="簡単に案件投稿"
+                                        width="60"
+                                        height="60"
+                                    />
+                                </div>
+                                <h3 className="p-top__feature-title">
+                                    簡単に案件投稿
+                                </h3>
+                                <p className="p-top__feature-text">
+                                    複雑な入力項目はなく、シンプルな画面でエンジニア向けの案件を投稿できます。
+                                    単発案件とレベニューシェア案件の両方に対応しています。
+                                </p>
+                            </div>
+
+                            <div className="p-top__feature">
+                                <div className="p-top__feature-icon">
+                                    <img
+                                        src="/images/features/direct-communication.webp"
+                                        alt="直接コミュニケーション"
+                                        width="60"
+                                        height="60"
+                                    />
+                                </div>
+                                <h3 className="p-top__feature-title">
+                                    直接コミュニケーション
+                                </h3>
+                                <p className="p-top__feature-text">
+                                    案件投稿者と応募者が直接メッセージのやり取りができます。
+                                    パブリックなメッセージと一対一のダイレクトメッセージの両方に対応しています。
+                                </p>
+                            </div>
+
+                            <div className="p-top__feature">
+                                <div className="p-top__feature-icon">
+                                    <img
+                                        src="/images/features/easy-sharing.webp"
+                                        alt="気軽にシェア"
+                                        width="60"
+                                        height="60"
+                                    />
+                                </div>
+                                <h3 className="p-top__feature-title">
+                                    気軽にシェア
+                                </h3>
+                                <p className="p-top__feature-text">
+                                    案件をＸ（旧Twitter）などのSNSで簡単に共有できます。
+                                    気になる案件を多くの人に共有して、マッチングの可能性を広げましょう。
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* なぜなら〜（理由） */}
+
                     <section className="p-top__solutions">
                         <h2 className="p-top__section-title">
-                            こんなお悩みを解決！
+                            matchが選ばれる理由
                         </h2>
                         <div className="p-top__solution-list">
                             <div className="p-top__solution-item">
@@ -470,7 +537,7 @@ export default function Top({
                         </div>
                     </section>
 
-                    {/* 人気の案件例セクション */}
+                    {/* 実績（人気の案件例）セクション */}
                     <section className="p-top__popular-jobs">
                         <h2 className="p-top__section-title">人気の案件例</h2>
                         <div className="p-top__job-list">
@@ -716,13 +783,13 @@ export default function Top({
                         </div>
                     </section>
 
-                    {/* CTAセクション（お悩み解決の後） */}
-                    <section className="p-top__hero">
+                    {/* 最終CTAセクション */}
+                    <section className="p-top__hero p-top__final-cta">
                         <h2 className="p-top__title">
-                            今すぐ案件を投稿してみましょう
+                            あなたもmatchで理想の案件を見つけませんか？
                         </h2>
                         <p className="p-top__subtitle">
-                            会員登録は無料です。案件投稿や応募もすぐに始められます。
+                            会員登録は無料です。今すぐはじめて、エンジニアとアイデアをつなげましょう。
                         </p>
                         <div className="p-top__buttons">
                             <Link
@@ -731,8 +798,11 @@ export default function Top({
                             >
                                 無料で会員登録する
                             </Link>
-                            <Link href="/job-post" className="p-top__button">
-                                案件を投稿する
+                            <Link
+                                href="/job-listings"
+                                className="p-top__button"
+                            >
+                                案件を探す
                             </Link>
                         </div>
                     </section>
@@ -910,24 +980,6 @@ export default function Top({
                                     ツール開発
                                 </div>
                             </div>
-                        </div>
-                    </section>
-
-                    {/* CTAセクション */}
-                    <section className="p-top__hero u-mt-5">
-                        <h2 className="p-top__title">
-                            今すぐ案件を探してみましょう
-                        </h2>
-                        <p className="p-top__subtitle">
-                            会員登録は無料です。案件投稿や応募もすぐに始められます。
-                        </p>
-                        <div className="p-top__buttons">
-                            <Link
-                                href="/register"
-                                className="p-top__button p-top__button--primary"
-                            >
-                                無料で会員登録する
-                            </Link>
                         </div>
                     </section>
                 </div>
