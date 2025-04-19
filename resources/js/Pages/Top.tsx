@@ -308,29 +308,49 @@ export default function Top({
 
                     {/* それを解決できるのがこちらです */}
                     <section className="p-top__solution">
-                        <h2 className="p-top__section-title p-top__section-title--full-underline">
-                            それを解決できるのが
-                            <span className="p-top__service-accent">match</span>
-                            です
-                        </h2>
-                        <p className="p-top__solution-description">
-                            matchは「シンプルで使いやすい」をコンセプトにした、
-                            <br />
-                            エンジニア向け案件マッチングサービスです。
-                        </p>
+                        <div className="p-top__solution-inner">
+                            <h2 className="p-top__section-title p-top__section-title--full-underline">
+                                それを解決できるのが
+                                <span className="p-top__service-accent">
+                                    match
+                                </span>
+                                です
+                            </h2>
+                            <p className="p-top__solution-description">
+                                <span className="service-accent">match</span>
+                                <span className="service-text">は</span>
+                            </p>
+                            <p className="p-top__concept-highlight p-top__concept-standalone">
+                                「シンプルで使いやすい」
+                            </p>
+                            <p className="p-top__solution-description">
+                                をコンセプトにした、エンジニア向け案件マッチングサービスです。
+                            </p>
 
-                        {/* キャッチフレーズ */}
-                        <h3 className="p-top__section-title p-top__section-title--catchphrase">
-                            単発案件やサービス立ち上げ案の投稿・応募が簡単にできる
-                            <br />
-                            手軽に案件の投稿・応募ができ、シンプルな操作で案件を見つけることができます
-                        </h3>
+                            {/* スマホ表示用の画像 */}
+                            <div className="p-top__solution-mobile-image">
+                                <img
+                                    src="/images/solution/match-solution.png"
+                                    alt="matchのソリューション"
+                                    width="300"
+                                    height="200"
+                                />
+                            </div>
+
+                            {/* キャッチフレーズ */}
+                            <h3 className="p-top__section-title p-top__section-title--catchphrase">
+                                単発案件やサービス立ち上げ案の投稿・応募が簡単にできる
+                                <br />
+                                手軽に案件の投稿・応募ができ、シンプルな操作で案件を見つけることができます
+                            </h3>
+                        </div>
                     </section>
 
                     {/* このサービスを使えばこんなメリットが得られます */}
                     <section className="p-top__features">
                         <h2 className="p-top__section-title">
-                            matchで簡単にできること
+                            <span className="p-top__service-accent">match</span>
+                            で簡単にできること
                         </h2>
                         <div className="p-top__feature-list">
                             <div className="p-top__feature">
@@ -393,7 +413,8 @@ export default function Top({
 
                     <section className="p-top__solutions">
                         <h2 className="p-top__section-title">
-                            matchが選ばれる理由
+                            <span className="p-top__service-accent">match</span>
+                            が選ばれる理由
                         </h2>
                         <div className="p-top__solution-list">
                             <div className="p-top__solution-item">

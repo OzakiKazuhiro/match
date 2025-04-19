@@ -298,26 +298,52 @@ function Top(_ref) {
               })]
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("section", {
           className: "p-top__solution",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
-            className: "p-top__section-title p-top__section-title--full-underline",
-            children: ["\u305D\u308C\u3092\u89E3\u6C7A\u3067\u304D\u308B\u306E\u304C", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-              className: "p-top__service-accent",
-              children: "match"
-            }), "\u3067\u3059"]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
-            className: "p-top__solution-description",
-            children: ["match\u306F\u300C\u30B7\u30F3\u30D7\u30EB\u3067\u4F7F\u3044\u3084\u3059\u3044\u300D\u3092\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u3057\u305F\u3001", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), "\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u6848\u4EF6\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3067\u3059\u3002"]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h3", {
-            className: "p-top__section-title p-top__section-title--catchphrase",
-            children: ["\u5358\u767A\u6848\u4EF6\u3084\u30B5\u30FC\u30D3\u30B9\u7ACB\u3061\u4E0A\u3052\u6848\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u7C21\u5358\u306B\u3067\u304D\u308B", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), "\u624B\u8EFD\u306B\u6848\u4EF6\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u3067\u304D\u3001\u30B7\u30F3\u30D7\u30EB\u306A\u64CD\u4F5C\u3067\u6848\u4EF6\u3092\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059"]
-          })]
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: "p-top__solution-inner",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
+              className: "p-top__section-title p-top__section-title--full-underline",
+              children: ["\u305D\u308C\u3092\u89E3\u6C7A\u3067\u304D\u308B\u306E\u304C", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                className: "p-top__service-accent",
+                children: "match"
+              }), "\u3067\u3059"]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+              className: "p-top__solution-description",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                className: "service-accent",
+                children: "match"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                className: "service-text",
+                children: "\u306F"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "p-top__concept-highlight p-top__concept-standalone",
+              children: "\u300C\u30B7\u30F3\u30D7\u30EB\u3067\u4F7F\u3044\u3084\u3059\u3044\u300D"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              className: "p-top__solution-description",
+              children: "\u3092\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u3057\u305F\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u6848\u4EF6\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3067\u3059\u3002"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: "p-top__solution-mobile-image",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                src: "/images/solution/match-solution.png",
+                alt: "match\u306E\u30BD\u30EA\u30E5\u30FC\u30B7\u30E7\u30F3",
+                width: "300",
+                height: "200"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h3", {
+              className: "p-top__section-title p-top__section-title--catchphrase",
+              children: ["\u5358\u767A\u6848\u4EF6\u3084\u30B5\u30FC\u30D3\u30B9\u7ACB\u3061\u4E0A\u3052\u6848\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u7C21\u5358\u306B\u3067\u304D\u308B", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), "\u624B\u8EFD\u306B\u6848\u4EF6\u306E\u6295\u7A3F\u30FB\u5FDC\u52DF\u304C\u3067\u304D\u3001\u30B7\u30F3\u30D7\u30EB\u306A\u64CD\u4F5C\u3067\u6848\u4EF6\u3092\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059"]
+            })]
+          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
           className: "p-top__features",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
             className: "p-top__section-title",
-            children: "match\u3067\u7C21\u5358\u306B\u3067\u304D\u308B\u3053\u3068"
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "p-top__service-accent",
+              children: "match"
+            }), "\u3067\u7C21\u5358\u306B\u3067\u304D\u308B\u3053\u3068"]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "p-top__feature-list",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -375,9 +401,12 @@ function Top(_ref) {
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
           className: "p-top__solutions",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h2", {
             className: "p-top__section-title",
-            children: "match\u304C\u9078\u3070\u308C\u308B\u7406\u7531"
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+              className: "p-top__service-accent",
+              children: "match"
+            }), "\u304C\u9078\u3070\u308C\u308B\u7406\u7531"]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "p-top__solution-list",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
