@@ -804,6 +804,113 @@ export default function Top({
                         </div>
                     </section>
 
+                    {/* よくある質問セクション */}
+                    <section className="p-top__faq">
+                        <div className="p-top__container">
+                            <h2 className="p-top__section-title">
+                                よくある質問
+                            </h2>
+                            <div className="p-top__faq-list">
+                                <div className="p-top__faq-item">
+                                    <h3 className="p-top__faq-question">
+                                        <span className="p-top__faq-q">Q.</span>
+                                        どんな案件が投稿できますか？
+                                    </h3>
+                                    <div className="p-top__faq-answer">
+                                        <span className="p-top__faq-a">A.</span>
+                                        <p>
+                                            エンジニア向けの案件として、
+                                            <strong>単発案件</strong>と
+                                            <strong>
+                                                レベニューシェア案件
+                                            </strong>
+                                            の2種類が投稿できます。
+                                            Webサイトやアプリケーションなどエンジニアリングに関する案件であれば、
+                                            <strong>
+                                                職業エンジニアでなくても誰でも
+                                            </strong>
+                                            案件を投稿できます。
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="p-top__faq-item">
+                                    <h3 className="p-top__faq-question">
+                                        <span className="p-top__faq-q">Q.</span>
+                                        利用には料金がかかりますか？
+                                    </h3>
+                                    <div className="p-top__faq-answer">
+                                        <span className="p-top__faq-a">A.</span>
+                                        <p>
+                                            matchの会員登録・利用は
+                                            <strong>完全無料</strong>
+                                            です。案件の投稿、応募、メッセージのやり取りなど、すべての機能を無料でご利用いただけます。
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="p-top__faq-item">
+                                    <h3 className="p-top__faq-question">
+                                        <span className="p-top__faq-q">Q.</span>
+                                        案件への応募方法を教えてください
+                                    </h3>
+                                    <div className="p-top__faq-answer">
+                                        <span className="p-top__faq-a">A.</span>
+                                        <p>
+                                            案件一覧から興味のある案件を選び、詳細ページで「応募する」ボタンを押すだけです。応募すると案件投稿者に通知が届き、その後ダイレクトメッセージでやり取りを進めることができます。
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="p-top__faq-item">
+                                    <h3 className="p-top__faq-question">
+                                        <span className="p-top__faq-q">Q.</span>
+                                        パブリックメッセージとダイレクトメッセージの違いは何ですか？
+                                    </h3>
+                                    <div className="p-top__faq-answer">
+                                        <span className="p-top__faq-a">A.</span>
+                                        <p>
+                                            <strong>
+                                                パブリックメッセージ
+                                            </strong>
+                                            は案件詳細ページで誰でも閲覧できるメッセージで、案件についての質問や情報交換に適しています。一方、
+                                            <strong>
+                                                ダイレクトメッセージ
+                                            </strong>
+                                            は案件投稿者と応募者の間で1対1でやり取りするプライベートなメッセージです。具体的な条件交渉や詳細な打ち合わせにご活用ください。
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="p-top__faq-item">
+                                    <h3 className="p-top__faq-question">
+                                        <span className="p-top__faq-q">Q.</span>
+                                        案件の報酬はどのように決まりますか？
+                                    </h3>
+                                    <div className="p-top__faq-answer">
+                                        <span className="p-top__faq-a">A.</span>
+                                        <p>
+                                            単発案件の場合は、案件投稿時に上限と下限の金額を設定できます（例：5万円〜10万円）。最終的な報酬額は、ダイレクトメッセージでの相談により当事者間で決定してください。レベニューシェア案件の場合は、サービスの収益分配方法について当事者間で取り決めていただきます。
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="p-top__faq-item">
+                                    <h3 className="p-top__faq-question">
+                                        <span className="p-top__faq-q">Q.</span>
+                                        プロフィールの設定は必要ですか？
+                                    </h3>
+                                    <div className="p-top__faq-answer">
+                                        <span className="p-top__faq-a">A.</span>
+                                        <p>
+                                            必須ではありませんが、案件の成約率を高めるために設定をおすすめします。プロフィール設定では、アイコン画像、メールアドレス、自己紹介文の3項目を登録できます。特に自己紹介文では、スキルやこれまでの実績を記載すると良いでしょう。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
                     {/* 最終CTAセクション */}
                     <section className="p-top__hero p-top__final-cta">
                         <h2 className="p-top__title">
