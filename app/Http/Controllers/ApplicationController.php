@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\ConversationGroup;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -106,15 +107,34 @@ class ApplicationController extends Controller
      */
     public function showApplicationsToMyJobs(): Response
     {
-        $applications = Application::whereHas('jobListing', function($query) {
-                $query->where('user_id', Auth::id());
-            })
-            ->with(['jobListing', 'user'])
+        // 自分の案件一覧を取得
+        $myJobListings = JobListing::where('user_id', Auth::id())->pluck('id');
+        
+        if ($myJobListings->isEmpty()) {
+            return Inertia::render('ApplicationsToMyJobs', [
+                'applications' => []
+            ]);
+        }
+        
+        // まず案件データを確実に取得
+        $jobListings = JobListing::whereIn('id', $myJobListings)->get();
+        
+        // 応募データを取得（Eager Loadingで関連データも取得）
+        $applications = Application::whereIn('job_listing_id', $myJobListings)
+            ->with(['user'])
             ->latest()
             ->get();
             
+        // 各応募データに明示的にjobListingをセット
+        foreach ($applications as $application) {
+            $jobListing = $jobListings->where('id', $application->job_listing_id)->first();
+            if ($jobListing) {
+                $application->setRelation('jobListing', $jobListing);
+            }
+        }
+        
         return Inertia::render('ApplicationsToMyJobs', [
-            'applications' => $applications,
+            'applications' => $applications
         ]);
     }
     
