@@ -419,8 +419,10 @@ function EditJob(_ref) {
       description: jobListing.description,
       budget_min: ((_jobListing$budget_mi = jobListing.budget_min) === null || _jobListing$budget_mi === void 0 ? void 0 : _jobListing$budget_mi.toString()) || "",
       budget_max: ((_jobListing$budget_ma = jobListing.budget_max) === null || _jobListing$budget_ma === void 0 ? void 0 : _jobListing$budget_ma.toString()) || "",
-      skills: [],
-      preferred_skills: [],
+      category: jobListing.category || "",
+      skills: jobListing.skills || [],
+      preferred_skills: jobListing.preferred_skills || [],
+      location: jobListing.location || "リモート",
       is_closed: jobListing.is_closed
     }),
     data = _useForm.data,
@@ -459,7 +461,12 @@ function EditJob(_ref) {
   };
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    put(route("job-listings.update", jobListing.id));
+    // useFormのputメソッドを使って送信する
+    put(route("job-listings.update", jobListing.id), {
+      onSuccess: function onSuccess() {
+        console.log("更新成功");
+      }
+    });
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -550,7 +557,7 @@ function EditJob(_ref) {
                     className: "p-post-job__radio-input"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
                     className: "p-post-job__radio-text",
-                    children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2"
+                    children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6"
                   })]
                 })]
               }), errors.type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -568,68 +575,245 @@ function EditJob(_ref) {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: "p-post-job__budget-inputs",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                  className: "p-post-job__budget-input-group",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                  className: "p-post-job__budget-input-wrapper",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "p-post-job__currency",
+                    children: "\xA5"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                     type: "number",
-                    placeholder: "\u6700\u5C0F\u4E88\u7B97",
+                    placeholder: "\u6700\u5C0F\u91D1\u984D",
                     value: data.budget_min,
                     onChange: function onChange(e) {
                       return setData("budget_min", e.target.value);
                     },
-                    className: "p-post-job__input ".concat(errors.budget_min ? "p-post-job__input--error" : ""),
+                    className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_min ? "p-post-job__input--error" : ""),
                     min: "0"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                    className: "p-post-job__budget-unit",
-                    children: "\u5343\u5186"
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
                   className: "p-post-job__budget-separator",
                   children: "\u301C"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                  className: "p-post-job__budget-input-group",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                  className: "p-post-job__budget-input-wrapper",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "p-post-job__currency",
+                    children: "\xA5"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                     type: "number",
-                    placeholder: "\u6700\u5927\u4E88\u7B97",
+                    placeholder: "\u6700\u5927\u91D1\u984D",
                     value: data.budget_max,
                     onChange: function onChange(e) {
                       return setData("budget_max", e.target.value);
                     },
-                    className: "p-post-job__input ".concat(errors.budget_max ? "p-post-job__input--error" : ""),
+                    className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_max ? "p-post-job__input--error" : ""),
                     min: "0"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                    className: "p-post-job__budget-unit",
-                    children: "\u5343\u5186"
                   })]
                 })]
-              }), errors.budget_min && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                message: errors.budget_min,
-                className: "mt-1"
-              }), errors.budget_max && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                message: errors.budget_max,
-                className: "mt-1"
+              }), (errors.budget_min || errors.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "p-post-job__error",
+                children: errors.budget_min || errors.budget_max
               })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "p-post-job__form-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
+                htmlFor: "category",
+                className: "p-post-job__label",
+                children: ["\u30AB\u30C6\u30B4\u30EA\u30FC", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "p-post-job__required",
+                  children: "\u5FC5\u9808"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                id: "category",
+                className: "p-post-job__select ".concat(errors.category ? "p-post-job__select--error" : ""),
+                value: data.category,
+                onChange: function onChange(e) {
+                  return setData("category", e.target.value);
+                },
+                required: true,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "",
+                  children: "\u30AB\u30C6\u30B4\u30EA\u30FC\u3092\u9078\u629E"
+                }), categoryOptions.map(function (category) {
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                    value: category,
+                    children: category
+                  }, category);
+                })]
+              }), errors.category && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "p-post-job__error",
+                children: errors.category
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "p-post-job__form-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
+                htmlFor: "location",
+                className: "p-post-job__label",
+                children: ["\u4F5C\u696D\u5834\u6240", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "p-post-job__required",
+                  children: "\u5FC5\u9808"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                id: "location",
+                className: "p-post-job__select",
+                value: data.location,
+                onChange: function onChange(e) {
+                  return setData("location", e.target.value);
+                },
+                required: true,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "\u30EA\u30E2\u30FC\u30C8",
+                  children: "\u30EA\u30E2\u30FC\u30C8"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "\u30AA\u30F3\u30B5\u30A4\u30C8",
+                  children: "\u30AA\u30F3\u30B5\u30A4\u30C8"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "\u30CF\u30A4\u30D6\u30EA\u30C3\u30C9",
+                  children: "\u30CF\u30A4\u30D6\u30EA\u30C3\u30C9"
+                })]
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "p-post-job__section",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+              className: "p-post-job__section-title",
+              children: "\u6848\u4EF6\u8A73\u7D30"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "p-post-job__form-group",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
                 htmlFor: "description",
                 className: "p-post-job__label",
-                children: ["\u6848\u4EF6\u5185\u5BB9\u306E\u8A73\u7D30", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                children: ["\u6848\u4EF6\u306E\u8AAC\u660E", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
                   className: "p-post-job__required",
                   children: "\u5FC5\u9808"
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("textarea", {
                 id: "description",
                 className: "p-post-job__textarea ".concat(errors.description ? "p-post-job__textarea--error" : ""),
-                placeholder: "\u6848\u4EF6\u306E\u8A73\u7D30\u3092\u8A18\u5165\u3057\u3066\u304F\u3060\u3055\u3044\u3002\u4F8B\uFF1A\n- \u6C42\u3081\u308B\u30B9\u30AD\u30EB\u3084\u7D4C\u9A13\n- \u4F5C\u696D\u5185\u5BB9\u306E\u8A73\u7D30\n- \u7D0D\u671F\u3084\u671F\u9593\n- \u30B3\u30DF\u30E5\u30CB\u30B1\u30FC\u30B7\u30E7\u30F3\u65B9\u6CD5\n\u306A\u3069",
+                placeholder: "\u6848\u4EF6\u306E\u8A73\u7D30\u306A\u8AAC\u660E\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002\u4F5C\u696D\u5185\u5BB9\u3001\u6C42\u3081\u308B\u30B9\u30AD\u30EB\u3001\u6210\u679C\u7269\u3001\u7D0D\u671F\u306A\u3069\u3092\u5177\u4F53\u7684\u306B\u8A18\u8F09\u3059\u308B\u3068\u3001\u5FDC\u52DF\u304C\u96C6\u307E\u308A\u3084\u3059\u304F\u306A\u308A\u307E\u3059\u3002",
                 value: data.description,
                 onChange: function onChange(e) {
                   return setData("description", e.target.value);
                 },
                 rows: 8,
                 required: true
-              }), errors.description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                message: errors.description,
-                className: "mt-1"
+              }), errors.description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "p-post-job__error",
+                children: errors.description
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "p-post-job__form-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
+                className: "p-post-job__label",
+                children: ["\u5FC5\u8981\u306A\u30B9\u30AD\u30EB", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "p-post-job__optional",
+                  children: "\u81EA\u7531\u8FFD\u52A0"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "p-post-job__skills-container",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                  className: "p-post-job__skills-input",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                    className: "p-post-job__select",
+                    value: customSkill,
+                    onChange: function onChange(e) {
+                      return setCustomSkill(e.target.value);
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                      value: "",
+                      children: "\u30B9\u30AD\u30EB\u3092\u9078\u629E\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0"
+                    }), skillOptions.map(function (skill) {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                        value: skill,
+                        children: skill
+                      }, skill);
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                    type: "text",
+                    placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
+                    value: !skillOptions.includes(customSkill) ? customSkill : "",
+                    onChange: function onChange(e) {
+                      return setCustomSkill(e.target.value);
+                    },
+                    className: "p-post-job__input p-post-job__input--skill"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                    type: "button",
+                    className: "p-post-job__add-button",
+                    onClick: addSkill,
+                    children: "\u8FFD\u52A0"
+                  })]
+                }), data.skills.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "p-post-job__skills-tags",
+                  children: data.skills.map(function (skill) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                      className: "p-post-job__skill-tag",
+                      children: [skill, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                        type: "button",
+                        className: "p-post-job__skill-remove",
+                        onClick: function onClick() {
+                          return removeSkill(skill);
+                        },
+                        children: "\xD7"
+                      })]
+                    }, skill);
+                  })
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "p-post-job__form-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
+                className: "p-post-job__label",
+                children: ["\u3042\u308C\u3070\u6B53\u8FCE\u3059\u308B\u30B9\u30AD\u30EB", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "p-post-job__optional",
+                  children: "\u81EA\u7531\u8FFD\u52A0"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "p-post-job__skills-container",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                  className: "p-post-job__skills-input",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                    className: "p-post-job__select",
+                    value: customPreferredSkill,
+                    onChange: function onChange(e) {
+                      return setCustomPreferredSkill(e.target.value);
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                      value: "",
+                      children: "\u30B9\u30AD\u30EB\u3092\u9078\u629E\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0"
+                    }), skillOptions.map(function (skill) {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                        value: skill,
+                        children: skill
+                      }, skill);
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                    type: "text",
+                    placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
+                    value: !skillOptions.includes(customPreferredSkill) ? customPreferredSkill : "",
+                    onChange: function onChange(e) {
+                      return setCustomPreferredSkill(e.target.value);
+                    },
+                    className: "p-post-job__input p-post-job__input--skill"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                    type: "button",
+                    className: "p-post-job__add-button",
+                    onClick: addPreferredSkill,
+                    children: "\u8FFD\u52A0"
+                  })]
+                }), data.preferred_skills.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "p-post-job__skills-tags",
+                  children: data.preferred_skills.map(function (skill) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                      className: "p-post-job__skill-tag p-post-job__skill-tag--preferred",
+                      children: [skill, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                        type: "button",
+                        className: "p-post-job__skill-remove",
+                        onClick: function onClick() {
+                          return removePreferredSkill(skill);
+                        },
+                        children: "\xD7"
+                      })]
+                    }, skill);
+                  })
+                })]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "p-post-job__form-group",
@@ -637,22 +821,37 @@ function EditJob(_ref) {
                 className: "p-post-job__label",
                 children: "\u52DF\u96C6\u30B9\u30C6\u30FC\u30BF\u30B9"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                className: "p-post-job__toggle",
+                className: "p-post-job__radio-group",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
-                  className: "p-post-job__toggle-label",
+                  className: "p-post-job__radio",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-                    type: "checkbox",
+                    type: "radio",
+                    name: "status",
+                    value: "open",
+                    checked: !data.is_closed,
+                    onChange: function onChange() {
+                      return setData("is_closed", false);
+                    },
+                    className: "p-post-job__radio-input"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "p-post-job__radio-text",
+                    children: "\u52DF\u96C6\u4E2D"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
+                  className: "p-post-job__radio",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                    type: "radio",
+                    name: "status",
+                    value: "closed",
                     checked: data.is_closed,
                     onChange: function onChange() {
-                      return setData("is_closed", !data.is_closed);
+                      return setData("is_closed", true);
                     },
-                    className: "p-post-job__toggle-input"
+                    className: "p-post-job__radio-input"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                    className: "p-post-job__toggle-slider"
+                    className: "p-post-job__radio-text",
+                    children: "\u52DF\u96C6\u7D42\u4E86"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                  className: "p-post-job__toggle-text",
-                  children: data.is_closed ? "募集終了" : "募集中"
                 })]
               })]
             })]

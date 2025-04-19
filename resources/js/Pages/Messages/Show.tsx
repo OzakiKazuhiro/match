@@ -4,22 +4,14 @@ import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
+import DirectMessage, { DirectMessageType } from "@/Components/DirectMessage";
+import axios from "axios";
 
 type User = {
     id: number;
     name: string;
     email: string;
     avatar?: string;
-};
-
-type Message = {
-    id: number;
-    conversation_group_id: number;
-    sender_id: number;
-    message: string;
-    created_at: string;
-    updated_at: string;
-    sender: User;
 };
 
 type ConversationGroup = {
@@ -32,57 +24,74 @@ type ConversationGroup = {
     applicant: User;
 };
 
-// アバターURLを取得する関数
-function getAvatarUrl(avatar: string | undefined): string {
-    if (!avatar) return "";
-    // storage/avatarsで始まる場合は/を先頭に追加
-    if (avatar.startsWith("storage/avatars/")) {
-        return `/${avatar}`;
-    }
-    // ファイル名のみの場合はパスを構築する
-    return `/storage/avatars/${avatar}`;
-}
-
-// ユーザー名からイニシャルを取得する関数
-function getInitials(name: string): string {
-    return name
-        .split(" ")
-        .map((word) => word.charAt(0))
-        .join("")
-        .toUpperCase()
-        .substring(0, 2);
-}
-
 export default function Show({
     auth,
     conversationGroup,
-    messages,
+    messages: initialMessages,
     participants,
 }: PageProps<{
     conversationGroup: ConversationGroup;
-    messages: Message[];
+    messages: DirectMessageType[];
     participants: User[];
 }>) {
     const messagesContainerRef = useRef<HTMLDivElement>(null);
+    const [messages, setMessages] =
+        useState<DirectMessageType[]>(initialMessages);
+    const [sending, setSending] = useState(false);
 
     // 会話相手を特定（自分以外の参加者）
     const otherParticipant = participants.find(
         (participant) => participant.id !== auth.user.id
     );
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, errors, reset } = useForm({
         message: "",
     });
 
     // メッセージ送信処理
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        post(route("messages.store", conversationGroup.id), {
-            onSuccess: () => {
+        if (!data.message.trim() || sending) {
+            return;
+        }
+
+        setSending(true);
+
+        try {
+            // CSRFトークンの取得
+            const csrfToken =
+                document
+                    .querySelector('meta[name="csrf-token"]')
+                    ?.getAttribute("content") || "";
+
+            // APIでメッセージを送信
+            const response = await axios.post(
+                route("messages.store", conversationGroup.id),
+                data,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                }
+            );
+
+            // 成功したら新しいメッセージを追加
+            if (response.data && response.data.message) {
+                const newMessage: DirectMessageType = {
+                    ...response.data.message,
+                    sender: auth.user,
+                };
+
+                setMessages([...messages, newMessage]);
                 reset("message");
-            },
-        });
+            }
+        } catch (error) {
+            console.error("メッセージ送信エラー:", error);
+        } finally {
+            setSending(false);
+        }
     };
 
     // メッセージが追加されたらスクロール位置を最下部に移動
@@ -121,56 +130,11 @@ export default function Show({
                             className="p-messages__conversation"
                         >
                             {messages.map((message) => (
-                                <div
+                                <DirectMessage
                                     key={message.id}
-                                    className={`p-messages__message ${
-                                        message.sender_id === auth.user.id
-                                            ? "p-messages__message--sent"
-                                            : "p-messages__message--received"
-                                    }`}
-                                >
-                                    {message.sender_id !== auth.user.id && (
-                                        <div className="p-messages__avatar">
-                                            {message.sender.avatar ? (
-                                                <img
-                                                    src={getAvatarUrl(
-                                                        message.sender.avatar
-                                                    )}
-                                                    alt={message.sender.name}
-                                                    className="w-8 h-8 rounded-full"
-                                                />
-                                            ) : (
-                                                <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xs font-bold">
-                                                    {getInitials(
-                                                        message.sender.name
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-                                    <div
-                                        className={`p-messages__bubble ${
-                                            message.sender_id === auth.user.id
-                                                ? "p-messages__bubble--sent"
-                                                : "p-messages__bubble--received"
-                                        }`}
-                                    >
-                                        <p className="p-messages__message-text">
-                                            {message.message}
-                                        </p>
-                                        <p className="p-messages__message-time">
-                                            {new Date(
-                                                message.created_at
-                                            ).toLocaleString("ja-JP", {
-                                                year: "numeric",
-                                                month: "2-digit",
-                                                day: "2-digit",
-                                                hour: "2-digit",
-                                                minute: "2-digit",
-                                            })}
-                                        </p>
-                                    </div>
-                                </div>
+                                    message={message}
+                                    currentUserId={auth.user.id}
+                                />
                             ))}
                         </div>
                     </div>
@@ -205,11 +169,8 @@ export default function Show({
                                 />
                             </div>
                             <div className="p-messages__submit-container">
-                                <PrimaryButton
-                                    type="submit"
-                                    disabled={processing}
-                                >
-                                    送信
+                                <PrimaryButton type="submit" disabled={sending}>
+                                    {sending ? "送信中..." : "送信"}
                                 </PrimaryButton>
                             </div>
                         </form>

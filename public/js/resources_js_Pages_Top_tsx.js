@@ -322,7 +322,7 @@ function Top(_ref) {
               children: "\u300C\u30B7\u30F3\u30D7\u30EB\u3067\u4F7F\u3044\u3084\u3059\u3044\u300D"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
               className: "p-top__solution-description",
-              children: "\u3092\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u3057\u305F\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u6848\u4EF6\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3067\u3059\u3002"
+              children: "\u3092\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u3057\u305F\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u6848\u4EF6\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3067\u3059"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
               className: "p-top__solution-mobile-image",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
@@ -588,16 +588,12 @@ function Top(_ref) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                   className: "p-top__job-desc",
                   children: "\u65E2\u5B58\u306E\u30A6\u30A7\u30D6\u30A2\u30D7\u30EA\u30B1\u30FC\u30B7\u30E7\u30F3\u3092React\u3092\u4F7F\u7528\u3057\u3066\u30EA\u30CB\u30E5\u30FC\u30A2\u30EB\u3059\u308B\u304A\u4ED5\u4E8B\u3067\u3059\u3002\u30EC\u30B9\u30DD\u30F3\u30B7\u30D6\u5BFE\u5FDC\u5FC5\u9808\u3001TypeScript\u306E\u7D4C\u9A13\u304C\u3042\u308B\u65B9\u6B53\u8FCE\u3057\u307E\u3059\u3002"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                   className: "p-top__job-footer",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                     className: "p-top__job-date",
                     children: "3\u65E5\u524D"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                    href: "/job/1",
-                    className: "p-top__job-link",
-                    children: "\u8A73\u7D30\u3092\u898B\u308B"
-                  })]
+                  })
                 })]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -619,16 +615,12 @@ function Top(_ref) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                   className: "p-top__job-desc",
                   children: "\u98F2\u98DF\u5E97\u3068\u8FB2\u5BB6\u3092\u7E4B\u3050\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u306E\u958B\u767A\u30D1\u30FC\u30C8\u30CA\u30FC\u3092\u52DF\u96C6\u3057\u3066\u3044\u307E\u3059\u3002\u30D0\u30C3\u30AF\u30A8\u30F3\u30C9\u958B\u767A\u306E\u7D4C\u9A13\u8005\u6B53\u8FCE\u3002\u53CE\u76CA\u306F\u5747\u7B49\u5206\u914D\u3057\u307E\u3059\u3002"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                   className: "p-top__job-footer",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                     className: "p-top__job-date",
                     children: "1\u9031\u9593\u524D"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                    href: "/job/2",
-                    className: "p-top__job-link",
-                    children: "\u8A73\u7D30\u3092\u898B\u308B"
-                  })]
+                  })
                 })]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -650,16 +642,12 @@ function Top(_ref) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                   className: "p-top__job-desc",
                   children: "\u30A2\u30D1\u30EC\u30EB\u30D6\u30E9\u30F3\u30C9\u306EEC\u30B5\u30A4\u30C8\u3092Laravel\u3067\u69CB\u7BC9\u3057\u3066\u3044\u305F\u3060\u304D\u307E\u3059\u3002\u6C7A\u6E08\u30B7\u30B9\u30C6\u30E0\u306E\u9023\u643A\u3084\u30E6\u30FC\u30B6\u30FC\u7BA1\u7406\u30B7\u30B9\u30C6\u30E0\u306E\u5B9F\u88C5\u304C\u4E3B\u306A\u696D\u52D9\u5185\u5BB9\u3067\u3059\u3002"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                   className: "p-top__job-footer",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                     className: "p-top__job-date",
                     children: "2\u65E5\u524D"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                    href: "/job/3",
-                    className: "p-top__job-link",
-                    children: "\u8A73\u7D30\u3092\u898B\u308B"
-                  })]
+                  })
                 })]
               })]
             })]

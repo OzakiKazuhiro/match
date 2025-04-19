@@ -14,7 +14,14 @@ class UpdateJobListingRequest extends FormRequest
     public function authorize(): bool
     {
         // 自分の投稿した案件のみ更新可能
-        $jobListing = JobListing::findOrFail($this->route('jobListing'));
+        $jobListingId = $this->route('jobListing');
+        
+        // jobListingがモデルインスタンスの場合はIDを取得
+        if ($jobListingId instanceof JobListing) {
+            $jobListingId = $jobListingId->id;
+        }
+        
+        $jobListing = JobListing::findOrFail($jobListingId);
         return Auth::id() === $jobListing->user_id;
     }
 

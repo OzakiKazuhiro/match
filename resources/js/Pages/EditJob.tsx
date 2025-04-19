@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Head, useForm } from "@inertiajs/react";
+import { useState } from "react";
+import { Head, useForm, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
@@ -12,6 +12,10 @@ interface JobListingData {
     budget_min?: number | null;
     budget_max?: number | null;
     is_closed: boolean;
+    category?: string | null;
+    location?: string;
+    skills?: string[] | null;
+    preferred_skills?: string[] | null;
 }
 
 export default function EditJob({
@@ -28,8 +32,10 @@ export default function EditJob({
         description: jobListing.description,
         budget_min: jobListing.budget_min?.toString() || "",
         budget_max: jobListing.budget_max?.toString() || "",
-        skills: [] as string[],
-        preferred_skills: [] as string[],
+        category: jobListing.category || "",
+        skills: jobListing.skills || [],
+        preferred_skills: jobListing.preferred_skills || [],
+        location: jobListing.location || "リモート",
         is_closed: jobListing.is_closed,
     });
 
@@ -117,7 +123,12 @@ export default function EditJob({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        put(route("job-listings.update", jobListing.id));
+        // useFormのputメソッドを使って送信する
+        put(route("job-listings.update", jobListing.id), {
+            onSuccess: () => {
+                console.log("更新成功");
+            },
+        });
     };
 
     return (
@@ -211,7 +222,7 @@ export default function EditJob({
                                             className="p-post-job__radio-input"
                                         />
                                         <span className="p-post-job__radio-text">
-                                            レベニューシェア
+                                            レベニューシェア案件
                                         </span>
                                     </label>
                                 </div>
@@ -232,10 +243,13 @@ export default function EditJob({
                                         </span>
                                     </label>
                                     <div className="p-post-job__budget-inputs">
-                                        <div className="p-post-job__budget-input-group">
+                                        <div className="p-post-job__budget-input-wrapper">
+                                            <span className="p-post-job__currency">
+                                                ¥
+                                            </span>
                                             <input
                                                 type="number"
-                                                placeholder="最小予算"
+                                                placeholder="最小金額"
                                                 value={data.budget_min}
                                                 onChange={(e) =>
                                                     setData(
@@ -243,24 +257,24 @@ export default function EditJob({
                                                         e.target.value
                                                     )
                                                 }
-                                                className={`p-post-job__input ${
+                                                className={`p-post-job__input p-post-job__input--budget ${
                                                     errors.budget_min
                                                         ? "p-post-job__input--error"
                                                         : ""
                                                 }`}
                                                 min="0"
                                             />
-                                            <span className="p-post-job__budget-unit">
-                                                千円
-                                            </span>
                                         </div>
                                         <span className="p-post-job__budget-separator">
                                             〜
                                         </span>
-                                        <div className="p-post-job__budget-input-group">
+                                        <div className="p-post-job__budget-input-wrapper">
+                                            <span className="p-post-job__currency">
+                                                ¥
+                                            </span>
                                             <input
                                                 type="number"
-                                                placeholder="最大予算"
+                                                placeholder="最大金額"
                                                 value={data.budget_max}
                                                 onChange={(e) =>
                                                     setData(
@@ -268,39 +282,103 @@ export default function EditJob({
                                                         e.target.value
                                                     )
                                                 }
-                                                className={`p-post-job__input ${
+                                                className={`p-post-job__input p-post-job__input--budget ${
                                                     errors.budget_max
                                                         ? "p-post-job__input--error"
                                                         : ""
                                                 }`}
                                                 min="0"
                                             />
-                                            <span className="p-post-job__budget-unit">
-                                                千円
-                                            </span>
                                         </div>
                                     </div>
-                                    {errors.budget_min && (
-                                        <InputError
-                                            message={errors.budget_min}
-                                            className="mt-1"
-                                        />
-                                    )}
-                                    {errors.budget_max && (
-                                        <InputError
-                                            message={errors.budget_max}
-                                            className="mt-1"
-                                        />
+                                    {(errors.budget_min ||
+                                        errors.budget_max) && (
+                                        <div className="p-post-job__error">
+                                            {errors.budget_min ||
+                                                errors.budget_max}
+                                        </div>
                                     )}
                                 </div>
                             )}
 
                             <div className="p-post-job__form-group">
                                 <label
+                                    htmlFor="category"
+                                    className="p-post-job__label"
+                                >
+                                    カテゴリー{" "}
+                                    <span className="p-post-job__required">
+                                        必須
+                                    </span>
+                                </label>
+                                <select
+                                    id="category"
+                                    className={`p-post-job__select ${
+                                        errors.category
+                                            ? "p-post-job__select--error"
+                                            : ""
+                                    }`}
+                                    value={data.category}
+                                    onChange={(e) =>
+                                        setData("category", e.target.value)
+                                    }
+                                    required
+                                >
+                                    <option value="">カテゴリーを選択</option>
+                                    {categoryOptions.map((category) => (
+                                        <option key={category} value={category}>
+                                            {category}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.category && (
+                                    <div className="p-post-job__error">
+                                        {errors.category}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="p-post-job__form-group">
+                                <label
+                                    htmlFor="location"
+                                    className="p-post-job__label"
+                                >
+                                    作業場所{" "}
+                                    <span className="p-post-job__required">
+                                        必須
+                                    </span>
+                                </label>
+                                <select
+                                    id="location"
+                                    className="p-post-job__select"
+                                    value={data.location}
+                                    onChange={(e) =>
+                                        setData("location", e.target.value)
+                                    }
+                                    required
+                                >
+                                    <option value="リモート">リモート</option>
+                                    <option value="オンサイト">
+                                        オンサイト
+                                    </option>
+                                    <option value="ハイブリッド">
+                                        ハイブリッド
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="p-post-job__section">
+                            <h2 className="p-post-job__section-title">
+                                案件詳細
+                            </h2>
+
+                            <div className="p-post-job__form-group">
+                                <label
                                     htmlFor="description"
                                     className="p-post-job__label"
                                 >
-                                    案件内容の詳細{" "}
+                                    案件の説明{" "}
                                     <span className="p-post-job__required">
                                         必須
                                     </span>
@@ -312,12 +390,7 @@ export default function EditJob({
                                             ? "p-post-job__textarea--error"
                                             : ""
                                     }`}
-                                    placeholder="案件の詳細を記入してください。例：
-- 求めるスキルや経験
-- 作業内容の詳細
-- 納期や期間
-- コミュニケーション方法
-など"
+                                    placeholder="案件の詳細な説明を入力してください。作業内容、求めるスキル、成果物、納期などを具体的に記載すると、応募が集まりやすくなります。"
                                     value={data.description}
                                     onChange={(e) =>
                                         setData("description", e.target.value)
@@ -326,35 +399,208 @@ export default function EditJob({
                                     required
                                 ></textarea>
                                 {errors.description && (
-                                    <InputError
-                                        message={errors.description}
-                                        className="mt-1"
-                                    />
+                                    <div className="p-post-job__error">
+                                        {errors.description}
+                                    </div>
                                 )}
+                            </div>
+
+                            <div className="p-post-job__form-group">
+                                <label className="p-post-job__label">
+                                    必要なスキル{" "}
+                                    <span className="p-post-job__optional">
+                                        自由追加
+                                    </span>
+                                </label>
+                                <div className="p-post-job__skills-container">
+                                    <div className="p-post-job__skills-input">
+                                        <select
+                                            className="p-post-job__select"
+                                            value={customSkill}
+                                            onChange={(e) =>
+                                                setCustomSkill(e.target.value)
+                                            }
+                                        >
+                                            <option value="">
+                                                スキルを選択して追加ボタンで追加
+                                            </option>
+                                            {skillOptions.map((skill) => (
+                                                <option
+                                                    key={skill}
+                                                    value={skill}
+                                                >
+                                                    {skill}
+                                                </option>
+                                            ))}
+                                        </select>
+
+                                        <input
+                                            type="text"
+                                            placeholder="スキルを入力して追加ボタンで追加"
+                                            value={
+                                                !skillOptions.includes(
+                                                    customSkill
+                                                )
+                                                    ? customSkill
+                                                    : ""
+                                            }
+                                            onChange={(e) =>
+                                                setCustomSkill(e.target.value)
+                                            }
+                                            className="p-post-job__input p-post-job__input--skill"
+                                        />
+                                        <button
+                                            type="button"
+                                            className="p-post-job__add-button"
+                                            onClick={addSkill}
+                                        >
+                                            追加
+                                        </button>
+                                    </div>
+
+                                    {data.skills.length > 0 && (
+                                        <div className="p-post-job__skills-tags">
+                                            {data.skills.map((skill) => (
+                                                <div
+                                                    key={skill}
+                                                    className="p-post-job__skill-tag"
+                                                >
+                                                    {skill}
+                                                    <button
+                                                        type="button"
+                                                        className="p-post-job__skill-remove"
+                                                        onClick={() =>
+                                                            removeSkill(skill)
+                                                        }
+                                                    >
+                                                        ×
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="p-post-job__form-group">
+                                <label className="p-post-job__label">
+                                    あれば歓迎するスキル{" "}
+                                    <span className="p-post-job__optional">
+                                        自由追加
+                                    </span>
+                                </label>
+                                <div className="p-post-job__skills-container">
+                                    <div className="p-post-job__skills-input">
+                                        <select
+                                            className="p-post-job__select"
+                                            value={customPreferredSkill}
+                                            onChange={(e) =>
+                                                setCustomPreferredSkill(
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option value="">
+                                                スキルを選択して追加ボタンで追加
+                                            </option>
+                                            {skillOptions.map((skill) => (
+                                                <option
+                                                    key={skill}
+                                                    value={skill}
+                                                >
+                                                    {skill}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <input
+                                            type="text"
+                                            placeholder="スキルを入力して追加ボタンで追加"
+                                            value={
+                                                !skillOptions.includes(
+                                                    customPreferredSkill
+                                                )
+                                                    ? customPreferredSkill
+                                                    : ""
+                                            }
+                                            onChange={(e) =>
+                                                setCustomPreferredSkill(
+                                                    e.target.value
+                                                )
+                                            }
+                                            className="p-post-job__input p-post-job__input--skill"
+                                        />
+                                        <button
+                                            type="button"
+                                            className="p-post-job__add-button"
+                                            onClick={addPreferredSkill}
+                                        >
+                                            追加
+                                        </button>
+                                    </div>
+
+                                    {data.preferred_skills.length > 0 && (
+                                        <div className="p-post-job__skills-tags">
+                                            {data.preferred_skills.map(
+                                                (skill) => (
+                                                    <div
+                                                        key={skill}
+                                                        className="p-post-job__skill-tag p-post-job__skill-tag--preferred"
+                                                    >
+                                                        {skill}
+                                                        <button
+                                                            type="button"
+                                                            className="p-post-job__skill-remove"
+                                                            onClick={() =>
+                                                                removePreferredSkill(
+                                                                    skill
+                                                                )
+                                                            }
+                                                        >
+                                                            ×
+                                                        </button>
+                                                    </div>
+                                                )
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="p-post-job__form-group">
                                 <label className="p-post-job__label">
                                     募集ステータス
                                 </label>
-                                <div className="p-post-job__toggle">
-                                    <label className="p-post-job__toggle-label">
+                                <div className="p-post-job__radio-group">
+                                    <label className="p-post-job__radio">
                                         <input
-                                            type="checkbox"
+                                            type="radio"
+                                            name="status"
+                                            value="open"
+                                            checked={!data.is_closed}
+                                            onChange={() =>
+                                                setData("is_closed", false)
+                                            }
+                                            className="p-post-job__radio-input"
+                                        />
+                                        <span className="p-post-job__radio-text">
+                                            募集中
+                                        </span>
+                                    </label>
+                                    <label className="p-post-job__radio">
+                                        <input
+                                            type="radio"
+                                            name="status"
+                                            value="closed"
                                             checked={data.is_closed}
                                             onChange={() =>
-                                                setData(
-                                                    "is_closed",
-                                                    !data.is_closed
-                                                )
+                                                setData("is_closed", true)
                                             }
-                                            className="p-post-job__toggle-input"
+                                            className="p-post-job__radio-input"
                                         />
-                                        <span className="p-post-job__toggle-slider"></span>
+                                        <span className="p-post-job__radio-text">
+                                            募集終了
+                                        </span>
                                     </label>
-                                    <span className="p-post-job__toggle-text">
-                                        {data.is_closed ? "募集終了" : "募集中"}
-                                    </span>
                                 </div>
                             </div>
                         </div>

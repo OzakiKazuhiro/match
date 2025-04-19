@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Inertia\Response;
 
 class DirectMessageController extends Controller
@@ -58,7 +59,7 @@ class DirectMessageController extends Controller
     /**
      * Store a new message in the conversation.
      */
-    public function store(Request $request, ConversationGroup $conversationGroup): RedirectResponse
+    public function store(Request $request, ConversationGroup $conversationGroup): JsonResponse|RedirectResponse
     {
         // Validate request
         $request->validate([
@@ -79,6 +80,15 @@ class DirectMessageController extends Controller
         $conversationGroup->messages()->save($message);
         $conversationGroup->touch(); // Update the updated_at timestamp
 
+        // Ajax リクエストの場合は JSON レスポンスを返す
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message->load('sender'),
+            ]);
+        }
+
+        // 通常のフォーム送信の場合はリダイレクト
         return redirect()->back();
     }
 

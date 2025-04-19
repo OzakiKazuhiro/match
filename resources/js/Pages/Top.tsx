@@ -324,7 +324,7 @@ export default function Top({
                                 「シンプルで使いやすい」
                             </p>
                             <p className="p-top__solution-description">
-                                をコンセプトにした、エンジニア向け案件マッチングサービスです。
+                                をコンセプトにした、エンジニア向け案件マッチングサービスです
                             </p>
 
                             {/* スマホ表示用の画像 */}
@@ -583,12 +583,6 @@ export default function Top({
                                         <span className="p-top__job-date">
                                             3日前
                                         </span>
-                                        <Link
-                                            href="/job/1"
-                                            className="p-top__job-link"
-                                        >
-                                            詳細を見る
-                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -614,12 +608,6 @@ export default function Top({
                                         <span className="p-top__job-date">
                                             1週間前
                                         </span>
-                                        <Link
-                                            href="/job/2"
-                                            className="p-top__job-link"
-                                        >
-                                            詳細を見る
-                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -645,12 +633,6 @@ export default function Top({
                                         <span className="p-top__job-date">
                                             2日前
                                         </span>
-                                        <Link
-                                            href="/job/3"
-                                            className="p-top__job-link"
-                                        >
-                                            詳細を見る
-                                        </Link>
                                     </div>
                                 </div>
                             </div>

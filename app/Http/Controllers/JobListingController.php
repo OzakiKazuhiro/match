@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateJobListingRequest;
 use App\Http\Requests\StorePublicMessageRequest;
 use App\Models\JobListing;
 use App\Models\PublicMessage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,8 @@ use Inertia\Response;
 
 class JobListingController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * 案件一覧を表示
      */
@@ -72,7 +75,7 @@ class JobListingController extends Controller
         // 登録成功メッセージをフラッシュデータに追加
         session()->flash('message', '案件を投稿しました');
         
-        return redirect()->route('job-listings.show', $jobListing);
+        return redirect()->route('job-listings.index');
     }
 
     /**

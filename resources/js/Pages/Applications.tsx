@@ -128,106 +128,135 @@ export default function Applications({
                                             key={application.id}
                                             className="p-applications__item"
                                         >
-                                            <div className="p-applications__item-header">
-                                                <div className="p-applications__job-info">
-                                                    <Link
-                                                        href={route(
-                                                            "job-listings.show",
-                                                            application
-                                                                .jobListing.id
-                                                        )}
-                                                        className="p-applications__job-title"
-                                                    >
-                                                        {
-                                                            application
-                                                                .jobListing
-                                                                .title
-                                                        }
-                                                    </Link>
-                                                    <div className="p-applications__job-meta">
-                                                        <span
-                                                            className={`p-applications__job-type p-applications__job-type--${
-                                                                application
-                                                                    .jobListing
-                                                                    .type ===
-                                                                "one_time"
-                                                                    ? "onetime"
-                                                                    : "revenue"
-                                                            }`}
-                                                        >
-                                                            {application
-                                                                .jobListing
-                                                                .type ===
-                                                            "one_time"
-                                                                ? "単発案件"
-                                                                : "レベニューシェア"}
-                                                        </span>
-                                                        {formatBudget(
-                                                            application.jobListing
-                                                        ) && (
-                                                            <span className="p-applications__job-budget">
-                                                                予算:{" "}
+                                            {application.jobListing ? (
+                                                <>
+                                                    <div className="p-applications__item-header">
+                                                        <div className="p-applications__job-info">
+                                                            <Link
+                                                                href={route(
+                                                                    "job-listings.show",
+                                                                    application
+                                                                        .jobListing
+                                                                        .id
+                                                                )}
+                                                                className="p-applications__job-title"
+                                                            >
+                                                                {
+                                                                    application
+                                                                        .jobListing
+                                                                        .title
+                                                                }
+                                                            </Link>
+                                                            <div className="p-applications__job-meta">
+                                                                <span
+                                                                    className={`p-applications__job-type p-applications__job-type--${
+                                                                        application
+                                                                            .jobListing
+                                                                            .type ===
+                                                                        "one_time"
+                                                                            ? "onetime"
+                                                                            : "revenue"
+                                                                    }`}
+                                                                >
+                                                                    {application
+                                                                        .jobListing
+                                                                        .type ===
+                                                                    "one_time"
+                                                                        ? "単発案件"
+                                                                        : "レベニューシェア"}
+                                                                </span>
                                                                 {formatBudget(
                                                                     application.jobListing
+                                                                ) && (
+                                                                    <span className="p-applications__job-budget">
+                                                                        予算:{" "}
+                                                                        {formatBudget(
+                                                                            application.jobListing
+                                                                        )}
+                                                                    </span>
+                                                                )}
+                                                                {application
+                                                                    .jobListing
+                                                                    .user && (
+                                                                    <span className="p-applications__job-poster">
+                                                                        投稿者:{" "}
+                                                                        {
+                                                                            application
+                                                                                .jobListing
+                                                                                .user
+                                                                                .name
+                                                                        }
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            className={`p-applications__status ${getStatusClass(
+                                                                application.status
+                                                            )}`}
+                                                        >
+                                                            {getStatusText(
+                                                                application.status
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className="p-applications__item-body">
+                                                        <div className="p-applications__meta">
+                                                            <span className="p-applications__applied-date">
+                                                                応募日:{" "}
+                                                                {formatDate(
+                                                                    application.created_at
                                                                 )}
                                                             </span>
-                                                        )}
-                                                        <span className="p-applications__job-poster">
-                                                            投稿者:{" "}
-                                                            {
-                                                                application
-                                                                    .jobListing
-                                                                    .user.name
-                                                            }
-                                                        </span>
+                                                            {application
+                                                                .jobListing
+                                                                .is_closed && (
+                                                                <span className="p-applications__closed-tag">
+                                                                    募集終了
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <div className="p-applications__message">
+                                                            <h3 className="p-applications__message-title">
+                                                                応募メッセージ:
+                                                            </h3>
+                                                            <div className="p-applications__message-content">
+                                                                {
+                                                                    application.message
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div className="p-applications__actions">
+                                                            <Link
+                                                                href={route(
+                                                                    "job-listings.show",
+                                                                    application
+                                                                        .jobListing
+                                                                        .id
+                                                                )}
+                                                                className="p-applications__view-job"
+                                                            >
+                                                                案件を確認する
+                                                            </Link>
+                                                        </div>
                                                     </div>
+                                                </>
+                                            ) : (
+                                                <div className="p-applications__item-error">
+                                                    <p>
+                                                        この応募に関連する案件情報が見つかりません。
+                                                    </p>
+                                                    <p>
+                                                        応募ID: {application.id}
+                                                    </p>
+                                                    <p>
+                                                        案件ID:{" "}
+                                                        {
+                                                            application.job_listing_id
+                                                        }
+                                                    </p>
                                                 </div>
-                                                <div
-                                                    className={`p-applications__status ${getStatusClass(
-                                                        application.status
-                                                    )}`}
-                                                >
-                                                    {getStatusText(
-                                                        application.status
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="p-applications__item-body">
-                                                <div className="p-applications__meta">
-                                                    <span className="p-applications__applied-date">
-                                                        応募日:{" "}
-                                                        {formatDate(
-                                                            application.created_at
-                                                        )}
-                                                    </span>
-                                                    {application.jobListing
-                                                        .is_closed && (
-                                                        <span className="p-applications__closed-tag">
-                                                            募集終了
-                                                        </span>
-                                                    )}
-                                                </div>
-                                                <div className="p-applications__message">
-                                                    <h3 className="p-applications__message-title">
-                                                        応募メッセージ:
-                                                    </h3>
-                                                    <div className="p-applications__message-content">
-                                                        {application.message}
-                                                    </div>
-                                                </div>
-                                                <div className="p-applications__actions">
-                                                    <Link
-                                                        href={route(
-                                                            "job-listings.show",
-                                                            application
-                                                                .jobListing.id
-                                                        )}
-                                                        className="p-applications__view-job"
-                                                    >
-                                                        案件を確認する
-                                                    </Link>
-                                                </div>
-                                            </div>
+                                            )}
                                         </div>
                                     ))}
                                 </div>

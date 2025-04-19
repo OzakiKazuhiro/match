@@ -4,6 +4,8 @@ import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
+import { route } from "ziggy-js";
+import PublicMessage, { PublicMessageType } from "@/Components/PublicMessage";
 
 /**
  * アバター画像のURLを適切な形式に変換する
@@ -11,7 +13,19 @@ import PrimaryButton from "@/Components/PrimaryButton";
  */
 const getAvatarUrl = (avatarPath: string | undefined): string => {
     if (!avatarPath) return "";
-    return avatarPath.startsWith("/") ? avatarPath : `/${avatarPath}`;
+
+    // 既にstorageから始まる場合は重複を避ける
+    if (avatarPath.startsWith("storage/")) {
+        return `/${avatarPath}`;
+    }
+
+    // http or httpsから始まる場合はそのまま返す
+    if (avatarPath.startsWith("http")) {
+        return avatarPath;
+    }
+
+    // それ以外の場合はstorageパスを追加
+    return `/storage/${avatarPath}`;
 };
 
 interface User {
@@ -20,16 +34,6 @@ interface User {
     email: string;
     avatar?: string;
     created_at?: string;
-}
-
-interface PublicMessage {
-    id: number;
-    job_listing_id: number;
-    user_id: number;
-    message: string;
-    created_at: string;
-    updated_at: string;
-    user: User;
 }
 
 interface JobListingData {
@@ -49,7 +53,7 @@ interface JobListingData {
     created_at: string;
     updated_at: string;
     user: User;
-    public_messages: PublicMessage[];
+    public_messages: PublicMessageType[];
 }
 
 export default function JobDetail({
@@ -351,75 +355,10 @@ export default function JobDetail({
                                                 0 ? (
                                                 jobListing.public_messages.map(
                                                     (message) => (
-                                                        <div
+                                                        <PublicMessage
                                                             key={message.id}
-                                                            className="p-job-detail__message"
-                                                        >
-                                                            <div className="p-job-detail__message-header">
-                                                                <div className="p-job-detail__message-user">
-                                                                    {message
-                                                                        .user
-                                                                        .avatar ? (
-                                                                        <img
-                                                                            src={getAvatarUrl(
-                                                                                message
-                                                                                    .user
-                                                                                    .avatar
-                                                                            )}
-                                                                            alt={
-                                                                                message
-                                                                                    .user
-                                                                                    .name
-                                                                            }
-                                                                            className="p-job-detail__message-avatar"
-                                                                            onError={(
-                                                                                e
-                                                                            ) => {
-                                                                                e.currentTarget.onerror =
-                                                                                    null;
-                                                                                e.currentTarget.src =
-                                                                                    "";
-                                                                                if (
-                                                                                    e
-                                                                                        .currentTarget
-                                                                                        .parentElement
-                                                                                ) {
-                                                                                    e.currentTarget.parentElement.innerHTML =
-                                                                                        message.user.name
-                                                                                            .charAt(
-                                                                                                0
-                                                                                            )
-                                                                                            .toUpperCase();
-                                                                                }
-                                                                            }}
-                                                                        />
-                                                                    ) : (
-                                                                        <div className="p-job-detail__message-avatar-placeholder">
-                                                                            {message.user.name.charAt(
-                                                                                0
-                                                                            )}
-                                                                        </div>
-                                                                    )}
-                                                                    <span className="p-job-detail__message-name">
-                                                                        {
-                                                                            message
-                                                                                .user
-                                                                                .name
-                                                                        }
-                                                                    </span>
-                                                                </div>
-                                                                <span className="p-job-detail__message-date">
-                                                                    {formatMessageDate(
-                                                                        message.created_at
-                                                                    )}
-                                                                </span>
-                                                            </div>
-                                                            <div className="p-job-detail__message-content">
-                                                                {
-                                                                    message.message
-                                                                }
-                                                            </div>
-                                                        </div>
+                                                            message={message}
+                                                        />
                                                     )
                                                 )
                                             ) : (

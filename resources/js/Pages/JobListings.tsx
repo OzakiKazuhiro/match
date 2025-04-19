@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { PropsWithChildren, ReactNode } from "react";
+import JobCard, { JobType } from "@/Components/JobCard";
+import { route } from "ziggy-js";
 
 // 共通レイアウトコンポーネント（ログイン不要）
 function Layout({
@@ -170,24 +172,6 @@ function Layout({
     );
 }
 
-interface JobType {
-    id: number;
-    title: string;
-    description: string;
-    type: string;
-    budget_min?: number | null;
-    budget_max?: number | null;
-    category?: string | null;
-    created_at: string;
-    updated_at: string;
-    user: {
-        id: number;
-        name: string;
-        email: string;
-        avatar?: string;
-    };
-}
-
 export default function JobListings({
     auth,
     jobListings,
@@ -232,48 +216,6 @@ export default function JobListings({
         return matchesQuery && matchesType;
     });
 
-    // 案件タイプの表示名
-    const jobTypeNames = {
-        one_time: "単発案件",
-        revenue_share: "レベニューシェア",
-    };
-
-    // 予算表示のフォーマット
-    const formatBudget = (
-        budgetMin?: number | null,
-        budgetMax?: number | null
-    ) => {
-        if (!budgetMin && !budgetMax) {
-            return null;
-        }
-
-        if (budgetMin && budgetMax) {
-            return `¥${budgetMin.toLocaleString()} 〜 ¥${budgetMax.toLocaleString()}`;
-        } else if (budgetMin) {
-            return `¥${budgetMin.toLocaleString()} 〜`;
-        } else if (budgetMax) {
-            return `〜 ¥${budgetMax.toLocaleString()}`;
-        }
-    };
-
-    // 日付のフォーマット
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        const now = new Date();
-        const diffTime = Math.abs(now.getTime() - date.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        if (diffDays === 1) {
-            return "今日";
-        } else if (diffDays <= 7) {
-            return `${diffDays}日前`;
-        } else if (diffDays <= 30) {
-            return `${Math.floor(diffDays / 7)}週間前`;
-        } else {
-            return date.toLocaleDateString("ja-JP");
-        }
-    };
-
     // タイプフィルターの変更（SPA対応）
     const handleFilterChange = (type: "all" | "one_time" | "revenue_share") => {
         setActiveFilter(type);
@@ -294,10 +236,10 @@ export default function JobListings({
             <div className="p-job-listings__header">
                 <div className="p-job-listings__header-inner">
                     <h1 className="p-job-listings__title">案件を探す</h1>
-                    <p className="p-job-listings__subtitle">
+                    {/* <p className="p-job-listings__subtitle">
                         単発案件やレベニューシェア案件を探してみましょう。
                         あなたのスキルや希望に合った案件が見つかります。
-                    </p>
+                    </p> */}
 
                     {!auth?.user && (
                         <div className="p-job-listings__login-notice">
@@ -410,72 +352,7 @@ export default function JobListings({
                 {filteredJobs.length > 0 ? (
                     <div className="p-job-listings__grid">
                         {filteredJobs.map((job) => (
-                            <div key={job.id} className="p-job-listings__card">
-                                <div className="p-job-listings__card-header">
-                                    <span
-                                        className={`p-job-listings__card-type p-job-listings__card-type--${
-                                            job.type === "one_time"
-                                                ? "onetime"
-                                                : "revenue"
-                                        }`}
-                                    >
-                                        {
-                                            jobTypeNames[
-                                                job.type as keyof typeof jobTypeNames
-                                            ]
-                                        }
-                                    </span>
-                                    {(job.budget_min || job.budget_max) && (
-                                        <span className="p-job-listings__card-budget">
-                                            {formatBudget(
-                                                job.budget_min,
-                                                job.budget_max
-                                            )}
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="p-job-listings__card-content">
-                                    <h3 className="p-job-listings__card-title">
-                                        {job.title}
-                                    </h3>
-                                    <p className="p-job-listings__card-desc">
-                                        {job.description}
-                                    </p>
-                                    <div className="p-job-listings__card-meta">
-                                        <span className="p-job-listings__card-date">
-                                            {formatDate(job.created_at)}
-                                        </span>
-                                        <span className="p-job-listings__card-author">
-                                            投稿者: {job.user.name}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="p-job-listings__card-footer">
-                                    {job.category && (
-                                        <div className="p-job-listings__card-category">
-                                            {job.category}
-                                        </div>
-                                    )}
-                                    <Link
-                                        href={
-                                            auth?.user
-                                                ? route(
-                                                      "job-listings.show",
-                                                      job.id
-                                                  )
-                                                : route("login", {
-                                                      redirect: route(
-                                                          "job-listings.show",
-                                                          job.id
-                                                      ),
-                                                  })
-                                        }
-                                        className="p-job-listings__card-link"
-                                    >
-                                        詳細を見る
-                                    </Link>
-                                </div>
-                            </div>
+                            <JobCard key={job.id} job={job} auth={auth} />
                         ))}
                     </div>
                 ) : (
