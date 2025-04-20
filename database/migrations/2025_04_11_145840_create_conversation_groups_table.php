@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
             
             // 同じ案件に対する同じユーザー間の会話グループが重複しないようにする
-            $table->unique(['job_owner_id', 'applicant_id', 'job_listing_id']);
+            $table->unique(['job_owner_id', 'applicant_id', 'job_listing_id'], 'conversation_groups_owner_applicant_job_unique');
         });
         
         // direct_messagesテーブルを変更

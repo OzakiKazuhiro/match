@@ -9,7 +9,6 @@ use App\Models\ConversationGroup;
 use App\Notifications\ApplicationReceived;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -187,14 +186,11 @@ class ApplicationController extends Controller
         // 承認の場合、会話グループの存在を確認し、必要に応じて作成または更新
         $conversationGroupId = null;
         if ($status === 'accepted') {
-            // 会話グループを検索（案件投稿者と応募者間）
+            // 会話グループを検索（案件投稿者と応募者間、かつ同じ案件）
             $conversationGroup = ConversationGroup::where(function($query) use ($jobListing, $application) {
                     $query->where('job_owner_id', $jobListing->user_id)
-                          ->where('applicant_id', $application->user_id);
-                })
-                ->orWhere(function($query) use ($jobListing, $application) {
-                    $query->where('job_owner_id', $application->user_id)
-                          ->where('applicant_id', $jobListing->user_id);
+                          ->where('applicant_id', $application->user_id)
+                          ->where('job_listing_id', $jobListing->id);
                 })
                 ->first();
                 
@@ -205,9 +201,6 @@ class ApplicationController extends Controller
                     'applicant_id' => $application->user_id, // 応募者
                     'job_listing_id' => $jobListing->id, // 関連する案件
                 ]);
-            } else if ($conversationGroup->job_listing_id === null) {
-                // 既存の会話グループに案件IDが設定されていない場合は更新
-                $conversationGroup->update(['job_listing_id' => $jobListing->id]);
             }
             
             $conversationGroupId = $conversationGroup->id;
