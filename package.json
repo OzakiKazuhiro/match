@@ -48,6 +48,7 @@
     },
     "dependencies": {
         "@heroicons/react": "^2.2.0",
+        "dayjs": "^1.11.13",
         "ziggy-js": "^2.5.2"
     }
 }

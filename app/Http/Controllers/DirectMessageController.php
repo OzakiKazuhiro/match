@@ -20,11 +20,19 @@ class DirectMessageController extends Controller
     public function index(): Response
     {
         $user = Auth::user();
-        $conversationGroups = ConversationGroup::with(['jobOwner', 'applicant', 'latestMessage.sender'])
+        $conversationGroups = ConversationGroup::with(['jobOwner', 'applicant', 'latestMessage.sender', 'jobListing'])
             ->where('job_owner_id', $user->id)
             ->orWhere('applicant_id', $user->id)
             ->orderBy('updated_at', 'desc')
             ->get();
+            
+        // 各会話グループの未読メッセージ数を計算
+        $conversationGroups->each(function ($group) use ($user) {
+            $group->unread_count = $group->messages()
+                ->where('sender_id', '!=', $user->id)
+                ->where('is_read', false)
+                ->count();
+        });
 
         return Inertia::render('Messages/Index', [
             'conversationGroups' => $conversationGroups,
@@ -41,13 +49,16 @@ class DirectMessageController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $conversationGroup->load(['jobOwner', 'applicant']);
+        $conversationGroup->load(['jobOwner', 'applicant', 'jobListing']);
         $messages = $conversationGroup->messages()
             ->with('sender')
             ->orderBy('created_at', 'asc')
             ->get();
             
         $participants = $conversationGroup->getAllParticipants();
+        
+        // 表示時に、自分宛のメッセージを既読にする
+        $this->markMessagesAsRead($conversationGroup);
 
         return Inertia::render('Messages/Show', [
             'conversationGroup' => $conversationGroup,
@@ -75,6 +86,7 @@ class DirectMessageController extends Controller
         $message = new DirectMessage([
             'sender_id' => Auth::id(),
             'message' => $request->message,
+            'is_read' => false, // 初期状態は未読
         ]);
 
         $conversationGroup->messages()->save($message);
@@ -119,5 +131,34 @@ class DirectMessageController extends Controller
         ]);
 
         return redirect()->route('messages.show', $conversationGroup);
+    }
+    
+    /**
+     * メッセージを既読にするAPIエンドポイント
+     */
+    public function markAsRead(Request $request, ConversationGroup $conversationGroup): JsonResponse
+    {
+        // 権限チェック
+        if (!$conversationGroup->hasParticipant(Auth::id())) {
+            abort(403, '権限がありません');
+        }
+        
+        $this->markMessagesAsRead($conversationGroup);
+        
+        return response()->json([
+            'success' => true
+        ]);
+    }
+    
+    /**
+     * 会話グループ内の自分宛のメッセージを既読にする
+     */
+    private function markMessagesAsRead(ConversationGroup $conversationGroup): void
+    {
+        // 自分が送信者ではないメッセージ（＝自分宛のメッセージ）を既読にする
+        $conversationGroup->messages()
+            ->where('sender_id', '!=', Auth::id())
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
     }
 } 

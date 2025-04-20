@@ -14,6 +14,16 @@ type User = {
     avatar?: string;
 };
 
+type JobListing = {
+    id: number;
+    title: string;
+    user_id: number;
+    type: string;
+    budget_min?: number;
+    budget_max?: number;
+    is_closed: boolean;
+};
+
 type ConversationGroup = {
     id: number;
     job_owner_id: number;
@@ -22,6 +32,7 @@ type ConversationGroup = {
     updated_at: string;
     job_owner: User;
     applicant: User;
+    job_listing: JobListing | null;
 };
 
 export default function Show({
@@ -47,6 +58,31 @@ export default function Show({
     const { data, setData, errors, reset } = useForm({
         message: "",
     });
+
+    // メッセージを既読にするAPI呼び出し
+    const markMessagesAsRead = async () => {
+        try {
+            // CSRFトークンの取得
+            const csrfToken =
+                document
+                    .querySelector('meta[name="csrf-token"]')
+                    ?.getAttribute("content") || "";
+
+            // 既読APIを呼び出し
+            await axios.post(
+                route("messages.mark-as-read", conversationGroup.id),
+                {},
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                }
+            );
+        } catch (error) {
+            console.error("既読設定エラー:", error);
+        }
+    };
 
     // メッセージ送信処理
     const handleSubmit = async (e: React.FormEvent) => {
@@ -102,6 +138,22 @@ export default function Show({
         }
     }, [messages]);
 
+    // 画面読み込み時にメッセージを既読にする
+    useEffect(() => {
+        // 初回ロード時に既読APIを呼び出し
+        markMessagesAsRead();
+
+        // 一定間隔で既読APIを呼び出し（ポーリング）
+        const interval = setInterval(() => {
+            markMessagesAsRead();
+        }, 30000); // 30秒ごと
+
+        // クリーンアップ関数
+        return () => {
+            clearInterval(interval);
+        };
+    }, [conversationGroup.id]);
+
     return (
         <AuthenticatedLayout
             header={
@@ -123,11 +175,37 @@ export default function Show({
             />
 
             <div className="p-messages__container">
-                <div className="p-messages__card">
+                {conversationGroup.job_listing && (
+                    <div className="p-messages__card mb-4">
+                        <div className="p-messages__card-body">
+                            <div className="p-messages__job-info">
+                                <div className="p-messages__job-info-content">
+                                    <p className="p-messages__job-info-label">
+                                        関連案件
+                                    </p>
+                                    <h3 className="p-messages__job-info-title">
+                                        {conversationGroup.job_listing.title}
+                                    </h3>
+                                </div>
+                                <Link
+                                    href={route(
+                                        "job-listings.show",
+                                        conversationGroup.job_listing.id
+                                    )}
+                                    className="p-messages__job-info-link"
+                                >
+                                    案件詳細を見る
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <div className="p-messages__card mb-4">
                     <div className="p-messages__card-body">
                         <div
                             ref={messagesContainerRef}
-                            className="p-messages__conversation"
+                            className="p-messages__conversation px-2"
                         >
                             {messages.map((message) => (
                                 <DirectMessage

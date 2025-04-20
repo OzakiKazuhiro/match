@@ -6,6 +6,7 @@ import {
     useRef,
     useEffect,
 } from "react";
+import NotificationBadge from "@/Components/NotificationBadge";
 
 export default function Authenticated({
     header,
@@ -67,6 +68,7 @@ export default function Authenticated({
                     </Link>
 
                     <nav className="l-header__nav">
+                        <NotificationBadge />
                         <Link
                             href="/job-listings"
                             className="l-header__nav-link"
@@ -75,6 +77,12 @@ export default function Authenticated({
                         </Link>
                         <Link href="/post-job" className="l-header__nav-link">
                             案件を投稿
+                        </Link>
+                        <Link
+                            href={route("dashboard")}
+                            className="l-header__nav-link"
+                        >
+                            マイページ
                         </Link>
                         <div
                             className="l-header__user-menu"
@@ -223,6 +231,12 @@ export default function Authenticated({
                                 </span>
                             </div>
                         </div>
+                        <Link
+                            href="/notifications"
+                            className="l-header__mobile-link"
+                        >
+                            通知
+                        </Link>
                         <Link
                             href="/job-listings"
                             className="l-header__mobile-link"

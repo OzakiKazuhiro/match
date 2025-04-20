@@ -250,15 +250,27 @@
         }
     }
 
-    // メッセージセクション
+    // メッセージ関連のスタイル
+    &__messages-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 24px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 12px;
+    }
+
     &__messages {
         margin-bottom: 24px;
     }
 
-    &__messages-title {
-        border-bottom: 1px solid #eee;
-        padding-bottom: 12px;
-        margin-bottom: 20px;
+    &__no-messages {
+        padding: 16px;
+        text-align: center;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        color: #666;
+        margin-bottom: 24px;
     }
 
     &__message {
@@ -535,33 +547,5 @@
 
     &__related-job-budget {
         color: #666;
-    }
-
-    // メッセージタブ
-    &__message-tabs {
-        display: flex;
-        border-bottom: 1px solid #eee;
-        margin-bottom: 20px;
-    }
-
-    &__message-tab {
-        padding: 12px 24px;
-        background: none;
-        border: none;
-        border-bottom: 2px solid transparent;
-        font-weight: 600;
-        font-size: 1rem;
-        color: #666;
-        cursor: pointer;
-        transition: all 0.3s;
-
-        &:hover {
-            color: #6cc3e0;
-        }
-
-        &--active {
-            color: #6cc3e0;
-            border-bottom-color: #6cc3e0;
-        }
     }
 }

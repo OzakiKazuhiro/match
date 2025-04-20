@@ -400,6 +400,14 @@ export default function ApplicationsToMyJobs({
                                                                                                         ?.email
                                                                                                 }
                                                                                             </p>
+                                                                                            <Link
+                                                                                                href={route(
+                                                                                                    "messages.index"
+                                                                                                )}
+                                                                                                className="p-applications__message-button"
+                                                                                            >
+                                                                                                メッセージを送る
+                                                                                            </Link>
                                                                                         </div>
                                                                                     </div>
                                                                                 )}

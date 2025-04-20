@@ -10,6 +10,7 @@ export interface DirectMessageType {
     created_at: string;
     updated_at: string;
     sender: User;
+    is_read: boolean;
 }
 
 interface DirectMessageProps {
@@ -64,51 +65,67 @@ export default function DirectMessage({
 }: DirectMessageProps) {
     const isSentByCurrentUser = message.sender_id === currentUserId;
 
+    // 日時のフォーマット
+    const formattedDate = new Date(message.created_at).toLocaleString("ja-JP", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+
     return (
-        <div
-            className={`p-messages__message ${
-                isSentByCurrentUser
-                    ? "p-messages__message--sent"
-                    : "p-messages__message--received"
-            }`}
-        >
-            {!isSentByCurrentUser && (
-                <div className="p-messages__avatar">
-                    {message.sender.avatar ? (
-                        <img
-                            src={getAvatarUrl(message.sender.avatar)}
-                            alt={message.sender.name}
-                            className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600 text-xs font-bold">
-                            {getInitials(message.sender.name)}
-                        </div>
-                    )}
-                </div>
-            )}
+        <div className="p-messages__message-container">
             <div
-                className={`p-messages__bubble ${
+                className={`p-messages__message ${
                     isSentByCurrentUser
-                        ? "p-messages__bubble--sent"
-                        : "p-messages__bubble--received"
+                        ? "p-messages__message--sent"
+                        : "p-messages__message--received"
                 }`}
             >
                 {!isSentByCurrentUser && (
-                    <p className="p-messages__sender-name">
-                        {message.sender.name}
-                    </p>
+                    <div className="p-messages__avatar">
+                        {message.sender.avatar ? (
+                            <img
+                                src={getAvatarUrl(message.sender.avatar)}
+                                alt={message.sender.name}
+                            />
+                        ) : (
+                            <div className="p-messages__avatar-placeholder">
+                                {getInitials(message.sender.name)}
+                            </div>
+                        )}
+                    </div>
                 )}
-                <p className="p-messages__message-text">{message.message}</p>
-                <p className="p-messages__message-time">
-                    {new Date(message.created_at).toLocaleString("ja-JP", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                    })}
-                </p>
+                <div
+                    className={`p-messages__bubble ${
+                        isSentByCurrentUser
+                            ? "p-messages__bubble--sent"
+                            : "p-messages__bubble--received"
+                    }`}
+                >
+                    {!isSentByCurrentUser && (
+                        <p className="p-messages__sender-name">
+                            {message.sender.name}
+                        </p>
+                    )}
+                    <p className="p-messages__message-text">
+                        {message.message}
+                    </p>
+                </div>
+            </div>
+
+            <div
+                className={`p-messages__message-time ${
+                    isSentByCurrentUser
+                        ? "p-messages__message-time--sent"
+                        : "p-messages__message-time--received"
+                }`}
+            >
+                {formattedDate}
+                {isSentByCurrentUser && message.is_read && (
+                    <span className="p-messages__read-status">既読</span>
+                )}
             </div>
         </div>
     );

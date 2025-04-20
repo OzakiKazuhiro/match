@@ -6,6 +6,7 @@ use App\Http\Requests\StoreApplicationRequest;
 use App\Models\JobListing;
 use App\Models\Application;
 use App\Models\ConversationGroup;
+use App\Notifications\ApplicationReceived;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -79,8 +80,16 @@ class ApplicationController extends Controller
             $conversationGroup = ConversationGroup::create([
                 'job_owner_id' => $jobListing->user_id, // 案件投稿者
                 'applicant_id' => Auth::id(), // 応募者
+                'job_listing_id' => $jobListing->id, // 関連する案件
             ]);
+        } else if ($conversationGroup->job_listing_id === null) {
+            // 既存の会話グループに案件IDが設定されていない場合は更新
+            $conversationGroup->update(['job_listing_id' => $jobListing->id]);
         }
+        
+        // 案件投稿者に通知を送信
+        $jobOwner = $jobListing->user;
+        $jobOwner->notify(new ApplicationReceived($application));
         
         session()->flash('message', '案件に応募しました。案件投稿者からの返信をお待ちください');
         
@@ -93,7 +102,7 @@ class ApplicationController extends Controller
     public function index(): Response
     {
         $applications = Application::where('user_id', Auth::id())
-            ->with('jobListing.user')
+            ->with(['jobListing.user'])
             ->latest()
             ->get();
             
@@ -162,5 +171,23 @@ class ApplicationController extends Controller
         session()->flash('message', "応募を{$statusText}しました");
         
         return redirect()->back();
+    }
+    
+    /**
+     * 案件への応募詳細ページを表示
+     */
+    public function show(Application $application): Response
+    {
+        // 権限チェック
+        if (Auth::id() !== $application->user_id && Auth::id() !== $application->jobListing->user_id) {
+            abort(403, '閲覧権限がありません。');
+        }
+        
+        // Eager Loadingで関連データを取得
+        $application->load(['jobListing.user', 'user']);
+        
+        return Inertia::render('Applications/Show', [
+            'application' => $application,
+        ]);
     }
 } 

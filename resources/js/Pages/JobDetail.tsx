@@ -70,9 +70,6 @@ export default function JobDetail({
         message: "",
     });
 
-    // メッセージタブの状態管理（パブリック/ダイレクト）
-    const [activeTab, setActiveTab] = useState<"public" | "direct">("public");
-
     const handleSubmitMessage = (e: React.FormEvent) => {
         e.preventDefault();
         post(route("job-listings.messages.store", jobListing.id), {
@@ -318,153 +315,82 @@ export default function JobDetail({
 
                             {/* メッセージセクション */}
                             <div className="p-job-detail__card p-job-detail__card--messages">
-                                {/* メッセージタブ */}
-                                <div className="p-job-detail__message-tabs">
-                                    <button
-                                        className={`p-job-detail__message-tab ${
-                                            activeTab === "public"
-                                                ? "p-job-detail__message-tab--active"
-                                                : ""
-                                        }`}
-                                        onClick={() => setActiveTab("public")}
-                                    >
-                                        公開メッセージ
-                                    </button>
-                                    <button
-                                        className={`p-job-detail__message-tab ${
-                                            activeTab === "direct"
-                                                ? "p-job-detail__message-tab--active"
-                                                : ""
-                                        }`}
-                                        onClick={() => setActiveTab("direct")}
-                                    >
-                                        ダイレクトメッセージ
-                                    </button>
+                                <h2 className="p-job-detail__messages-title">
+                                    パブリックメッセージ
+                                </h2>
+
+                                <div className="p-job-detail__messages">
+                                    {jobListing.public_messages &&
+                                    jobListing.public_messages.length > 0 ? (
+                                        jobListing.public_messages.map(
+                                            (message) => (
+                                                <PublicMessage
+                                                    key={message.id}
+                                                    message={message}
+                                                />
+                                            )
+                                        )
+                                    ) : (
+                                        <div className="p-job-detail__no-messages">
+                                            まだメッセージはありません。最初のメッセージを投稿しましょう。
+                                        </div>
+                                    )}
                                 </div>
 
-                                {/* パブリックメッセージ */}
-                                {activeTab === "public" && (
-                                    <>
-                                        <h2 className="p-job-detail__messages-title">
-                                            公開メッセージ
-                                        </h2>
-
-                                        <div className="p-job-detail__messages">
-                                            {jobListing.public_messages &&
-                                            jobListing.public_messages.length >
-                                                0 ? (
-                                                jobListing.public_messages.map(
-                                                    (message) => (
-                                                        <PublicMessage
-                                                            key={message.id}
-                                                            message={message}
-                                                        />
+                                {auth.user && (
+                                    <div className="p-job-detail__message-form-wrapper">
+                                        <h3 className="p-job-detail__message-form-title">
+                                            メッセージを投稿
+                                        </h3>
+                                        <form
+                                            onSubmit={handleSubmitMessage}
+                                            className="p-job-detail__message-form"
+                                        >
+                                            <textarea
+                                                id="message"
+                                                className="p-job-detail__message-input"
+                                                placeholder="質問や応募の意思などをメッセージしてください"
+                                                value={data.message}
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "message",
+                                                        e.target.value
                                                     )
-                                                )
-                                            ) : (
-                                                <div className="p-job-detail__no-messages">
-                                                    まだメッセージはありません。最初のメッセージを投稿しましょう。
-                                                </div>
+                                                }
+                                                rows={4}
+                                                required
+                                            ></textarea>
+                                            {errors.message && (
+                                                <InputError
+                                                    message={errors.message}
+                                                    className="mt-2"
+                                                />
                                             )}
-                                        </div>
-
-                                        {auth.user && (
-                                            <div className="p-job-detail__message-form-wrapper">
-                                                <h3 className="p-job-detail__message-form-title">
-                                                    メッセージを投稿
-                                                </h3>
-                                                <form
-                                                    onSubmit={
-                                                        handleSubmitMessage
-                                                    }
-                                                    className="p-job-detail__message-form"
-                                                >
-                                                    <textarea
-                                                        id="message"
-                                                        className="p-job-detail__message-input"
-                                                        placeholder="質問や応募の意思などをメッセージしてください"
-                                                        value={data.message}
-                                                        onChange={(e) =>
-                                                            setData(
-                                                                "message",
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        rows={4}
-                                                        required
-                                                    ></textarea>
-                                                    {errors.message && (
-                                                        <InputError
-                                                            message={
-                                                                errors.message
-                                                            }
-                                                            className="mt-2"
-                                                        />
-                                                    )}
-                                                    <button
-                                                        type="submit"
-                                                        className="p-job-detail__message-submit"
-                                                        disabled={processing}
-                                                    >
-                                                        {processing
-                                                            ? "送信中..."
-                                                            : "メッセージを送信"}
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        )}
-
-                                        {!auth.user && (
-                                            <div className="p-job-detail__login-prompt">
-                                                <p>
-                                                    メッセージを投稿するには、ログインしてください。
-                                                </p>
-                                                <Link
-                                                    href={route("login")}
-                                                    className="p-job-detail__apply-button"
-                                                >
-                                                    ログイン
-                                                </Link>
-                                            </div>
-                                        )}
-                                    </>
+                                            <button
+                                                type="submit"
+                                                className="p-job-detail__message-submit"
+                                                disabled={processing}
+                                            >
+                                                {processing
+                                                    ? "送信中..."
+                                                    : "メッセージを送信"}
+                                            </button>
+                                        </form>
+                                    </div>
                                 )}
 
-                                {/* ダイレクトメッセージ */}
-                                {activeTab === "direct" && (
-                                    <>
-                                        <h2 className="p-job-detail__messages-title">
-                                            ダイレクトメッセージ
-                                        </h2>
-
-                                        <div className="p-job-detail__no-messages">
-                                            {auth.user ? (
-                                                <>
-                                                    <p>
-                                                        案件投稿者とのダイレクトメッセージはまだ実装されていません。
-                                                    </p>
-                                                    <p>
-                                                        公開メッセージを通じて連絡を取ることができます。
-                                                    </p>
-                                                </>
-                                            ) : (
-                                                <p>
-                                                    ダイレクトメッセージを表示するには、ログインしてください。
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        {!auth.user && (
-                                            <div className="p-job-detail__login-prompt">
-                                                <Link
-                                                    href={route("login")}
-                                                    className="p-job-detail__apply-button"
-                                                >
-                                                    ログイン
-                                                </Link>
-                                            </div>
-                                        )}
-                                    </>
+                                {!auth.user && (
+                                    <div className="p-job-detail__login-prompt">
+                                        <p>
+                                            メッセージを投稿するには、ログインしてください。
+                                        </p>
+                                        <Link
+                                            href={route("login")}
+                                            className="p-job-detail__apply-button"
+                                        >
+                                            ログイン
+                                        </Link>
+                                    </div>
                                 )}
                             </div>
                         </div>

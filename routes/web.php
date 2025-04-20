@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\JobListingController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DirectMessageController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -81,6 +82,9 @@ Route::middleware('auth')->prefix('messages')->name('messages.')->group(function
     
     // メッセージ送信
     Route::post('/{conversationGroup}', [DirectMessageController::class, 'store'])->name('store');
+    
+    // メッセージを既読にする
+    Route::post('/{conversationGroup}/read', [DirectMessageController::class, 'markAsRead'])->name('mark-as-read');
 });
 
 // プロフィール関連ルート
@@ -102,6 +106,21 @@ Route::middleware('auth')->prefix('applications')->name('applications.')->group(
     Route::patch('/{application}/{status}', [ApplicationController::class, 'updateStatus'])
         ->name('update-status')
         ->where('status', 'accepted|declined');
+});
+
+// 通知関連ルート
+Route::middleware('auth')->prefix('notifications')->name('notifications.')->group(function () {
+    // 通知一覧
+    Route::get('/', [NotificationController::class, 'index'])->name('index');
+    
+    // 通知を既読にする
+    Route::patch('/{id}/read', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
+    
+    // すべての通知を既読にする
+    Route::patch('/read-all', [NotificationController::class, 'markAllAsRead'])->name('mark-all-as-read');
+    
+    // 未読の通知数を取得するAPI
+    Route::get('/unread-count', [NotificationController::class, 'getUnreadCount'])->name('unread-count');
 });
 
 require __DIR__.'/auth.php';

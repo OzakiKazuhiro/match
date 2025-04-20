@@ -17,6 +17,17 @@ interface DirectMessage {
     created_at: string;
     updated_at: string;
     sender: User;
+    is_read: boolean;
+}
+
+interface JobListing {
+    id: number;
+    title: string;
+    user_id: number;
+    type: string;
+    budget_min?: number;
+    budget_max?: number;
+    is_closed: boolean;
 }
 
 interface ConversationGroup {
@@ -26,6 +37,8 @@ interface ConversationGroup {
     job_owner: User;
     applicant: User;
     latest_message: DirectMessage | null;
+    unread_count: number;
+    job_listing: JobListing | null;
 }
 
 // 簡単な時間フォーマット関数
@@ -99,28 +112,32 @@ export default function Index({
         >
             <Head title="メッセージ" />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            {conversationGroups.length === 0 ? (
-                                <p>メッセージはありません。</p>
-                            ) : (
-                                <ul className="divide-y divide-gray-200">
-                                    {conversationGroups.map((group) => {
-                                        // 自分以外の参加者を特定
-                                        const otherParticipant =
-                                            group.job_owner_id === currentUserId
-                                                ? group.applicant
-                                                : group.job_owner;
+            <div className="p-messages__container">
+                <div className="p-messages__card">
+                    <div className="p-messages__card-body">
+                        {conversationGroups.length === 0 ? (
+                            <p className="p-messages__empty">
+                                メッセージはありません。
+                            </p>
+                        ) : (
+                            <ul className="p-messages__message-list">
+                                {conversationGroups.map((group) => {
+                                    // 自分以外の参加者を特定
+                                    const otherParticipant =
+                                        group.job_owner_id === currentUserId
+                                            ? group.applicant
+                                            : group.job_owner;
 
-                                        return (
-                                            <li key={group.id} className="py-4">
-                                                <Link
-                                                    href={`/messages/${group.id}`}
-                                                    className="block hover:bg-gray-50"
-                                                >
-                                                    <div className="flex items-center space-x-4">
+                                    return (
+                                        <li
+                                            key={group.id}
+                                            className="p-messages__message-list-item"
+                                        >
+                                            <Link
+                                                href={`/messages/${group.id}`}
+                                            >
+                                                <div className="p-messages__list-content">
+                                                    <div className="p-messages__user-avatar">
                                                         {otherParticipant.avatar ? (
                                                             <img
                                                                 src={getAvatarUrl(
@@ -129,56 +146,82 @@ export default function Index({
                                                                 alt={
                                                                     otherParticipant.name
                                                                 }
-                                                                className="h-12 w-12 rounded-full"
                                                             />
                                                         ) : (
-                                                            <div className="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold">
+                                                            <div className="p-messages__user-avatar-placeholder">
                                                                 {getInitials(
                                                                     otherParticipant.name
                                                                 )}
                                                             </div>
                                                         )}
-                                                        <div className="flex-1 min-w-0">
-                                                            <p className="text-sm font-medium text-gray-900 truncate">
+                                                        {group.unread_count >
+                                                            0 && (
+                                                            <span className="p-messages__user-avatar-badge">
+                                                                {
+                                                                    group.unread_count
+                                                                }
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div className="p-messages__list-details">
+                                                        <div className="p-messages__list-header">
+                                                            <p className="p-messages__user-name">
                                                                 {
                                                                     otherParticipant.name
                                                                 }
                                                             </p>
-                                                            <p className="text-sm text-gray-500 truncate">
-                                                                {group.latest_message
-                                                                    ? `${
-                                                                          group
-                                                                              .latest_message
-                                                                              .sender
-                                                                              .id ===
-                                                                          currentUserId
-                                                                              ? "あなた: "
-                                                                              : ""
-                                                                      }${
-                                                                          group
-                                                                              .latest_message
-                                                                              .message
-                                                                      }`
-                                                                    : "メッセージがありません"}
-                                                            </p>
+                                                            {group.latest_message && (
+                                                                <div className="p-messages__timestamp">
+                                                                    {formatTimeAgo(
+                                                                        group
+                                                                            .latest_message
+                                                                            .created_at
+                                                                    )}
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                        {group.latest_message && (
-                                                            <div className="text-xs text-gray-500">
-                                                                {formatTimeAgo(
+                                                        {group.job_listing && (
+                                                            <div className="p-messages__job-tag">
+                                                                案件:{" "}
+                                                                {
                                                                     group
-                                                                        .latest_message
-                                                                        .created_at
-                                                                )}
+                                                                        .job_listing
+                                                                        .title
+                                                                }
                                                             </div>
                                                         )}
+                                                        <p
+                                                            className={
+                                                                group.unread_count >
+                                                                0
+                                                                    ? "p-messages__preview p-messages__preview--unread"
+                                                                    : "p-messages__preview p-messages__preview--read"
+                                                            }
+                                                        >
+                                                            {group.latest_message
+                                                                ? `${
+                                                                      group
+                                                                          .latest_message
+                                                                          .sender
+                                                                          .id ===
+                                                                      currentUserId
+                                                                          ? "あなた: "
+                                                                          : ""
+                                                                  }${
+                                                                      group
+                                                                          .latest_message
+                                                                          .message
+                                                                  }`
+                                                                : "メッセージがありません"}
+                                                        </p>
                                                     </div>
-                                                </Link>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            )}
-                        </div>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        )}
                     </div>
                 </div>
             </div>

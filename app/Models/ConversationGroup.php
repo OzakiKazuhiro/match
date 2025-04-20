@@ -25,6 +25,7 @@ class ConversationGroup extends Model
         'is_active',
         'job_owner_id',
         'applicant_id',
+        'job_listing_id',
     ];
     
     /**
@@ -39,10 +40,9 @@ class ConversationGroup extends Model
     /**
      * このグループに関連する案件を取得
      */
-    public function jobs(): BelongsToMany
+    public function jobListing(): BelongsTo
     {
-        return $this->belongsToMany(JobListing::class, 'conversation_group_job')
-            ->withTimestamps();
+        return $this->belongsTo(JobListing::class);
     }
     
     /**
