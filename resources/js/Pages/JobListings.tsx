@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { PropsWithChildren, ReactNode } from "react";
 import JobCard, { JobType } from "@/Components/JobCard";
 import { route } from "ziggy-js";
+import NotificationBadge from "@/Components/NotificationBadge";
 
 // 共通レイアウトコンポーネント（ログイン不要）
 function Layout({
@@ -12,6 +13,50 @@ function Layout({
 }: PropsWithChildren<{ header?: ReactNode }>) {
     const { auth } = usePage().props as PageProps;
     const user = auth?.user;
+    const [showingUserDropdown, setShowingUserDropdown] = useState(false);
+    const [showingMobileMenu, setShowingMobileMenu] = useState(false);
+    const userDropdownRef = useRef<HTMLDivElement>(null);
+    const mobileMenuRef = useRef<HTMLDivElement>(null);
+    const mobileButtonRef = useRef<HTMLButtonElement>(null);
+
+    // ユーザードロップダウン外のクリックを検出
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                userDropdownRef.current &&
+                !userDropdownRef.current.contains(event.target as Node)
+            ) {
+                setShowingUserDropdown(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    // モバイルメニュー外のクリックを検出
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            // ボタン自体は例外（ボタンクリックはトグル動作のため）
+            if (
+                mobileMenuRef.current &&
+                !mobileMenuRef.current.contains(event.target as Node) &&
+                mobileButtonRef.current &&
+                !mobileButtonRef.current.contains(event.target as Node)
+            ) {
+                setShowingMobileMenu(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <div className="min-h-screen bg-f5f7fa">
@@ -23,34 +68,135 @@ function Layout({
                     </Link>
 
                     <nav className="l-header__nav">
-                        <Link
-                            href="/job-listings"
-                            className="l-header__nav-link"
-                        >
-                            案件一覧
-                        </Link>
-                        <Link href="/post-job" className="l-header__nav-link">
-                            案件を投稿
-                        </Link>
                         {auth?.user ? (
                             <>
+                                <NotificationBadge />
                                 <Link
-                                    href="/dashboard"
+                                    href="/job-listings"
+                                    className="l-header__nav-link"
+                                >
+                                    案件一覧
+                                </Link>
+                                <Link
+                                    href="/post-job"
+                                    className="l-header__nav-link"
+                                >
+                                    案件を投稿
+                                </Link>
+                                <Link
+                                    href={route("dashboard")}
                                     className="l-header__nav-link"
                                 >
                                     マイページ
                                 </Link>
-                                <Link
-                                    href="/logout"
-                                    method="post"
-                                    as="button"
-                                    className="l-header__nav-link"
+                                <div
+                                    className="l-header__user-menu"
+                                    ref={userDropdownRef}
                                 >
-                                    ログアウト
-                                </Link>
+                                    <button
+                                        onClick={() =>
+                                            setShowingUserDropdown(
+                                                !showingUserDropdown
+                                            )
+                                        }
+                                        className="l-header__user-button"
+                                    >
+                                        <div className="l-header__user-avatar">
+                                            {user.avatar ? (
+                                                <img
+                                                    src={
+                                                        user.avatar.startsWith(
+                                                            "/"
+                                                        )
+                                                            ? user.avatar
+                                                            : `/${user.avatar}`
+                                                    }
+                                                    alt={`${user.name}のアバター`}
+                                                    onError={(e) => {
+                                                        e.currentTarget.onerror =
+                                                            null;
+                                                        e.currentTarget.src =
+                                                            "";
+                                                        if (
+                                                            e.currentTarget
+                                                                .parentElement
+                                                        ) {
+                                                            e.currentTarget.parentElement.innerHTML =
+                                                                user.name
+                                                                    .charAt(0)
+                                                                    .toUpperCase();
+                                                        }
+                                                    }}
+                                                />
+                                            ) : (
+                                                user.name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            )}
+                                        </div>
+                                        <div className="l-header__user-info">
+                                            <span className="l-header__login-status">
+                                                ログイン中
+                                            </span>
+                                            <span className="l-header__user-name">
+                                                {user.name}さん
+                                            </span>
+                                        </div>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M6 9l6 6 6-6" />
+                                        </svg>
+                                    </button>
+
+                                    {showingUserDropdown && (
+                                        <div className="l-header__dropdown">
+                                            <Link
+                                                href={route("dashboard")}
+                                                className="l-header__dropdown-item"
+                                            >
+                                                マイページ
+                                            </Link>
+                                            <Link
+                                                href={route("profile.edit")}
+                                                className="l-header__dropdown-item"
+                                            >
+                                                プロフィール編集
+                                            </Link>
+                                            <Link
+                                                href={route("logout")}
+                                                method="post"
+                                                as="button"
+                                                className="l-header__dropdown-item l-header__dropdown-item--danger"
+                                            >
+                                                ログアウト
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
                             </>
                         ) : (
                             <>
+                                <Link
+                                    href="/job-listings"
+                                    className="l-header__nav-link"
+                                >
+                                    案件一覧
+                                </Link>
+                                <Link
+                                    href="/post-job"
+                                    className="l-header__nav-link"
+                                >
+                                    案件を投稿
+                                </Link>
                                 <Link
                                     href="/login"
                                     className="l-header__nav-link"
@@ -66,7 +212,134 @@ function Layout({
                             </>
                         )}
                     </nav>
+
+                    <button
+                        className="l-header__mobile-button"
+                        onClick={() => setShowingMobileMenu(!showingMobileMenu)}
+                        ref={mobileButtonRef}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
                 </div>
+
+                {/* モバイルメニュー */}
+                {showingMobileMenu && (
+                    <div className="l-header__mobile-menu" ref={mobileMenuRef}>
+                        {auth?.user ? (
+                            <>
+                                <div className="l-header__mobile-user">
+                                    <div className="l-header__user-avatar">
+                                        {user.avatar ? (
+                                            <img
+                                                src={
+                                                    user.avatar.startsWith("/")
+                                                        ? user.avatar
+                                                        : `/${user.avatar}`
+                                                }
+                                                alt={`${user.name}のアバター`}
+                                                onError={(e) => {
+                                                    e.currentTarget.onerror =
+                                                        null;
+                                                    e.currentTarget.src = "";
+                                                    if (
+                                                        e.currentTarget
+                                                            .parentElement
+                                                    ) {
+                                                        e.currentTarget.parentElement.innerHTML =
+                                                            user.name
+                                                                .charAt(0)
+                                                                .toUpperCase();
+                                                    }
+                                                }}
+                                            />
+                                        ) : (
+                                            user.name.charAt(0).toUpperCase()
+                                        )}
+                                    </div>
+                                    <div className="l-header__mobile-user-info">
+                                        <span className="l-header__mobile-user-name">
+                                            {user.name}さん
+                                        </span>
+                                        <span className="l-header__mobile-login-status">
+                                            ログイン中
+                                        </span>
+                                    </div>
+                                </div>
+                                <Link
+                                    href="/notifications"
+                                    className="l-header__mobile-link"
+                                >
+                                    通知
+                                </Link>
+                            </>
+                        ) : null}
+                        <Link
+                            href="/job-listings"
+                            className="l-header__mobile-link"
+                        >
+                            案件一覧
+                        </Link>
+                        <Link
+                            href="/post-job"
+                            className="l-header__mobile-link"
+                        >
+                            案件を投稿
+                        </Link>
+                        {auth?.user ? (
+                            <>
+                                <Link
+                                    href="/dashboard"
+                                    className="l-header__mobile-link"
+                                >
+                                    マイページ
+                                </Link>
+                                <Link
+                                    href="/profile/edit"
+                                    className="l-header__mobile-link"
+                                >
+                                    プロフィール編集
+                                </Link>
+                                <Link
+                                    href="/logout"
+                                    method="post"
+                                    as="button"
+                                    className="l-header__mobile-link l-header__mobile-link--danger"
+                                >
+                                    ログアウト
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link
+                                    href="/login"
+                                    className="l-header__mobile-link"
+                                >
+                                    ログイン
+                                </Link>
+                                <Link
+                                    href="/register"
+                                    className="l-header__mobile-link"
+                                >
+                                    会員登録
+                                </Link>
+                            </>
+                        )}
+                    </div>
+                )}
             </header>
 
             {header && (
@@ -230,357 +503,375 @@ export default function JobListings({
     };
 
     return (
-        <Layout header={<div className="p-job-listings__title">案件一覧</div>}>
+        <Layout header={<h2 className="p-dashboard__title">案件一覧</h2>}>
             <Head title="案件一覧 - Match" />
 
-            <div className="p-job-listings__header">
-                <div className="p-job-listings__header-inner">
-                    <h1 className="p-job-listings__title">案件を探す</h1>
-                    {/* <p className="p-job-listings__subtitle">
-                        単発案件やレベニューシェア案件を探してみましょう。
-                        あなたのスキルや希望に合った案件が見つかります。
-                    </p> */}
+            <div className="p-job-listings__container">
+                <div className="p-job-listings__header">
+                    <div className="p-job-listings__header-inner">
+                        <h1 className="p-job-listings__title">案件を探す</h1>
+                        {/* <p className="p-job-listings__subtitle">
+                            単発案件やレベニューシェア案件を探してみましょう。
+                            あなたのスキルや希望に合った案件が見つかります。
+                        </p> */}
 
-                    {!auth?.user && (
-                        <div className="p-job-listings__login-notice">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="8" x2="12" y2="12"></line>
-                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                            </svg>
-                            <span>
-                                案件詳細の閲覧には
-                                <Link
-                                    href="/login"
-                                    className="p-job-listings__login-link"
+                        {!auth?.user && (
+                            <div className="p-job-listings__login-notice">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
                                 >
-                                    ログイン
-                                </Link>
-                                が必要です
-                            </span>
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line
+                                        x1="12"
+                                        y1="16"
+                                        x2="12.01"
+                                        y2="16"
+                                    ></line>
+                                </svg>
+                                <span>
+                                    案件詳細の閲覧には
+                                    <Link
+                                        href="/login"
+                                        className="p-job-listings__login-link"
+                                    >
+                                        ログイン
+                                    </Link>
+                                    が必要です
+                                </span>
+                            </div>
+                        )}
+
+                        <div className="p-job-listings__search-box">
+                            <form
+                                className="p-job-listings__search-form"
+                                onSubmit={(e) => e.preventDefault()}
+                            >
+                                <input
+                                    type="text"
+                                    className="p-job-listings__search-input"
+                                    placeholder="キーワードで検索（案件名、内容など）"
+                                    value={searchQuery}
+                                    onChange={(e) =>
+                                        setSearchQuery(e.target.value)
+                                    }
+                                />
+                                <button
+                                    type="submit"
+                                    className="p-job-listings__search-button"
+                                >
+                                    検索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="p-job-listings__container">
+                    <div className="p-job-listings__filter-bar">
+                        <div className="p-job-listings__filter-tabs">
+                            <div
+                                className={`p-job-listings__filter-tab ${
+                                    activeFilter === "all"
+                                        ? "p-job-listings__filter-tab--active"
+                                        : ""
+                                }`}
+                                onClick={() => handleFilterChange("all")}
+                            >
+                                すべての案件
+                            </div>
+                            <div
+                                className={`p-job-listings__filter-tab ${
+                                    activeFilter === "one_time"
+                                        ? "p-job-listings__filter-tab--active"
+                                        : ""
+                                }`}
+                                onClick={() => handleFilterChange("one_time")}
+                            >
+                                単発案件
+                            </div>
+                            <div
+                                className={`p-job-listings__filter-tab ${
+                                    activeFilter === "revenue_share"
+                                        ? "p-job-listings__filter-tab--active"
+                                        : ""
+                                }`}
+                                onClick={() =>
+                                    handleFilterChange("revenue_share")
+                                }
+                            >
+                                レベニューシェア
+                            </div>
+                        </div>
+
+                        <div className="p-job-listings__sort-dropdown">
+                            <button className="p-job-listings__sort-button">
+                                新着順
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    {filteredJobs.length > 0 ? (
+                        <div className="p-job-listings__grid">
+                            {filteredJobs.map((job) => (
+                                <JobCard key={job.id} job={job} auth={auth} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="p-job-listings__no-results">
+                            <div className="p-job-listings__no-results-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="80"
+                                    height="80"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line
+                                        x1="12"
+                                        y1="16"
+                                        x2="12.01"
+                                        y2="16"
+                                    ></line>
+                                </svg>
+                            </div>
+                            <h3 className="p-job-listings__no-results-text">
+                                該当する案件が見つかりませんでした
+                            </h3>
+                            <p>
+                                検索条件を変更するか、別のキーワードで再度検索してみてください。
+                            </p>
+                            <div className="u-mt-4">
+                                <button
+                                    className="p-job-listings__no-results-button"
+                                    onClick={() => {
+                                        setSearchQuery("");
+                                        setActiveFilter("all");
+                                        // URLも更新
+                                        const url = route("job-listings.index");
+                                        window.history.pushState({}, "", url);
+                                    }}
+                                >
+                                    すべての案件を表示
+                                </button>
+                            </div>
                         </div>
                     )}
-
-                    <div className="p-job-listings__search-box">
-                        <form
-                            className="p-job-listings__search-form"
-                            onSubmit={(e) => e.preventDefault()}
-                        >
-                            <input
-                                type="text"
-                                className="p-job-listings__search-input"
-                                placeholder="キーワードで検索（案件名、内容など）"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                            <button
-                                type="submit"
-                                className="p-job-listings__search-button"
-                            >
-                                検索
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div className="p-job-listings__container">
-                <div className="p-job-listings__filter-bar">
-                    <div className="p-job-listings__filter-tabs">
-                        <div
-                            className={`p-job-listings__filter-tab ${
-                                activeFilter === "all"
-                                    ? "p-job-listings__filter-tab--active"
-                                    : ""
-                            }`}
-                            onClick={() => handleFilterChange("all")}
-                        >
-                            すべての案件
-                        </div>
-                        <div
-                            className={`p-job-listings__filter-tab ${
-                                activeFilter === "one_time"
-                                    ? "p-job-listings__filter-tab--active"
-                                    : ""
-                            }`}
-                            onClick={() => handleFilterChange("one_time")}
-                        >
-                            単発案件
-                        </div>
-                        <div
-                            className={`p-job-listings__filter-tab ${
-                                activeFilter === "revenue_share"
-                                    ? "p-job-listings__filter-tab--active"
-                                    : ""
-                            }`}
-                            onClick={() => handleFilterChange("revenue_share")}
-                        >
-                            レベニューシェア
-                        </div>
-                    </div>
-
-                    <div className="p-job-listings__sort-dropdown">
-                        <button className="p-job-listings__sort-button">
-                            新着順
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <path d="M6 9l6 6 6-6" />
-                            </svg>
-                        </button>
-                    </div>
                 </div>
 
-                {filteredJobs.length > 0 ? (
-                    <div className="p-job-listings__grid">
-                        {filteredJobs.map((job) => (
-                            <JobCard key={job.id} job={job} auth={auth} />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="p-job-listings__no-results">
-                        <div className="p-job-listings__no-results-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="80"
-                                height="80"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="8" x2="12" y2="12"></line>
-                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                            </svg>
-                        </div>
-                        <h3 className="p-job-listings__no-results-text">
-                            該当する案件が見つかりませんでした
-                        </h3>
-                        <p>
-                            検索条件を変更するか、別のキーワードで再度検索してみてください。
-                        </p>
-                        <div className="u-mt-4">
-                            <button
-                                className="p-job-listings__no-results-button"
-                                onClick={() => {
-                                    setSearchQuery("");
-                                    setActiveFilter("all");
-                                    // URLも更新
-                                    const url = route("job-listings.index");
-                                    window.history.pushState({}, "", url);
-                                }}
-                            >
-                                すべての案件を表示
-                            </button>
+                {/* 検索結果のサマリー表示 */}
+                {filteredJobs.length > 0 && (
+                    <div className="p-job-listings__container">
+                        <div className="p-job-listings__search-result">
+                            <p className="p-job-listings__search-result-text">
+                                {searchQuery
+                                    ? `「${searchQuery}」の検索結果: ${filteredJobs.length}件`
+                                    : `全${jobListings.total}件中 ${jobListings.from}〜${jobListings.to}件を表示`}
+                            </p>
                         </div>
                     </div>
                 )}
-            </div>
 
-            {/* 検索結果のサマリー表示 */}
-            {filteredJobs.length > 0 && (
-                <div className="p-job-listings__container">
-                    <div className="p-job-listings__search-result">
-                        <p className="p-job-listings__search-result-text">
-                            {searchQuery
-                                ? `「${searchQuery}」の検索結果: ${filteredJobs.length}件`
-                                : `全${jobListings.total}件中 ${jobListings.from}〜${jobListings.to}件を表示`}
-                        </p>
-                    </div>
-                </div>
-            )}
-
-            {/* ページネーション */}
-            {jobListings.last_page > 1 && (
-                <div className="p-job-listings__container">
-                    <div className="p-job-listings__pagination">
-                        {/* 「前へ」ボタン */}
-                        <Link
-                            href={jobListings.links[0].url || ""}
-                            className={`p-job-listings__pagination-button ${
-                                !jobListings.links[0].url
-                                    ? "p-job-listings__pagination-button--disabled"
-                                    : ""
-                            }`}
-                            preserveScroll
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                        </Link>
-
-                        {/* ページ番号ボタン - 最初と最後のリンク（前後のナビゲーション）を除外 */}
-                        {jobListings.links.slice(1, -1).map((link, i) => (
+                {/* ページネーション */}
+                {jobListings.last_page > 1 && (
+                    <div className="p-job-listings__container">
+                        <div className="p-job-listings__pagination">
+                            {/* 「前へ」ボタン */}
                             <Link
-                                key={i}
-                                href={link.url || ""}
+                                href={jobListings.links[0].url || ""}
                                 className={`p-job-listings__pagination-button ${
-                                    link.active
-                                        ? "p-job-listings__pagination-button--active"
+                                    !jobListings.links[0].url
+                                        ? "p-job-listings__pagination-button--disabled"
                                         : ""
                                 }`}
                                 preserveScroll
                             >
-                                {link.label}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
                             </Link>
-                        ))}
 
-                        {/* 「次へ」ボタン */}
-                        <Link
-                            href={
-                                jobListings.links[jobListings.links.length - 1]
-                                    .url || ""
-                            }
-                            className={`p-job-listings__pagination-button ${
-                                !jobListings.links[jobListings.links.length - 1]
-                                    .url
-                                    ? "p-job-listings__pagination-button--disabled"
-                                    : ""
-                            }`}
-                            preserveScroll
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </Link>
-                    </div>
-                </div>
-            )}
+                            {/* ページ番号ボタン - 最初と最後のリンク（前後のナビゲーション）を除外 */}
+                            {jobListings.links.slice(1, -1).map((link, i) => (
+                                <Link
+                                    key={i}
+                                    href={link.url || ""}
+                                    className={`p-job-listings__pagination-button ${
+                                        link.active
+                                            ? "p-job-listings__pagination-button--active"
+                                            : ""
+                                    }`}
+                                    preserveScroll
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
 
-            {/* 特徴セクション */}
-            <div className="p-job-listings__features">
-                <h2 className="p-job-listings__features-title">
-                    案件探しをもっと簡単に
-                </h2>
-                <div className="p-job-listings__features-grid">
-                    <div className="p-job-listings__feature">
-                        <div className="p-job-listings__feature-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                            {/* 「次へ」ボタン */}
+                            <Link
+                                href={
+                                    jobListings.links[
+                                        jobListings.links.length - 1
+                                    ].url || ""
+                                }
+                                className={`p-job-listings__pagination-button ${
+                                    !jobListings.links[
+                                        jobListings.links.length - 1
+                                    ].url
+                                        ? "p-job-listings__pagination-button--disabled"
+                                        : ""
+                                }`}
+                                preserveScroll
                             >
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="8.5" cy="7" r="4"></circle>
-                                <polyline points="17 11 19 13 23 9"></polyline>
-                            </svg>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </Link>
                         </div>
-                        <h3 className="p-job-listings__feature-title">
-                            簡単応募
-                        </h3>
-                        <p className="p-job-listings__feature-text">
-                            気になった案件にはワンクリックで応募。
-                            複雑な手続きは必要ありません。
-                        </p>
                     </div>
+                )}
 
-                    <div className="p-job-listings__feature">
-                        <div className="p-job-listings__feature-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <rect
-                                    x="3"
-                                    y="4"
-                                    width="18"
-                                    height="18"
-                                    rx="2"
-                                    ry="2"
-                                ></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
+                {/* 特徴セクション */}
+                <div className="p-job-listings__features">
+                    <h2 className="p-job-listings__features-title">
+                        案件探しをもっと簡単に
+                    </h2>
+                    <div className="p-job-listings__features-grid">
+                        <div className="p-job-listings__feature">
+                            <div className="p-job-listings__feature-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <polyline points="17 11 19 13 23 9"></polyline>
+                                </svg>
+                            </div>
+                            <h3 className="p-job-listings__feature-title">
+                                簡単応募
+                            </h3>
+                            <p className="p-job-listings__feature-text">
+                                気になった案件にはワンクリックで応募。
+                                複雑な手続きは必要ありません。
+                            </p>
                         </div>
-                        <h3 className="p-job-listings__feature-title">
-                            最新の案件情報
-                        </h3>
-                        <p className="p-job-listings__feature-text">
-                            常に最新の案件情報を掲載。
-                            新着通知を設定して、お気に入りの案件を見逃さないようにしましょう。
-                        </p>
-                    </div>
 
-                    <div className="p-job-listings__feature">
-                        <div className="p-job-listings__feature-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="8" x2="12" y2="16"></line>
-                                <line x1="8" y1="12" x2="16" y2="12"></line>
-                            </svg>
+                        <div className="p-job-listings__feature">
+                            <div className="p-job-listings__feature-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="4"
+                                        width="18"
+                                        height="18"
+                                        rx="2"
+                                        ry="2"
+                                    ></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </div>
+                            <h3 className="p-job-listings__feature-title">
+                                最新の案件情報
+                            </h3>
+                            <p className="p-job-listings__feature-text">
+                                常に最新の案件情報を掲載。
+                                新着通知を設定して、お気に入りの案件を見逃さないようにしましょう。
+                            </p>
                         </div>
-                        <h3 className="p-job-listings__feature-title">
-                            案件投稿も簡単
-                        </h3>
-                        <p className="p-job-listings__feature-text">
-                            あなたの案件を投稿して、優秀なエンジニアとマッチング。
-                            シンプルな入力フォームで、すぐに案件を公開できます。
-                        </p>
+
+                        <div className="p-job-listings__feature">
+                            <div className="p-job-listings__feature-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                            </div>
+                            <h3 className="p-job-listings__feature-title">
+                                案件投稿も簡単
+                            </h3>
+                            <p className="p-job-listings__feature-text">
+                                あなたの案件を投稿して、優秀なエンジニアとマッチング。
+                                シンプルな入力フォームで、すぐに案件を公開できます。
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
