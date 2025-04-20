@@ -24,23 +24,18 @@ interface DirectMessageProps {
 const getAvatarUrl = (avatar: string | undefined): string => {
     if (!avatar) return "";
 
-    // 既にstorageから始まる場合は重複を避ける
-    if (avatar.startsWith("storage/")) {
-        return `/${avatar}`;
-    }
-
-    // http or httpsから始まる場合はそのまま返す
+    // 既にhttpから始まる場合はそのまま返す
     if (avatar.startsWith("http")) {
         return avatar;
     }
 
-    // storage/avatarsで始まる場合は/を先頭に追加
-    if (avatar.startsWith("avatars/")) {
-        return `/storage/${avatar}`;
+    // すでにスラッシュで始まっている場合は、そのまま返す
+    if (avatar.startsWith("/")) {
+        return avatar;
     }
 
-    // ファイル名のみの場合はパスを構築する
-    return `/storage/avatars/${avatar}`;
+    // DBには「storage/avatars/ファイル名」で保存されているので、先頭に「/」を追加
+    return `/${avatar}`;
 };
 
 /**
@@ -74,21 +69,44 @@ export default function DirectMessage({
         minute: "2-digit",
     });
 
+    // アバター画像のURLをコンソールログに出力（デバッグ用）
+    if (message.sender) {
+        console.log("Sender:", JSON.stringify(message.sender));
+        if (message.sender.avatar) {
+            const avatarUrl = getAvatarUrl(message.sender.avatar);
+            console.log("Avatar original:", message.sender.avatar);
+            console.log("Avatar URL constructed:", avatarUrl);
+        } else {
+            console.log("No avatar found in sender object");
+        }
+    }
+
     return (
-        <div className="p-messages__message-container">
-            <div
-                className={`p-messages__message ${
-                    isSentByCurrentUser
-                        ? "p-messages__message--sent"
-                        : "p-messages__message--received"
-                }`}
-            >
+        <div
+            className={`p-messages__message-wrapper p-messages__message-wrapper--${
+                isSentByCurrentUser ? "sent" : "received"
+            }`}
+        >
+            <div className="p-messages__message-content">
                 {!isSentByCurrentUser && (
                     <div className="p-messages__avatar">
                         {message.sender.avatar ? (
                             <img
                                 src={getAvatarUrl(message.sender.avatar)}
                                 alt={message.sender.name}
+                                onError={(e) => {
+                                    // 画像読み込みエラー時に頭文字を表示
+                                    const target = e.target as HTMLImageElement;
+                                    target.style.display = "none";
+                                    if (target.parentElement) {
+                                        target.parentElement.innerText =
+                                            getInitials(message.sender.name);
+                                    }
+                                    console.error(
+                                        "アバター画像の読み込みに失敗:",
+                                        getAvatarUrl(message.sender.avatar)
+                                    );
+                                }}
                             />
                         ) : (
                             <div className="p-messages__avatar-placeholder">
@@ -98,10 +116,8 @@ export default function DirectMessage({
                     </div>
                 )}
                 <div
-                    className={`p-messages__bubble ${
-                        isSentByCurrentUser
-                            ? "p-messages__bubble--sent"
-                            : "p-messages__bubble--received"
+                    className={`p-messages__message-bubble p-messages__message-bubble--${
+                        isSentByCurrentUser ? "sent" : "received"
                     }`}
                 >
                     {!isSentByCurrentUser && (
@@ -116,15 +132,17 @@ export default function DirectMessage({
             </div>
 
             <div
-                className={`p-messages__message-time ${
-                    isSentByCurrentUser
-                        ? "p-messages__message-time--sent"
-                        : "p-messages__message-time--received"
+                className={`p-messages__message-meta p-messages__message-meta--${
+                    isSentByCurrentUser ? "sent" : "received"
                 }`}
             >
-                {formattedDate}
+                <span className="p-messages__message-time">
+                    {formattedDate}
+                </span>
                 {isSentByCurrentUser && message.is_read && (
-                    <span className="p-messages__read-status">既読</span>
+                    <span className="p-messages__message-status p-messages__message-status--read">
+                        既読
+                    </span>
                 )}
             </div>
         </div>

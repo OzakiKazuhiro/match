@@ -20,9 +20,13 @@ class DirectMessageController extends Controller
     public function index(): Response
     {
         $user = Auth::user();
+        
+        // 参加している会話グループをjob_listing_idも含めてグループ化して取得
         $conversationGroups = ConversationGroup::with(['jobOwner', 'applicant', 'latestMessage.sender', 'jobListing'])
-            ->where('job_owner_id', $user->id)
-            ->orWhere('applicant_id', $user->id)
+            ->where(function($query) use ($user) {
+                $query->where('job_owner_id', $user->id)
+                    ->orWhere('applicant_id', $user->id);
+            })
             ->orderBy('updated_at', 'desc')
             ->get();
             
@@ -104,35 +108,6 @@ class DirectMessageController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Create a new conversation group with a user.
-     */
-    public function create(User $user): RedirectResponse
-    {
-        $currentUser = Auth::user();
-        
-        // Check if conversation already exists
-        $existingConversation = ConversationGroup::where(function($query) use ($currentUser, $user) {
-            $query->where('job_owner_id', $currentUser->id)
-                  ->where('applicant_id', $user->id);
-        })->orWhere(function($query) use ($currentUser, $user) {
-            $query->where('job_owner_id', $user->id)
-                  ->where('applicant_id', $currentUser->id);
-        })->first();
-
-        if ($existingConversation) {
-            return redirect()->route('messages.show', $existingConversation);
-        }
-
-        // Create new conversation group
-        $conversationGroup = ConversationGroup::create([
-            'job_owner_id' => $currentUser->id,
-            'applicant_id' => $user->id
-        ]);
-
-        return redirect()->route('messages.show', $conversationGroup);
-    }
-    
     /**
      * メッセージを既読にするAPIエンドポイント
      */

@@ -98,6 +98,15 @@ class JobListing extends Model
      */
     public function incrementViewCount(): void
     {
-        $this->increment('view_count');
+        // セッションにこの案件のIDが含まれていない場合のみカウントアップ
+        $sessionKey = 'job_listing_viewed_' . $this->id;
+        
+        if (!session()->has($sessionKey)) {
+            $this->increment('view_count');
+            // 24時間有効なセッションを設定
+            session()->put($sessionKey, true);
+            session()->put($sessionKey . '_expires_at', now()->addHours(24));
+            session()->save();
+        }
     }
 }

@@ -21,6 +21,43 @@ class Application extends Model
         'message',
         'status',
     ];
+
+    /**
+     * アクセサで追加するプロパティ
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'conversation_group_id',
+    ];
+
+    /**
+     * シリアライズ時に含まれるプロパティ
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        '_conversation_group_id',
+    ];
+
+    // 会話グループIDを保存する内部プロパティ
+    private $_conversation_group_id = null;
+
+    /**
+     * 会話グループIDのゲッター
+     */
+    public function getConversationGroupIdAttribute()
+    {
+        return $this->_conversation_group_id;
+    }
+
+    /**
+     * 会話グループIDのセッター
+     */
+    public function setConversationGroupIdAttribute($value)
+    {
+        $this->_conversation_group_id = $value;
+    }
     
     /**
      * 応募したユーザーを取得

@@ -139,6 +139,23 @@ class ApplicationController extends Controller
             $jobListing = $jobListings->where('id', $application->job_listing_id)->first();
             if ($jobListing) {
                 $application->setRelation('jobListing', $jobListing);
+                
+                // 承認された応募の場合、会話グループIDを検索して設定
+                if ($application->status === 'accepted') {
+                    $conversationGroup = ConversationGroup::where(function($query) use ($jobListing, $application) {
+                        $query->where('job_owner_id', $jobListing->user_id)
+                              ->where('applicant_id', $application->user_id);
+                    })
+                    ->orWhere(function($query) use ($jobListing, $application) {
+                        $query->where('job_owner_id', $application->user_id)
+                              ->where('applicant_id', $jobListing->user_id);
+                    })
+                    ->first();
+                    
+                    if ($conversationGroup) {
+                        $application->conversation_group_id = $conversationGroup->id;
+                    }
+                }
             }
         }
         
@@ -167,8 +184,45 @@ class ApplicationController extends Controller
             'status' => $status
         ]);
         
+        // 承認の場合、会話グループの存在を確認し、必要に応じて作成または更新
+        $conversationGroupId = null;
+        if ($status === 'accepted') {
+            // 会話グループを検索（案件投稿者と応募者間）
+            $conversationGroup = ConversationGroup::where(function($query) use ($jobListing, $application) {
+                    $query->where('job_owner_id', $jobListing->user_id)
+                          ->where('applicant_id', $application->user_id);
+                })
+                ->orWhere(function($query) use ($jobListing, $application) {
+                    $query->where('job_owner_id', $application->user_id)
+                          ->where('applicant_id', $jobListing->user_id);
+                })
+                ->first();
+                
+            if (!$conversationGroup) {
+                // 会話グループがなければ作成
+                $conversationGroup = ConversationGroup::create([
+                    'job_owner_id' => $jobListing->user_id, // 案件投稿者
+                    'applicant_id' => $application->user_id, // 応募者
+                    'job_listing_id' => $jobListing->id, // 関連する案件
+                ]);
+            } else if ($conversationGroup->job_listing_id === null) {
+                // 既存の会話グループに案件IDが設定されていない場合は更新
+                $conversationGroup->update(['job_listing_id' => $jobListing->id]);
+            }
+            
+            $conversationGroupId = $conversationGroup->id;
+            
+            // 応募データに会話グループIDを保存
+            $application->conversation_group_id = $conversationGroupId;
+        }
+        
         $statusText = $status === 'accepted' ? '承認' : '拒否';
         session()->flash('message', "応募を{$statusText}しました");
+        
+        // 会話グループIDをセッションに追加
+        if ($conversationGroupId) {
+            session()->flash('conversation_group_id', $conversationGroupId);
+        }
         
         return redirect()->back();
     }

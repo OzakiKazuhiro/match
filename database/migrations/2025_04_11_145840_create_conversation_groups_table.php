@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('job_owner_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('applicant_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('job_listing_id')->nullable()->constrained('job_listings')->onDelete('set null');
             $table->timestamps();
             
-            // 同じ組み合わせの会話グループを作れないようにする
-            $table->unique(['job_owner_id', 'applicant_id']);
+            // 同じ案件に対する同じユーザー間の会話グループが重複しないようにする
+            $table->unique(['job_owner_id', 'applicant_id', 'job_listing_id']);
         });
         
         // direct_messagesテーブルを変更

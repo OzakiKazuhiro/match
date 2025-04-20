@@ -29,7 +29,27 @@ interface Application {
     updated_at: string;
     jobListing?: JobListing;
     user: User;
+    conversation_group_id?: number | null;
+    [key: string]: any;
 }
+
+// アバターURLを取得する関数
+const getAvatarUrl = (avatar: string | undefined): string => {
+    if (!avatar) return "";
+
+    // 既にhttpから始まる場合はそのまま返す
+    if (avatar.startsWith("http")) {
+        return avatar;
+    }
+
+    // すでにスラッシュで始まっている場合は、そのまま返す
+    if (avatar.startsWith("/")) {
+        return avatar;
+    }
+
+    // DBには「storage/avatars/ファイル名」で保存されているので、先頭に「/」を追加
+    return `/${avatar}`;
+};
 
 export default function ApplicationsToMyJobs({
     auth,
@@ -275,7 +295,11 @@ export default function ApplicationsToMyJobs({
                                                                                                     .user
                                                                                                     .avatar ? (
                                                                                                     <img
-                                                                                                        src={`/storage/${application.user.avatar}`}
+                                                                                                        src={getAvatarUrl(
+                                                                                                            application
+                                                                                                                .user
+                                                                                                                .avatar
+                                                                                                        )}
                                                                                                         alt={
                                                                                                             application
                                                                                                                 .user
@@ -290,12 +314,16 @@ export default function ApplicationsToMyJobs({
                                                                                                                 e.target as HTMLImageElement;
                                                                                                             target.style.display =
                                                                                                                 "none";
-                                                                                                            target.parentElement!.innerText =
-                                                                                                                application.user.name
-                                                                                                                    .charAt(
-                                                                                                                        0
-                                                                                                                    )
-                                                                                                                    .toUpperCase();
+                                                                                                            if (
+                                                                                                                target.parentElement
+                                                                                                            ) {
+                                                                                                                target.parentElement.innerText =
+                                                                                                                    application.user.name
+                                                                                                                        .charAt(
+                                                                                                                            0
+                                                                                                                        )
+                                                                                                                        .toUpperCase();
+                                                                                                            }
                                                                                                         }}
                                                                                                     />
                                                                                                 ) : (
@@ -401,9 +429,16 @@ export default function ApplicationsToMyJobs({
                                                                                                 }
                                                                                             </p>
                                                                                             <Link
-                                                                                                href={route(
-                                                                                                    "messages.index"
-                                                                                                )}
+                                                                                                href={
+                                                                                                    application.conversation_group_id
+                                                                                                        ? route(
+                                                                                                              "messages.show",
+                                                                                                              application.conversation_group_id
+                                                                                                          )
+                                                                                                        : route(
+                                                                                                              "messages.index"
+                                                                                                          )
+                                                                                                }
                                                                                                 className="p-applications__message-button"
                                                                                             >
                                                                                                 メッセージを送る
@@ -417,6 +452,17 @@ export default function ApplicationsToMyJobs({
                                                                 )}
                                                             </div>
                                                             <div className="p-applications__job-card-footer">
+                                                                <Link
+                                                                    href={route(
+                                                                        "job-listings.close",
+                                                                        jobListing.id
+                                                                    )}
+                                                                    method="patch"
+                                                                    as="button"
+                                                                    className="p-applications__close-job-button"
+                                                                >
+                                                                    案件の募集を終了する
+                                                                </Link>
                                                                 <Link
                                                                     href={route(
                                                                         "job-listings.show",

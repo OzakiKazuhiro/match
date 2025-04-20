@@ -494,6 +494,14 @@ function Applications(_ref) {
       day: "numeric"
     });
   };
+  console.log("Applications:", applications);
+  applications.forEach(function (app, index) {
+    var _app$jobListing;
+    console.log("Application ".concat(index, " full:"), app);
+    console.log("Application ".concat(index, " job_listing_id:"), app.job_listing_id);
+    console.log("Application ".concat(index, " jobListing:"), app.jobListing);
+    console.log("Application ".concat(index, " jobListing?.title:"), (_app$jobListing = app.jobListing) === null || _app$jobListing === void 0 ? void 0 : _app$jobListing.title);
+  });
 
   // ステータスの表示
   var getStatusText = function getStatusText(status) {
@@ -501,9 +509,9 @@ function Applications(_ref) {
       case "pending":
         return "応募中（確認待ち）";
       case "accepted":
-        return "承認済み";
+        return "案件の投稿者により、採用が確定されました";
       case "declined":
-        return "不採用";
+        return "案件の投稿者により、採用が見送られました";
       default:
         return "";
     }
@@ -568,73 +576,63 @@ function Applications(_ref) {
             }), applications.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
               className: "p-applications__list",
               children: applications.map(function (application) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                var _application$job_list, _application$jobListi, _application$job_list2, _application$jobListi2, _application$job_list3, _application$jobListi3, _application$job_list4, _application$jobListi4, _application$job_list5, _application$jobListi5, _application$job_list6, _application$jobListi6;
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "p-applications__item",
-                  children: application.jobListing ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                    className: "p-applications__item-header",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                      className: "p-applications__item-header",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                        className: "p-applications__job-info",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                          href: route("job-listings.show", application.jobListing.id),
-                          className: "p-applications__job-title",
-                          children: application.jobListing.title
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                          className: "p-applications__job-meta",
-                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                            className: "p-applications__job-type p-applications__job-type--".concat(application.jobListing.type === "one_time" ? "onetime" : "revenue"),
-                            children: application.jobListing.type === "one_time" ? "単発案件" : "レベニューシェア"
-                          }), formatBudget(application.jobListing) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
-                            className: "p-applications__job-budget",
-                            children: ["\u4E88\u7B97:", " ", formatBudget(application.jobListing)]
-                          }), application.jobListing.user && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
-                            className: "p-applications__job-poster",
-                            children: ["\u6295\u7A3F\u8005:", " ", application.jobListing.user.name]
-                          })]
+                      className: "p-applications__job-info",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                        href: route("job-listings.show", application.job_listing_id),
+                        className: "p-applications__job-title",
+                        children: ((_application$job_list = application.job_listing) === null || _application$job_list === void 0 ? void 0 : _application$job_list.title) || ((_application$jobListi = application.jobListing) === null || _application$jobListi === void 0 ? void 0 : _application$jobListi.title) || "案件名不明"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                        className: "p-applications__job-meta",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                          className: "p-applications__job-type p-applications__job-type--".concat((((_application$job_list2 = application.job_listing) === null || _application$job_list2 === void 0 ? void 0 : _application$job_list2.type) || ((_application$jobListi2 = application.jobListing) === null || _application$jobListi2 === void 0 ? void 0 : _application$jobListi2.type)) === "one_time" ? "onetime" : "revenue"),
+                          children: (((_application$job_list3 = application.job_listing) === null || _application$job_list3 === void 0 ? void 0 : _application$job_list3.type) || ((_application$jobListi3 = application.jobListing) === null || _application$jobListi3 === void 0 ? void 0 : _application$jobListi3.type)) === "one_time" ? "単発案件" : "レベニューシェア"
+                        }), (application.job_listing || application.jobListing) && formatBudget(application.job_listing || application.jobListing) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                          className: "p-applications__job-budget",
+                          children: ["\u4E88\u7B97:", " ", formatBudget(application.job_listing || application.jobListing)]
+                        }), (((_application$job_list4 = application.job_listing) === null || _application$job_list4 === void 0 ? void 0 : _application$job_list4.user) || ((_application$jobListi4 = application.jobListing) === null || _application$jobListi4 === void 0 ? void 0 : _application$jobListi4.user)) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                          className: "p-applications__job-poster",
+                          children: ["\u6295\u7A3F\u8005:", " ", (((_application$job_list5 = application.job_listing) === null || _application$job_list5 === void 0 ? void 0 : _application$job_list5.user) || ((_application$jobListi5 = application.jobListing) === null || _application$jobListi5 === void 0 ? void 0 : _application$jobListi5.user)).name]
                         })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                        className: "p-applications__status ".concat(getStatusClass(application.status)),
-                        children: getStatusText(application.status)
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                      className: "p-applications__status ".concat(getStatusClass(application.status)),
+                      children: getStatusText(application.status)
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                    className: "p-applications__item-body",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                      className: "p-applications__meta",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                        className: "p-applications__applied-date",
+                        children: ["\u5FDC\u52DF\u65E5:", " ", formatDate(application.created_at)]
+                      }), (((_application$job_list6 = application.job_listing) === null || _application$job_list6 === void 0 ? void 0 : _application$job_list6.is_closed) || ((_application$jobListi6 = application.jobListing) === null || _application$jobListi6 === void 0 ? void 0 : _application$jobListi6.is_closed)) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                        className: "p-applications__closed-tag",
+                        children: "\u52DF\u96C6\u7D42\u4E86"
                       })]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                      className: "p-applications__item-body",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                        className: "p-applications__meta",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
-                          className: "p-applications__applied-date",
-                          children: ["\u5FDC\u52DF\u65E5:", " ", formatDate(application.created_at)]
-                        }), application.jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                          className: "p-applications__closed-tag",
-                          children: "\u52DF\u96C6\u7D42\u4E86"
-                        })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                        className: "p-applications__message",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-                          className: "p-applications__message-title",
-                          children: "\u5FDC\u52DF\u30E1\u30C3\u30BB\u30FC\u30B8:"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                          className: "p-applications__message-content",
-                          children: application.message
-                        })]
+                      className: "p-applications__message",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
+                        className: "p-applications__message-title",
+                        children: "\u5FDC\u52DF\u30E1\u30C3\u30BB\u30FC\u30B8:"
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                        className: "p-applications__actions",
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                          href: route("job-listings.show", application.jobListing.id),
-                          className: "p-applications__view-job",
-                          children: "\u6848\u4EF6\u3092\u78BA\u8A8D\u3059\u308B"
-                        })
+                        className: "p-applications__message-content",
+                        children: application.message
                       })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                      className: "p-applications__actions",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                        href: route("job-listings.show", application.job_listing_id),
+                        className: "p-applications__view-job",
+                        children: "\u6848\u4EF6\u3092\u78BA\u8A8D\u3059\u308B"
+                      })
                     })]
-                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                    className: "p-applications__item-error",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-                      children: "\u3053\u306E\u5FDC\u52DF\u306B\u95A2\u9023\u3059\u308B\u6848\u4EF6\u60C5\u5831\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3002"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
-                      children: ["\u5FDC\u52DFID: ", application.id]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
-                      children: ["\u6848\u4EF6ID:", " ", application.job_listing_id]
-                    })]
-                  })
+                  })]
                 }, application.id);
               })
             }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {

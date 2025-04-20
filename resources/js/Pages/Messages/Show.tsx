@@ -28,10 +28,10 @@ type ConversationGroup = {
     id: number;
     job_owner_id: number;
     applicant_id: number;
-    created_at: string;
-    updated_at: string;
     job_owner: User;
     applicant: User;
+    created_at: string;
+    updated_at: string;
     job_listing: JobListing | null;
 };
 
@@ -159,6 +159,9 @@ export default function Show({
             header={
                 <div className="p-messages__header">
                     <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                        {conversationGroup.job_listing && (
+                            <>{conversationGroup.job_listing.title} - </>
+                        )}
                         {otherParticipant?.name || "不明なユーザー"}との会話
                     </h2>
                     <Link
@@ -171,7 +174,11 @@ export default function Show({
             }
         >
             <Head
-                title={`${otherParticipant?.name || "不明なユーザー"}との会話`}
+                title={`${
+                    conversationGroup.job_listing
+                        ? conversationGroup.job_listing.title + " - "
+                        : ""
+                }${otherParticipant?.name || "不明なユーザー"}との会話`}
             />
 
             <div className="p-messages__container">
@@ -201,19 +208,25 @@ export default function Show({
                     </div>
                 )}
 
-                <div className="p-messages__card mb-4">
+                <div className="p-messages__card">
                     <div className="p-messages__card-body">
                         <div
                             ref={messagesContainerRef}
-                            className="p-messages__conversation px-2"
+                            className="p-messages__conversation"
                         >
-                            {messages.map((message) => (
-                                <DirectMessage
-                                    key={message.id}
-                                    message={message}
-                                    currentUserId={auth.user.id}
-                                />
-                            ))}
+                            {messages.length === 0 ? (
+                                <div className="p-messages__empty">
+                                    メッセージがまだありません。最初のメッセージを送信しましょう。
+                                </div>
+                            ) : (
+                                messages.map((message) => (
+                                    <DirectMessage
+                                        key={message.id}
+                                        message={message}
+                                        currentUserId={auth.user.id}
+                                    />
+                                ))
+                            )}
                         </div>
                     </div>
                 </div>
@@ -239,6 +252,7 @@ export default function Show({
                                     }
                                     rows={3}
                                     className="p-messages__textarea"
+                                    placeholder="メッセージを入力..."
                                     required
                                 />
                                 <InputError
@@ -248,7 +262,7 @@ export default function Show({
                             </div>
                             <div className="p-messages__submit-container">
                                 <PrimaryButton type="submit" disabled={sending}>
-                                    {sending ? "送信中..." : "送信"}
+                                    送信
                                 </PrimaryButton>
                             </div>
                         </form>

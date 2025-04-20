@@ -497,6 +497,23 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+// アバターURLを取得する関数
+var getAvatarUrl = function getAvatarUrl(avatar) {
+  if (!avatar) return "";
+
+  // 既にhttpから始まる場合はそのまま返す
+  if (avatar.startsWith("http")) {
+    return avatar;
+  }
+
+  // すでにスラッシュで始まっている場合は、そのまま返す
+  if (avatar.startsWith("/")) {
+    return avatar;
+  }
+
+  // DBには「storage/avatars/ファイル名」で保存されているので、先頭に「/」を追加
+  return "/".concat(avatar);
+};
 function ApplicationsToMyJobs(_ref) {
   var auth = _ref.auth,
     rawApplications = _ref.applications;
@@ -689,14 +706,16 @@ function ApplicationsToMyJobs(_ref) {
                                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                                   className: "p-applications__applicant-avatar",
                                   children: application.user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-                                    src: "/storage/".concat(application.user.avatar),
+                                    src: getAvatarUrl(application.user.avatar),
                                     alt: application.user.name,
                                     className: "p-applications__avatar-image",
                                     onError: function onError(e) {
                                       // 画像読み込みエラー時に頭文字を表示
                                       var target = e.target;
                                       target.style.display = "none";
-                                      target.parentElement.innerText = application.user.name.charAt(0).toUpperCase();
+                                      if (target.parentElement) {
+                                        target.parentElement.innerText = application.user.name.charAt(0).toUpperCase();
+                                      }
                                     }
                                   }) : application.user.name.charAt(0).toUpperCase()
                                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
@@ -757,7 +776,7 @@ function ApplicationsToMyJobs(_ref) {
                                     children: ["\u9023\u7D61\u5148:", " "]
                                   }), (_application$user = application.user) === null || _application$user === void 0 ? void 0 : _application$user.email]
                                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                                  href: route("messages.index"),
+                                  href: application.conversation_group_id ? route("messages.show", application.conversation_group_id) : route("messages.index"),
                                   className: "p-applications__message-button",
                                   children: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u9001\u308B"
                                 })]
@@ -766,13 +785,19 @@ function ApplicationsToMyJobs(_ref) {
                           })]
                         }, application.id);
                       })
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                       className: "p-applications__job-card-footer",
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                        href: route("job-listings.close", jobListing.id),
+                        method: "patch",
+                        as: "button",
+                        className: "p-applications__close-job-button",
+                        children: "\u6848\u4EF6\u306E\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
                         href: route("job-listings.show", jobListing.id),
                         className: "p-applications__view-job-button",
                         children: "\u6848\u4EF6\u8A73\u7D30\u3092\u898B\u308B"
-                      })
+                      })]
                     })]
                   })]
                 }, jobId);

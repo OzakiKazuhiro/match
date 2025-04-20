@@ -29,10 +29,10 @@ export default function NotificationsIndex({
         links: { url: string | null; label: string; active: boolean }[];
     };
 }>) {
-    const { post, processing } = useForm();
+    const { post, patch, processing } = useForm();
 
     const markAllAsRead = () => {
-        post(route("notifications.mark-all-as-read"));
+        patch(route("notifications.mark-all-as-read"));
     };
 
     const formatDate = (dateString: string) => {

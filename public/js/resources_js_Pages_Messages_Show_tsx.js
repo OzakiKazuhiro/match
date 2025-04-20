@@ -24,23 +24,18 @@ __webpack_require__.r(__webpack_exports__);
 var getAvatarUrl = function getAvatarUrl(avatar) {
   if (!avatar) return "";
 
-  // 既にstorageから始まる場合は重複を避ける
-  if (avatar.startsWith("storage/")) {
-    return "/".concat(avatar);
-  }
-
-  // http or httpsから始まる場合はそのまま返す
+  // 既にhttpから始まる場合はそのまま返す
   if (avatar.startsWith("http")) {
     return avatar;
   }
 
-  // storage/avatarsで始まる場合は/を先頭に追加
-  if (avatar.startsWith("avatars/")) {
-    return "/storage/".concat(avatar);
+  // すでにスラッシュで始まっている場合は、そのまま返す
+  if (avatar.startsWith("/")) {
+    return avatar;
   }
 
-  // ファイル名のみの場合はパスを構築する
-  return "/storage/avatars/".concat(avatar);
+  // DBには「storage/avatars/ファイル名」で保存されているので、先頭に「/」を追加
+  return "/".concat(avatar);
 };
 
 /**
@@ -69,21 +64,42 @@ function DirectMessage(_ref) {
     hour: "2-digit",
     minute: "2-digit"
   });
+
+  // アバター画像のURLをコンソールログに出力（デバッグ用）
+  if (message.sender) {
+    console.log("Sender:", JSON.stringify(message.sender));
+    if (message.sender.avatar) {
+      var avatarUrl = getAvatarUrl(message.sender.avatar);
+      console.log("Avatar original:", message.sender.avatar);
+      console.log("Avatar URL constructed:", avatarUrl);
+    } else {
+      console.log("No avatar found in sender object");
+    }
+  }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-    className: "p-messages__message-container",
+    className: "p-messages__message-wrapper p-messages__message-wrapper--".concat(isSentByCurrentUser ? "sent" : "received"),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-      className: "p-messages__message ".concat(isSentByCurrentUser ? "p-messages__message--sent" : "p-messages__message--received"),
+      className: "p-messages__message-content",
       children: [!isSentByCurrentUser && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
         className: "p-messages__avatar",
         children: message.sender.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
           src: getAvatarUrl(message.sender.avatar),
-          alt: message.sender.name
+          alt: message.sender.name,
+          onError: function onError(e) {
+            // 画像読み込みエラー時に頭文字を表示
+            var target = e.target;
+            target.style.display = "none";
+            if (target.parentElement) {
+              target.parentElement.innerText = getInitials(message.sender.name);
+            }
+            console.error("アバター画像の読み込みに失敗:", getAvatarUrl(message.sender.avatar));
+          }
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
           className: "p-messages__avatar-placeholder",
           children: getInitials(message.sender.name)
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-        className: "p-messages__bubble ".concat(isSentByCurrentUser ? "p-messages__bubble--sent" : "p-messages__bubble--received"),
+        className: "p-messages__message-bubble p-messages__message-bubble--".concat(isSentByCurrentUser ? "sent" : "received"),
         children: [!isSentByCurrentUser && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
           className: "p-messages__sender-name",
           children: message.sender.name
@@ -93,9 +109,12 @@ function DirectMessage(_ref) {
         })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-      className: "p-messages__message-time ".concat(isSentByCurrentUser ? "p-messages__message-time--sent" : "p-messages__message-time--received"),
-      children: [formattedDate, isSentByCurrentUser && message.is_read && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
-        className: "p-messages__read-status",
+      className: "p-messages__message-meta p-messages__message-meta--".concat(isSentByCurrentUser ? "sent" : "received"),
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+        className: "p-messages__message-time",
+        children: formattedDate
+      }), isSentByCurrentUser && message.is_read && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+        className: "p-messages__message-status p-messages__message-status--read",
         children: "\u65E2\u8AAD"
       })]
     })]
@@ -823,7 +842,9 @@ function Show(_ref) {
       className: "p-messages__header",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h2", {
         className: "font-semibold text-xl text-gray-800 leading-tight",
-        children: [(otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", "\u3068\u306E\u4F1A\u8A71"]
+        children: [conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+          children: [conversationGroup.job_listing.title, " - "]
+        }), (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", "\u3068\u306E\u4F1A\u8A71"]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
         href: route("messages.index"),
         className: "p-messages__back-button",
@@ -831,7 +852,7 @@ function Show(_ref) {
       })]
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
-      title: "".concat((otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", "\u3068\u306E\u4F1A\u8A71")
+      title: "".concat(conversationGroup.job_listing ? conversationGroup.job_listing.title + " - " : "").concat((otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", "\u3068\u306E\u4F1A\u8A71")
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
       className: "p-messages__container",
       children: [conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
@@ -857,13 +878,16 @@ function Show(_ref) {
           })
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "p-messages__card mb-4",
+        className: "p-messages__card",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: "p-messages__card-body",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
             ref: messagesContainerRef,
-            className: "p-messages__conversation px-2",
-            children: messages.map(function (message) {
+            className: "p-messages__conversation",
+            children: messages.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              className: "p-messages__empty",
+              children: "\u30E1\u30C3\u30BB\u30FC\u30B8\u304C\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002\u6700\u521D\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u9001\u4FE1\u3057\u307E\u3057\u3087\u3046\u3002"
+            }) : messages.map(function (message) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_DirectMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
                 message: message,
                 currentUserId: auth.user.id
@@ -892,6 +916,7 @@ function Show(_ref) {
                 },
                 rows: 3,
                 className: "p-messages__textarea",
+                placeholder: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5165\u529B...",
                 required: true
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
                 message: errors.message,
@@ -902,7 +927,7 @@ function Show(_ref) {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
                 type: "submit",
                 disabled: sending,
-                children: sending ? "送信中..." : "送信"
+                children: "\u9001\u4FE1"
               })
             })]
           })

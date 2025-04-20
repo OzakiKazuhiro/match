@@ -86,6 +86,9 @@ class JobListingController extends Controller
         // 案件の投稿者情報とパブリックメッセージを取得
         $jobListing->load(['user', 'publicMessages.user']);
         
+        // 閲覧数をインクリメント
+        $jobListing->incrementViewCount();
+        
         return Inertia::render('JobDetail', [
             'jobListing' => $jobListing,
             'canEdit' => Auth::check() && Auth::id() === $jobListing->user_id,

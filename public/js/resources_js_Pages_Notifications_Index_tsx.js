@@ -502,9 +502,10 @@ function NotificationsIndex(_ref) {
     notifications = _ref.notifications;
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.useForm)(),
     post = _useForm.post,
+    patch = _useForm.patch,
     processing = _useForm.processing;
   var markAllAsRead = function markAllAsRead() {
-    post(route("notifications.mark-all-as-read"));
+    patch(route("notifications.mark-all-as-read"));
   };
   var formatDate = function formatDate(dateString) {
     return dayjs__WEBPACK_IMPORTED_MODULE_2___default()(dateString).format("YYYY年MM月DD日 HH:mm");

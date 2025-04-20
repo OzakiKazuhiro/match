@@ -918,7 +918,7 @@ export default function Top({
                     </section>
 
                     {/* カテゴリーセクション */}
-                    <section className="p-top__categories">
+                    {/* <section className="p-top__categories">
                         <h2 className="p-top__categories-title">
                             案件カテゴリーから探す
                         </h2>
@@ -1091,7 +1091,7 @@ export default function Top({
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </section> */}
                 </div>
             </main>
 
