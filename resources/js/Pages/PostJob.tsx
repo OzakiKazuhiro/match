@@ -109,7 +109,7 @@ export default function PostJob({ auth }: PageProps) {
 
     return (
         <AuthenticatedLayout
-            header={<div className="p-post-job__title">案件を投稿</div>}
+            header={<h2 className="p-post-job__header-title">案件を投稿</h2>}
         >
             <Head title="案件を投稿 - Match" />
 

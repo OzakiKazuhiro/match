@@ -178,7 +178,6 @@ textarea {
   font-size: 0.85rem;
   color: #666;
   font-weight: 500;
-  margin-left: 15px;
   margin-right: auto;
 }
 .l-header__login-status .l-header__user-avatar {
@@ -1995,8 +1994,8 @@ textarea {
 }
 .p-dashboard__title {
   font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-weight: 600;
+  color: #fff;
 }
 .p-dashboard__subtitle {
   font-size: 1rem;
@@ -3153,11 +3152,16 @@ textarea {
   margin-bottom: 32px;
   text-align: center;
 }
+.p-post-job__header-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+}
 .p-post-job__title {
   font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 12px;
   color: #333;
+  margin-bottom: 12px;
 }
 .p-post-job__subtitle {
   color: #666;

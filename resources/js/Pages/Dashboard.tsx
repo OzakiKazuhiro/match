@@ -11,11 +11,7 @@ import {
 export default function Dashboard({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
-            header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    マイページ
-                </h2>
-            }
+            header={<h2 className="p-dashboard__title">マイページ</h2>}
         >
             <Head title="マイページ" />
 
@@ -97,7 +93,7 @@ export default function Dashboard({ auth }: PageProps) {
                             </div>
                             <div className="p-dashboard__menu-card-text">
                                 <h3 className="p-dashboard__menu-card-title">
-                                    メッセージ
+                                    ダイレクトメッセージ
                                 </h3>
                                 <p className="p-dashboard__menu-card-description">
                                     他のユーザーとのメッセージをチェックできます

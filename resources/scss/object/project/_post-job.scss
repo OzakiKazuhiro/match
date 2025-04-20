@@ -13,11 +13,17 @@
         text-align: center;
     }
 
+    &__header-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #fff;
+    }
+
     &__title {
         font-size: 1.75rem;
         font-weight: 700;
-        margin-bottom: 12px;
         color: #333;
+        margin-bottom: 12px;
     }
 
     &__subtitle {

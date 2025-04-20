@@ -530,7 +530,6 @@ function Authenticated(_ref) {
         children: header
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("main", {
-      className: "main-content",
       children: children
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("footer", {
       className: "l-footer",
@@ -651,7 +650,7 @@ function Dashboard(_ref) {
   var auth = _ref.auth;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_0__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-      className: "font-semibold text-xl text-gray-800 leading-tight",
+      className: "p-dashboard__title",
       children: "\u30DE\u30A4\u30DA\u30FC\u30B8"
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
@@ -746,7 +745,7 @@ function Dashboard(_ref) {
               className: "p-dashboard__menu-card-text",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
                 className: "p-dashboard__menu-card-title",
-                children: "\u30E1\u30C3\u30BB\u30FC\u30B8"
+                children: "\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                 className: "p-dashboard__menu-card-description",
                 children: "\u4ED6\u306E\u30E6\u30FC\u30B6\u30FC\u3068\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u30C1\u30A7\u30C3\u30AF\u3067\u304D\u307E\u3059"

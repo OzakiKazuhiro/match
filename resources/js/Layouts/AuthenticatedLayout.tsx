@@ -273,13 +273,15 @@ export default function Authenticated({
                 )}
             </header>
 
+            {/* ページヘッダー */}
             {header && (
                 <div className="p-dashboard__header">
                     <div className="p-dashboard__header-inner">{header}</div>
                 </div>
             )}
 
-            <main className="main-content">{children}</main>
+            {/* メインコンテンツ */}
+            <main>{children}</main>
 
             {/* フッター */}
             <footer className="l-footer">
