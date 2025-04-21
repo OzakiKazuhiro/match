@@ -1558,6 +1558,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.tsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -1585,6 +1589,16 @@ function JobListings(_ref) {
     activeFilter = _useState4[0],
     setActiveFilter = _useState4[1];
 
+  // 並び替えオプションの状態
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("latest"),
+    _useState6 = _slicedToArray(_useState5, 2),
+    sortOption = _useState6[0],
+    setSortOption = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState8 = _slicedToArray(_useState7, 2),
+    showSortDropdown = _useState8[0],
+    setShowSortDropdown = _useState8[1];
+
   // フィルタリングされた案件リスト
   var filteredJobs = jobListings.data.filter(function (job) {
     // 検索クエリのフィルタリング
@@ -1605,6 +1619,66 @@ function JobListings(_ref) {
     });
     window.history.pushState({}, "", url);
   };
+
+  // 並び替えオプションの表示テキストを取得
+  var getSortOptionText = function getSortOptionText(option) {
+    switch (option) {
+      case "latest":
+        return "新着順";
+      case "oldest":
+        return "登録が古い順";
+      case "views":
+        return "閲覧数順";
+      case "budget_high":
+        return "予算の高い順";
+      case "budget_low":
+        return "予算の低い順";
+      default:
+        return "新着順";
+    }
+  };
+
+  // 並び替えオプション変更時の処理
+  var handleSortChange = function handleSortChange(option) {
+    setSortOption(option);
+    setShowSortDropdown(false);
+
+    // 並び替えオプションをURLに反映（ただしリロードはしない）
+    var url = new URL(window.location.href);
+    url.searchParams.set("sort", option);
+    window.history.pushState({}, "", url.toString());
+
+    // クライアントサイドでの並び替え処理は実装済みのfilteredJobsに反映されるため
+    // リロードする必要はありません
+  };
+
+  // クライアントサイドでの並び替え処理
+  var sortedJobs = _toConsumableArray(filteredJobs).sort(function (a, b) {
+    switch (sortOption) {
+      case "latest":
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      case "oldest":
+        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+      case "views":
+        return (b.view_count || 0) - (a.view_count || 0);
+      case "budget_high":
+        var aMaxBudget = Math.max(a.budget_max || 0, a.budget_min || 0);
+        var bMaxBudget = Math.max(b.budget_max || 0, b.budget_min || 0);
+        return bMaxBudget - aMaxBudget;
+      case "budget_low":
+        // 予算が設定されていない場合（レベニューシェア）は最後に表示
+        var aHasBudget = a.budget_min !== null && a.budget_min !== undefined || a.budget_max !== null && a.budget_max !== undefined;
+        var bHasBudget = b.budget_min !== null && b.budget_min !== undefined || b.budget_max !== null && b.budget_max !== undefined;
+        if (!aHasBudget && !bHasBudget) return 0;
+        if (!aHasBudget) return 1;
+        if (!bHasBudget) return -1;
+        var aMinBudget = Math.min(a.budget_min !== null && a.budget_min !== undefined ? a.budget_min : Infinity, a.budget_max !== null && a.budget_max !== undefined ? a.budget_max : Infinity);
+        var bMinBudget = Math.min(b.budget_min !== null && b.budget_min !== undefined ? b.budget_min : Infinity, b.budget_max !== null && b.budget_max !== undefined ? b.budget_max : Infinity);
+        return aMinBudget - bMinBudget;
+      default:
+        return 0;
+    }
+  });
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_4__["default"], {
     header: "\u6848\u4EF6\u4E00\u89A7",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
@@ -1700,11 +1774,14 @@ function JobListings(_ref) {
               },
               children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "p-job-listings__sort-dropdown",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
               className: "p-job-listings__sort-button",
-              children: ["\u65B0\u7740\u9806", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("svg", {
+              onClick: function onClick() {
+                return setShowSortDropdown(!showSortDropdown);
+              },
+              children: [getSortOptionText(sortOption), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
                 width: "16",
                 height: "16",
@@ -1718,11 +1795,44 @@ function JobListings(_ref) {
                   d: "M6 9l6 6 6-6"
                 })
               })]
-            })
+            }), showSortDropdown && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "p-job-listings__sort-options",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                className: "p-job-listings__sort-option ".concat(sortOption === "latest" ? "p-job-listings__sort-option--active" : ""),
+                onClick: function onClick() {
+                  return handleSortChange("latest");
+                },
+                children: "\u65B0\u7740\u9806"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                className: "p-job-listings__sort-option ".concat(sortOption === "oldest" ? "p-job-listings__sort-option--active" : ""),
+                onClick: function onClick() {
+                  return handleSortChange("oldest");
+                },
+                children: "\u767B\u9332\u304C\u53E4\u3044\u9806"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                className: "p-job-listings__sort-option ".concat(sortOption === "views" ? "p-job-listings__sort-option--active" : ""),
+                onClick: function onClick() {
+                  return handleSortChange("views");
+                },
+                children: "\u95B2\u89A7\u6570\u9806"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                className: "p-job-listings__sort-option ".concat(sortOption === "budget_high" ? "p-job-listings__sort-option--active" : ""),
+                onClick: function onClick() {
+                  return handleSortChange("budget_high");
+                },
+                children: "\u4E88\u7B97\u306E\u9AD8\u3044\u9806"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                className: "p-job-listings__sort-option ".concat(sortOption === "budget_low" ? "p-job-listings__sort-option--active" : ""),
+                onClick: function onClick() {
+                  return handleSortChange("budget_low");
+                },
+                children: "\u4E88\u7B97\u306E\u4F4E\u3044\u9806"
+              })]
+            })]
           })]
         }), filteredJobs.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
           className: "p-job-listings__grid",
-          children: filteredJobs.map(function (job) {
+          children: sortedJobs.map(function (job) {
             return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_JobCard__WEBPACK_IMPORTED_MODULE_2__["default"], {
               job: job,
               auth: auth

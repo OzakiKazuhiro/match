@@ -34,6 +34,10 @@ export default function JobListings({
         "all" | "one_time" | "revenue_share"
     >(filters.type ? (filters.type as any) : "all");
 
+    // 並び替えオプションの状態
+    const [sortOption, setSortOption] = useState<string>("latest");
+    const [showSortDropdown, setShowSortDropdown] = useState(false);
+
     // フィルタリングされた案件リスト
     const filteredJobs = jobListings.data.filter((job) => {
         // 検索クエリのフィルタリング
@@ -62,6 +66,98 @@ export default function JobListings({
 
         window.history.pushState({}, "", url);
     };
+
+    // 並び替えオプションの表示テキストを取得
+    const getSortOptionText = (option: string): string => {
+        switch (option) {
+            case "latest":
+                return "新着順";
+            case "oldest":
+                return "登録が古い順";
+            case "views":
+                return "閲覧数順";
+            case "budget_high":
+                return "予算の高い順";
+            case "budget_low":
+                return "予算の低い順";
+            default:
+                return "新着順";
+        }
+    };
+
+    // 並び替えオプション変更時の処理
+    const handleSortChange = (option: string) => {
+        setSortOption(option);
+        setShowSortDropdown(false);
+
+        // 並び替えオプションをURLに反映（ただしリロードはしない）
+        const url = new URL(window.location.href);
+        url.searchParams.set("sort", option);
+        window.history.pushState({}, "", url.toString());
+
+        // クライアントサイドでの並び替え処理は実装済みのfilteredJobsに反映されるため
+        // リロードする必要はありません
+    };
+
+    // クライアントサイドでの並び替え処理
+    const sortedJobs = [...filteredJobs].sort((a, b) => {
+        switch (sortOption) {
+            case "latest":
+                return (
+                    new Date(b.created_at).getTime() -
+                    new Date(a.created_at).getTime()
+                );
+            case "oldest":
+                return (
+                    new Date(a.created_at).getTime() -
+                    new Date(b.created_at).getTime()
+                );
+            case "views":
+                return (b.view_count || 0) - (a.view_count || 0);
+            case "budget_high":
+                const aMaxBudget = Math.max(
+                    a.budget_max || 0,
+                    a.budget_min || 0
+                );
+                const bMaxBudget = Math.max(
+                    b.budget_max || 0,
+                    b.budget_min || 0
+                );
+                return bMaxBudget - aMaxBudget;
+            case "budget_low":
+                // 予算が設定されていない場合（レベニューシェア）は最後に表示
+                const aHasBudget =
+                    (a.budget_min !== null && a.budget_min !== undefined) ||
+                    (a.budget_max !== null && a.budget_max !== undefined);
+                const bHasBudget =
+                    (b.budget_min !== null && b.budget_min !== undefined) ||
+                    (b.budget_max !== null && b.budget_max !== undefined);
+
+                if (!aHasBudget && !bHasBudget) return 0;
+                if (!aHasBudget) return 1;
+                if (!bHasBudget) return -1;
+
+                const aMinBudget = Math.min(
+                    a.budget_min !== null && a.budget_min !== undefined
+                        ? a.budget_min
+                        : Infinity,
+                    a.budget_max !== null && a.budget_max !== undefined
+                        ? a.budget_max
+                        : Infinity
+                );
+                const bMinBudget = Math.min(
+                    b.budget_min !== null && b.budget_min !== undefined
+                        ? b.budget_min
+                        : Infinity,
+                    b.budget_max !== null && b.budget_max !== undefined
+                        ? b.budget_max
+                        : Infinity
+                );
+                return aMinBudget - bMinBudget;
+            default:
+                return 0;
+        }
+    });
 
     return (
         <AppLayout header="案件一覧">
@@ -170,8 +266,13 @@ export default function JobListings({
                         </div>
 
                         <div className="p-job-listings__sort-dropdown">
-                            <button className="p-job-listings__sort-button">
-                                新着順
+                            <button
+                                className="p-job-listings__sort-button"
+                                onClick={() =>
+                                    setShowSortDropdown(!showSortDropdown)
+                                }
+                            >
+                                {getSortOptionText(sortOption)}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="16"
@@ -186,12 +287,77 @@ export default function JobListings({
                                     <path d="M6 9l6 6 6-6" />
                                 </svg>
                             </button>
+
+                            {showSortDropdown && (
+                                <div className="p-job-listings__sort-options">
+                                    <button
+                                        className={`p-job-listings__sort-option ${
+                                            sortOption === "latest"
+                                                ? "p-job-listings__sort-option--active"
+                                                : ""
+                                        }`}
+                                        onClick={() =>
+                                            handleSortChange("latest")
+                                        }
+                                    >
+                                        新着順
+                                    </button>
+                                    <button
+                                        className={`p-job-listings__sort-option ${
+                                            sortOption === "oldest"
+                                                ? "p-job-listings__sort-option--active"
+                                                : ""
+                                        }`}
+                                        onClick={() =>
+                                            handleSortChange("oldest")
+                                        }
+                                    >
+                                        登録が古い順
+                                    </button>
+                                    <button
+                                        className={`p-job-listings__sort-option ${
+                                            sortOption === "views"
+                                                ? "p-job-listings__sort-option--active"
+                                                : ""
+                                        }`}
+                                        onClick={() =>
+                                            handleSortChange("views")
+                                        }
+                                    >
+                                        閲覧数順
+                                    </button>
+                                    <button
+                                        className={`p-job-listings__sort-option ${
+                                            sortOption === "budget_high"
+                                                ? "p-job-listings__sort-option--active"
+                                                : ""
+                                        }`}
+                                        onClick={() =>
+                                            handleSortChange("budget_high")
+                                        }
+                                    >
+                                        予算の高い順
+                                    </button>
+                                    <button
+                                        className={`p-job-listings__sort-option ${
+                                            sortOption === "budget_low"
+                                                ? "p-job-listings__sort-option--active"
+                                                : ""
+                                        }`}
+                                        onClick={() =>
+                                            handleSortChange("budget_low")
+                                        }
+                                    >
+                                        予算の低い順
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
 
                     {filteredJobs.length > 0 ? (
                         <div className="p-job-listings__grid">
-                            {filteredJobs.map((job) => (
+                            {sortedJobs.map((job) => (
                                 <JobCard key={job.id} job={job} auth={auth} />
                             ))}
                         </div>

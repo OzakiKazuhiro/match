@@ -1985,17 +1985,34 @@ textarea {
   color: rgb(65.8820224719, 177.808988764, 215.1179775281);
   text-decoration: underline;
 }
+.p-auth__message {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+}
+.p-auth__status {
+  background-color: #e0f7fa;
+  color: #00838f;
+  border-radius: 4px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
 .p-dashboard__container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 40px 20px;
 }
 .p-dashboard__header {
   background: linear-gradient(135deg, #6cc3e0 0%, #8bc34a 100%);
   color: #fff;
   padding: 30px 0;
-  margin-bottom: 30px;
 }
 .p-dashboard__header-inner {
   width: 100%;
@@ -2194,84 +2211,107 @@ textarea {
   color: #666;
 }
 .p-dashboard__menu-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  padding: 1.5rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
 }
 .p-dashboard__menu-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 .p-dashboard__menu-card-content {
+  padding: 30px 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  gap: 15px;
+  flex: 1;
 }
 .p-dashboard__menu-card-icon {
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 9999px;
+  border-radius: 12px;
+  flex-shrink: 0;
 }
 .p-dashboard__menu-card-icon--blue {
-  background-color: #dbeafe;
-  color: #2563eb;
+  background-color: #e3f2fd;
+  color: #1565c0;
 }
 .p-dashboard__menu-card-icon--green {
-  background-color: #dcfce7;
-  color: #16a34a;
+  background-color: #e8f5e9;
+  color: #2e7d32;
 }
 .p-dashboard__menu-card-icon--purple {
-  background-color: #f3e8ff;
-  color: #9333ea;
+  background-color: #f3e5f5;
+  color: #7b1fa2;
 }
 .p-dashboard__menu-card-icon--yellow {
-  background-color: #fef9c3;
-  color: #ca8a04;
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+.p-dashboard__menu-card-icon--cyan {
+  background-color: #e0f7fa;
+  color: #00acc1;
+}
+.p-dashboard__menu-card-icon--orange {
+  background-color: #fff3e0;
+  color: #e65100;
 }
 .p-dashboard__menu-card-icon-svg {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 28px;
+  height: 28px;
 }
 .p-dashboard__menu-card-text {
-  margin-left: 1rem;
+  flex: 1;
 }
 .p-dashboard__menu-card-title {
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: #111827;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
 }
 .p-dashboard__menu-card-description {
-  margin-top: 0.25rem;
-  font-size: 0.875rem;
-  color: #6b7280;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
 }
 .p-dashboard__menu-card-action {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e5e7eb;
-  font-size: 0.875rem;
+  padding: 15px 20px;
+  text-align: right;
+  border-top: 1px solid #f0f0f0;
+  color: #6cc3e0;
+  font-size: 0.9rem;
   font-weight: 500;
-  color: #2563eb;
+  transition: color 0.3s;
 }
 .p-dashboard__card-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
 }
-@media (min-width: 768px) {
+@media (max-width: 1024px) {
   .p-dashboard__card-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .p-dashboard__card-grid {
+    grid-template-columns: 1fr;
   }
 }
 .p-dashboard__container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem;
 }
 .p-job-listings__container {
   width: 100%;
@@ -2386,17 +2426,62 @@ textarea {
 .p-job-listings__sort-button {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
-  background: none;
-  border: none;
-  padding: 8px 15px;
+  padding: 8px 16px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: #333;
   cursor: pointer;
-  color: #666;
-  font-weight: 500;
-  transition: color 0.3s;
+  transition: background-color 0.2s ease;
+  min-width: 120px;
+  width: 160px;
+}
+.p-job-listings__sort-button svg {
+  transition: transform 0.2s ease;
+  margin-left: auto;
 }
 .p-job-listings__sort-button:hover {
+  background-color: #f8f8f8;
+}
+.p-job-listings__sort-options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 160px;
+  margin-top: 4px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 160px;
+}
+.p-job-listings__sort-option {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 0.875rem;
   color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  min-width: 120px;
+}
+.p-job-listings__sort-option:hover {
+  background-color: #f5f5f5;
+}
+.p-job-listings__sort-option--active {
+  background-color: #f0f7ff;
+  color: #0081cc;
+  font-weight: 500;
+}
+.p-job-listings__sort-option--active:hover {
+  background-color: #e0f0ff;
 }
 .p-job-listings__grid {
   display: grid;
@@ -2413,16 +2498,11 @@ textarea {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
   border: 1px solid #eee;
-}
-.p-job-listings__card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 .p-job-listings__card-header {
   padding: 16px 20px;
@@ -3121,6 +3201,7 @@ textarea {
   font-weight: 600;
   transition: all 0.3s;
   overflow: hidden;
+  color: white;
 }
 .p-job-detail__share-button:hover {
   opacity: 0.8;

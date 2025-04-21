@@ -1,54 +1,64 @@
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import InputError from "@/Components/InputError";
+import TextInput from "@/Components/TextInput";
+import GuestLayout from "@/Layouts/GuestLayout";
+import { Head, useForm } from "@inertiajs/react";
+import { FormEventHandler } from "react";
+import InputLabel from "@/Components/InputLabel";
+import { Link } from "@inertiajs/react";
 
 export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
-        email: '',
+        email: "",
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('password.email'));
+        post(route("password.email"));
     };
 
     return (
-        <GuestLayout>
-            <Head title="Forgot Password" />
+        <GuestLayout title="パスワードリセット">
+            <Head title="パスワードリセット - Match" />
 
-            <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email
-                address and we will email you a password reset link that will
-                allow you to choose a new one.
+            <div className="p-auth__message">
+                パスワードをお忘れですか？メールアドレスを入力していただければ、パスワードリセットのリンクをメールでお送りします。
             </div>
 
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
+            {status && <div className="p-auth__status">{status}</div>}
+
+            <form onSubmit={submit} className="p-auth__form">
+                <div className="p-auth__form-group">
+                    <InputLabel htmlFor="email" value="メールアドレス" />
+
+                    <TextInput
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        className="p-auth__input"
+                        isFocused={true}
+                        autoComplete="email"
+                        onChange={(e) => setData("email", e.target.value)}
+                    />
+
+                    <InputError
+                        message={errors.email}
+                        className="p-auth__error"
+                    />
                 </div>
-            )}
 
-            <form onSubmit={submit}>
-                <TextInput
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={data.email}
-                    className="mt-1 block w-full"
-                    isFocused={true}
-                    onChange={(e) => setData('email', e.target.value)}
-                />
+                <div className="p-auth__actions">
+                    <Link href={route("login")} className="p-auth__link">
+                        ログイン画面に戻る
+                    </Link>
 
-                <InputError message={errors.email} className="mt-2" />
-
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Email Password Reset Link
-                    </PrimaryButton>
+                    <button
+                        className="p-auth__button p-auth__button--primary"
+                        disabled={processing}
+                    >
+                        パスワードリセットリンクを送信
+                    </button>
                 </div>
             </form>
         </GuestLayout>

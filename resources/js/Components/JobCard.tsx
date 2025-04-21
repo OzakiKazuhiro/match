@@ -14,6 +14,7 @@ export interface JobType {
     category?: string | null;
     created_at: string;
     updated_at: string;
+    view_count?: number | null;
     user: {
         id: number;
         name: string;

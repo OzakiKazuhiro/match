@@ -28,19 +28,19 @@ function InputError(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/Components/PrimaryButton.tsx":
-/*!***************************************************!*\
-  !*** ./resources/js/Components/PrimaryButton.tsx ***!
-  \***************************************************/
+/***/ "./resources/js/Components/InputLabel.tsx":
+/*!************************************************!*\
+  !*** ./resources/js/Components/InputLabel.tsx ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ PrimaryButton)
+/* harmony export */   "default": () => (/* binding */ InputLabel)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _excluded = ["className", "disabled", "children"];
+var _excluded = ["value", "className", "children"];
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -49,16 +49,15 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
-function PrimaryButton(_ref) {
-  var _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className,
-    disabled = _ref.disabled,
+function InputLabel(_ref) {
+  var value = _ref.value,
+    _ref$className = _ref.className,
+    className = _ref$className === void 0 ? "" : _ref$className,
     children = _ref.children,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", _objectSpread(_objectSpread({}, props), {}, {
-    className: "inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 ".concat(disabled && 'opacity-25', " ") + className,
-    disabled: disabled,
-    children: children
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", _objectSpread(_objectSpread({}, props), {}, {
+    className: "c-label ".concat(className),
+    children: value || children
   }));
 }
 
@@ -191,11 +190,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ ForgotPassword)
 /* harmony export */ });
 /* harmony import */ var _Components_InputError__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Components/InputError */ "./resources/js/Components/InputError.tsx");
-/* harmony import */ var _Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/PrimaryButton */ "./resources/js/Components/PrimaryButton.tsx");
-/* harmony import */ var _Components_TextInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/TextInput */ "./resources/js/Components/TextInput.tsx");
-/* harmony import */ var _Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Layouts/GuestLayout */ "./resources/js/Layouts/GuestLayout.tsx");
-/* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
+/* harmony import */ var _Components_TextInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/TextInput */ "./resources/js/Components/TextInput.tsx");
+/* harmony import */ var _Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Layouts/GuestLayout */ "./resources/js/Layouts/GuestLayout.tsx");
+/* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
+/* harmony import */ var _Components_InputLabel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/InputLabel */ "./resources/js/Components/InputLabel.tsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
@@ -204,8 +204,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function ForgotPassword(_ref) {
   var status = _ref.status;
-  var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.useForm)({
-      email: ''
+  var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_3__.useForm)({
+      email: ""
     }),
     data = _useForm.data,
     setData = _useForm.setData,
@@ -214,39 +214,52 @@ function ForgotPassword(_ref) {
     errors = _useForm.errors;
   var submit = function submit(e) {
     e.preventDefault();
-    post(route('password.email'));
+    post(route("password.email"));
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Head, {
-      title: "Forgot Password"
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    title: "\u30D1\u30B9\u30EF\u30FC\u30C9\u30EA\u30BB\u30C3\u30C8",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_3__.Head, {
+      title: "\u30D1\u30B9\u30EF\u30FC\u30C9\u30EA\u30BB\u30C3\u30C8 - Match"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-      className: "mb-4 text-sm text-gray-600",
-      children: "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one."
+      className: "p-auth__message",
+      children: "\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u304A\u5FD8\u308C\u3067\u3059\u304B\uFF1F\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u5165\u529B\u3057\u3066\u3044\u305F\u3060\u3051\u308C\u3070\u3001\u30D1\u30B9\u30EF\u30FC\u30C9\u30EA\u30BB\u30C3\u30C8\u306E\u30EA\u30F3\u30AF\u3092\u30E1\u30FC\u30EB\u3067\u304A\u9001\u308A\u3057\u307E\u3059\u3002"
     }), status && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-      className: "mb-4 text-sm font-medium text-green-600",
+      className: "p-auth__status",
       children: status
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
       onSubmit: submit,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        id: "email",
-        type: "email",
-        name: "email",
-        value: data.email,
-        className: "mt-1 block w-full",
-        isFocused: true,
-        onChange: function onChange(e) {
-          return setData('email', e.target.value);
-        }
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
-        message: errors.email,
-        className: "mt-2"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-        className: "mt-4 flex items-center justify-end",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          className: "ms-4",
+      className: "p-auth__form",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "p-auth__form-group",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          htmlFor: "email",
+          value: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          id: "email",
+          type: "email",
+          name: "email",
+          value: data.email,
+          className: "p-auth__input",
+          isFocused: true,
+          autoComplete: "email",
+          onChange: function onChange(e) {
+            return setData("email", e.target.value);
+          }
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          message: errors.email,
+          className: "p-auth__error"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "p-auth__actions",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_3__.Link, {
+          href: route("login"),
+          className: "p-auth__link",
+          children: "\u30ED\u30B0\u30A4\u30F3\u753B\u9762\u306B\u623B\u308B"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+          className: "p-auth__button p-auth__button--primary",
           disabled: processing,
-          children: "Email Password Reset Link"
-        })
+          children: "\u30D1\u30B9\u30EF\u30FC\u30C9\u30EA\u30BB\u30C3\u30C8\u30EA\u30F3\u30AF\u3092\u9001\u4FE1"
+        })]
       })]
     })]
   });
