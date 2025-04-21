@@ -395,6 +395,7 @@ export default function JobDetail({
                             </div>
                         </div>
 
+                        {/* サイドバー */}
                         <div className="p-job-detail__sidebar">
                             {/* 投稿者情報 */}
                             <div className="p-job-detail__card p-job-detail__card--author">
@@ -402,65 +403,56 @@ export default function JobDetail({
                                     投稿者情報
                                 </h2>
                                 <div className="p-job-detail__author">
-                                    <div className="p-job-detail__author-header">
-                                        <div className="p-job-detail__author-avatar">
-                                            {jobListing.user.avatar ? (
-                                                <img
-                                                    src={getAvatarUrl(
-                                                        jobListing.user.avatar
-                                                    )}
-                                                    alt={jobListing.user.name}
-                                                    className="p-job-detail__author-image"
-                                                    onError={(e) => {
-                                                        e.currentTarget.onerror =
-                                                            null;
-                                                        e.currentTarget.src =
-                                                            "";
-                                                        if (
-                                                            e.currentTarget
-                                                                .parentElement
-                                                        ) {
-                                                            e.currentTarget.parentElement.innerHTML =
-                                                                jobListing.user.name
-                                                                    .charAt(0)
-                                                                    .toUpperCase();
-                                                        }
-                                                    }}
-                                                />
-                                            ) : (
-                                                <div className="p-job-detail__author-avatar-placeholder">
-                                                    {jobListing.user.name.charAt(
-                                                        0
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="p-job-detail__author-info">
-                                            <div className="p-job-detail__author-name">
-                                                {jobListing.user.name}
+                                    <div className="p-job-detail__author-avatar">
+                                        {jobListing.user.avatar ? (
+                                            <img
+                                                src={getAvatarUrl(
+                                                    jobListing.user.avatar
+                                                )}
+                                                alt={`${jobListing.user.name}のプロフィール画像`}
+                                                className="p-job-detail__author-image"
+                                                onError={(e) => {
+                                                    if (
+                                                        e.currentTarget
+                                                            .parentElement
+                                                    ) {
+                                                        e.currentTarget.parentElement.innerHTML =
+                                                            jobListing.user.name
+                                                                .charAt(0)
+                                                                .toUpperCase();
+                                                    }
+                                                }}
+                                            />
+                                        ) : (
+                                            <div className="p-job-detail__author-avatar-placeholder">
+                                                {jobListing.user.name.charAt(0)}
                                             </div>
+                                        )}
+                                    </div>
+                                    <div className="p-job-detail__author-info">
+                                        <div className="p-job-detail__author-name">
+                                            {jobListing.user.name}
                                         </div>
                                     </div>
-                                    <div className="p-job-detail__author-stats">
-                                        <div className="p-job-detail__author-stat">
-                                            <div className="p-job-detail__author-stat-label">
-                                                投稿した案件
-                                            </div>
-                                            <div className="p-job-detail__author-stat-value">
-                                                5件
-                                            </div>
+                                </div>
+                                <div className="p-job-detail__author-stats">
+                                    <div className="p-job-detail__author-stat">
+                                        <div className="p-job-detail__author-stat-label">
+                                            投稿した案件
                                         </div>
-                                        <div className="p-job-detail__author-stat">
-                                            <div className="p-job-detail__author-stat-label">
-                                                会員登録日
-                                            </div>
-                                            <div className="p-job-detail__author-stat-value">
-                                                {formatDate(
-                                                    jobListing.user
-                                                        .created_at ||
-                                                        jobListing.created_at
-                                                )}
-                                            </div>
+                                        <div className="p-job-detail__author-stat-value">
+                                            5件
+                                        </div>
+                                    </div>
+                                    <div className="p-job-detail__author-stat">
+                                        <div className="p-job-detail__author-stat-label">
+                                            会員登録日
+                                        </div>
+                                        <div className="p-job-detail__author-stat-value">
+                                            {formatDate(
+                                                jobListing.user.created_at ||
+                                                    jobListing.created_at
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -473,52 +465,40 @@ export default function JobDetail({
                                 </h2>
                                 <div className="p-job-detail__share-buttons">
                                     <a
-                                        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                                            jobListing.title
+                                        href={`https://x.com/intent/tweet?text=${encodeURIComponent(
+                                            `【案件情報】${
+                                                jobListing.title
+                                            } | ${
+                                                jobListing.type === "one_time"
+                                                    ? "単発案件"
+                                                    : "レベニューシェア"
+                                            } | Match`
                                         )}&url=${encodeURIComponent(
                                             window.location.href
+                                        )}&hashtags=${encodeURIComponent(
+                                            "エンジニア,案件募集,Match"
                                         )}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="p-job-detail__share-button p-job-detail__share-button--twitter"
+                                        onClick={() => {
+                                            console.log(
+                                                "案件がシェアされました:",
+                                                jobListing.id
+                                            );
+                                        }}
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                                        </svg>
-                                        Twitter
-                                    </a>
-                                    <a
-                                        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                            window.location.href
-                                        )}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="p-job-detail__share-button p-job-detail__share-button--facebook"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                                        </svg>
-                                        Facebook
+                                        <div className="p-job-detail__share-button-content">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                            >
+                                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                            </svg>
+                                        </div>
                                     </a>
                                 </div>
                             </div>

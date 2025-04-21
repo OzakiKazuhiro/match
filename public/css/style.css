@@ -2735,6 +2735,7 @@ textarea {
 @media (min-width: 992px) {
   .p-job-detail__sidebar {
     width: 320px;
+    position: relative;
   }
 }
 .p-job-detail__card {
@@ -2746,9 +2747,20 @@ textarea {
 .p-job-detail__card--messages {
   margin-top: 16px;
 }
-.p-job-detail__card--author {
-  position: sticky;
-  top: 24px;
+@media (min-width: 992px) {
+  .p-job-detail__card--author, .p-job-detail__card--share {
+    position: sticky;
+    z-index: 10;
+  }
+  .p-job-detail__card--author {
+    position: sticky;
+    top: 24px;
+  }
+  .p-job-detail__card--share {
+    position: sticky;
+    top: 400px;
+    margin-top: -12px;
+  }
 }
 .p-job-detail__header {
   margin-bottom: 24px;
@@ -3096,27 +3108,35 @@ textarea {
 .p-job-detail__share-buttons {
   display: flex;
   gap: 12px;
+  width: 100%;
 }
 .p-job-detail__share-button {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 4px;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
-  transition: opacity 0.3s;
+  transition: all 0.3s;
+  overflow: hidden;
 }
 .p-job-detail__share-button:hover {
-  opacity: 0.9;
+  opacity: 0.8;
+  color: white;
 }
 .p-job-detail__share-button--twitter {
-  background-color: #1da1f2;
+  background-color: #000;
   color: white;
 }
-.p-job-detail__share-button--facebook {
-  background-color: #4267b2;
-  color: white;
+.p-job-detail__share-button-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  width: 100%;
 }
 .p-job-detail__related-jobs {
   display: flex;
