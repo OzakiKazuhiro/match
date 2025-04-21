@@ -50,28 +50,33 @@ export default function DeleteUserForm({
     };
 
     return (
-        <section className={`space-y-6 ${className}`}>
+        <section className={`${className}`}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">退会する</h2>
+                <h2 className="p-profile__section-title">退会する</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="p-profile__section-description">
                     退会すると、すべてのデータが完全に削除されます。
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>退会する</DangerButton>
+            <DangerButton
+                onClick={confirmUserDeletion}
+                className="p-profile__btn p-profile__btn--danger"
+            >
+                退会する
+            </DangerButton>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">
+                <form onSubmit={deleteUser} className="p-profile__modal-body">
+                    <h2 className="p-profile__modal-title">
                         本当に退会しますか？
                     </h2>
 
-                    <p className="mt-1 text-sm text-gray-600">
+                    <p className="p-profile__modal-text">
                         退会すると、すべてのデータが完全に削除されます。本当に退会する場合は、確認のためパスワードを入力してください。
                     </p>
 
-                    <div className="mt-6">
+                    <div className="p-profile__form-group">
                         <InputLabel
                             htmlFor="password"
                             value="パスワード"
@@ -87,23 +92,29 @@ export default function DeleteUserForm({
                             onChange={(e) =>
                                 setData("password", e.target.value)
                             }
-                            className="mt-1 block w-3/4"
+                            className="p-profile__form-input"
                             isFocused
                             placeholder="パスワード"
                         />
 
                         <InputError
                             message={errors.password}
-                            className="mt-2"
+                            className="p-profile__form-error"
                         />
                     </div>
 
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>
+                    <div className="p-profile__modal-actions">
+                        <SecondaryButton
+                            onClick={closeModal}
+                            className="p-profile__btn p-profile__btn--secondary"
+                        >
                             キャンセル
                         </SecondaryButton>
 
-                        <DangerButton className="ms-3" disabled={processing}>
+                        <DangerButton
+                            className="p-profile__btn p-profile__btn--danger"
+                            disabled={processing}
+                        >
                             退会する
                         </DangerButton>
                     </div>

@@ -1362,32 +1362,33 @@ function DeleteUserForm(_ref) {
     reset();
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("section", {
-    className: "space-y-6 ".concat(className),
+    className: "".concat(className),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("header", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
-        className: "text-lg font-medium text-gray-900",
+        className: "p-profile__section-title",
         children: "\u9000\u4F1A\u3059\u308B"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
-        className: "mt-1 text-sm text-gray-600",
+        className: "p-profile__section-description",
         children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30C7\u30FC\u30BF\u304C\u5B8C\u5168\u306B\u524A\u9664\u3055\u308C\u307E\u3059\u3002"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_DangerButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
       onClick: confirmUserDeletion,
+      className: "p-profile__btn p-profile__btn--danger",
       children: "\u9000\u4F1A\u3059\u308B"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
       show: confirmingUserDeletion,
       onClose: closeModal,
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("form", {
         onSubmit: deleteUser,
-        className: "p-6",
+        className: "p-profile__modal-body",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
-          className: "text-lg font-medium text-gray-900",
+          className: "p-profile__modal-title",
           children: "\u672C\u5F53\u306B\u9000\u4F1A\u3057\u307E\u3059\u304B\uFF1F"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
-          className: "mt-1 text-sm text-gray-600",
+          className: "p-profile__modal-text",
           children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30C7\u30FC\u30BF\u304C\u5B8C\u5168\u306B\u524A\u9664\u3055\u308C\u307E\u3059\u3002\u672C\u5F53\u306B\u9000\u4F1A\u3059\u308B\u5834\u5408\u306F\u3001\u78BA\u8A8D\u306E\u305F\u3081\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-          className: "mt-6",
+          className: "p-profile__form-group",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
             htmlFor: "password",
             value: "\u30D1\u30B9\u30EF\u30FC\u30C9",
@@ -1401,20 +1402,21 @@ function DeleteUserForm(_ref) {
             onChange: function onChange(e) {
               return setData("password", e.target.value);
             },
-            className: "mt-1 block w-3/4",
+            className: "p-profile__form-input",
             isFocused: true,
             placeholder: "\u30D1\u30B9\u30EF\u30FC\u30C9"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_1__["default"], {
             message: errors.password,
-            className: "mt-2"
+            className: "p-profile__form-error"
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-          className: "mt-6 flex justify-end",
+          className: "p-profile__modal-actions",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_SecondaryButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
             onClick: closeModal,
+            className: "p-profile__btn p-profile__btn--secondary",
             children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_DangerButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
-            className: "ms-3",
+            className: "p-profile__btn p-profile__btn--danger",
             disabled: processing,
             children: "\u9000\u4F1A\u3059\u308B"
           })]

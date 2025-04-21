@@ -124,3 +124,6 @@ Route::middleware('auth')->prefix('notifications')->name('notifications.')->grou
 });
 
 require __DIR__.'/auth.php';
+
+// メールアドレス検証ルート
+Route::post('/validate-email', [App\Http\Controllers\Auth\EmailValidationController::class, 'validateEmail'])->name('validate.email');

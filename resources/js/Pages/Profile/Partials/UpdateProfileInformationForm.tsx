@@ -21,17 +21,21 @@ export default function UpdateProfileInformation({
     );
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [recentlySuccessful, setRecentlySuccessful] = useState(false);
+    const [removeAvatar, setRemoveAvatar] = useState(false);
 
     const { data, setData, post, patch, errors, processing, reset } = useForm({
         name: user.name,
         email: user.email,
         avatar: null as File | null,
+        remove_avatar: false as boolean,
     });
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
         if (file) {
             setData("avatar", file);
+            setData("remove_avatar", false);
+            setRemoveAvatar(false);
 
             // プレビュー用のURLを作成
             const url = URL.createObjectURL(file);
@@ -41,6 +45,8 @@ export default function UpdateProfileInformation({
 
     const handleRemoveAvatar = () => {
         setData("avatar", null);
+        setData("remove_avatar", true);
+        setRemoveAvatar(true);
         setPreviewUrl(null);
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
@@ -55,6 +61,7 @@ export default function UpdateProfileInformation({
         formData.append("_method", "PATCH"); // Laravel method spoofing
         formData.append("name", data.name);
         formData.append("email", data.email);
+        formData.append("remove_avatar", data.remove_avatar ? "1" : "0");
 
         // アバター画像があれば追加
         if (data.avatar) {
@@ -78,39 +85,40 @@ export default function UpdateProfileInformation({
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    プロフィール情報
-                </h2>
+                <h2 className="p-profile__section-title">プロフィール情報</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="p-profile__section-description">
                     アカウントのプロフィール情報とメールアドレスを更新します。
                 </p>
             </header>
 
             <form
                 onSubmit={submit}
-                className="mt-6 space-y-6"
+                className="p-profile__form"
                 encType="multipart/form-data"
             >
-                <div>
-                    <InputLabel htmlFor="avatar" value="プロフィール画像" />
+                <div className="p-profile__form-group">
+                    <InputLabel
+                        htmlFor="avatar"
+                        value="プロフィール画像"
+                        className="p-profile__form-label"
+                    />
 
-                    <div className="mt-2 flex items-center gap-4">
-                        <div className="avatar-preview">
+                    <div className="p-profile__avatar-container">
+                        <div className="p-profile__avatar">
                             {previewUrl ? (
                                 <img
                                     src={previewUrl}
                                     alt="アバタープレビュー"
-                                    className="h-20 w-20 rounded-full object-cover"
                                 />
                             ) : (
-                                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 text-xl font-bold text-gray-600">
+                                <div className="p-profile__avatar-placeholder">
                                     {user.name.charAt(0).toUpperCase()}
                                 </div>
                             )}
                         </div>
 
-                        <div className="flex flex-col">
+                        <div className="p-profile__avatar-actions">
                             <input
                                 type="file"
                                 id="avatar"
@@ -119,13 +127,13 @@ export default function UpdateProfileInformation({
                                 className="hidden"
                                 accept="image/*"
                             />
-                            <div className="flex gap-2">
+                            <div>
                                 <button
                                     type="button"
                                     onClick={() =>
                                         fileInputRef.current?.click()
                                     }
-                                    className="rounded bg-gray-200 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-300"
+                                    className="p-profile__avatar-button p-profile__avatar-button--upload"
                                 >
                                     画像を選択
                                 </button>
@@ -133,27 +141,34 @@ export default function UpdateProfileInformation({
                                     <button
                                         type="button"
                                         onClick={handleRemoveAvatar}
-                                        className="rounded bg-red-100 px-3 py-1 text-sm font-medium text-red-600 hover:bg-red-200"
+                                        className="p-profile__avatar-button p-profile__avatar-button--remove"
                                     >
                                         削除
                                     </button>
                                 )}
                             </div>
-                            <p className="mt-1 text-xs text-gray-500">
+                            <p className="p-profile__avatar-note">
                                 JPG、PNG、GIF、WEBP 形式。最大2MB。
                             </p>
                         </div>
                     </div>
 
-                    <InputError className="mt-2" message={errors.avatar} />
+                    <InputError
+                        className="p-profile__form-error"
+                        message={errors.avatar}
+                    />
                 </div>
 
-                <div>
-                    <InputLabel htmlFor="name" value="名前" />
+                <div className="p-profile__form-group">
+                    <InputLabel
+                        htmlFor="name"
+                        value="名前"
+                        className="p-profile__form-label"
+                    />
 
                     <TextInput
                         id="name"
-                        className="mt-1 block w-full"
+                        className="p-profile__form-input"
                         value={data.name}
                         onChange={(e) => setData("name", e.target.value)}
                         required
@@ -161,49 +176,64 @@ export default function UpdateProfileInformation({
                         autoComplete="name"
                     />
 
-                    <InputError className="mt-2" message={errors.name} />
+                    <InputError
+                        className="p-profile__form-error"
+                        message={errors.name}
+                    />
                 </div>
 
-                <div>
-                    <InputLabel htmlFor="email" value="メールアドレス" />
+                <div className="p-profile__form-group">
+                    <InputLabel
+                        htmlFor="email"
+                        value="メールアドレス"
+                        className="p-profile__form-label"
+                    />
 
                     <TextInput
                         id="email"
                         type="email"
-                        className="mt-1 block w-full"
+                        className="p-profile__form-input"
                         value={data.email}
                         onChange={(e) => setData("email", e.target.value)}
                         required
                         autoComplete="username"
                     />
 
-                    <InputError className="mt-2" message={errors.email} />
+                    <InputError
+                        className="p-profile__form-error"
+                        message={errors.email}
+                    />
                 </div>
 
                 {mustVerifyEmail && user.email_verified_at === null && (
-                    <div>
-                        <p className="mt-2 text-sm text-gray-800">
+                    <div className="p-profile__verification">
+                        <p className="p-profile__verification-text">
                             メールアドレスが未確認です。
                             <Link
                                 href={route("verification.send")}
                                 method="post"
                                 as="button"
-                                className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                className="p-profile__verification-link"
                             >
                                 こちらをクリックして確認メールを再送信します。
                             </Link>
                         </p>
 
                         {status === "verification-link-sent" && (
-                            <div className="mt-2 text-sm font-medium text-green-600">
+                            <div className="p-profile__verification-sent">
                                 新しい確認リンクがメールアドレスに送信されました。
                             </div>
                         )}
                     </div>
                 )}
 
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>保存</PrimaryButton>
+                <div className="p-profile__form-actions">
+                    <PrimaryButton
+                        disabled={processing}
+                        className="p-profile__btn p-profile__btn--primary"
+                    >
+                        保存
+                    </PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -212,7 +242,7 @@ export default function UpdateProfileInformation({
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm font-medium text-blue-600">
+                        <p className="p-profile__success-message">
                             保存しました。
                         </p>
                     </Transition>

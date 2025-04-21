@@ -27,8 +27,25 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*\d).+$/'],
+        ];
+    }
+
+    /**
+     * バリデーションメッセージを取得
+     * 
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'メールアドレスは必須です',
+            'email.email' => '有効なメールアドレスを入力してください',
+            'email.max' => 'メールアドレスは255文字以内で入力してください',
+            'password.required' => 'パスワードは必須です',
+            'password.min' => 'パスワードは8文字以上で入力してください',
+            'password.regex' => 'パスワードは半角英文字と数字を含める必要があります',
         ];
     }
 
@@ -45,7 +62,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'ログイン情報が正しくありません。',
             ]);
         }
 
@@ -68,10 +85,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+            'email' => 'ログイン試行回数が多すぎます。' . $seconds . '秒後に再度お試しください。',
         ]);
     }
 

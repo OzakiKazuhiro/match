@@ -534,19 +534,21 @@ function UpdatePasswordForm(_ref) {
     className: className,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("header", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
-        className: "text-lg font-medium text-gray-900",
+        className: "p-profile__section-title",
         children: "\u30D1\u30B9\u30EF\u30FC\u30C9\u5909\u66F4"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-        className: "mt-1 text-sm text-gray-600",
+        className: "p-profile__section-description",
         children: "\u5B89\u5168\u6027\u3092\u4FDD\u3064\u305F\u3081\u3001\u9577\u304F\u3066\u30E9\u30F3\u30C0\u30E0\u306A\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: updatePassword,
-      className: "mt-6 space-y-6",
+      className: "p-profile__form",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "current_password",
-          value: "\u73FE\u5728\u306E\u30D1\u30B9\u30EF\u30FC\u30C9"
+          value: "\u73FE\u5728\u306E\u30D1\u30B9\u30EF\u30FC\u30C9",
+          className: "p-profile__form-label"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "current_password",
           ref: currentPasswordInput,
@@ -555,16 +557,18 @@ function UpdatePasswordForm(_ref) {
             return setData("current_password", e.target.value);
           },
           type: "password",
-          className: "mt-1 block w-full",
+          className: "p-profile__form-input",
           autoComplete: "current-password"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.current_password,
-          className: "mt-2"
+          className: "p-profile__form-error"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password",
-          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9"
+          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9",
+          className: "p-profile__form-label"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "password",
           ref: passwordInput,
@@ -573,16 +577,18 @@ function UpdatePasswordForm(_ref) {
             return setData("password", e.target.value);
           },
           type: "password",
-          className: "mt-1 block w-full",
+          className: "p-profile__form-input",
           autoComplete: "new-password"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.password,
-          className: "mt-2"
+          className: "p-profile__form-error"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password_confirmation",
-          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9\uFF08\u78BA\u8A8D\uFF09"
+          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9\uFF08\u78BA\u8A8D\uFF09",
+          className: "p-profile__form-label"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "password_confirmation",
           value: data.password_confirmation,
@@ -590,16 +596,17 @@ function UpdatePasswordForm(_ref) {
             return setData("password_confirmation", e.target.value);
           },
           type: "password",
-          className: "mt-1 block w-full",
+          className: "p-profile__form-input",
           autoComplete: "new-password"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.password_confirmation,
-          className: "mt-2"
+          className: "p-profile__form-error"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "flex items-center gap-4",
+        className: "p-profile__form-actions",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
           disabled: processing,
+          className: "p-profile__btn p-profile__btn--primary",
           children: "\u4FDD\u5B58"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_headlessui_react__WEBPACK_IMPORTED_MODULE_7__.Transition, {
           show: recentlySuccessful,
@@ -608,7 +615,7 @@ function UpdatePasswordForm(_ref) {
           leave: "transition ease-in-out",
           leaveTo: "opacity-0",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-            className: "text-sm text-gray-600",
+            className: "p-profile__success-message",
             children: "\u4FDD\u5B58\u3057\u307E\u3057\u305F"
           })
         })]

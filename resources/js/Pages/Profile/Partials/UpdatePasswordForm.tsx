@@ -51,20 +51,19 @@ export default function UpdatePasswordForm({
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    パスワード変更
-                </h2>
+                <h2 className="p-profile__section-title">パスワード変更</h2>
 
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="p-profile__section-description">
                     安全性を保つため、長くてランダムなパスワードを設定してください。
                 </p>
             </header>
 
-            <form onSubmit={updatePassword} className="mt-6 space-y-6">
-                <div>
+            <form onSubmit={updatePassword} className="p-profile__form">
+                <div className="p-profile__form-group">
                     <InputLabel
                         htmlFor="current_password"
                         value="現在のパスワード"
+                        className="p-profile__form-label"
                     />
 
                     <TextInput
@@ -75,18 +74,22 @@ export default function UpdatePasswordForm({
                             setData("current_password", e.target.value)
                         }
                         type="password"
-                        className="mt-1 block w-full"
+                        className="p-profile__form-input"
                         autoComplete="current-password"
                     />
 
                     <InputError
                         message={errors.current_password}
-                        className="mt-2"
+                        className="p-profile__form-error"
                     />
                 </div>
 
-                <div>
-                    <InputLabel htmlFor="password" value="新しいパスワード" />
+                <div className="p-profile__form-group">
+                    <InputLabel
+                        htmlFor="password"
+                        value="新しいパスワード"
+                        className="p-profile__form-label"
+                    />
 
                     <TextInput
                         id="password"
@@ -94,17 +97,21 @@ export default function UpdatePasswordForm({
                         value={data.password}
                         onChange={(e) => setData("password", e.target.value)}
                         type="password"
-                        className="mt-1 block w-full"
+                        className="p-profile__form-input"
                         autoComplete="new-password"
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError
+                        message={errors.password}
+                        className="p-profile__form-error"
+                    />
                 </div>
 
-                <div>
+                <div className="p-profile__form-group">
                     <InputLabel
                         htmlFor="password_confirmation"
                         value="新しいパスワード（確認）"
+                        className="p-profile__form-label"
                     />
 
                     <TextInput
@@ -114,18 +121,23 @@ export default function UpdatePasswordForm({
                             setData("password_confirmation", e.target.value)
                         }
                         type="password"
-                        className="mt-1 block w-full"
+                        className="p-profile__form-input"
                         autoComplete="new-password"
                     />
 
                     <InputError
                         message={errors.password_confirmation}
-                        className="mt-2"
+                        className="p-profile__form-error"
                     />
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>保存</PrimaryButton>
+                <div className="p-profile__form-actions">
+                    <PrimaryButton
+                        disabled={processing}
+                        className="p-profile__btn p-profile__btn--primary"
+                    >
+                        保存
+                    </PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -134,7 +146,9 @@ export default function UpdatePasswordForm({
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">保存しました</p>
+                        <p className="p-profile__success-message">
+                            保存しました
+                        </p>
                     </Transition>
                 </div>
             </form>

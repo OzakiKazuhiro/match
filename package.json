@@ -48,7 +48,9 @@
     },
     "dependencies": {
         "@heroicons/react": "^2.2.0",
+        "@types/lodash": "^4.17.16",
         "dayjs": "^1.11.13",
+        "lodash": "^4.17.21",
         "ziggy-js": "^2.5.2"
     }
 }

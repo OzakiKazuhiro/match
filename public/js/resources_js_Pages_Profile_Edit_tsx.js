@@ -1811,31 +1811,31 @@ function Edit(_ref) {
     status = _ref.status;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_0__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
-      className: "text-xl font-semibold leading-tight text-gray-800",
-      children: "Profile"
+      className: "p-profile__title",
+      children: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB"
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
-      title: "Profile"
+      title: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-      className: "py-12",
+      className: "p-profile__container",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        className: "mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8",
+        className: "p-profile__inner",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-          className: "bg-white p-4 shadow sm:rounded-lg sm:p-8",
+          className: "p-profile__card",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Partials_UpdateProfileInformationForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
             mustVerifyEmail: mustVerifyEmail,
             status: status,
-            className: "max-w-xl"
+            className: "p-profile__section"
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-          className: "bg-white p-4 shadow sm:rounded-lg sm:p-8",
+          className: "p-profile__card",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Partials_UpdatePasswordForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            className: "max-w-xl"
+            className: "p-profile__section"
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-          className: "bg-white p-4 shadow sm:rounded-lg sm:p-8",
+          className: "p-profile__card",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Partials_DeleteUserForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
-            className: "max-w-xl"
+            className: "p-profile__section"
           })
         })]
       })
@@ -1923,32 +1923,33 @@ function DeleteUserForm(_ref) {
     reset();
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("section", {
-    className: "space-y-6 ".concat(className),
+    className: "".concat(className),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("header", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
-        className: "text-lg font-medium text-gray-900",
+        className: "p-profile__section-title",
         children: "\u9000\u4F1A\u3059\u308B"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
-        className: "mt-1 text-sm text-gray-600",
+        className: "p-profile__section-description",
         children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30C7\u30FC\u30BF\u304C\u5B8C\u5168\u306B\u524A\u9664\u3055\u308C\u307E\u3059\u3002"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_DangerButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
       onClick: confirmUserDeletion,
+      className: "p-profile__btn p-profile__btn--danger",
       children: "\u9000\u4F1A\u3059\u308B"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
       show: confirmingUserDeletion,
       onClose: closeModal,
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("form", {
         onSubmit: deleteUser,
-        className: "p-6",
+        className: "p-profile__modal-body",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
-          className: "text-lg font-medium text-gray-900",
+          className: "p-profile__modal-title",
           children: "\u672C\u5F53\u306B\u9000\u4F1A\u3057\u307E\u3059\u304B\uFF1F"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
-          className: "mt-1 text-sm text-gray-600",
+          className: "p-profile__modal-text",
           children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30C7\u30FC\u30BF\u304C\u5B8C\u5168\u306B\u524A\u9664\u3055\u308C\u307E\u3059\u3002\u672C\u5F53\u306B\u9000\u4F1A\u3059\u308B\u5834\u5408\u306F\u3001\u78BA\u8A8D\u306E\u305F\u3081\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-          className: "mt-6",
+          className: "p-profile__form-group",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
             htmlFor: "password",
             value: "\u30D1\u30B9\u30EF\u30FC\u30C9",
@@ -1962,20 +1963,21 @@ function DeleteUserForm(_ref) {
             onChange: function onChange(e) {
               return setData("password", e.target.value);
             },
-            className: "mt-1 block w-3/4",
+            className: "p-profile__form-input",
             isFocused: true,
             placeholder: "\u30D1\u30B9\u30EF\u30FC\u30C9"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_1__["default"], {
             message: errors.password,
-            className: "mt-2"
+            className: "p-profile__form-error"
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-          className: "mt-6 flex justify-end",
+          className: "p-profile__modal-actions",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_SecondaryButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
             onClick: closeModal,
+            className: "p-profile__btn p-profile__btn--secondary",
             children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_DangerButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
-            className: "ms-3",
+            className: "p-profile__btn p-profile__btn--danger",
             disabled: processing,
             children: "\u9000\u4F1A\u3059\u308B"
           })]
@@ -2056,19 +2058,21 @@ function UpdatePasswordForm(_ref) {
     className: className,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("header", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
-        className: "text-lg font-medium text-gray-900",
+        className: "p-profile__section-title",
         children: "\u30D1\u30B9\u30EF\u30FC\u30C9\u5909\u66F4"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-        className: "mt-1 text-sm text-gray-600",
+        className: "p-profile__section-description",
         children: "\u5B89\u5168\u6027\u3092\u4FDD\u3064\u305F\u3081\u3001\u9577\u304F\u3066\u30E9\u30F3\u30C0\u30E0\u306A\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: updatePassword,
-      className: "mt-6 space-y-6",
+      className: "p-profile__form",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "current_password",
-          value: "\u73FE\u5728\u306E\u30D1\u30B9\u30EF\u30FC\u30C9"
+          value: "\u73FE\u5728\u306E\u30D1\u30B9\u30EF\u30FC\u30C9",
+          className: "p-profile__form-label"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "current_password",
           ref: currentPasswordInput,
@@ -2077,16 +2081,18 @@ function UpdatePasswordForm(_ref) {
             return setData("current_password", e.target.value);
           },
           type: "password",
-          className: "mt-1 block w-full",
+          className: "p-profile__form-input",
           autoComplete: "current-password"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.current_password,
-          className: "mt-2"
+          className: "p-profile__form-error"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password",
-          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9"
+          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9",
+          className: "p-profile__form-label"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "password",
           ref: passwordInput,
@@ -2095,16 +2101,18 @@ function UpdatePasswordForm(_ref) {
             return setData("password", e.target.value);
           },
           type: "password",
-          className: "mt-1 block w-full",
+          className: "p-profile__form-input",
           autoComplete: "new-password"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.password,
-          className: "mt-2"
+          className: "p-profile__form-error"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password_confirmation",
-          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9\uFF08\u78BA\u8A8D\uFF09"
+          value: "\u65B0\u3057\u3044\u30D1\u30B9\u30EF\u30FC\u30C9\uFF08\u78BA\u8A8D\uFF09",
+          className: "p-profile__form-label"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "password_confirmation",
           value: data.password_confirmation,
@@ -2112,16 +2120,17 @@ function UpdatePasswordForm(_ref) {
             return setData("password_confirmation", e.target.value);
           },
           type: "password",
-          className: "mt-1 block w-full",
+          className: "p-profile__form-input",
           autoComplete: "new-password"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.password_confirmation,
-          className: "mt-2"
+          className: "p-profile__form-error"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "flex items-center gap-4",
+        className: "p-profile__form-actions",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
           disabled: processing,
+          className: "p-profile__btn p-profile__btn--primary",
           children: "\u4FDD\u5B58"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_headlessui_react__WEBPACK_IMPORTED_MODULE_7__.Transition, {
           show: recentlySuccessful,
@@ -2130,7 +2139,7 @@ function UpdatePasswordForm(_ref) {
           leave: "transition ease-in-out",
           leaveTo: "opacity-0",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-            className: "text-sm text-gray-600",
+            className: "p-profile__success-message",
             children: "\u4FDD\u5B58\u3057\u307E\u3057\u305F"
           })
         })]
@@ -2189,10 +2198,15 @@ function UpdateProfileInformation(_ref) {
     _useState4 = _slicedToArray(_useState3, 2),
     recentlySuccessful = _useState4[0],
     setRecentlySuccessful = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    removeAvatar = _useState6[0],
+    setRemoveAvatar = _useState6[1];
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.useForm)({
       name: user.name,
       email: user.email,
-      avatar: null
+      avatar: null,
+      remove_avatar: false
     }),
     data = _useForm.data,
     setData = _useForm.setData,
@@ -2206,6 +2220,8 @@ function UpdateProfileInformation(_ref) {
     var file = ((_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0]) || null;
     if (file) {
       setData("avatar", file);
+      setData("remove_avatar", false);
+      setRemoveAvatar(false);
 
       // プレビュー用のURLを作成
       var url = URL.createObjectURL(file);
@@ -2214,6 +2230,8 @@ function UpdateProfileInformation(_ref) {
   };
   var handleRemoveAvatar = function handleRemoveAvatar() {
     setData("avatar", null);
+    setData("remove_avatar", true);
+    setRemoveAvatar(true);
     setPreviewUrl(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -2227,6 +2245,7 @@ function UpdateProfileInformation(_ref) {
     formData.append("_method", "PATCH"); // Laravel method spoofing
     formData.append("name", data.name);
     formData.append("email", data.email);
+    formData.append("remove_avatar", data.remove_avatar ? "1" : "0");
 
     // アバター画像があれば追加
     if (data.avatar) {
@@ -2253,34 +2272,35 @@ function UpdateProfileInformation(_ref) {
     className: className,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("header", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
-        className: "text-lg font-medium text-gray-900",
+        className: "p-profile__section-title",
         children: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u60C5\u5831"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-        className: "mt-1 text-sm text-gray-600",
+        className: "p-profile__section-description",
         children: "\u30A2\u30AB\u30A6\u30F3\u30C8\u306E\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u60C5\u5831\u3068\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u66F4\u65B0\u3057\u307E\u3059\u3002"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: submit,
-      className: "mt-6 space-y-6",
+      className: "p-profile__form",
       encType: "multipart/form-data",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "avatar",
-          value: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u753B\u50CF"
+          value: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u753B\u50CF",
+          className: "p-profile__form-label"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          className: "mt-2 flex items-center gap-4",
+          className: "p-profile__avatar-container",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            className: "avatar-preview",
+            className: "p-profile__avatar",
             children: previewUrl ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
               src: previewUrl,
-              alt: "\u30A2\u30D0\u30BF\u30FC\u30D7\u30EC\u30D3\u30E5\u30FC",
-              className: "h-20 w-20 rounded-full object-cover"
+              alt: "\u30A2\u30D0\u30BF\u30FC\u30D7\u30EC\u30D3\u30E5\u30FC"
             }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-              className: "flex h-20 w-20 items-center justify-center rounded-full bg-gray-100 text-xl font-bold text-gray-600",
+              className: "p-profile__avatar-placeholder",
               children: user.name.charAt(0).toUpperCase()
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-            className: "flex flex-col",
+            className: "p-profile__avatar-actions",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
               type: "file",
               id: "avatar",
@@ -2289,37 +2309,38 @@ function UpdateProfileInformation(_ref) {
               className: "hidden",
               accept: "image/*"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              className: "flex gap-2",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                 type: "button",
                 onClick: function onClick() {
                   var _fileInputRef$current;
                   return (_fileInputRef$current = fileInputRef.current) === null || _fileInputRef$current === void 0 ? void 0 : _fileInputRef$current.click();
                 },
-                className: "rounded bg-gray-200 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-300",
+                className: "p-profile__avatar-button p-profile__avatar-button--upload",
                 children: "\u753B\u50CF\u3092\u9078\u629E"
               }), previewUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                 type: "button",
                 onClick: handleRemoveAvatar,
-                className: "rounded bg-red-100 px-3 py-1 text-sm font-medium text-red-600 hover:bg-red-200",
+                className: "p-profile__avatar-button p-profile__avatar-button--remove",
                 children: "\u524A\u9664"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-              className: "mt-1 text-xs text-gray-500",
+              className: "p-profile__avatar-note",
               children: "JPG\u3001PNG\u3001GIF\u3001WEBP \u5F62\u5F0F\u3002\u6700\u59272MB\u3002"
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
-          className: "mt-2",
+          className: "p-profile__form-error",
           message: errors.avatar
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "name",
-          value: "\u540D\u524D"
+          value: "\u540D\u524D",
+          className: "p-profile__form-label"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "name",
-          className: "mt-1 block w-full",
+          className: "p-profile__form-input",
           value: data.name,
           onChange: function onChange(e) {
             return setData("name", e.target.value);
@@ -2328,17 +2349,19 @@ function UpdateProfileInformation(_ref) {
           isFocused: true,
           autoComplete: "name"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
-          className: "mt-2",
+          className: "p-profile__form-error",
           message: errors.name
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "email",
-          value: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9"
+          value: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9",
+          className: "p-profile__form-label"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "email",
           type: "email",
-          className: "mt-1 block w-full",
+          className: "p-profile__form-input",
           value: data.email,
           onChange: function onChange(e) {
             return setData("email", e.target.value);
@@ -2346,27 +2369,29 @@ function UpdateProfileInformation(_ref) {
           required: true,
           autoComplete: "username"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
-          className: "mt-2",
+          className: "p-profile__form-error",
           message: errors.email
         })]
       }), mustVerifyEmail && user.email_verified_at === null && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-profile__verification",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("p", {
-          className: "mt-2 text-sm text-gray-800",
+          className: "p-profile__verification-text",
           children: ["\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u304C\u672A\u78BA\u8A8D\u3067\u3059\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Link, {
             href: route("verification.send"),
             method: "post",
             as: "button",
-            className: "rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
+            className: "p-profile__verification-link",
             children: "\u3053\u3061\u3089\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u78BA\u8A8D\u30E1\u30FC\u30EB\u3092\u518D\u9001\u4FE1\u3057\u307E\u3059\u3002"
           })]
         }), status === "verification-link-sent" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "mt-2 text-sm font-medium text-green-600",
+          className: "p-profile__verification-sent",
           children: "\u65B0\u3057\u3044\u78BA\u8A8D\u30EA\u30F3\u30AF\u304C\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306B\u9001\u4FE1\u3055\u308C\u307E\u3057\u305F\u3002"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "flex items-center gap-4",
+        className: "p-profile__form-actions",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
           disabled: processing,
+          className: "p-profile__btn p-profile__btn--primary",
           children: "\u4FDD\u5B58"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_headlessui_react__WEBPACK_IMPORTED_MODULE_7__.Transition, {
           show: recentlySuccessful,
@@ -2375,7 +2400,7 @@ function UpdateProfileInformation(_ref) {
           leave: "transition ease-in-out",
           leaveTo: "opacity-0",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-            className: "text-sm font-medium text-blue-600",
+            className: "p-profile__success-message",
             children: "\u4FDD\u5B58\u3057\u307E\u3057\u305F\u3002"
           })
         })]

@@ -1,4 +1,3 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import {
@@ -7,12 +6,11 @@ import {
     DocumentTextIcon,
     InboxIcon,
 } from "@heroicons/react/24/outline";
+import AppLayout from "@/Layouts/AppLayout";
 
 export default function Dashboard({ auth }: PageProps) {
     return (
-        <AuthenticatedLayout
-            header={<h2 className="p-dashboard__title">マイページ</h2>}
-        >
+        <AppLayout header="マイページ">
             <Head title="マイページ" />
 
             <div className="p-dashboard__container">
@@ -106,6 +104,6 @@ export default function Dashboard({ auth }: PageProps) {
                     </Link>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AppLayout>
     );
 }
