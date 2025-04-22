@@ -144,7 +144,11 @@ export default function ApplicationsToMyJobs({
 
     return (
         <AuthenticatedLayout
-            header={<div className="p-applications__title">応募一覧</div>}
+            header={
+                <div className="p-applications__title">
+                    自分の案件への応募一覧
+                </div>
+            }
         >
             <Head title="自分の案件への応募一覧 - Match" />
 

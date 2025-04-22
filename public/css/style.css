@@ -2021,7 +2021,7 @@ textarea {
   padding: 0 20px;
 }
 .p-dashboard__title {
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   font-weight: 600;
   color: #fff;
 }
@@ -2323,6 +2323,7 @@ textarea {
   background: linear-gradient(135deg, #6cc3e0 0%, #8bc34a 100%);
   color: #fff;
   padding: 40px 0;
+  margin-top: 40px;
   margin-bottom: 40px;
   text-align: center;
 }
@@ -2333,8 +2334,9 @@ textarea {
   padding: 0 20px;
 }
 .p-job-listings__title {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
 }
 .p-job-listings__subtitle {
   font-size: 1.1rem;
@@ -3809,9 +3811,9 @@ textarea {
   margin: 0 auto;
 }
 .p-applications__title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
-  color: #111827;
+  color: #fff;
 }
 .p-applications__tabs {
   display: flex;
@@ -4250,6 +4252,11 @@ textarea {
 /*
   メッセージ一覧・詳細画面のスタイル
 */
+.p-messages__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+}
 .p-messages__container {
   padding: 1.5rem 0.75rem;
 }
@@ -4714,6 +4721,214 @@ textarea {
   display: flex;
   align-items: flex-end;
   gap: 0.5rem;
+}
+/*
+ * パブリックメッセージ一覧スタイル
+ */
+.p-public-messages {
+  padding: 24px 0;
+}
+.p-public-messages__container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.p-public-messages__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.p-public-messages__item {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.p-public-messages__item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.p-public-messages__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.p-public-messages__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+.p-public-messages__type {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.p-public-messages__type--onetime {
+  background-color: #e6f4fa;
+  color: #0081cc;
+}
+.p-public-messages__type--revenue {
+  background-color: #e6f9f1;
+  color: #00b378;
+}
+.p-public-messages__message {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.p-public-messages__message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.p-public-messages__sender {
+  font-weight: 600;
+  color: #444;
+}
+.p-public-messages__date {
+  font-size: 12px;
+  color: #666;
+}
+.p-public-messages__content {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.p-public-messages__footer {
+  text-align: right;
+}
+.p-public-messages__view-all {
+  display: inline-block;
+  color: #0081cc;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+.p-public-messages__view-all:hover {
+  text-decoration: underline;
+}
+.p-public-messages__empty {
+  background-color: #fff;
+  padding: 32px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  color: #666;
+}
+/*
+ * パブリックメッセージ詳細スタイル
+ */
+.p-public-messages-detail {
+  padding: 24px 0;
+}
+.p-public-messages-detail__container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.p-public-messages-detail__breadcrumb {
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.p-public-messages-detail__breadcrumb-link {
+  color: #0081cc;
+  text-decoration: none;
+}
+.p-public-messages-detail__breadcrumb-link:hover {
+  text-decoration: underline;
+}
+.p-public-messages-detail__breadcrumb-separator {
+  margin: 0 8px;
+  color: #666;
+}
+.p-public-messages-detail__breadcrumb-current {
+  color: #666;
+}
+.p-public-messages-detail__header {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.p-public-messages-detail__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+.p-public-messages-detail__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.p-public-messages-detail__type {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.p-public-messages-detail__type--onetime {
+  background-color: #e6f4fa;
+  color: #0081cc;
+}
+.p-public-messages-detail__type--revenue {
+  background-color: #e6f9f1;
+  color: #00b378;
+}
+.p-public-messages-detail__date {
+  font-size: 14px;
+  color: #666;
+}
+.p-public-messages-detail__actions {
+  margin-top: 16px;
+}
+.p-public-messages-detail__view-job-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f0f9fc;
+  color: #0081cc;
+  border: 1px solid #6cc3e0;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+.p-public-messages-detail__view-job-button:hover {
+  background-color: #e6f4fa;
+}
+.p-public-messages-detail__section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+.p-public-messages-detail__messages {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+}
+.p-public-messages-detail__messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.p-public-messages-detail__empty {
+  padding: 32px;
+  text-align: center;
+  color: #666;
+  background-color: #f8f9fa;
+  border-radius: 4px;
 }
 /*
  * Project: Terms

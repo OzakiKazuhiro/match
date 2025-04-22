@@ -104,9 +104,9 @@ export default function Index({
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    メッセージ
-                </h2>
+                <div className="p-messages__title">
+                    ダイレクトメッセージ一覧
+                </div>
             }
         >
             <Head title="メッセージ" />

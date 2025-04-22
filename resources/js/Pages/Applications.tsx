@@ -106,7 +106,9 @@ export default function Applications({
 
     return (
         <AuthenticatedLayout
-            header={<div className="p-applications__title">応募一覧</div>}
+            header={
+                <div className="p-applications__title">応募した案件一覧</div>
+            }
         >
             <Head title="応募一覧 - Match" />
 

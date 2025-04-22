@@ -3,7 +3,7 @@ import { Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import JobCard, { JobType } from "@/Components/JobCard";
 import { route } from "ziggy-js";
-import AppLayout from "@/Layouts/AppLayout";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link } from "@inertiajs/react";
 
 export default function JobListings({
@@ -160,7 +160,9 @@ export default function JobListings({
     });
 
     return (
-        <AppLayout header="案件一覧">
+        <AuthenticatedLayout
+            header={<div className="p-job-listings__title">案件一覧</div>}
+        >
             <Head title="案件一覧 - Match" />
 
             <div className="p-job-listings__container">
@@ -598,6 +600,6 @@ export default function JobListings({
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </AuthenticatedLayout>
     );
 }

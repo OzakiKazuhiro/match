@@ -546,7 +546,7 @@ function Applications(_ref) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "p-applications__title",
-      children: "\u5FDC\u52DF\u4E00\u89A7"
+      children: "\u5FDC\u52DF\u3057\u305F\u6848\u4EF6\u4E00\u89A7"
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Head, {
       title: "\u5FDC\u52DF\u4E00\u89A7 - Match"

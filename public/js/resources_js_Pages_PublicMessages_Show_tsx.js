@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_JobListings_tsx"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_PublicMessages_Show_tsx"],{
 
 /***/ "./node_modules/ziggy-js/dist/index.js":
 /*!*********************************************!*\
@@ -899,115 +899,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./resources/js/Components/JobCard.tsx":
-/*!*********************************************!*\
-  !*** ./resources/js/Components/JobCard.tsx ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ JobCard)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
-/* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-// ジョブタイプの定義
-
-// プロップス定義
-
-function JobCard(_ref) {
-  var job = _ref.job,
-    auth = _ref.auth;
-  // 案件タイプの表示名
-  var jobTypeNames = {
-    one_time: "単発案件",
-    revenue_share: "レベニューシェア"
-  };
-
-  // 予算表示のフォーマット
-  var formatBudget = function formatBudget(budgetMin, budgetMax) {
-    if (!budgetMin && !budgetMax) {
-      return null;
-    }
-    if (budgetMin && budgetMax) {
-      return "\xA5".concat(budgetMin.toLocaleString(), " \u301C \xA5").concat(budgetMax.toLocaleString());
-    } else if (budgetMin) {
-      return "\xA5".concat(budgetMin.toLocaleString(), " \u301C");
-    } else if (budgetMax) {
-      return "\u301C \xA5".concat(budgetMax.toLocaleString());
-    }
-  };
-
-  // 日付のフォーマット
-  var formatDate = function formatDate(dateString) {
-    var date = new Date(dateString);
-    var now = new Date();
-    var diffTime = Math.abs(now.getTime() - date.getTime());
-    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    if (diffDays === 1) {
-      return "今日";
-    } else if (diffDays <= 7) {
-      return "".concat(diffDays, "\u65E5\u524D");
-    } else if (diffDays <= 30) {
-      return "".concat(Math.floor(diffDays / 7), "\u9031\u9593\u524D");
-    } else {
-      return date.toLocaleDateString("ja-JP");
-    }
-  };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-    className: "p-job-listings__card",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-      className: "p-job-listings__card-header",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-        className: "p-job-listings__card-type p-job-listings__card-type--".concat(job.type === "one_time" ? "onetime" : "revenue"),
-        children: jobTypeNames[job.type]
-      }), (job.budget_min || job.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-        className: "p-job-listings__card-budget",
-        children: formatBudget(job.budget_min, job.budget_max)
-      })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-      className: "p-job-listings__card-content",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
-        className: "p-job-listings__card-title",
-        children: job.title
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-        className: "p-job-listings__card-desc",
-        children: job.description
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: "p-job-listings__card-meta",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-          className: "p-job-listings__card-date",
-          children: formatDate(job.created_at)
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
-          className: "p-job-listings__card-author",
-          children: ["\u6295\u7A3F\u8005: ", job.user.name]
-        })]
-      })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-      className: "p-job-listings__card-footer",
-      children: [job.category && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        className: "p-job-listings__card-category",
-        children: job.category
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-        href: auth !== null && auth !== void 0 && auth.user ? (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("job-listings.show", job.id) : (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("login", {
-          redirect: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("job-listings.show", job.id)
-        }),
-        className: "p-job-listings__card-link",
-        children: "\u8A73\u7D30\u3092\u898B\u308B"
-      })]
-    })]
-  });
-}
-
-/***/ }),
-
 /***/ "./resources/js/Components/NotificationBadge.tsx":
 /*!*******************************************************!*\
   !*** ./resources/js/Components/NotificationBadge.tsx ***!
@@ -1117,6 +1008,100 @@ function NotificationBadge() {
     }), unreadCount > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
       className: "l-header__notification-badge",
       children: unreadCount
+    })]
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/Components/PublicMessage.tsx":
+/*!***************************************************!*\
+  !*** ./resources/js/Components/PublicMessage.tsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PublicMessage)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+// パブリックメッセージの型定義
+
+/**
+ * アバターURLを取得する関数
+ */
+var getAvatarUrl = function getAvatarUrl(avatarPath) {
+  if (!avatarPath) return "";
+
+  // 既にstorageから始まる場合は重複を避ける
+  if (avatarPath.startsWith("storage/")) {
+    return "/".concat(avatarPath);
+  }
+
+  // http or httpsから始まる場合はそのまま返す
+  if (avatarPath.startsWith("http")) {
+    return avatarPath;
+  }
+
+  // それ以外の場合はstorageパスを追加
+  return "/storage/".concat(avatarPath);
+};
+
+/**
+ * メッセージの日時フォーマット
+ */
+var formatMessageDate = function formatMessageDate(dateString) {
+  var date = new Date(dateString);
+  return date.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+};
+
+/**
+ * パブリックメッセージコンポーネント
+ * 案件詳細ページなどで表示される公開メッセージ
+ */
+function PublicMessage(_ref) {
+  var message = _ref.message;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: "p-job-detail__message",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "p-job-detail__message-header",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "p-job-detail__message-user",
+        children: [message.user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+          src: getAvatarUrl(message.user.avatar),
+          alt: message.user.name,
+          className: "p-job-detail__message-avatar",
+          onError: function onError(e) {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = "";
+            if (e.currentTarget.parentElement) {
+              e.currentTarget.parentElement.innerHTML = message.user.name.charAt(0).toUpperCase();
+            }
+          }
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "p-job-detail__message-avatar-placeholder",
+          children: message.user.name.charAt(0)
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+          className: "p-job-detail__message-name",
+          children: message.user.name
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+        className: "p-job-detail__message-date",
+        children: formatMessageDate(message.created_at)
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      className: "p-job-detail__message-content",
+      children: message.message
     })]
   });
 }
@@ -1472,33 +1457,24 @@ function Authenticated(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/Pages/JobListings.tsx":
-/*!********************************************!*\
-  !*** ./resources/js/Pages/JobListings.tsx ***!
-  \********************************************/
+/***/ "./resources/js/Pages/PublicMessages/Show.tsx":
+/*!****************************************************!*\
+  !*** ./resources/js/Pages/PublicMessages/Show.tsx ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ JobListings)
+/* harmony export */   "default": () => (/* binding */ Show)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
-/* harmony import */ var _Components_JobCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/JobCard */ "./resources/js/Components/JobCard.tsx");
-/* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
-/* harmony import */ var _Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Layouts/AuthenticatedLayout */ "./resources/js/Layouts/AuthenticatedLayout.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+/* harmony import */ var _Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Layouts/AuthenticatedLayout */ "./resources/js/Layouts/AuthenticatedLayout.tsx");
+/* harmony import */ var _utils_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/utils/format */ "./resources/js/utils/format.ts");
+/* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
+/* harmony import */ var _Components_PublicMessage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/PublicMessage */ "./resources/js/Components/PublicMessage.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
@@ -1506,505 +1482,124 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-function JobListings(_ref) {
-  var auth = _ref.auth,
-    jobListings = _ref.jobListings,
-    filters = _ref.filters;
-  // 状態管理
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-    _useState2 = _slicedToArray(_useState, 2),
-    searchQuery = _useState2[0],
-    setSearchQuery = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(filters.type ? filters.type : "all"),
-    _useState4 = _slicedToArray(_useState3, 2),
-    activeFilter = _useState4[0],
-    setActiveFilter = _useState4[1];
-
-  // 並び替えオプションの状態
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("latest"),
-    _useState6 = _slicedToArray(_useState5, 2),
-    sortOption = _useState6[0],
-    setSortOption = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState8 = _slicedToArray(_useState7, 2),
-    showSortDropdown = _useState8[0],
-    setShowSortDropdown = _useState8[1];
-
-  // フィルタリングされた案件リスト
-  var filteredJobs = jobListings.data.filter(function (job) {
-    // 検索クエリのフィルタリング
-    var matchesQuery = searchQuery === "" || job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.description.toLowerCase().includes(searchQuery.toLowerCase()) || job.category && job.category.toLowerCase().includes(searchQuery.toLowerCase());
-
-    // タイプフィルタリング（SPA対応）
-    var matchesType = activeFilter === "all" || job.type === activeFilter;
-    return matchesQuery && matchesType;
-  });
-
-  // タイプフィルターの変更（SPA対応）
-  var handleFilterChange = function handleFilterChange(type) {
-    setActiveFilter(type);
-
-    // URL更新（SPA対応：history APIを使用）
-    var url = type === "all" ? (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("job-listings.index") : (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("job-listings.index", {
-      type: type
-    });
-    window.history.pushState({}, "", url);
-  };
-
-  // 並び替えオプションの表示テキストを取得
-  var getSortOptionText = function getSortOptionText(option) {
-    switch (option) {
-      case "latest":
-        return "新着順";
-      case "oldest":
-        return "登録が古い順";
-      case "views":
-        return "閲覧数順";
-      case "budget_high":
-        return "予算の高い順";
-      case "budget_low":
-        return "予算の低い順";
-      default:
-        return "新着順";
-    }
-  };
-
-  // 並び替えオプション変更時の処理
-  var handleSortChange = function handleSortChange(option) {
-    setSortOption(option);
-    setShowSortDropdown(false);
-
-    // 並び替えオプションをURLに反映（ただしリロードはしない）
-    var url = new URL(window.location.href);
-    url.searchParams.set("sort", option);
-    window.history.pushState({}, "", url.toString());
-
-    // クライアントサイドでの並び替え処理は実装済みのfilteredJobsに反映されるため
-    // リロードする必要はありません
-  };
-
-  // クライアントサイドでの並び替え処理
-  var sortedJobs = _toConsumableArray(filteredJobs).sort(function (a, b) {
-    switch (sortOption) {
-      case "latest":
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      case "oldest":
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-      case "views":
-        return (b.view_count || 0) - (a.view_count || 0);
-      case "budget_high":
-        var aMaxBudget = Math.max(a.budget_max || 0, a.budget_min || 0);
-        var bMaxBudget = Math.max(b.budget_max || 0, b.budget_min || 0);
-        return bMaxBudget - aMaxBudget;
-      case "budget_low":
-        // 予算が設定されていない場合（レベニューシェア）は最後に表示
-        var aHasBudget = a.budget_min !== null && a.budget_min !== undefined || a.budget_max !== null && a.budget_max !== undefined;
-        var bHasBudget = b.budget_min !== null && b.budget_min !== undefined || b.budget_max !== null && b.budget_max !== undefined;
-        if (!aHasBudget && !bHasBudget) return 0;
-        if (!aHasBudget) return 1;
-        if (!bHasBudget) return -1;
-        var aMinBudget = Math.min(a.budget_min !== null && a.budget_min !== undefined ? a.budget_min : Infinity, a.budget_max !== null && a.budget_max !== undefined ? a.budget_max : Infinity);
-        var bMinBudget = Math.min(b.budget_min !== null && b.budget_min !== undefined ? b.budget_min : Infinity, b.budget_max !== null && b.budget_max !== undefined ? b.budget_max : Infinity);
-        return aMinBudget - bMinBudget;
-      default:
-        return 0;
-    }
-  });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-      className: "p-job-listings__title",
-      children: "\u6848\u4EF6\u4E00\u89A7"
-    }),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
-      title: "\u6848\u4EF6\u4E00\u89A7 - Match"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-      className: "p-job-listings__container",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-        className: "p-job-listings__header",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "p-job-listings__header-inner",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
-            className: "p-job-listings__title",
-            children: "\u6848\u4EF6\u3092\u63A2\u3059"
-          }), !(auth !== null && auth !== void 0 && auth.user) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "p-job-listings__login-notice",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("svg", {
-              xmlns: "http://www.w3.org/2000/svg",
-              width: "20",
-              height: "20",
-              viewBox: "0 0 24 24",
-              fill: "none",
-              stroke: "currentColor",
-              strokeWidth: "2",
-              strokeLinecap: "round",
-              strokeLinejoin: "round",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("circle", {
-                cx: "12",
-                cy: "12",
-                r: "10"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("line", {
-                x1: "12",
-                y1: "8",
-                x2: "12",
-                y2: "12"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("line", {
-                x1: "12",
-                y1: "16",
-                x2: "12.01",
-                y2: "16"
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
-              children: ["\u6848\u4EF6\u8A73\u7D30\u306E\u95B2\u89A7\u306B\u306F", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-                href: "/login",
-                className: "p-job-listings__login-link",
-                children: "\u30ED\u30B0\u30A4\u30F3"
-              }), "\u304C\u5FC5\u8981\u3067\u3059"]
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            className: "p-job-listings__search-box",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
-              className: "p-job-listings__search-form",
-              onSubmit: function onSubmit(e) {
-                return e.preventDefault();
-              },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                type: "text",
-                className: "p-job-listings__search-input",
-                placeholder: "\u30AD\u30FC\u30EF\u30FC\u30C9\u3067\u691C\u7D22\uFF08\u6848\u4EF6\u540D\u3001\u5185\u5BB9\u306A\u3069\uFF09",
-                value: searchQuery,
-                onChange: function onChange(e) {
-                  return setSearchQuery(e.target.value);
-                }
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-                type: "submit",
-                className: "p-job-listings__search-button",
-                children: "\u691C\u7D22"
-              })]
-            })
-          })]
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        className: "p-job-listings__container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "p-job-listings__filter-bar",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "p-job-listings__filter-tabs",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-              className: "p-job-listings__filter-tab ".concat(activeFilter === "all" ? "p-job-listings__filter-tab--active" : ""),
-              onClick: function onClick() {
-                return handleFilterChange("all");
-              },
-              children: "\u3059\u3079\u3066\u306E\u6848\u4EF6"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-              className: "p-job-listings__filter-tab ".concat(activeFilter === "one_time" ? "p-job-listings__filter-tab--active" : ""),
-              onClick: function onClick() {
-                return handleFilterChange("one_time");
-              },
-              children: "\u5358\u767A\u6848\u4EF6"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-              className: "p-job-listings__filter-tab ".concat(activeFilter === "revenue_share" ? "p-job-listings__filter-tab--active" : ""),
-              onClick: function onClick() {
-                return handleFilterChange("revenue_share");
-              },
-              children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2"
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "p-job-listings__sort-dropdown",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
-              className: "p-job-listings__sort-button",
-              onClick: function onClick() {
-                return setShowSortDropdown(!showSortDropdown);
-              },
-              children: [getSortOptionText(sortOption), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("svg", {
-                xmlns: "http://www.w3.org/2000/svg",
-                width: "16",
-                height: "16",
-                viewBox: "0 0 24 24",
-                fill: "none",
-                stroke: "currentColor",
-                strokeWidth: "2",
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("path", {
-                  d: "M6 9l6 6 6-6"
-                })
-              })]
-            }), showSortDropdown && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-              className: "p-job-listings__sort-options",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-                className: "p-job-listings__sort-option ".concat(sortOption === "latest" ? "p-job-listings__sort-option--active" : ""),
-                onClick: function onClick() {
-                  return handleSortChange("latest");
-                },
-                children: "\u65B0\u7740\u9806"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-                className: "p-job-listings__sort-option ".concat(sortOption === "oldest" ? "p-job-listings__sort-option--active" : ""),
-                onClick: function onClick() {
-                  return handleSortChange("oldest");
-                },
-                children: "\u767B\u9332\u304C\u53E4\u3044\u9806"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-                className: "p-job-listings__sort-option ".concat(sortOption === "views" ? "p-job-listings__sort-option--active" : ""),
-                onClick: function onClick() {
-                  return handleSortChange("views");
-                },
-                children: "\u95B2\u89A7\u6570\u9806"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-                className: "p-job-listings__sort-option ".concat(sortOption === "budget_high" ? "p-job-listings__sort-option--active" : ""),
-                onClick: function onClick() {
-                  return handleSortChange("budget_high");
-                },
-                children: "\u4E88\u7B97\u306E\u9AD8\u3044\u9806"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-                className: "p-job-listings__sort-option ".concat(sortOption === "budget_low" ? "p-job-listings__sort-option--active" : ""),
-                onClick: function onClick() {
-                  return handleSortChange("budget_low");
-                },
-                children: "\u4E88\u7B97\u306E\u4F4E\u3044\u9806"
-              })]
-            })]
-          })]
-        }), filteredJobs.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-          className: "p-job-listings__grid",
-          children: sortedJobs.map(function (job) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_JobCard__WEBPACK_IMPORTED_MODULE_2__["default"], {
-              job: job,
-              auth: auth
-            }, job.id);
-          })
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "p-job-listings__no-results",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            className: "p-job-listings__no-results-icon",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("svg", {
-              xmlns: "http://www.w3.org/2000/svg",
-              width: "80",
-              height: "80",
-              viewBox: "0 0 24 24",
-              fill: "none",
-              stroke: "currentColor",
-              strokeWidth: "1",
-              strokeLinecap: "round",
-              strokeLinejoin: "round",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("circle", {
-                cx: "12",
-                cy: "12",
-                r: "10"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("line", {
-                x1: "12",
-                y1: "8",
-                x2: "12",
-                y2: "12"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("line", {
-                x1: "12",
-                y1: "16",
-                x2: "12.01",
-                y2: "16"
-              })]
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
-            className: "p-job-listings__no-results-text",
-            children: "\u8A72\u5F53\u3059\u308B\u6848\u4EF6\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3067\u3057\u305F"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-            children: "\u691C\u7D22\u6761\u4EF6\u3092\u5909\u66F4\u3059\u308B\u304B\u3001\u5225\u306E\u30AD\u30FC\u30EF\u30FC\u30C9\u3067\u518D\u5EA6\u691C\u7D22\u3057\u3066\u307F\u3066\u304F\u3060\u3055\u3044\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            className: "u-mt-4",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-              className: "p-job-listings__no-results-button",
-              onClick: function onClick() {
-                setSearchQuery("");
-                setActiveFilter("all");
-                // URLも更新
-                var url = (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("job-listings.index");
-                window.history.pushState({}, "", url);
-              },
-              children: "\u3059\u3079\u3066\u306E\u6848\u4EF6\u3092\u8868\u793A"
-            })
-          })]
-        })]
-      }), filteredJobs.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-        className: "p-job-listings__container",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-          className: "p-job-listings__search-result",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-            className: "p-job-listings__search-result-text",
-            children: searchQuery ? "\u300C".concat(searchQuery, "\u300D\u306E\u691C\u7D22\u7D50\u679C: ").concat(filteredJobs.length, "\u4EF6") : "\u5168".concat(jobListings.total, "\u4EF6\u4E2D ").concat(jobListings.from, "\u301C").concat(jobListings.to, "\u4EF6\u3092\u8868\u793A")
+function Show(_ref) {
+  var _jobListing$public_me, _jobListing$public_me2;
+  var jobListing = _ref.jobListing;
+  console.log(jobListing);
+  // データのチェック
+  if (!jobListing) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        className: "p-public-messages-detail__title",
+        children: "\u30A8\u30E9\u30FC"
+      }),
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
+        title: "\u30A8\u30E9\u30FC - Match"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        className: "p-public-messages-detail",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: "p-public-messages-detail__container",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+            className: "p-public-messages-detail__empty",
+            children: "\u6848\u4EF6\u60C5\u5831\u3092\u8AAD\u307F\u8FBC\u3081\u307E\u305B\u3093\u3067\u3057\u305F\u3002"
           })
         })
-      }), jobListings.last_page > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-        className: "p-job-listings__container",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "p-job-listings__pagination",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-            href: jobListings.links[0].url || "",
-            className: "p-job-listings__pagination-button ".concat(!jobListings.links[0].url ? "p-job-listings__pagination-button--disabled" : ""),
-            preserveScroll: true,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("svg", {
-              xmlns: "http://www.w3.org/2000/svg",
-              width: "20",
-              height: "20",
-              viewBox: "0 0 24 24",
-              fill: "none",
-              stroke: "currentColor",
-              strokeWidth: "2",
-              strokeLinecap: "round",
-              strokeLinejoin: "round",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("polyline", {
-                points: "15 18 9 12 15 6"
-              })
-            })
-          }), jobListings.links.slice(1, -1).map(function (link, i) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-              href: link.url || "",
-              className: "p-job-listings__pagination-button ".concat(link.active ? "p-job-listings__pagination-button--active" : ""),
-              preserveScroll: true,
-              children: link.label
-            }, i);
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-            href: jobListings.links[jobListings.links.length - 1].url || "",
-            className: "p-job-listings__pagination-button ".concat(!jobListings.links[jobListings.links.length - 1].url ? "p-job-listings__pagination-button--disabled" : ""),
-            preserveScroll: true,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("svg", {
-              xmlns: "http://www.w3.org/2000/svg",
-              width: "20",
-              height: "20",
-              viewBox: "0 0 24 24",
-              fill: "none",
-              stroke: "currentColor",
-              strokeWidth: "2",
-              strokeLinecap: "round",
-              strokeLinejoin: "round",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("polyline", {
-                points: "9 18 15 12 9 6"
-              })
-            })
-          })]
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        className: "p-job-listings__features",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
-          className: "p-job-listings__features-title",
-          children: "\u6848\u4EF6\u63A2\u3057\u3092\u3082\u3063\u3068\u7C21\u5358\u306B"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "p-job-listings__features-grid",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "p-job-listings__feature",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-              className: "p-job-listings__feature-icon",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("svg", {
-                xmlns: "http://www.w3.org/2000/svg",
-                width: "24",
-                height: "24",
-                viewBox: "0 0 24 24",
-                fill: "none",
-                stroke: "currentColor",
-                strokeWidth: "2",
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("path", {
-                  d: "M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("circle", {
-                  cx: "8.5",
-                  cy: "7",
-                  r: "4"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("polyline", {
-                  points: "17 11 19 13 23 9"
-                })]
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
-              className: "p-job-listings__feature-title",
-              children: "\u7C21\u5358\u5FDC\u52DF"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-              className: "p-job-listings__feature-text",
-              children: "\u6C17\u306B\u306A\u3063\u305F\u6848\u4EF6\u306B\u306F\u30EF\u30F3\u30AF\u30EA\u30C3\u30AF\u3067\u5FDC\u52DF\u3002 \u8907\u96D1\u306A\u624B\u7D9A\u304D\u306F\u5FC5\u8981\u3042\u308A\u307E\u305B\u3093\u3002"
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "p-job-listings__feature",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-              className: "p-job-listings__feature-icon",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("svg", {
-                xmlns: "http://www.w3.org/2000/svg",
-                width: "24",
-                height: "24",
-                viewBox: "0 0 24 24",
-                fill: "none",
-                stroke: "currentColor",
-                strokeWidth: "2",
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("rect", {
-                  x: "3",
-                  y: "4",
-                  width: "18",
-                  height: "18",
-                  rx: "2",
-                  ry: "2"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("line", {
-                  x1: "16",
-                  y1: "2",
-                  x2: "16",
-                  y2: "6"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("line", {
-                  x1: "8",
-                  y1: "2",
-                  x2: "8",
-                  y2: "6"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("line", {
-                  x1: "3",
-                  y1: "10",
-                  x2: "21",
-                  y2: "10"
-                })]
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
-              className: "p-job-listings__feature-title",
-              children: "\u6700\u65B0\u306E\u6848\u4EF6\u60C5\u5831"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-              className: "p-job-listings__feature-text",
-              children: "\u5E38\u306B\u6700\u65B0\u306E\u6848\u4EF6\u60C5\u5831\u3092\u63B2\u8F09\u3002 \u65B0\u7740\u901A\u77E5\u3092\u8A2D\u5B9A\u3057\u3066\u3001\u304A\u6C17\u306B\u5165\u308A\u306E\u6848\u4EF6\u3092\u898B\u9003\u3055\u306A\u3044\u3088\u3046\u306B\u3057\u307E\u3057\u3087\u3046\u3002"
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "p-job-listings__feature",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-              className: "p-job-listings__feature-icon",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("svg", {
-                xmlns: "http://www.w3.org/2000/svg",
-                width: "24",
-                height: "24",
-                viewBox: "0 0 24 24",
-                fill: "none",
-                stroke: "currentColor",
-                strokeWidth: "2",
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("circle", {
-                  cx: "12",
-                  cy: "12",
-                  r: "10"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("line", {
-                  x1: "12",
-                  y1: "8",
-                  x2: "12",
-                  y2: "16"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("line", {
-                  x1: "8",
-                  y1: "12",
-                  x2: "16",
-                  y2: "12"
-                })]
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
-              className: "p-job-listings__feature-title",
-              children: "\u6848\u4EF6\u6295\u7A3F\u3082\u7C21\u5358"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-              className: "p-job-listings__feature-text",
-              children: "\u3042\u306A\u305F\u306E\u6848\u4EF6\u3092\u6295\u7A3F\u3057\u3066\u3001\u512A\u79C0\u306A\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u30DE\u30C3\u30C1\u30F3\u30B0\u3002 \u30B7\u30F3\u30D7\u30EB\u306A\u5165\u529B\u30D5\u30A9\u30FC\u30E0\u3067\u3001\u3059\u3050\u306B\u6848\u4EF6\u3092\u516C\u958B\u3067\u304D\u307E\u3059\u3002"
-            })]
-          })]
-        })]
       })]
+    });
+  }
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+      className: "p-public-messages-detail__title",
+      children: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8"
+    }),
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
+      title: "".concat(jobListing.title, "\u306E\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8 - Match")
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+      className: "p-public-messages-detail",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-public-messages-detail__container",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+          className: "p-public-messages-detail__breadcrumb",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("public-messages.index"),
+            className: "p-public-messages-detail__breadcrumb-link",
+            children: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u4E00\u89A7"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+            className: "p-public-messages-detail__breadcrumb-separator",
+            children: ">"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+            className: "p-public-messages-detail__breadcrumb-current",
+            children: jobListing.title
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+          className: "p-public-messages-detail__header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h1", {
+            className: "p-public-messages-detail__title",
+            children: jobListing.title
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            className: "p-public-messages-detail__meta",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+              className: "p-public-messages-detail__type p-public-messages-detail__type--".concat(jobListing.type === "one_time" ? "onetime" : "revenue"),
+              children: jobListing.type === "one_time" ? "単発案件" : "レベニューシェア"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
+              className: "p-public-messages-detail__date",
+              children: ["\u6295\u7A3F\u65E5: ", (0,_utils_format__WEBPACK_IMPORTED_MODULE_3__.formatDate)(jobListing.created_at)]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            className: "p-public-messages-detail__actions",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.show", jobListing.id),
+              className: "p-public-messages-detail__view-job-button",
+              children: "\u6848\u4EF6\u8A73\u7D30\u3092\u898B\u308B"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+          className: "p-public-messages-detail__messages",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h2", {
+            className: "p-public-messages-detail__section-title",
+            children: ["\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\uFF08", ((_jobListing$public_me = jobListing.public_messages) === null || _jobListing$public_me === void 0 ? void 0 : _jobListing$public_me.length) || 0, "\u4EF6\uFF09"]
+          }), ((_jobListing$public_me2 = jobListing.public_messages) === null || _jobListing$public_me2 === void 0 ? void 0 : _jobListing$public_me2.length) > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            className: "p-public-messages-detail__messages-list",
+            children: jobListing.public_messages.map(function (message) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PublicMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
+                message: message
+              }, message.id);
+            })
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+            className: "p-public-messages-detail__empty",
+            children: "\u307E\u3060\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u306F\u3042\u308A\u307E\u305B\u3093"
+          })]
+        })]
+      })
     })]
   });
+}
+
+/***/ }),
+
+/***/ "./resources/js/utils/format.ts":
+/*!**************************************!*\
+  !*** ./resources/js/utils/format.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   formatDate: () => (/* binding */ formatDate)
+/* harmony export */ });
+/**
+ * 日付を「YYYY年MM月DD日 HH:MM」形式にフォーマットする
+ * @param dateString ISO形式の日付文字列
+ * @returns フォーマットされた日付文字列
+ */
+function formatDate(dateString) {
+  var date = new Date(dateString);
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hours = date.getHours();
+  var minutes = date.getMinutes().toString().padStart(2, "0");
+  return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5 ").concat(hours, ":").concat(minutes);
 }
 
 /***/ })

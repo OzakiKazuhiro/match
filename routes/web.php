@@ -5,6 +5,7 @@ use App\Http\Controllers\JobListingController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DirectMessageController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PublicMessageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -65,6 +66,15 @@ Route::prefix('job-listings')->name('job-listings.')->group(function () {
         Route::get('/{jobListing}/apply', [ApplicationController::class, 'create'])->name('apply.create');
         Route::post('/{jobListing}/apply', [ApplicationController::class, 'store'])->name('apply.store');
     });
+});
+
+// パブリックメッセージ関連ルート
+Route::middleware('auth')->prefix('public-messages')->name('public-messages.')->group(function () {
+    // 自分が投稿したパブリックメッセージの一覧
+    Route::get('/', [PublicMessageController::class, 'index'])->name('index');
+    
+    // 特定の案件のパブリックメッセージ詳細
+    Route::get('/{jobListing}', [PublicMessageController::class, 'show'])->name('show');
 });
 
 // 案件投稿ページへのショートカットルート

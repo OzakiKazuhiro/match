@@ -2,6 +2,12 @@
   メッセージ一覧・詳細画面のスタイル
 */
 .p-messages {
+    &__title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #fff;
+    }
+
     &__container {
         padding: 1.5rem 0.75rem;
 

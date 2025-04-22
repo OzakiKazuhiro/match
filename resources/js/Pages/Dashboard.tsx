@@ -8,11 +8,13 @@ import {
     DocumentMagnifyingGlassIcon,
     ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
-import AppLayout from "@/Layouts/AppLayout";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 export default function Dashboard({ auth }: PageProps) {
     return (
-        <AppLayout header="マイページ">
+        <AuthenticatedLayout
+            header={<div className="p-dashboard__title">マイページ</div>}
+        >
             <Head title="マイページ" />
 
             <div className="p-dashboard__container">
@@ -106,8 +108,8 @@ export default function Dashboard({ auth }: PageProps) {
                     </Link>
 
                     <Link
-                        // href={route("public-messages.index")}
-                        href={route("applications.to-my-jobs")}
+                        href={route("public-messages.index")}
+                        // href={route("applications.to-my-jobs")}
                         className="p-dashboard__menu-card"
                     >
                         <div className="p-dashboard__menu-card-content">
@@ -151,6 +153,6 @@ export default function Dashboard({ auth }: PageProps) {
                     </Link>
                 </div>
             </div>
-        </AppLayout>
+        </AuthenticatedLayout>
     );
 }
