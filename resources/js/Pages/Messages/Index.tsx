@@ -1,6 +1,7 @@
 import { Head, Link } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
+import { route } from "ziggy-js";
 
 interface User {
     id: number;
@@ -111,9 +112,24 @@ export default function Index({
         >
             <Head title="メッセージ" />
 
-            <div className="p-messages__container">
-                <div className="p-messages__card">
-                    <div className="p-messages__card-body">
+            <div className="p-messages">
+                <div className="p-messages__container">
+                    <div className="p-messages__tabs">
+                        <Link
+                            href={route("public-messages.index")}
+                            className="p-messages__tab"
+                        >
+                            パブリックメッセージ一覧
+                        </Link>
+                        <Link
+                            href={route("messages.index")}
+                            className="p-messages__tab p-messages__tab--active"
+                        >
+                            ダイレクトメッセージ一覧
+                        </Link>
+                    </div>
+
+                    <div className="p-messages__list">
                         {conversationGroups.length === 0 ? (
                             <p className="p-messages__empty">
                                 メッセージはありません。

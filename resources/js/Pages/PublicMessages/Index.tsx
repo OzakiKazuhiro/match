@@ -1,8 +1,7 @@
 import React from "react";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { formatDate } from "@/utils/format";
-import { Link } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
 interface User {
@@ -48,6 +47,21 @@ export default function Index({ jobListingsWithMessages = [] }: Props) {
 
             <div className="p-public-messages">
                 <div className="p-public-messages__container">
+                    <div className="p-messages__tabs">
+                        <Link
+                            href={route("public-messages.index")}
+                            className="p-messages__tab p-messages__tab--active"
+                        >
+                            パブリックメッセージ一覧
+                        </Link>
+                        <Link
+                            href={route("messages.index")}
+                            className="p-messages__tab"
+                        >
+                            ダイレクトメッセージ一覧
+                        </Link>
+                    </div>
+
                     {jobListingsWithMessages.length > 0 ? (
                         <div className="p-public-messages__list">
                             {jobListingsWithMessages.map((item) => (

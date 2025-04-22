@@ -1386,7 +1386,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 function Index(_ref) {
   var _ref$jobListingsWithM = _ref.jobListingsWithMessages,
     jobListingsWithMessages = _ref$jobListingsWithM === void 0 ? [] : _ref$jobListingsWithM;
@@ -1399,9 +1398,20 @@ function Index(_ref) {
       title: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u4E00\u89A7"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: "p-public-messages",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "p-public-messages__container",
-        children: jobListingsWithMessages.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "p-messages__tabs",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("public-messages.index"),
+            className: "p-messages__tab p-messages__tab--active",
+            children: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u4E00\u89A7"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("messages.index"),
+            className: "p-messages__tab",
+            children: "\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u4E00\u89A7"
+          })]
+        }), jobListingsWithMessages.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
           className: "p-public-messages__list",
           children: jobListingsWithMessages.map(function (item) {
             var _item$latest_message, _item$latest_message2, _item$latest_message3;
@@ -1445,7 +1455,7 @@ function Index(_ref) {
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
           className: "p-public-messages__empty",
           children: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u306F\u3042\u308A\u307E\u305B\u3093"
-        })
+        })]
       })
     })]
   });
