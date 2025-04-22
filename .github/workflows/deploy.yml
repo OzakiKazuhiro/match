@@ -45,14 +45,12 @@ jobs:
       - name: Build assets
         run: npm run build
 
-      - name: Generate key
+      # 既存の本番環境用.envファイルを使用
+      - name: Create .env file
         run: |
+          # 既存の.envファイルを使用
           cp .env.example .env
           php artisan key:generate --force
-
-      # Match プロジェクトの APP_NAME を設定
-      - name: Set correct APP_NAME in .env
-        run: sed -i "s/APP_NAME=.*/APP_NAME=Match/" .env
 
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
