@@ -33,3 +33,17 @@
 .u-text-success {
     color: #4caf50;
 }
+
+// スマホ表示時に改行するためのクラス
+.u-break-sp {
+    @media (max-width: 767px) {
+        display: block;
+    }
+}
+
+// スマホ表示時に改行しないためのクラス
+.u-no-break-sp {
+    @media (max-width: 767px) {
+        display: block;
+    }
+}

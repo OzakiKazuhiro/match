@@ -236,7 +236,12 @@ export default function Top({
                     {/* ヒーローセクション */}
                     <section className="p-top__hero">
                         <h1 className="p-top__title">
-                            シンプルなエンジニア案件マッチングサービス
+                            <span className="u-break-sp">
+                                シンプルなエンジニア案件
+                            </span>
+                            <span className="u-no-break-sp">
+                                マッチングサービス
+                            </span>
                         </h1>
                         <div className="p-top__service-name">match</div>
                         <p className="p-top__subtitle">
