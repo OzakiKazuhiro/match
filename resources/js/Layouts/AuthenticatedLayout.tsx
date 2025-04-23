@@ -111,14 +111,16 @@ export default function Authenticated({
                                                         .parentElement
                                                 ) {
                                                     e.currentTarget.parentElement.innerHTML =
-                                                        user.name
-                                                            .charAt(0)
-                                                            .toUpperCase();
+                                                        user?.name
+                                                            ?.charAt(0)
+                                                            .toUpperCase() ||
+                                                        "U";
                                                 }
                                             }}
                                         />
                                     ) : (
-                                        user.name.charAt(0).toUpperCase()
+                                        user?.name?.charAt(0).toUpperCase() ||
+                                        "U"
                                     )}
                                 </div>
                                 <div className="l-header__user-info">
@@ -126,7 +128,7 @@ export default function Authenticated({
                                         ログイン中
                                     </span>
                                     <span className="l-header__user-name">
-                                        {user.name}さん
+                                        {user?.name || "ユーザー"}さん
                                     </span>
                                 </div>
                                 <svg
@@ -212,19 +214,19 @@ export default function Authenticated({
                                             e.currentTarget.src = "";
                                             if (e.currentTarget.parentElement) {
                                                 e.currentTarget.parentElement.innerHTML =
-                                                    user.name
-                                                        .charAt(0)
-                                                        .toUpperCase();
+                                                    user?.name
+                                                        ?.charAt(0)
+                                                        .toUpperCase() || "U";
                                             }
                                         }}
                                     />
                                 ) : (
-                                    user.name.charAt(0).toUpperCase()
+                                    user?.name?.charAt(0).toUpperCase() || "U"
                                 )}
                             </div>
                             <div className="l-header__mobile-user-info">
                                 <span className="l-header__mobile-user-name">
-                                    {user.name}さん
+                                    {user?.name || "ユーザー"}さん
                                 </span>
                                 <span className="l-header__mobile-login-status">
                                     ログイン中
