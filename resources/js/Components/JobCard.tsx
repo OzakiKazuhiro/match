@@ -19,8 +19,8 @@ export interface JobType {
         id: number;
         name: string;
         email: string;
-        avatar?: string;
-    };
+        avatar?: string | null;
+    } | null;
 }
 
 // プロップス定義
@@ -98,7 +98,7 @@ export default function JobCard({ job, auth }: JobCardProps) {
                         {formatDate(job.created_at)}
                     </span>
                     <span className="p-job-listings__card-author">
-                        投稿者: {job.user.name}
+                        投稿者: {job.user?.name || "不明なユーザー"}
                     </span>
                 </div>
             </div>

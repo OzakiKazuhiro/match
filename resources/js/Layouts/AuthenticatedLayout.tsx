@@ -95,7 +95,7 @@ export default function Authenticated({
                                 className="l-header__user-button"
                             >
                                 <div className="l-header__user-avatar">
-                                    {user.avatar ? (
+                                    {user?.avatar ? (
                                         <img
                                             src={
                                                 user.avatar.startsWith("/")
@@ -199,7 +199,7 @@ export default function Authenticated({
                     <div className="l-header__mobile-menu" ref={mobileMenuRef}>
                         <div className="l-header__mobile-user">
                             <div className="l-header__user-avatar">
-                                {user.avatar ? (
+                                {user?.avatar ? (
                                     <img
                                         src={
                                             user.avatar.startsWith("/")
