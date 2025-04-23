@@ -740,6 +740,13 @@ textarea {
   font-weight: bold;
   margin-bottom: 15px;
 }
+@media (max-width: 768px) {
+  .p-top__title {
+    font-size: 1.7rem;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
 .p-top__service-name {
   font-size: 3.5rem;
   font-weight: 900;
@@ -934,6 +941,11 @@ textarea {
   text-align: center;
   width: 100%;
 }
+@media (max-width: 768px) {
+  .p-top__section-title {
+    font-size: 1.4rem;
+  }
+}
 .p-top__section-title::after {
   content: "";
   position: absolute;
@@ -977,7 +989,7 @@ textarea {
 }
 @media (max-width: 768px) {
   .p-top__section-title--catchphrase {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 }
 .p-top__flow {
@@ -1016,7 +1028,7 @@ textarea {
   .p-top__flow-item {
     width: 100%;
     max-width: 350px;
-    margin: 0 0 30px;
+    margin: 0 0 12px;
   }
 }
 .p-top__flow-step {
@@ -1057,7 +1069,7 @@ textarea {
 @media (max-width: 768px) {
   .p-top__flow-arrow {
     transform: rotate(90deg);
-    margin: -15px 0;
+    margin: 14px 0;
   }
 }
 .p-top__flow-register {
@@ -1332,7 +1344,7 @@ textarea {
   flex-direction: column;
   justify-content: center;
   gap: 50px;
-  margin-top: 60px;
+  margin-top: 30px;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -1589,6 +1601,18 @@ textarea {
   background-size: 200% 200%;
   animation: gradientShift 10s ease infinite;
 }
+@media (max-width: 768px) {
+  .p-top__final-cta .p-top__title {
+    font-size: 1.5rem;
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+  .p-top__final-cta .p-top__subtitle {
+    font-size: 1rem;
+    padding: 0 15px;
+    margin-bottom: 25px;
+  }
+}
 @keyframes gradientShift {
   0% {
     background-position: 0% 50%;
@@ -1767,8 +1791,10 @@ textarea {
 }
 @media (max-width: 768px) {
   .p-top__faq-question {
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 16px 20px;
+    text-align: left;
+    align-items: center;
   }
 }
 .p-top__faq-q {
@@ -2381,6 +2407,13 @@ textarea {
 .p-job-listings__search-input::placeholder {
   color: #999;
 }
+@media (max-width: 768px) {
+  .p-job-listings__search-input {
+    height: 80px;
+    font-size: 1.1rem;
+    padding: 12px 24px;
+  }
+}
 .p-job-listings__search-button {
   height: 50px;
   padding: 0 30px;
@@ -2395,6 +2428,13 @@ textarea {
 .p-job-listings__search-button:hover {
   background-color: #ff3838;
   transform: translateY(-2px);
+}
+@media (max-width: 768px) {
+  .p-job-listings__search-button {
+    height: 60px;
+    font-size: 1.1rem;
+    padding: 0 36px;
+  }
 }
 .p-job-listings__filter-bar {
   display: flex;
@@ -2557,9 +2597,30 @@ textarea {
   justify-content: space-between;
   margin-top: auto;
 }
+.p-job-listings__card-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 .p-job-listings__card-date {
   font-size: 0.85rem;
   color: #888;
+}
+.p-job-listings__card-views {
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+.p-job-listings__card-views::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 4px;
 }
 .p-job-listings__card-author {
   font-size: 0.85rem;
@@ -2744,7 +2805,8 @@ textarea {
   color: #856404;
   padding: 20px;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-top: 24px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -3278,6 +3340,7 @@ textarea {
   font-size: 1.75rem;
   font-weight: 700;
   color: #333;
+  padding-top: 12px;
   margin-bottom: 12px;
 }
 .p-post-job__subtitle {
@@ -3426,6 +3489,42 @@ textarea {
   transform: translateY(-50%);
   color: #666;
 }
+.p-post-job__unit {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 0.9rem;
+}
+.p-post-job__budget-help {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.4;
+}
+.p-post-job__budget-preview {
+  margin-top: 12px;
+  margin-bottom: 5px;
+  padding: 8px 12px;
+  background-color: #f0f7ff;
+  border: 1px solid #d0e7ff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.p-post-job__budget-preview-label {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 600;
+}
+.p-post-job__budget-preview-value {
+  font-size: 1rem;
+  color: #0081cc;
+  font-weight: 700;
+}
 .p-post-job__budget-separator {
   color: #666;
 }
@@ -3440,6 +3539,17 @@ textarea {
 }
 @media (min-width: 576px) {
   .p-post-job__skills-input {
+    flex-wrap: nowrap;
+  }
+}
+.p-post-job__skills-input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .p-post-job__skills-input-row {
     flex-wrap: nowrap;
   }
 }
@@ -3461,6 +3571,16 @@ textarea {
 .p-post-job__add-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+@media (max-width: 767px) {
+  .p-post-job__add-button--middle {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .p-post-job__add-button--end {
+    display: none;
+  }
 }
 .p-post-job__skills-tags {
   display: flex;
@@ -4774,6 +4894,19 @@ textarea {
   font-weight: 600;
   color: #fff;
 }
+.p-public-messages__job-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0081cc;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 12px;
+  transition: color 0.2s;
+}
+.p-public-messages__job-title:hover {
+  color: rgb(0, 96.75, 153);
+  text-decoration: underline;
+}
 .p-public-messages__type {
   font-size: 12px;
   padding: 4px 8px;
@@ -4875,9 +5008,10 @@ textarea {
   margin-bottom: 24px;
 }
 .p-public-messages-detail__title {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #fff;
+  color: #0081cc;
+  margin-bottom: 12px;
 }
 .p-public-messages-detail__meta {
   display: flex;

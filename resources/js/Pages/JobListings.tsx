@@ -242,14 +242,14 @@ export default function JobListings({
                                     ></line>
                                 </svg>
                                 <span>
-                                    案件詳細の閲覧には
+                                    案件詳細の閲覧は
                                     <Link
                                         href="/login"
                                         className="p-job-listings__login-link"
                                     >
                                         ログイン
                                     </Link>
-                                    が必要です
+                                    が必要
                                 </span>
                             </div>
                         )}

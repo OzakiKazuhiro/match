@@ -42,6 +42,21 @@
         color: #fff;
     }
 
+    &__job-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #0081cc;
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 12px;
+        transition: color 0.2s;
+
+        &:hover {
+            color: darken(#0081cc, 10%);
+            text-decoration: underline;
+        }
+    }
+
     &__type {
         font-size: 12px;
         padding: 4px 8px;
@@ -163,9 +178,10 @@
     }
 
     &__title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         font-weight: 600;
-        color: #fff;
+        color: #0081cc;
+        margin-bottom: 12px;
     }
 
     &__meta {

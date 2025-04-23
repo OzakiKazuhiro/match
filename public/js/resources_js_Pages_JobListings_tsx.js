@@ -983,9 +983,15 @@ function JobCard(_ref) {
         children: job.description
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "p-job-listings__card-meta",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-          className: "p-job-listings__card-date",
-          children: formatDate(job.created_at)
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "p-job-listings__card-meta-left",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+            className: "p-job-listings__card-date",
+            children: formatDate(job.created_at)
+          }), job.view_count !== null && job.view_count !== undefined && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
+            className: "p-job-listings__card-views",
+            children: ["\u95B2\u89A7\u6570", job.view_count]
+          })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
           className: "p-job-listings__card-author",
           children: ["\u6295\u7A3F\u8005: ", ((_job$user = job.user) === null || _job$user === void 0 ? void 0 : _job$user.name) || "不明なユーザー"]
@@ -1708,11 +1714,11 @@ function JobListings(_ref) {
                 y2: "16"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
-              children: ["\u6848\u4EF6\u8A73\u7D30\u306E\u95B2\u89A7\u306B\u306F", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              children: ["\u6848\u4EF6\u8A73\u7D30\u306E\u95B2\u89A7\u306F", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
                 href: "/login",
                 className: "p-job-listings__login-link",
                 children: "\u30ED\u30B0\u30A4\u30F3"
-              }), "\u304C\u5FC5\u8981\u3067\u3059"]
+              }), "\u304C\u5FC5\u8981"]
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: "p-job-listings__search-box",

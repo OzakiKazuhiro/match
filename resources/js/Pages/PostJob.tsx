@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Head, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -7,6 +7,9 @@ import InputError from "@/Components/InputError";
 export default function PostJob({ auth }: PageProps) {
     const [customSkill, setCustomSkill] = useState("");
     const [customPreferredSkill, setCustomPreferredSkill] = useState("");
+    // 表示用の実際の金額を保持する状態
+    const [displayBudgetMin, setDisplayBudgetMin] = useState<string>("");
+    const [displayBudgetMax, setDisplayBudgetMax] = useState<string>("");
 
     const { data, setData, post, processing, errors, reset } = useForm({
         title: "",
@@ -19,6 +22,12 @@ export default function PostJob({ auth }: PageProps) {
         preferred_skills: [] as string[],
         location: "リモート",
     });
+
+    // 予算入力時に実際の表示金額を更新
+    useEffect(() => {
+        updateDisplayBudget(data.budget_min, setDisplayBudgetMin);
+        updateDisplayBudget(data.budget_max, setDisplayBudgetMax);
+    }, [data.budget_min, data.budget_max]);
 
     // カテゴリーの選択肢
     const categoryOptions = [
@@ -104,7 +113,41 @@ export default function PostJob({ auth }: PageProps) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        // 単発案件の場合のみ、送信前に金額を千円単位から円単位に変換
+        if (data.type === "one_time") {
+            // 予算の最小値と最大値を千円単位から円単位に変換（例：10 → 10000）
+            if (data.budget_min) {
+                setData("budget_min", String(parseInt(data.budget_min) * 1000));
+            }
+
+            if (data.budget_max) {
+                setData("budget_max", String(parseInt(data.budget_max) * 1000));
+            }
+        }
+
+        // フォームを送信
         post(route("job-listings.store"));
+    };
+
+    // 入力された千円単位の金額を実際の金額に変換して表示する関数
+    const updateDisplayBudget = (
+        value: string,
+        setter: React.Dispatch<React.SetStateAction<string>>
+    ) => {
+        if (!value) {
+            setter("");
+            return;
+        }
+
+        try {
+            // 数値に変換して千円単位を円単位に変換
+            const amount = parseInt(value) * 1000;
+            // 金額をカンマ区切りで表示
+            setter(amount.toLocaleString() + "円");
+        } catch (e) {
+            setter("");
+        }
     };
 
     return (
@@ -226,21 +269,31 @@ export default function PostJob({ auth }: PageProps) {
                                             </span>
                                             <input
                                                 type="number"
-                                                placeholder="最小金額"
+                                                placeholder="最小金額（千円単位）"
                                                 value={data.budget_min}
-                                                onChange={(e) =>
+                                                onChange={(e) => {
+                                                    const value =
+                                                        e.target.value;
                                                     setData(
                                                         "budget_min",
-                                                        e.target.value
-                                                    )
-                                                }
+                                                        value
+                                                    );
+                                                    updateDisplayBudget(
+                                                        value,
+                                                        setDisplayBudgetMin
+                                                    );
+                                                }}
                                                 className={`p-post-job__input p-post-job__input--budget ${
                                                     errors.budget_min
                                                         ? "p-post-job__input--error"
                                                         : ""
                                                 }`}
                                                 min="0"
+                                                style={{ paddingRight: "45px" }}
                                             />
+                                            <span className="p-post-job__unit">
+                                                千円
+                                            </span>
                                         </div>
                                         <span className="p-post-job__budget-separator">
                                             〜
@@ -251,22 +304,62 @@ export default function PostJob({ auth }: PageProps) {
                                             </span>
                                             <input
                                                 type="number"
-                                                placeholder="最大金額"
+                                                placeholder="最大金額（千円単位）"
                                                 value={data.budget_max}
-                                                onChange={(e) =>
+                                                onChange={(e) => {
+                                                    const value =
+                                                        e.target.value;
                                                     setData(
                                                         "budget_max",
-                                                        e.target.value
-                                                    )
-                                                }
+                                                        value
+                                                    );
+                                                    updateDisplayBudget(
+                                                        value,
+                                                        setDisplayBudgetMax
+                                                    );
+                                                }}
                                                 className={`p-post-job__input p-post-job__input--budget ${
                                                     errors.budget_max
                                                         ? "p-post-job__input--error"
                                                         : ""
                                                 }`}
                                                 min="0"
+                                                style={{ paddingRight: "45px" }}
                                             />
+                                            <span className="p-post-job__unit">
+                                                千円
+                                            </span>
                                         </div>
+                                    </div>
+
+                                    {/* 実際の金額表示 */}
+                                    {(displayBudgetMin || displayBudgetMax) && (
+                                        <div className="p-post-job__budget-preview">
+                                            <span className="p-post-job__budget-preview-label">
+                                                表示される金額：
+                                            </span>
+                                            {displayBudgetMin &&
+                                            displayBudgetMax ? (
+                                                <span className="p-post-job__budget-preview-value">
+                                                    {displayBudgetMin} 〜{" "}
+                                                    {displayBudgetMax}
+                                                </span>
+                                            ) : displayBudgetMin ? (
+                                                <span className="p-post-job__budget-preview-value">
+                                                    {displayBudgetMin} 〜
+                                                </span>
+                                            ) : (
+                                                <span className="p-post-job__budget-preview-value">
+                                                    〜 {displayBudgetMax}
+                                                </span>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    <div className="p-post-job__budget-help">
+                                        ※
+                                        金額は千円単位で入力してください（例：50
+                                        = 5万円、100 = 10万円）
                                     </div>
                                     {(errors.budget_min ||
                                         errors.budget_max) && (
@@ -391,48 +484,62 @@ export default function PostJob({ auth }: PageProps) {
                                 </label>
                                 <div className="p-post-job__skills-container">
                                     <div className="p-post-job__skills-input">
-                                        <select
-                                            className="p-post-job__select"
-                                            value={customSkill}
-                                            onChange={(e) =>
-                                                setCustomSkill(e.target.value)
-                                            }
-                                        >
-                                            <option value="">
-                                                スキルを選択して追加ボタンで追加
-                                            </option>
-                                            {skillOptions.map((skill) => (
-                                                <option
-                                                    key={skill}
-                                                    value={skill}
-                                                >
-                                                    {skill}
+                                        <div className="p-post-job__skills-input-row">
+                                            <select
+                                                className="p-post-job__select"
+                                                value={customSkill}
+                                                onChange={(e) =>
+                                                    setCustomSkill(
+                                                        e.target.value
+                                                    )
+                                                }
+                                            >
+                                                <option value="">
+                                                    スキルを選択して追加ボタンで追加
                                                 </option>
-                                            ))}
-                                        </select>
+                                                {skillOptions.map((skill) => (
+                                                    <option
+                                                        key={skill}
+                                                        value={skill}
+                                                    >
+                                                        {skill}
+                                                    </option>
+                                                ))}
+                                            </select>
 
-                                        <input
-                                            type="text"
-                                            placeholder="スキルを入力して追加ボタンで追加"
-                                            value={
-                                                !skillOptions.includes(
-                                                    customSkill
-                                                )
-                                                    ? customSkill
-                                                    : ""
-                                            }
-                                            onChange={(e) =>
-                                                setCustomSkill(e.target.value)
-                                            }
-                                            className="p-post-job__input p-post-job__input--skill"
-                                        />
-                                        <button
-                                            type="button"
-                                            className="p-post-job__add-button"
-                                            onClick={addSkill}
-                                        >
-                                            追加
-                                        </button>
+                                            <button
+                                                type="button"
+                                                className="p-post-job__add-button p-post-job__add-button--middle"
+                                                onClick={addSkill}
+                                            >
+                                                追加
+                                            </button>
+
+                                            <input
+                                                type="text"
+                                                placeholder="スキルを入力して追加ボタンで追加"
+                                                value={
+                                                    !skillOptions.includes(
+                                                        customSkill
+                                                    )
+                                                        ? customSkill
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    setCustomSkill(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                className="p-post-job__input p-post-job__input--skill"
+                                            />
+                                            <button
+                                                type="button"
+                                                className="p-post-job__add-button p-post-job__add-button--end"
+                                                onClick={addSkill}
+                                            >
+                                                追加
+                                            </button>
+                                        </div>
                                     </div>
 
                                     {data.skills.length > 0 && (
@@ -468,51 +575,62 @@ export default function PostJob({ auth }: PageProps) {
                                 </label>
                                 <div className="p-post-job__skills-container">
                                     <div className="p-post-job__skills-input">
-                                        <select
-                                            className="p-post-job__select"
-                                            value={customPreferredSkill}
-                                            onChange={(e) =>
-                                                setCustomPreferredSkill(
-                                                    e.target.value
-                                                )
-                                            }
-                                        >
-                                            <option value="">
-                                                スキルを選択して追加ボタンで追加
-                                            </option>
-                                            {skillOptions.map((skill) => (
-                                                <option
-                                                    key={skill}
-                                                    value={skill}
-                                                >
-                                                    {skill}
+                                        <div className="p-post-job__skills-input-row">
+                                            <select
+                                                className="p-post-job__select"
+                                                value={customPreferredSkill}
+                                                onChange={(e) =>
+                                                    setCustomPreferredSkill(
+                                                        e.target.value
+                                                    )
+                                                }
+                                            >
+                                                <option value="">
+                                                    スキルを選択して追加ボタンで追加
                                                 </option>
-                                            ))}
-                                        </select>
-                                        <input
-                                            type="text"
-                                            placeholder="スキルを入力して追加ボタンで追加"
-                                            value={
-                                                !skillOptions.includes(
-                                                    customPreferredSkill
-                                                )
-                                                    ? customPreferredSkill
-                                                    : ""
-                                            }
-                                            onChange={(e) =>
-                                                setCustomPreferredSkill(
-                                                    e.target.value
-                                                )
-                                            }
-                                            className="p-post-job__input p-post-job__input--skill"
-                                        />
-                                        <button
-                                            type="button"
-                                            className="p-post-job__add-button"
-                                            onClick={addPreferredSkill}
-                                        >
-                                            追加
-                                        </button>
+                                                {skillOptions.map((skill) => (
+                                                    <option
+                                                        key={skill}
+                                                        value={skill}
+                                                    >
+                                                        {skill}
+                                                    </option>
+                                                ))}
+                                            </select>
+
+                                            <button
+                                                type="button"
+                                                className="p-post-job__add-button p-post-job__add-button--middle"
+                                                onClick={addPreferredSkill}
+                                            >
+                                                追加
+                                            </button>
+
+                                            <input
+                                                type="text"
+                                                placeholder="スキルを入力して追加ボタンで追加"
+                                                value={
+                                                    !skillOptions.includes(
+                                                        customPreferredSkill
+                                                    )
+                                                        ? customPreferredSkill
+                                                        : ""
+                                                }
+                                                onChange={(e) =>
+                                                    setCustomPreferredSkill(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                className="p-post-job__input p-post-job__input--skill"
+                                            />
+                                            <button
+                                                type="button"
+                                                className="p-post-job__add-button p-post-job__add-button--end"
+                                                onClick={addPreferredSkill}
+                                            >
+                                                追加
+                                            </button>
+                                        </div>
                                     </div>
 
                                     {data.preferred_skills.length > 0 && (

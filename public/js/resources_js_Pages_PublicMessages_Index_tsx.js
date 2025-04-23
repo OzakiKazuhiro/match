@@ -1424,7 +1424,7 @@ function Index(_ref) {
                 className: "p-public-messages__header",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
                   href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("public-messages.show", item.job_listing.id),
-                  className: "p-public-messages__title",
+                  className: "p-public-messages__job-title",
                   children: item.job_listing.title
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
                   className: "p-public-messages__type p-public-messages__type--".concat(item.job_listing.type === "one_time" ? "onetime" : "revenue"),

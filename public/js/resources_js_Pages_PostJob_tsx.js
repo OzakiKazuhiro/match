@@ -536,6 +536,15 @@ function PostJob(_ref) {
     _useState4 = _slicedToArray(_useState3, 2),
     customPreferredSkill = _useState4[0],
     setCustomPreferredSkill = _useState4[1];
+  // 表示用の実際の金額を保持する状態
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState6 = _slicedToArray(_useState5, 2),
+    displayBudgetMin = _useState6[0],
+    setDisplayBudgetMin = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState8 = _slicedToArray(_useState7, 2),
+    displayBudgetMax = _useState8[0],
+    setDisplayBudgetMax = _useState8[1];
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.useForm)({
       title: "",
       type: "one_time",
@@ -553,6 +562,12 @@ function PostJob(_ref) {
     processing = _useForm.processing,
     errors = _useForm.errors,
     reset = _useForm.reset;
+
+  // 予算入力時に実際の表示金額を更新
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    updateDisplayBudget(data.budget_min, setDisplayBudgetMin);
+    updateDisplayBudget(data.budget_max, setDisplayBudgetMax);
+  }, [data.budget_min, data.budget_max]);
 
   // カテゴリーの選択肢
   var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "その他"];
@@ -583,7 +598,36 @@ function PostJob(_ref) {
   };
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
+
+    // 単発案件の場合のみ、送信前に金額を千円単位から円単位に変換
+    if (data.type === "one_time") {
+      // 予算の最小値と最大値を千円単位から円単位に変換（例：10 → 10000）
+      if (data.budget_min) {
+        setData("budget_min", String(parseInt(data.budget_min) * 1000));
+      }
+      if (data.budget_max) {
+        setData("budget_max", String(parseInt(data.budget_max) * 1000));
+      }
+    }
+
+    // フォームを送信
     post(route("job-listings.store"));
+  };
+
+  // 入力された千円単位の金額を実際の金額に変換して表示する関数
+  var updateDisplayBudget = function updateDisplayBudget(value, setter) {
+    if (!value) {
+      setter("");
+      return;
+    }
+    try {
+      // 数値に変換して千円単位を円単位に変換
+      var amount = parseInt(value) * 1000;
+      // 金額をカンマ区切りで表示
+      setter(amount.toLocaleString() + "円");
+    } catch (e) {
+      setter("");
+    }
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -698,13 +742,21 @@ function PostJob(_ref) {
                     children: "\xA5"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                     type: "number",
-                    placeholder: "\u6700\u5C0F\u91D1\u984D",
+                    placeholder: "\u6700\u5C0F\u91D1\u984D\uFF08\u5343\u5186\u5358\u4F4D\uFF09",
                     value: data.budget_min,
                     onChange: function onChange(e) {
-                      return setData("budget_min", e.target.value);
+                      var value = e.target.value;
+                      setData("budget_min", value);
+                      updateDisplayBudget(value, setDisplayBudgetMin);
                     },
                     className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_min ? "p-post-job__input--error" : ""),
-                    min: "0"
+                    min: "0",
+                    style: {
+                      paddingRight: "45px"
+                    }
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "p-post-job__unit",
+                    children: "\u5343\u5186"
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
                   className: "p-post-job__budget-separator",
@@ -716,15 +768,41 @@ function PostJob(_ref) {
                     children: "\xA5"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                     type: "number",
-                    placeholder: "\u6700\u5927\u91D1\u984D",
+                    placeholder: "\u6700\u5927\u91D1\u984D\uFF08\u5343\u5186\u5358\u4F4D\uFF09",
                     value: data.budget_max,
                     onChange: function onChange(e) {
-                      return setData("budget_max", e.target.value);
+                      var value = e.target.value;
+                      setData("budget_max", value);
+                      updateDisplayBudget(value, setDisplayBudgetMax);
                     },
                     className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_max ? "p-post-job__input--error" : ""),
-                    min: "0"
+                    min: "0",
+                    style: {
+                      paddingRight: "45px"
+                    }
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "p-post-job__unit",
+                    children: "\u5343\u5186"
                   })]
                 })]
+              }), (displayBudgetMin || displayBudgetMax) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "p-post-job__budget-preview",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "p-post-job__budget-preview-label",
+                  children: "\u8868\u793A\u3055\u308C\u308B\u91D1\u984D\uFF1A"
+                }), displayBudgetMin && displayBudgetMax ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                  className: "p-post-job__budget-preview-value",
+                  children: [displayBudgetMin, " \u301C", " ", displayBudgetMax]
+                }) : displayBudgetMin ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                  className: "p-post-job__budget-preview-value",
+                  children: [displayBudgetMin, " \u301C"]
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                  className: "p-post-job__budget-preview-value",
+                  children: ["\u301C ", displayBudgetMax]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "p-post-job__budget-help",
+                children: "\u203B \u91D1\u984D\u306F\u5343\u5186\u5358\u4F4D\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A50 = 5\u4E07\u5186\u3001100 = 10\u4E07\u5186\uFF09"
               }), (errors.budget_min || errors.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "p-post-job__error",
                 children: errors.budget_min || errors.budget_max
@@ -826,37 +904,45 @@ function PostJob(_ref) {
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: "p-post-job__skills-container",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: "p-post-job__skills-input",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
-                    className: "p-post-job__select",
-                    value: customSkill,
-                    onChange: function onChange(e) {
-                      return setCustomSkill(e.target.value);
-                    },
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                      value: "",
-                      children: "\u30B9\u30AD\u30EB\u3092\u9078\u629E\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0"
-                    }), skillOptions.map(function (skill) {
-                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                        value: skill,
-                        children: skill
-                      }, skill);
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                    className: "p-post-job__skills-input-row",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                      className: "p-post-job__select",
+                      value: customSkill,
+                      onChange: function onChange(e) {
+                        return setCustomSkill(e.target.value);
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                        value: "",
+                        children: "\u30B9\u30AD\u30EB\u3092\u9078\u629E\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0"
+                      }), skillOptions.map(function (skill) {
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                          value: skill,
+                          children: skill
+                        }, skill);
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                      type: "button",
+                      className: "p-post-job__add-button p-post-job__add-button--middle",
+                      onClick: addSkill,
+                      children: "\u8FFD\u52A0"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      type: "text",
+                      placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
+                      value: !skillOptions.includes(customSkill) ? customSkill : "",
+                      onChange: function onChange(e) {
+                        return setCustomSkill(e.target.value);
+                      },
+                      className: "p-post-job__input p-post-job__input--skill"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                      type: "button",
+                      className: "p-post-job__add-button p-post-job__add-button--end",
+                      onClick: addSkill,
+                      children: "\u8FFD\u52A0"
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-                    type: "text",
-                    placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
-                    value: !skillOptions.includes(customSkill) ? customSkill : "",
-                    onChange: function onChange(e) {
-                      return setCustomSkill(e.target.value);
-                    },
-                    className: "p-post-job__input p-post-job__input--skill"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
-                    type: "button",
-                    className: "p-post-job__add-button",
-                    onClick: addSkill,
-                    children: "\u8FFD\u52A0"
-                  })]
+                  })
                 }), data.skills.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: "p-post-job__skills-tags",
                   children: data.skills.map(function (skill) {
@@ -884,37 +970,45 @@ function PostJob(_ref) {
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: "p-post-job__skills-container",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: "p-post-job__skills-input",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
-                    className: "p-post-job__select",
-                    value: customPreferredSkill,
-                    onChange: function onChange(e) {
-                      return setCustomPreferredSkill(e.target.value);
-                    },
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                      value: "",
-                      children: "\u30B9\u30AD\u30EB\u3092\u9078\u629E\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0"
-                    }), skillOptions.map(function (skill) {
-                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
-                        value: skill,
-                        children: skill
-                      }, skill);
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                    className: "p-post-job__skills-input-row",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                      className: "p-post-job__select",
+                      value: customPreferredSkill,
+                      onChange: function onChange(e) {
+                        return setCustomPreferredSkill(e.target.value);
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                        value: "",
+                        children: "\u30B9\u30AD\u30EB\u3092\u9078\u629E\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0"
+                      }), skillOptions.map(function (skill) {
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                          value: skill,
+                          children: skill
+                        }, skill);
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                      type: "button",
+                      className: "p-post-job__add-button p-post-job__add-button--middle",
+                      onClick: addPreferredSkill,
+                      children: "\u8FFD\u52A0"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      type: "text",
+                      placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
+                      value: !skillOptions.includes(customPreferredSkill) ? customPreferredSkill : "",
+                      onChange: function onChange(e) {
+                        return setCustomPreferredSkill(e.target.value);
+                      },
+                      className: "p-post-job__input p-post-job__input--skill"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                      type: "button",
+                      className: "p-post-job__add-button p-post-job__add-button--end",
+                      onClick: addPreferredSkill,
+                      children: "\u8FFD\u52A0"
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-                    type: "text",
-                    placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
-                    value: !skillOptions.includes(customPreferredSkill) ? customPreferredSkill : "",
-                    onChange: function onChange(e) {
-                      return setCustomPreferredSkill(e.target.value);
-                    },
-                    className: "p-post-job__input p-post-job__input--skill"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
-                    type: "button",
-                    className: "p-post-job__add-button",
-                    onClick: addPreferredSkill,
-                    children: "\u8FFD\u52A0"
-                  })]
+                  })
                 }), data.preferred_skills.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: "p-post-job__skills-tags",
                   children: data.preferred_skills.map(function (skill) {

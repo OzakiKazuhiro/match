@@ -94,9 +94,17 @@ export default function JobCard({ job, auth }: JobCardProps) {
                 <h3 className="p-job-listings__card-title">{job.title}</h3>
                 <p className="p-job-listings__card-desc">{job.description}</p>
                 <div className="p-job-listings__card-meta">
-                    <span className="p-job-listings__card-date">
-                        {formatDate(job.created_at)}
-                    </span>
+                    <div className="p-job-listings__card-meta-left">
+                        <span className="p-job-listings__card-date">
+                            {formatDate(job.created_at)}
+                        </span>
+                        {job.view_count !== null &&
+                            job.view_count !== undefined && (
+                                <span className="p-job-listings__card-views">
+                                    閲覧数{job.view_count}
+                                </span>
+                            )}
+                    </div>
                     <span className="p-job-listings__card-author">
                         投稿者: {job.user?.name || "不明なユーザー"}
                     </span>

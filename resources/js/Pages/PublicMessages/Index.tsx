@@ -75,7 +75,7 @@ export default function Index({ jobListingsWithMessages = [] }: Props) {
                                                 "public-messages.show",
                                                 item.job_listing.id
                                             )}
-                                            className="p-public-messages__title"
+                                            className="p-public-messages__job-title"
                                         >
                                             {item.job_listing.title}
                                         </Link>
