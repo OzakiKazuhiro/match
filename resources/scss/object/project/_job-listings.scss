@@ -393,17 +393,40 @@
         text-align: center;
         padding: 60px 0;
         color: #666;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        width: 100%;
+        grid-column: 1 / -1;
     }
 
     &__no-results-icon {
         font-size: 4rem;
         color: #ddd;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
     }
 
     &__no-results-text {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #555;
+    }
+
+    &__no-results-description {
+        font-size: 1rem;
+        color: #777;
+        margin-bottom: 25px;
+        max-width: 500px;
+        text-align: center;
+    }
+
+    &__no-results-action {
+        margin-top: 10px;
     }
 
     &__no-results-button {

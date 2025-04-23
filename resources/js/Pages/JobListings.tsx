@@ -441,10 +441,10 @@ export default function JobListings({
                                 <h3 className="p-job-listings__no-results-text">
                                     該当する案件が見つかりませんでした
                                 </h3>
-                                <p>
+                                <p className="p-job-listings__no-results-description">
                                     検索条件を変更するか、別のキーワードで再度検索してみてください。
                                 </p>
-                                <div className="u-mt-4">
+                                <div className="p-job-listings__no-results-action">
                                     <button
                                         className="p-job-listings__no-results-button"
                                         onClick={() => {
