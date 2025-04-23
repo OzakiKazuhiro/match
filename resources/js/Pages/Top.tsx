@@ -402,7 +402,7 @@ export default function Top({
                                     気軽にシェア
                                 </h3>
                                 <p className="p-top__feature-text">
-                                    案件をＸ（旧Twitter）などのSNSで簡単に共有できます。
+                                    案件をＸ（旧Twitter）で簡単に共有できます。
                                     気になる案件を多くの人に共有して、マッチングの可能性を広げましょう。
                                 </p>
                             </div>
