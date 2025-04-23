@@ -444,25 +444,6 @@ export default function JobListings({
                                 <p className="p-job-listings__no-results-description">
                                     検索条件を変更するか、別のキーワードで再度検索してみてください。
                                 </p>
-                                <div className="p-job-listings__no-results-action">
-                                    <button
-                                        className="p-job-listings__no-results-button"
-                                        onClick={() => {
-                                            setSearchQuery("");
-                                            setActiveFilter("all");
-                                            // URLも更新
-                                            const url =
-                                                route("job-listings.index");
-                                            window.history.pushState(
-                                                {},
-                                                "",
-                                                url
-                                            );
-                                        }}
-                                    >
-                                        すべての案件を表示
-                                    </button>
-                                </div>
                             </div>
                         ) : (
                             <>

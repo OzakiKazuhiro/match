@@ -2681,27 +2681,8 @@ textarea {
   font-size: 1rem;
   color: #777;
   margin-bottom: 25px;
-  max-width: 500px;
+  max-width: 520px;
   text-align: center;
-}
-.p-job-listings__no-results-action {
-  margin-top: 10px;
-}
-.p-job-listings__no-results-button {
-  display: inline-block;
-  padding: 10px 25px;
-  background-color: #6cc3e0;
-  color: white;
-  border-radius: 30px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: all 0.3s;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.p-job-listings__no-results-button:hover {
-  background-color: rgb(65.8820224719, 177.808988764, 215.1179775281);
-  transform: translateY(-2px);
-  color: white;
 }
 .p-job-listings__features {
   background-color: #f8f9fa;
