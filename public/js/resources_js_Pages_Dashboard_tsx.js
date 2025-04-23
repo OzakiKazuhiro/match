@@ -382,6 +382,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 function Authenticated(_ref) {
+  var _user$name2, _user$name4;
   var header = _ref.header,
     children = _ref.children;
   var user = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.auth.user;
@@ -460,17 +461,18 @@ function Authenticated(_ref) {
               className: "l-header__user-button",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                 className: "l-header__user-avatar",
-                children: user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+                children: user !== null && user !== void 0 && user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
                   src: user.avatar.startsWith("/") ? user.avatar : "/".concat(user.avatar),
                   alt: "".concat(user.name, "\u306E\u30A2\u30D0\u30BF\u30FC"),
                   onError: function onError(e) {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = "";
                     if (e.currentTarget.parentElement) {
-                      e.currentTarget.parentElement.innerHTML = user.name.charAt(0).toUpperCase();
+                      var _user$name;
+                      e.currentTarget.parentElement.innerHTML = (user === null || user === void 0 || (_user$name = user.name) === null || _user$name === void 0 ? void 0 : _user$name.charAt(0).toUpperCase()) || "U";
                     }
                   }
-                }) : user.name.charAt(0).toUpperCase()
+                }) : (user === null || user === void 0 || (_user$name2 = user.name) === null || _user$name2 === void 0 ? void 0 : _user$name2.charAt(0).toUpperCase()) || "U"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                 className: "l-header__user-info",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
@@ -478,7 +480,7 @@ function Authenticated(_ref) {
                   children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
                   className: "l-header__user-name",
-                  children: [user.name, "\u3055\u3093"]
+                  children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
@@ -554,22 +556,23 @@ function Authenticated(_ref) {
           className: "l-header__mobile-user",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: "l-header__user-avatar",
-            children: user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+            children: user !== null && user !== void 0 && user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
               src: user.avatar.startsWith("/") ? user.avatar : "/".concat(user.avatar),
               alt: "".concat(user.name, "\u306E\u30A2\u30D0\u30BF\u30FC"),
               onError: function onError(e) {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = "";
                 if (e.currentTarget.parentElement) {
-                  e.currentTarget.parentElement.innerHTML = user.name.charAt(0).toUpperCase();
+                  var _user$name3;
+                  e.currentTarget.parentElement.innerHTML = (user === null || user === void 0 || (_user$name3 = user.name) === null || _user$name3 === void 0 ? void 0 : _user$name3.charAt(0).toUpperCase()) || "U";
                 }
               }
-            }) : user.name.charAt(0).toUpperCase()
+            }) : (user === null || user === void 0 || (_user$name4 = user.name) === null || _user$name4 === void 0 ? void 0 : _user$name4.charAt(0).toUpperCase()) || "U"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "l-header__mobile-user-info",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
               className: "l-header__mobile-user-name",
-              children: [user.name, "\u3055\u3093"]
+              children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
               className: "l-header__mobile-login-status",
               children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
