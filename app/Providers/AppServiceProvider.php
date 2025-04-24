@@ -29,26 +29,23 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo asset('assets/' . app(\App\Providers\AppServiceProvider::class)->getManifestAsset($expression)); ?>";
 });
 
-// メールコンポーネントの接頭辞をx-mailとして登録
-Blade::componentNamespace('Illuminate\\Mail\\Resources\\Views\\Components', 'mail');
-
-// コンポーネントのエイリアスを手動で登録
+// メールコンポーネントのパスを登録
 $this->registerMailComponents();
 }
 
 /**
-* メールコンポーネントを手動で登録
+* メールコンポーネントを登録
 */
 protected function registerMailComponents()
 {
-$components = [
-'button', 'footer', 'header', 'layout', 'message',
-'panel', 'subcopy', 'table',
-];
-
-foreach ($components as $component) {
-Blade::component("mail::$component", "mail-$component");
-}
+// mail::ディレクティブがビューを使用するよう設定
+Blade::component('mail::button', 'mail.html.button');
+Blade::component('mail::message', 'mail.html.message');
+Blade::component('mail::header', 'mail.html.header');
+Blade::component('mail::footer', 'mail.html.footer');
+Blade::component('mail::layout', 'mail.html.layout');
+Blade::component('mail::subcopy', 'mail.html.subcopy');
+Blade::component('mail::table', 'mail.html.table');
 }
 
 /**
