@@ -16,18 +16,25 @@ class NewVerifyEmail extends VerifyEmail
     /**
      * メール通知のメッセージをカスタマイズして日本語化する
      *
-     * @param  mixed  $notifiable
+     * @param  string  $url
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     protected function buildMailMessage($url)
     {
-        return (new MailMessage)
-            ->subject('メールアドレス確認のお願い')
-            ->greeting('こんにちは！')
-            ->line('アカウント登録いただきありがとうございます。下のボタンをクリックして、メールアドレスの確認を完了してください。')
-            ->action('メールアドレスを確認', $url)
-            ->line('このメールに心当たりがない場合は、何も行動を取る必要はありません。')
-            ->salutation('よろしくお願いします、'.config('app.name'));
+        $message = new MailMessage;
+        $message->subject('メールアドレス確認のお願い');
+        $message->markdown('notifications::email');
+        $message->greeting('こんにちは！');
+        $message->line('アカウント登録いただきありがとうございます。');
+        $message->line('下のURLをクリックして、メールアドレスの確認を完了してください。');
+        $message->line($url);
+        $message->line('このメールに心当たりがない場合は、何も行動を取る必要はありません。');
+        $message->salutation('よろしくお願いします、'.config('app.name'));
+        
+        // HTMLスタイリングを無効化
+        $message->viewData['markdown'] = false;
+        
+        return $message;
     }
 
     /**
