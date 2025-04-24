@@ -90,7 +90,7 @@ function Top(_ref) {
             className: "l-header__logo-accent",
             children: "match"
           })
-        }), (auth === null || auth === void 0 ? void 0 : auth.user) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        }), (auth === null || auth === void 0 ? void 0 : auth.user) && (auth === null || auth === void 0 ? void 0 : auth.user.email_verified_at) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "l-header__login-status",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "l-header__user-avatar",
@@ -101,6 +101,16 @@ function Top(_ref) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
             children: auth.user.name
           })]
+        }), (auth === null || auth === void 0 ? void 0 : auth.user) && !(auth !== null && auth !== void 0 && auth.user.email_verified_at) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "l-header__login-status",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "l-header__verification-alert",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+              href: "/verify-email",
+              className: "l-header__verification-link",
+              children: "\u30E1\u30FC\u30EB\u8A8D\u8A3C\u304C\u672A\u5B8C\u4E86\u3067\u3059"
+            })
+          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("nav", {
           className: "l-header__nav",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
@@ -170,7 +180,7 @@ function Top(_ref) {
       }), menuVisible && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "l-header__mobile-menu ".concat(mobileMenuOpen ? "menu-fade-in" : "menu-fade-out"),
         ref: mobileMenuRef,
-        children: [(auth === null || auth === void 0 ? void 0 : auth.user) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        children: [(auth === null || auth === void 0 ? void 0 : auth.user) && (auth === null || auth === void 0 ? void 0 : auth.user.email_verified_at) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "l-header__mobile-user",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "l-header__user-avatar",
@@ -188,6 +198,13 @@ function Top(_ref) {
               children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
             })]
           })]
+        }), (auth === null || auth === void 0 ? void 0 : auth.user) && !(auth !== null && auth !== void 0 && auth.user.email_verified_at) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "l-header__mobile-verification-alert",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            href: "/verify-email",
+            className: "l-header__mobile-verification-link",
+            children: "\u30E1\u30FC\u30EB\u8A8D\u8A3C\u304C\u672A\u5B8C\u4E86\u3067\u3059"
+          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
           href: "/job-listings",
           className: "l-header__mobile-link",
@@ -196,7 +213,7 @@ function Top(_ref) {
           href: "/post-job",
           className: "l-header__mobile-link",
           children: "\u6848\u4EF6\u3092\u6295\u7A3F"
-        }), auth !== null && auth !== void 0 && auth.user ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+        }), auth !== null && auth !== void 0 && auth.user && auth !== null && auth !== void 0 && auth.user.email_verified_at ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
             href: "/dashboard",
             className: "l-header__mobile-link",

@@ -61,7 +61,7 @@ export default function Terms({ auth }: PageProps) {
                         <span className="l-header__logo-accent">match</span>
                     </Link>
 
-                    {auth?.user && (
+                    {auth?.user && auth?.user.email_verified_at && (
                         <div className="l-header__login-status">
                             <div className="l-header__user-avatar">
                                 {auth.user.avatar ? (
@@ -74,6 +74,19 @@ export default function Terms({ auth }: PageProps) {
                                 )}
                             </div>
                             <span>{auth.user.name}</span>
+                        </div>
+                    )}
+
+                    {auth?.user && !auth?.user.email_verified_at && (
+                        <div className="l-header__login-status">
+                            <div className="l-header__verification-alert">
+                                <Link
+                                    href="/verify-email"
+                                    className="l-header__verification-link"
+                                >
+                                    メール認証が未完了です
+                                </Link>
+                            </div>
                         </div>
                     )}
 
@@ -174,6 +187,17 @@ export default function Terms({ auth }: PageProps) {
                                         ログイン中
                                     </div>
                                 </div>
+                            </div>
+                        )}
+
+                        {auth?.user && !auth?.user.email_verified_at && (
+                            <div className="l-header__mobile-verification-alert">
+                                <Link
+                                    href="/verify-email"
+                                    className="l-header__mobile-verification-link"
+                                >
+                                    メール認証が未完了です
+                                </Link>
                             </div>
                         )}
 

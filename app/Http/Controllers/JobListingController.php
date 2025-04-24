@@ -81,8 +81,13 @@ class JobListingController extends Controller
     /**
      * 案件の詳細を表示
      */
-    public function show(JobListing $jobListing): Response
+    public function show(JobListing $jobListing): Response|RedirectResponse
     {
+        // メール認証が必要なルートであることを確認
+        if (Auth::check() && !Auth::user()->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
+        
         // 案件の投稿者情報とパブリックメッセージを取得
         $jobListing->load(['user', 'publicMessages.user']);
         

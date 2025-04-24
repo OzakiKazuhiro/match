@@ -1003,7 +1003,7 @@ function JobCard(_ref) {
         className: "p-job-listings__card-category",
         children: job.category
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-        href: auth !== null && auth !== void 0 && auth.user ? (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("job-listings.show", job.id) : (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("login", {
+        href: auth !== null && auth !== void 0 && auth.user && auth !== null && auth !== void 0 && auth.user.email_verified_at ? (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("job-listings.show", job.id) : (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("login", {
           redirect: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("job-listings.show", job.id)
         }),
         className: "p-job-listings__card-link",
@@ -1686,7 +1686,7 @@ function JobListings(_ref) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
             className: "p-job-listings__title",
             children: "\u6848\u4EF6\u3092\u63A2\u3059"
-          }), !(auth !== null && auth !== void 0 && auth.user) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          }), (!(auth !== null && auth !== void 0 && auth.user) || !(auth !== null && auth !== void 0 && auth.user.email_verified_at)) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "p-job-listings__login-notice",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("svg", {
               xmlns: "http://www.w3.org/2000/svg",
@@ -1714,10 +1714,14 @@ function JobListings(_ref) {
                 y2: "16"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
-              children: ["\u6848\u4EF6\u8A73\u7D30\u306E\u95B2\u89A7\u306F", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              children: ["\u6848\u4EF6\u8A73\u7D30\u306E\u95B2\u89A7\u306F", !(auth !== null && auth !== void 0 && auth.user) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
                 href: "/login",
                 className: "p-job-listings__login-link",
                 children: "\u30ED\u30B0\u30A4\u30F3"
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+                href: "/verify-email",
+                className: "p-job-listings__login-link",
+                children: "\u30E1\u30FC\u30EB\u8A8D\u8A3C"
               }), "\u304C\u5FC5\u8981"]
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
@@ -1893,8 +1897,8 @@ function JobListings(_ref) {
   });
 
   // 認証状態によって異なるレイアウトを返す
-  if (auth !== null && auth !== void 0 && auth.user) {
-    // ログイン済みの場合はAuthenticatedLayoutを使用
+  if (auth !== null && auth !== void 0 && auth.user && auth !== null && auth !== void 0 && auth.user.email_verified_at) {
+    // ログイン済みかつメール認証済みの場合はAuthenticatedLayoutを使用
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_4__["default"], {
       header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
         className: "p-job-listings__title",
@@ -1903,7 +1907,7 @@ function JobListings(_ref) {
       children: pageContent
     });
   } else {
-    // 未ログインの場合はTop.tsxと同様のレイアウトを使用
+    // 未ログインまたはメール未認証の場合はTop.tsxと同様のレイアウトを使用
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("header", {
         className: "l-header",
@@ -1915,6 +1919,16 @@ function JobListings(_ref) {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
               className: "l-header__logo-accent",
               children: "match"
+            })
+          }), (auth === null || auth === void 0 ? void 0 : auth.user) && !(auth !== null && auth !== void 0 && auth.user.email_verified_at) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "l-header__login-status",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "l-header__verification-alert",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+                href: "/verify-email",
+                className: "l-header__verification-link",
+                children: "\u30E1\u30FC\u30EB\u8A8D\u8A3C\u304C\u672A\u5B8C\u4E86\u3067\u3059"
+              })
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("nav", {
             className: "l-header__nav",

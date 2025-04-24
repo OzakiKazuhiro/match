@@ -65,7 +65,7 @@ export default function Top({
                         <span className="l-header__logo-accent">match</span>
                     </Link>
 
-                    {auth?.user && (
+                    {auth?.user && auth?.user.email_verified_at && (
                         <div className="l-header__login-status">
                             <div className="l-header__user-avatar">
                                 {auth.user.avatar ? (
@@ -78,6 +78,19 @@ export default function Top({
                                 )}
                             </div>
                             <span>{auth.user.name}</span>
+                        </div>
+                    )}
+
+                    {auth?.user && !auth?.user.email_verified_at && (
+                        <div className="l-header__login-status">
+                            <div className="l-header__verification-alert">
+                                <Link
+                                    href="/verify-email"
+                                    className="l-header__verification-link"
+                                >
+                                    メール認証が未完了です
+                                </Link>
+                            </div>
                         </div>
                     )}
 
@@ -158,7 +171,7 @@ export default function Top({
                         }`}
                         ref={mobileMenuRef}
                     >
-                        {auth?.user && (
+                        {auth?.user && auth?.user.email_verified_at && (
                             <div className="l-header__mobile-user">
                                 <div className="l-header__user-avatar">
                                     {auth.user.avatar ? (
@@ -181,6 +194,17 @@ export default function Top({
                             </div>
                         )}
 
+                        {auth?.user && !auth?.user.email_verified_at && (
+                            <div className="l-header__mobile-verification-alert">
+                                <Link
+                                    href="/verify-email"
+                                    className="l-header__mobile-verification-link"
+                                >
+                                    メール認証が未完了です
+                                </Link>
+                            </div>
+                        )}
+
                         <Link
                             href="/job-listings"
                             className="l-header__mobile-link"
@@ -194,7 +218,7 @@ export default function Top({
                             案件を投稿
                         </Link>
 
-                        {auth?.user ? (
+                        {auth?.user && auth?.user.email_verified_at ? (
                             <>
                                 <Link
                                     href="/dashboard"

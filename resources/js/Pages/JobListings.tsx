@@ -219,7 +219,7 @@ export default function JobListings({
                     <div className="p-job-listings__header-inner">
                         <h1 className="p-job-listings__title">案件を探す</h1>
 
-                        {!auth?.user && (
+                        {(!auth?.user || !auth?.user.email_verified_at) && (
                             <div className="p-job-listings__login-notice">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -243,12 +243,21 @@ export default function JobListings({
                                 </svg>
                                 <span>
                                     案件詳細の閲覧は
-                                    <Link
-                                        href="/login"
-                                        className="p-job-listings__login-link"
-                                    >
-                                        ログイン
-                                    </Link>
+                                    {!auth?.user ? (
+                                        <Link
+                                            href="/login"
+                                            className="p-job-listings__login-link"
+                                        >
+                                            ログイン
+                                        </Link>
+                                    ) : (
+                                        <Link
+                                            href="/verify-email"
+                                            className="p-job-listings__login-link"
+                                        >
+                                            メール認証
+                                        </Link>
+                                    )}
                                     が必要
                                 </span>
                             </div>
@@ -487,8 +496,8 @@ export default function JobListings({
     );
 
     // 認証状態によって異なるレイアウトを返す
-    if (auth?.user) {
-        // ログイン済みの場合はAuthenticatedLayoutを使用
+    if (auth?.user && auth?.user.email_verified_at) {
+        // ログイン済みかつメール認証済みの場合はAuthenticatedLayoutを使用
         return (
             <AuthenticatedLayout
                 header={<div className="p-job-listings__title">案件一覧</div>}
@@ -497,7 +506,7 @@ export default function JobListings({
             </AuthenticatedLayout>
         );
     } else {
-        // 未ログインの場合はTop.tsxと同様のレイアウトを使用
+        // 未ログインまたはメール未認証の場合はTop.tsxと同様のレイアウトを使用
         return (
             <>
                 {/* ヘッダー */}
@@ -506,6 +515,19 @@ export default function JobListings({
                         <Link href="/" className="l-header__logo">
                             <span className="l-header__logo-accent">match</span>
                         </Link>
+
+                        {auth?.user && !auth?.user.email_verified_at && (
+                            <div className="l-header__login-status">
+                                <div className="l-header__verification-alert">
+                                    <Link
+                                        href="/verify-email"
+                                        className="l-header__verification-link"
+                                    >
+                                        メール認証が未完了です
+                                    </Link>
+                                </div>
+                            </div>
+                        )}
 
                         <nav className="l-header__nav">
                             <Link

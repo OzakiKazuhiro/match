@@ -34,7 +34,7 @@ Route::prefix('job-listings')->name('job-listings.')->group(function () {
     Route::get('/', [JobListingController::class, 'index'])->name('index');
     
     // 認証が必要なルート
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
         // 案件投稿フォーム（先に配置して/{jobListing}と競合しないようにする）
         Route::get('/create', [JobListingController::class, 'create'])->name('create');
         
@@ -46,7 +46,7 @@ Route::prefix('job-listings')->name('job-listings.')->group(function () {
     Route::get('/{jobListing}', [JobListingController::class, 'show'])->name('show');
     
     // 認証が必要なルート - jobListingパラメータを含むルート
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
         // 案件編集フォーム
         Route::get('/{jobListing}/edit', [JobListingController::class, 'edit'])->name('edit');
         
@@ -69,7 +69,7 @@ Route::prefix('job-listings')->name('job-listings.')->group(function () {
 });
 
 // パブリックメッセージ関連ルート
-Route::middleware('auth')->prefix('public-messages')->name('public-messages.')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('public-messages')->name('public-messages.')->group(function () {
     // 自分が投稿したパブリックメッセージの一覧
     Route::get('/', [PublicMessageController::class, 'index'])->name('index');
     
@@ -80,10 +80,10 @@ Route::middleware('auth')->prefix('public-messages')->name('public-messages.')->
 // 案件投稿ページへのショートカットルート
 Route::get('/post-job', function () {
     return redirect()->route('job-listings.create');
-})->middleware(['auth'])->name('post-job');
+})->middleware(['auth', 'verified'])->name('post-job');
 
 // ダイレクトメッセージ関連ルート
-Route::middleware('auth')->prefix('messages')->name('messages.')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('messages')->name('messages.')->group(function () {
     // メッセージ一覧
     Route::get('/', [DirectMessageController::class, 'index'])->name('index');
     
@@ -98,14 +98,14 @@ Route::middleware('auth')->prefix('messages')->name('messages.')->group(function
 });
 
 // プロフィール関連ルート
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // 応募関連ルート
-Route::middleware('auth')->prefix('applications')->name('applications.')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('applications')->name('applications.')->group(function () {
     // 自分が応募した案件一覧
     Route::get('/', [ApplicationController::class, 'index'])->name('index');
     
@@ -119,7 +119,7 @@ Route::middleware('auth')->prefix('applications')->name('applications.')->group(
 });
 
 // 通知関連ルート
-Route::middleware('auth')->prefix('notifications')->name('notifications.')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('notifications')->name('notifications.')->group(function () {
     // 通知一覧
     Route::get('/', [NotificationController::class, 'index'])->name('index');
     

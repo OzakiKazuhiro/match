@@ -118,7 +118,7 @@ export default function JobCard({ job, auth }: JobCardProps) {
                 )}
                 <Link
                     href={
-                        auth?.user
+                        auth?.user && auth?.user.email_verified_at
                             ? route("job-listings.show", job.id)
                             : route("login", {
                                   redirect: route("job-listings.show", job.id),
