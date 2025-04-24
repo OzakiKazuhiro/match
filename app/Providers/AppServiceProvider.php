@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Mail\Markdown;
+use Illuminate\View\Component;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,27 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('webpack', function ($expression) {
             return "<?php echo asset('assets/' . app(\App\Providers\AppServiceProvider::class)->getManifestAsset($expression)); ?>";
 });
+
+// メールコンポーネントの接頭辞をx-mailとして登録
+Blade::componentNamespace('Illuminate\\Mail\\Resources\\Views\\Components', 'mail');
+
+// コンポーネントのエイリアスを手動で登録
+$this->registerMailComponents();
+}
+
+/**
+* メールコンポーネントを手動で登録
+*/
+protected function registerMailComponents()
+{
+$components = [
+'button', 'footer', 'header', 'layout', 'message',
+'panel', 'subcopy', 'table',
+];
+
+foreach ($components as $component) {
+Blade::component("mail::$component", "mail-$component");
+}
 }
 
 /**
