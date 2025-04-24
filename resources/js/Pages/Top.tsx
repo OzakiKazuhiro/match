@@ -312,7 +312,7 @@ export default function Top({
                     </section>
 
                     {/* それを解決できるのがこちらです */}
-                    <section className="p-top__solution">
+                    <section className="p-top__solution" id="about">
                         <div className="p-top__solution-inner">
                             <h2 className="p-top__section-title p-top__section-title--full-underline">
                                 それを解決できるのが
@@ -629,7 +629,7 @@ export default function Top({
                                 </div>
                                 <div className="p-top__job-content">
                                     <h3 className="p-top__job-title">
-                                        Laravelを使用したECサイトの構築
+                                        Laravelを使用したアパレルブランドのECサイトの構築
                                     </h3>
                                     <p className="p-top__job-desc">
                                         アパレルブランドのECサイトをLaravelで構築していただきます。決済システムの連携やユーザー管理システムの実装が主な業務内容です。
@@ -1113,76 +1113,8 @@ export default function Top({
                             <p className="l-footer__description">
                                 エンジニア向けの案件マッチングサービス。
                                 単発案件からレベニューシェア案件まで、
-                                シンプルに探せて、すぐに応募できます。
+                                シンプルに探せて、すぐに応募できます
                             </p>
-                            <div className="l-footer__social">
-                                <a href="#" className="l-footer__social-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="18"
-                                        height="18"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                                    </svg>
-                                </a>
-                                <a href="#" className="l-footer__social-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="18"
-                                        height="18"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                        <rect
-                                            x="2"
-                                            y="9"
-                                            width="4"
-                                            height="12"
-                                        ></rect>
-                                        <circle cx="4" cy="4" r="2"></circle>
-                                    </svg>
-                                </a>
-                                <a href="#" className="l-footer__social-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="18"
-                                        height="18"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <rect
-                                            x="2"
-                                            y="2"
-                                            width="20"
-                                            height="20"
-                                            rx="5"
-                                            ry="5"
-                                        ></rect>
-                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                        <line
-                                            x1="17.5"
-                                            y1="6.5"
-                                            x2="17.51"
-                                            y2="6.5"
-                                        ></line>
-                                    </svg>
-                                </a>
-                            </div>
                         </div>
 
                         <div>
@@ -1192,7 +1124,7 @@ export default function Top({
                             <ul className="l-footer__links">
                                 <li className="l-footer__link-item">
                                     <Link
-                                        href="/about"
+                                        href="#about"
                                         className="l-footer__link"
                                     >
                                         matchとは
@@ -1214,14 +1146,14 @@ export default function Top({
                                         プライバシーポリシー
                                     </Link>
                                 </li>
-                                <li className="l-footer__link-item">
+                                {/* <li className="l-footer__link-item">
                                     <Link
                                         href="/company"
                                         className="l-footer__link"
                                     >
                                         運営会社
                                     </Link>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
 
@@ -1244,22 +1176,6 @@ export default function Top({
                                         レベニューシェア案件
                                     </Link>
                                 </li>
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href="/job-listings?category=frontend"
-                                        className="l-footer__link"
-                                    >
-                                        フロントエンド案件
-                                    </Link>
-                                </li>
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href="/job-listings?category=backend"
-                                        className="l-footer__link"
-                                    >
-                                        バックエンド案件
-                                    </Link>
-                                </li>
                             </ul>
                         </div>
 
@@ -1280,14 +1196,6 @@ export default function Top({
                                         className="l-footer__link"
                                     >
                                         ご利用ガイド
-                                    </Link>
-                                </li>
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href="/contact"
-                                        className="l-footer__link"
-                                    >
-                                        お問い合わせ
                                     </Link>
                                 </li>
                             </ul>

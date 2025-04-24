@@ -122,30 +122,31 @@ function VerifyEmail(_ref) {
     processing = _useForm.processing;
   var submit = function submit(e) {
     e.preventDefault();
-    post(route('verification.send'));
+    post(route("verification.send"));
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    title: "\u30E1\u30FC\u30EB\u8A8D\u8A3C",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
-      title: "Email Verification"
+      title: "\u30E1\u30FC\u30EB\u8A8D\u8A3C - Match"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "mb-4 text-sm text-gray-600",
-      children: "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another."
-    }), status === 'verification-link-sent' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      children: "\u3054\u767B\u9332\u3042\u308A\u304C\u3068\u3046\u3054\u3056\u3044\u307E\u3059\uFF01 \u59CB\u3081\u308B\u524D\u306B\u3001\u5148\u307B\u3069\u304A\u9001\u308A\u3057\u305F\u30E1\u30FC\u30EB\u306E\u30EA\u30F3\u30AF\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u3001\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u3044\u305F\u3060\u3051\u307E\u3059\u304B\uFF1F \u30E1\u30FC\u30EB\u304C\u5C4A\u3044\u3066\u3044\u306A\u3044\u5834\u5408\u306F\u3001\u559C\u3093\u3067\u5225\u306E\u30E1\u30FC\u30EB\u3092\u304A\u9001\u308A\u3057\u307E\u3059\u3002"
+    }), status === "verification-link-sent" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "mb-4 text-sm font-medium text-green-600",
-      children: "A new verification link has been sent to the email address you provided during registration."
+      children: "\u767B\u9332\u6642\u306B\u5165\u529B\u3055\u308C\u305F\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306B\u65B0\u3057\u3044\u78BA\u8A8D\u30EA\u30F3\u30AF\u3092\u9001\u4FE1\u3057\u307E\u3057\u305F\u3002"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("form", {
       onSubmit: submit,
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "mt-4 flex items-center justify-between",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
           disabled: processing,
-          children: "Resend Verification Email"
+          children: "\u78BA\u8A8D\u30E1\u30FC\u30EB\u3092\u518D\u9001\u4FE1"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
-          href: route('logout'),
+          href: route("logout"),
           method: "post",
           as: "button",
           className: "rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
-          children: "Log Out"
+          children: "\u30ED\u30B0\u30A2\u30A6\u30C8"
         })]
       })
     })]

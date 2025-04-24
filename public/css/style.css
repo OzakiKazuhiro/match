@@ -495,25 +495,6 @@ textarea {
   color: #bdc3c7;
   line-height: 1.6;
 }
-.l-footer__social {
-  display: flex;
-  gap: 15px;
-}
-.l-footer__social-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  transition: all 0.3s;
-}
-.l-footer__social-icon:hover {
-  background-color: #6cc3e0;
-  transform: translateY(-3px);
-}
 .l-footer__heading {
   font-size: 1.2rem;
   color: #fff;
@@ -892,6 +873,7 @@ textarea {
   color: #666;
   line-height: 1.7;
   font-size: 1.05rem;
+  text-align: left;
 }
 .p-top__categories {
   margin: 50px 0;
@@ -1161,6 +1143,7 @@ textarea {
   margin-bottom: 10px;
   color: #333;
   line-height: 1.4;
+  text-align: left;
 }
 .p-top__job-desc {
   font-size: 0.95rem;
@@ -1172,6 +1155,7 @@ textarea {
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: 1;
+  text-align: left;
 }
 .p-top__job-footer {
   display: flex;
@@ -1397,16 +1381,6 @@ textarea {
     border-radius: 0 0 24px 24px;
     text-align: center;
     padding: 25px 20px;
-  }
-  .p-top__problem-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
-  }
-  .p-top__problem-item:hover .p-top__problem-text {
-    background: linear-gradient(135deg, rgba(108, 195, 224, 0.1) 0%, rgba(139, 195, 74, 0.1) 100%);
-  }
-  .p-top__problem-item:hover .p-top__problem-icon img {
-    transform: scale(1.05);
   }
 }
 .p-top__problem-icon {
@@ -1732,6 +1706,7 @@ textarea {
   position: relative;
   z-index: 2;
   margin: 0 0 20px;
+  text-align: left;
 }
 .p-top__solution-button {
   display: inline-block;
@@ -5998,4 +5973,12 @@ textarea {
 }
 .u-text-success {
   color: #4caf50;
+}
+@media (max-width: 767px) {
+  .u-break-sp {
+    display: block;
+  }
+  .u-no-break-sp {
+    display: block;
+  }
 }
