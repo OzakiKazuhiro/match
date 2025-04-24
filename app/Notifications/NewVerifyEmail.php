@@ -2,53 +2,29 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class NewVerifyEmail extends Notification
+class NewVerifyEmail extends VerifyEmail
 {
-    use Queueable;
+    // Laravel日本語用ライブラリを入れている場合、以下も追加
+    // public static $toMailCallback;
 
     /**
-     * Create a new notification instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Get the notification's delivery channels.
+     * メール通知のメッセージをカスタマイズして日本語化する
      *
-     * @return array<int, string>
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function via(object $notifiable): array
-    {
-        return ['mail'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
+    protected function buildMailMessage($url)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('メールアドレス確認のお願い')
+            ->greeting('こんにちは！')
+            ->line('アカウント登録いただきありがとうございます。下のボタンをクリックして、メールアドレスの確認を完了してください。')
+            ->action('メールアドレスを確認', $url)
+            ->line('このメールに心当たりがない場合は、何も行動を取る必要はありません。')
+            ->salutation('よろしくお願いします、'.config('app.name'));
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
-    {
-        return [
-            //
-        ];
-    }
 }
