@@ -17471,6 +17471,16 @@ function Register() {
     passwordIsValid = _useState10[0],
     setPasswordIsValid = _useState10[1];
 
+  // パスワードの表示/非表示を管理する状態
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    showPassword = _useState12[0],
+    setShowPassword = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    showPasswordConfirmation = _useState14[0],
+    setShowPasswordConfirmation = _useState14[1];
+
   // メールアドレスの重複チェックを行う関数
   var validateEmail = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(email) {
@@ -17562,6 +17572,14 @@ function Register() {
       return;
     }
 
+    // 全角文字を含むかチェック
+    var hasFullWidthChars = /[^\x01-\x7E]/.test(password);
+    if (hasFullWidthChars) {
+      setPasswordIsValid(false);
+      setPasswordValidationMessage("パスワードに全角文字は使用できません。半角英数字のみを使用してください。");
+      return;
+    }
+
     // 8文字以上の長さをチェック
     if (password.length < 8) {
       setPasswordIsValid(false);
@@ -17616,7 +17634,7 @@ function Register() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_3__["default"], {
     title: "\u4F1A\u54E1\u767B\u9332",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Head, {
-      title: "\u4F1A\u54E1\u767B\u9332 - Match"
+      title: "\u4F1A\u54E1\u767B\u9332 - match"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
       onSubmit: submit,
       className: "p-auth__form",
@@ -17671,17 +17689,27 @@ function Register() {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password",
           value: "\u30D1\u30B9\u30EF\u30FC\u30C9"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          id: "password",
-          type: "password",
-          name: "password",
-          value: data.password,
-          className: "p-auth__input ".concat(passwordIsValid === false ? "border-red-500" : ""),
-          autoComplete: "new-password",
-          onChange: function onChange(e) {
-            return setData("password", e.target.value);
-          },
-          required: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          className: "p-auth__input-wrapper",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            id: "password",
+            type: showPassword ? "text" : "password",
+            name: "password",
+            value: data.password,
+            className: "p-auth__input ".concat(passwordIsValid === false ? "border-red-500" : ""),
+            autoComplete: "new-password",
+            onChange: function onChange(e) {
+              return setData("password", e.target.value);
+            },
+            required: true
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+            type: "button",
+            className: "p-auth__password-toggle",
+            onClick: function onClick() {
+              return setShowPassword(!showPassword);
+            },
+            children: showPassword ? "非表示" : "表示"
+          })]
         }), passwordValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
           className: "p-auth__error",
           children: passwordValidationMessage
@@ -17690,24 +17718,34 @@ function Register() {
           className: "p-auth__error"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
           className: "p-auth__input-help",
-          children: "\u203B\u30D1\u30B9\u30EF\u30FC\u30C9\u306F8\u6587\u5B57\u4EE5\u4E0A\u3067\u3001\u534A\u89D2\u82F1\u6587\u5B57\u3068\u6570\u5B57\u3092\u542B\u3081\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059"
+          children: "\u203B\u30D1\u30B9\u30EF\u30FC\u30C9\u306F8\u6587\u5B57\u4EE5\u4E0A\u3067\u3001\u534A\u89D2\u82F1\u6587\u5B57\u3068\u6570\u5B57\u3092\u542B\u3081\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "p-auth__form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password_confirmation",
           value: "\u30D1\u30B9\u30EF\u30FC\u30C9\uFF08\u78BA\u8A8D\u7528\uFF09"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          id: "password_confirmation",
-          type: "password",
-          name: "password_confirmation",
-          value: data.password_confirmation,
-          className: "p-auth__input",
-          autoComplete: "new-password",
-          onChange: function onChange(e) {
-            return setData("password_confirmation", e.target.value);
-          },
-          required: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          className: "p-auth__input-wrapper",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            id: "password_confirmation",
+            type: showPasswordConfirmation ? "text" : "password",
+            name: "password_confirmation",
+            value: data.password_confirmation,
+            className: "p-auth__input ".concat(passwordIsValid === false && data.password_confirmation ? "border-red-500" : ""),
+            autoComplete: "new-password",
+            onChange: function onChange(e) {
+              return setData("password_confirmation", e.target.value);
+            },
+            required: true
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+            type: "button",
+            className: "p-auth__password-toggle",
+            onClick: function onClick() {
+              return setShowPasswordConfirmation(!showPasswordConfirmation);
+            },
+            children: showPasswordConfirmation ? "非表示" : "表示"
+          })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.password_confirmation,
           className: "p-auth__error"

@@ -4,6 +4,7 @@
 .p-messages {
     background-color: #f5f7fa;
     min-height: calc(100vh - 64px);
+    padding: 24px 0;
 
     &__title {
         font-size: 1.75rem;
@@ -14,90 +15,201 @@
     &__container {
         max-width: 1000px;
         margin: 0 auto;
-        padding-top: 24px;
-        padding-left: 16px;
-        padding-right: 16px;
+        padding: 0 16px;
     }
 
     /* タブスタイル */
     &__tabs {
         display: flex;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #e5e7eb;
         margin-bottom: 1.5rem;
-        background-color: #f5f7fa;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        @media (max-width: 768px) {
+            justify-content: space-between;
+        }
     }
 
     &__tab {
-        padding: 0.75rem 1.5rem;
-        font-weight: 400;
-        color: #64748b;
-        text-decoration: none;
+        padding: 0.75rem 1rem;
+        font-weight: 500;
+        color: #6b7280;
         border-bottom: 2px solid transparent;
-        transition: all 0.2s ease;
+        transition: all 0.2s;
+        white-space: nowrap;
         text-align: center;
-        position: relative;
+
+        @media (min-width: 768px) {
+            margin-right: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            flex: 1 1 45%;
+            font-size: 0.9rem;
+            padding: 0.75rem 0.5rem;
+        }
 
         &:hover {
-            color: #3b82f6;
+            color: #111827;
         }
 
         &--active {
-            color: #3b82f6;
-            border-bottom: 2px solid #3b82f6;
-            font-weight: 500;
+            color: #6cc3e0;
+            border-bottom-color: #6cc3e0;
         }
     }
 
-    /* カードスタイル */
-    &__card {
-        background-color: #fff;
-        border-radius: 0.5rem;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-        margin-bottom: 1.5rem;
-        overflow: hidden;
-    }
-
-    &__card-body {
-        padding: 1rem;
-    }
-
-    /* メッセージリスト */
+    /*
+     * メッセージ一覧ページ用スタイル
+     */
     &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__item {
         background-color: #fff;
-        border-radius: 0.5rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-
-    &__message-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    &__message-list-item {
-        border-bottom: 1px solid #e2e8f0;
-        transition: background-color 0.2s;
-
-        &:last-child {
-            border-bottom: none;
-        }
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        padding: 16px;
+        transition: transform 0.2s, box-shadow 0.2s;
 
         &:hover {
-            background-color: #f8fafc;
-        }
-
-        a {
-            display: block;
-            padding: 1rem;
-            text-decoration: none;
-            color: inherit;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
     }
 
-    &__list-content {
+    &__header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+    }
+
+    &__person-info {
+        display: flex;
+        align-items: center;
+    }
+
+    &__avatar {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 12px;
+        overflow: hidden;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__avatar-placeholder {
+        width: 100%;
+        height: 100%;
+        background-color: #e2e8f0;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+    }
+
+    &__unread-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: #ef4444;
+        color: white;
+        border-radius: 50%;
+        padding: 0.15rem 0.4rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        border: 2px solid white;
+    }
+
+    &__person-name {
+        font-weight: 600;
+        color: #1a202c;
+    }
+
+    &__job-tag {
+        display: inline-block;
+        background-color: #ebf4ff;
+        color: #3b82f6;
+        border-radius: 4px;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    /* メッセージ内容 */
+    &__message {
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        padding: 12px;
+        margin-top: 4px;
+        margin-bottom: 12px;
+    }
+
+    &__message-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__message-content {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    &__sender {
+        font-weight: 600;
+        color: #444;
+        margin-right: 4px;
+    }
+
+    &__preview {
+        color: #333;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+
+        &--unread {
+            font-weight: 500;
+            color: #000;
+        }
+    }
+
+    &__date {
+        font-size: 12px;
+        color: #666;
+        flex-shrink: 0;
+        margin-left: 15px;
+    }
+
+    &__footer {
+        text-align: right;
+    }
+
+    &__view-all {
+        display: inline-block;
+        color: #0081cc;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
     /* 空の状態メッセージ */
@@ -111,7 +223,37 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
-    /* アバター関連 */
+    /*
+     * メッセージ詳細ページ用スタイル
+     */
+    &__card {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+    }
+
+    &__card-body {
+        padding: 1rem;
+    }
+
+    &__back-button {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        background-color: #e5e7eb;
+        color: #374151;
+        transition: background-color 0.2s;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+
+        &:hover {
+            background-color: #d1d5db;
+        }
+    }
+
     &__user-avatar {
         position: relative;
         width: 50px;
@@ -152,7 +294,6 @@
         border: 2px solid white;
     }
 
-    /* メッセージ詳細 */
     &__list-details {
         flex: 1;
         min-width: 0;
@@ -174,63 +315,6 @@
     &__timestamp {
         font-size: 0.75rem;
         color: #64748b;
-    }
-
-    &__job-tag {
-        display: inline-block;
-        background-color: #ebf4ff;
-        color: #3b82f6;
-        border-radius: 4px;
-        padding: 0.2rem 0.5rem;
-        font-size: 0.75rem;
-        margin-bottom: 0.5rem;
-    }
-
-    &__preview {
-        margin: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        color: #64748b;
-        font-size: 0.875rem;
-
-        &--unread {
-            color: #1a202c;
-            font-weight: 500;
-        }
-    }
-
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-
-        @media (min-width: 640px) {
-            flex-wrap: nowrap;
-        }
-
-        h2 {
-            font-size: 1.25rem;
-
-            @media (min-width: 640px) {
-                font-size: 1.5rem;
-            }
-        }
-    }
-
-    &__back-button {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        border-radius: 0.25rem;
-        background-color: #e5e7eb;
-        color: #374151;
-        transition: background-color 0.2s;
-
-        &:hover {
-            background-color: #d1d5db;
-        }
     }
 
     &__job-info {
@@ -394,7 +478,6 @@
     }
 
     &__message {
-        display: flex;
         margin-bottom: 0.5rem;
         align-items: flex-start;
 

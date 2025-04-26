@@ -46,6 +46,13 @@
         margin-bottom: 20px;
     }
 
+    &__input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+    }
+
     &__input {
         display: block;
         width: 100%;
@@ -53,13 +60,42 @@
         border: 1px solid #e0e0e0;
         border-radius: 4px;
         font-size: 1rem;
-        margin-top: 8px;
         transition: border-color 0.3s, box-shadow 0.3s;
+
+        .p-auth__input-wrapper & {
+            margin-top: 0;
+            padding-right: 65px; // トグルボタンのスペース確保
+        }
 
         &:focus {
             border-color: #6cc3e0;
             box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.25);
             outline: none;
+        }
+    }
+
+    &__password-toggle {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: #6cc3e0;
+        font-size: 0.85rem;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: color 0.3s, background 0.3s;
+        border-radius: 4px;
+
+        &:hover {
+            background-color: rgba(108, 195, 224, 0.1);
+            color: darken(#6cc3e0, 10%);
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.25);
         }
     }
 
@@ -146,6 +182,14 @@
             }
         }
 
+        &--disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+        }
+
         &:disabled {
             opacity: 0.6;
             cursor: not-allowed;
@@ -197,5 +241,55 @@
         margin-bottom: 20px;
         font-size: 0.9rem;
         font-weight: 500;
+    }
+
+    // メール認証ページ特有のスタイル
+    &__verify-email {
+        margin-bottom: 30px;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #555;
+    }
+
+    &__success-message {
+        background-color: #e6f7ef;
+        border-radius: 4px;
+        padding: 15px;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+        color: #10b981;
+        font-weight: 500;
+    }
+
+    &__verify-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+
+        @media (max-width: 576px) {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+
+    &__logout-link {
+        font-size: 0.9rem;
+        color: #6c757d;
+        text-decoration: underline;
+        transition: color 0.3s;
+        padding: 8px 12px;
+        border-radius: 4px;
+
+        &:hover {
+            color: #495057;
+            background-color: #f8f9fa;
+        }
+
+        @media (max-width: 576px) {
+            width: 100%;
+            text-align: center;
+            order: 2;
+        }
     }
 }

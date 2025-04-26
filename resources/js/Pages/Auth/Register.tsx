@@ -30,6 +30,11 @@ export default function Register() {
         null
     );
 
+    // パスワードの表示/非表示を管理する状態
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConfirmation, setShowPasswordConfirmation] =
+        useState(false);
+
     // メールアドレスの重複チェックを行う関数
     const validateEmail = async (email: string) => {
         if (!email || !email.includes("@") || email.length < 5) {
@@ -111,6 +116,16 @@ export default function Register() {
             return;
         }
 
+        // 全角文字を含むかチェック
+        const hasFullWidthChars = /[^\x01-\x7E]/.test(password);
+        if (hasFullWidthChars) {
+            setPasswordIsValid(false);
+            setPasswordValidationMessage(
+                "パスワードに全角文字は使用できません。半角英数字のみを使用してください。"
+            );
+            return;
+        }
+
         // 8文字以上の長さをチェック
         if (password.length < 8) {
             setPasswordIsValid(false);
@@ -171,7 +186,7 @@ export default function Register() {
 
     return (
         <GuestLayout title="会員登録">
-            <Head title="会員登録 - Match" />
+            <Head title="会員登録 - match" />
 
             <form onSubmit={submit} className="p-auth__form">
                 <div className="p-auth__form-group">
@@ -231,18 +246,31 @@ export default function Register() {
                 <div className="p-auth__form-group">
                     <InputLabel htmlFor="password" value="パスワード" />
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className={`p-auth__input ${
-                            passwordIsValid === false ? "border-red-500" : ""
-                        }`}
-                        autoComplete="new-password"
-                        onChange={(e) => setData("password", e.target.value)}
-                        required
-                    />
+                    <div className="p-auth__input-wrapper">
+                        <TextInput
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            value={data.password}
+                            className={`p-auth__input ${
+                                passwordIsValid === false
+                                    ? "border-red-500"
+                                    : ""
+                            }`}
+                            autoComplete="new-password"
+                            onChange={(e) =>
+                                setData("password", e.target.value)
+                            }
+                            required
+                        />
+                        <button
+                            type="button"
+                            className="p-auth__password-toggle"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? "非表示" : "表示"}
+                        </button>
+                    </div>
 
                     {passwordValidationMessage && (
                         <div className="p-auth__error">
@@ -256,7 +284,7 @@ export default function Register() {
                     />
 
                     <div className="p-auth__input-help">
-                        ※パスワードは8文字以上で、半角英文字と数字を含める必要があります
+                        ※パスワードは8文字以上で、半角英文字と数字を含める必要があります。
                     </div>
                 </div>
 
@@ -266,18 +294,38 @@ export default function Register() {
                         value="パスワード（確認用）"
                     />
 
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="p-auth__input"
-                        autoComplete="new-password"
-                        onChange={(e) =>
-                            setData("password_confirmation", e.target.value)
-                        }
-                        required
-                    />
+                    <div className="p-auth__input-wrapper">
+                        <TextInput
+                            id="password_confirmation"
+                            type={
+                                showPasswordConfirmation ? "text" : "password"
+                            }
+                            name="password_confirmation"
+                            value={data.password_confirmation}
+                            className={`p-auth__input ${
+                                passwordIsValid === false &&
+                                data.password_confirmation
+                                    ? "border-red-500"
+                                    : ""
+                            }`}
+                            autoComplete="new-password"
+                            onChange={(e) =>
+                                setData("password_confirmation", e.target.value)
+                            }
+                            required
+                        />
+                        <button
+                            type="button"
+                            className="p-auth__password-toggle"
+                            onClick={() =>
+                                setShowPasswordConfirmation(
+                                    !showPasswordConfirmation
+                                )
+                            }
+                        >
+                            {showPasswordConfirmation ? "非表示" : "表示"}
+                        </button>
+                    </div>
 
                     <InputError
                         message={errors.password_confirmation}

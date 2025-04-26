@@ -39,7 +39,7 @@ select {
 /* Base Styles */
 html,
 body {
-  font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "メイリオ", Meiryo, sans-serif;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: #333;
@@ -1900,6 +1900,12 @@ textarea {
 .p-auth__form-group {
   margin-bottom: 20px;
 }
+.p-auth__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
 .p-auth__input {
   display: block;
   width: 100%;
@@ -1907,13 +1913,38 @@ textarea {
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 1rem;
-  margin-top: 8px;
   transition: border-color 0.3s, box-shadow 0.3s;
+}
+.p-auth__input-wrapper .p-auth__input {
+  margin-top: 0;
+  padding-right: 65px;
 }
 .p-auth__input:focus {
   border-color: #6cc3e0;
   box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.25);
   outline: none;
+}
+.p-auth__password-toggle {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #6cc3e0;
+  font-size: 0.85rem;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: color 0.3s, background 0.3s;
+  border-radius: 4px;
+}
+.p-auth__password-toggle:hover {
+  background-color: rgba(108, 195, 224, 0.1);
+  color: rgb(65.8820224719, 177.808988764, 215.1179775281);
+}
+.p-auth__password-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.25);
 }
 .p-auth__error {
   font-size: 14px;
@@ -1989,6 +2020,13 @@ textarea {
 .p-auth__button--primary:hover {
   color: #fff;
 }
+.p-auth__button--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
 .p-auth__button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -2035,6 +2073,52 @@ textarea {
   margin-bottom: 20px;
   font-size: 0.9rem;
   font-weight: 500;
+}
+.p-auth__verify-email {
+  margin-bottom: 30px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+.p-auth__success-message {
+  background-color: #e6f7ef;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: #10b981;
+  font-weight: 500;
+}
+.p-auth__verify-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+@media (max-width: 576px) {
+  .p-auth__verify-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+.p-auth__logout-link {
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-decoration: underline;
+  transition: color 0.3s;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+.p-auth__logout-link:hover {
+  color: #495057;
+  background-color: #f8f9fa;
+}
+@media (max-width: 576px) {
+  .p-auth__logout-link {
+    width: 100%;
+    text-align: center;
+    order: 2;
+  }
 }
 .p-dashboard__container {
   width: 100%;
@@ -2451,9 +2535,37 @@ textarea {
   flex-wrap: wrap;
   gap: 15px;
 }
+@media (max-width: 576px) {
+  .p-job-listings__filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}
 .p-job-listings__filter-tabs {
   display: flex;
   gap: 10px;
+}
+.p-job-listings__filter-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+@media (max-width: 576px) {
+  .p-job-listings__filter-actions {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+}
+.p-job-listings__filter-label {
+  margin-right: 8px;
+  font-size: 0.875rem;
+  color: #666;
+}
+.p-job-listings__category-filter {
+  display: flex;
+  align-items: center;
 }
 .p-job-listings__filter-tab {
   padding: 8px 20px;
@@ -2488,9 +2600,16 @@ textarea {
   min-width: 120px;
   width: 160px;
 }
+.p-job-listings__sort-button span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
 .p-job-listings__sort-button svg {
   transition: transform 0.2s ease;
   margin-left: auto;
+  flex-shrink: 0;
 }
 .p-job-listings__sort-button:hover {
   background-color: #f8f8f8;
@@ -3928,7 +4047,7 @@ textarea {
   cursor: not-allowed;
 }
 .p-applications {
-  padding: 2rem 1rem;
+  padding: 24px 1rem;
 }
 @media (min-width: 768px) {
   .p-applications {
@@ -3948,14 +4067,34 @@ textarea {
   display: flex;
   border-bottom: 1px solid #e5e7eb;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+@media (max-width: 768px) {
+  .p-applications__tabs {
+    justify-content: space-between;
+  }
 }
 .p-applications__tab {
   padding: 0.75rem 1rem;
   font-weight: 500;
   color: #6b7280;
   border-bottom: 2px solid transparent;
-  margin-right: 1rem;
   transition: all 0.2s;
+  white-space: nowrap;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .p-applications__tab {
+    margin-right: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .p-applications__tab {
+    flex: 1 1 45%;
+    font-size: 0.9rem;
+    padding: 0.75rem 0.5rem;
+  }
 }
 .p-applications__tab:hover {
   color: #111827;
@@ -4384,12 +4523,16 @@ textarea {
 .p-messages {
   background-color: #f5f7fa;
   min-height: calc(100vh - 64px);
+  padding: 24px 0;
   /* タブスタイル */
-  /* カードスタイル */
-  /* メッセージリスト */
+  /*
+   * メッセージ一覧ページ用スタイル
+   */
+  /* メッセージ内容 */
   /* 空の状態メッセージ */
-  /* アバター関連 */
-  /* メッセージ詳細 */
+  /*
+   * メッセージ詳細ページ用スタイル
+   */
 }
 .p-messages__title {
   font-size: 1.75rem;
@@ -4399,33 +4542,184 @@ textarea {
 .p-messages__container {
   max-width: 1000px;
   margin: 0 auto;
-  padding-top: 24px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 0 16px;
 }
 .p-messages__tabs {
   display: flex;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e5e7eb;
   margin-bottom: 1.5rem;
-  background-color: #f5f7fa;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+@media (max-width: 768px) {
+  .p-messages__tabs {
+    justify-content: space-between;
+  }
 }
 .p-messages__tab {
-  padding: 0.75rem 1.5rem;
-  font-weight: 400;
-  color: #64748b;
-  text-decoration: none;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  color: #6b7280;
   border-bottom: 2px solid transparent;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
+  white-space: nowrap;
   text-align: center;
-  position: relative;
+}
+@media (min-width: 768px) {
+  .p-messages__tab {
+    margin-right: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .p-messages__tab {
+    flex: 1 1 45%;
+    font-size: 0.9rem;
+    padding: 0.75rem 0.5rem;
+  }
 }
 .p-messages__tab:hover {
-  color: #3b82f6;
+  color: #111827;
 }
 .p-messages__tab--active {
+  color: #6cc3e0;
+  border-bottom-color: #6cc3e0;
+}
+.p-messages__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.p-messages__item {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.p-messages__item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.p-messages__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.p-messages__person-info {
+  display: flex;
+  align-items: center;
+}
+.p-messages__avatar {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.p-messages__avatar img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.p-messages__avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+.p-messages__unread-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 50%;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border: 2px solid white;
+}
+.p-messages__person-name {
+  font-weight: 600;
+  color: #1a202c;
+}
+.p-messages__job-tag {
+  display: inline-block;
+  background-color: #ebf4ff;
   color: #3b82f6;
-  border-bottom: 2px solid #3b82f6;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+}
+.p-messages__message {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 12px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+.p-messages__message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.p-messages__message-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.p-messages__sender {
+  font-weight: 600;
+  color: #444;
+  margin-right: 4px;
+}
+.p-messages__preview {
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+.p-messages__preview--unread {
   font-weight: 500;
+  color: #000;
+}
+.p-messages__date {
+  font-size: 12px;
+  color: #666;
+  flex-shrink: 0;
+  margin-left: 15px;
+}
+.p-messages__footer {
+  text-align: right;
+}
+.p-messages__view-all {
+  display: inline-block;
+  color: #0081cc;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+.p-messages__view-all:hover {
+  text-decoration: underline;
+}
+.p-messages__empty {
+  text-align: center;
+  color: #64748b;
+  padding: 2rem;
+  font-size: 1rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 .p-messages__card {
   background-color: #fff;
@@ -4437,45 +4731,19 @@ textarea {
 .p-messages__card-body {
   padding: 1rem;
 }
-.p-messages__list {
-  background-color: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-.p-messages__message-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.p-messages__message-list-item {
-  border-bottom: 1px solid #e2e8f0;
+.p-messages__back-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #e5e7eb;
+  color: #374151;
   transition: background-color 0.2s;
-}
-.p-messages__message-list-item:last-child {
-  border-bottom: none;
-}
-.p-messages__message-list-item:hover {
-  background-color: #f8fafc;
-}
-.p-messages__message-list-item a {
-  display: block;
-  padding: 1rem;
   text-decoration: none;
-  color: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
-.p-messages__list-content {
-  display: flex;
-  align-items: center;
-}
-.p-messages__empty {
-  text-align: center;
-  color: #64748b;
-  padding: 2rem;
-  font-size: 1rem;
-  background-color: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.p-messages__back-button:hover {
+  background-color: #d1d5db;
 }
 .p-messages__user-avatar {
   position: relative;
@@ -4532,58 +4800,6 @@ textarea {
 .p-messages__timestamp {
   font-size: 0.75rem;
   color: #64748b;
-}
-.p-messages__job-tag {
-  display: inline-block;
-  background-color: #ebf4ff;
-  color: #3b82f6;
-  border-radius: 4px;
-  padding: 0.2rem 0.5rem;
-  font-size: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-.p-messages__preview {
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #64748b;
-  font-size: 0.875rem;
-}
-.p-messages__preview--unread {
-  color: #1a202c;
-  font-weight: 500;
-}
-.p-messages__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-@media (min-width: 640px) {
-  .p-messages__header {
-    flex-wrap: nowrap;
-  }
-}
-.p-messages__header h2 {
-  font-size: 1.25rem;
-}
-@media (min-width: 640px) {
-  .p-messages__header h2 {
-    font-size: 1.5rem;
-  }
-}
-.p-messages__back-button {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  background-color: #e5e7eb;
-  color: #374151;
-  transition: background-color 0.2s;
-}
-.p-messages__back-button:hover {
-  background-color: #d1d5db;
 }
 .p-messages__job-info {
   display: flex;
@@ -4724,7 +4940,6 @@ textarea {
   margin-bottom: 0;
 }
 .p-messages__message {
-  display: flex;
   margin-bottom: 0.5rem;
   align-items: flex-start;
 }
@@ -4868,11 +5083,53 @@ textarea {
  */
 .p-public-messages {
   padding: 24px 0;
+  min-height: calc(100vh - 64px);
+  /* タブスタイル */
 }
 .p-public-messages__container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 16px;
+}
+.p-public-messages__tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+@media (max-width: 768px) {
+  .p-public-messages__tabs {
+    justify-content: space-between;
+  }
+}
+.p-public-messages__tab {
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .p-public-messages__tab {
+    margin-right: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .p-public-messages__tab {
+    flex: 1 1 45%;
+    font-size: 0.9rem;
+    padding: 0.75rem 0.5rem;
+  }
+}
+.p-public-messages__tab:hover {
+  color: #111827;
+}
+.p-public-messages__tab--active {
+  color: #6cc3e0;
+  border-bottom-color: #6cc3e0;
 }
 .p-public-messages__list {
   display: flex;
@@ -5179,14 +5436,15 @@ textarea {
   padding: 0 16px;
 }
 .p-notifications__title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #333;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
 }
 .p-notifications__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 24px;
   margin-bottom: 24px;
 }
 .p-notifications__heading {
@@ -5461,14 +5719,9 @@ textarea {
   border-bottom: 1px solid #e5e7eb;
 }
 .p-profile__title {
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   font-weight: 600;
-  color: #1f2937;
-}
-@media (min-width: 640px) {
-  .p-profile__title {
-    font-size: 1.5rem;
-  }
+  color: #fff;
 }
 .p-profile__content {
   display: flex;

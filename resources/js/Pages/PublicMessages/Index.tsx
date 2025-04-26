@@ -47,18 +47,30 @@ export default function Index({ jobListingsWithMessages = [] }: Props) {
 
             <div className="p-public-messages">
                 <div className="p-public-messages__container">
-                    <div className="p-messages__tabs">
+                    <div className="p-public-messages__tabs">
+                        <Link
+                            href={route("applications.index")}
+                            className="p-public-messages__tab"
+                        >
+                            応募した案件
+                        </Link>
+                        <Link
+                            href={route("applications.to-my-jobs")}
+                            className="p-public-messages__tab"
+                        >
+                            自分の案件への応募
+                        </Link>
                         <Link
                             href={route("public-messages.index")}
-                            className="p-messages__tab p-messages__tab--active"
+                            className="p-public-messages__tab p-public-messages__tab--active"
                         >
-                            パブリックメッセージ一覧
+                            パブリックメッセージ
                         </Link>
                         <Link
                             href={route("messages.index")}
-                            className="p-messages__tab"
+                            className="p-public-messages__tab"
                         >
-                            ダイレクトメッセージ一覧
+                            ダイレクトメッセージ
                         </Link>
                     </div>
 

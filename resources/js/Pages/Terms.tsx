@@ -52,7 +52,7 @@ export default function Terms({ auth }: PageProps) {
 
     return (
         <>
-            <Head title="利用規約 - Match" />
+            <Head title="利用規約 - match" />
 
             {/* ヘッダー */}
             <header className="l-header">

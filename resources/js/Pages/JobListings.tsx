@@ -32,10 +32,21 @@ export default function JobListings({
     const [activeFilter, setActiveFilter] = useState<
         "all" | "one_time" | "revenue_share"
     >(filters.type ? (filters.type as any) : "all");
+    const [activeCategory, setActiveCategory] = useState<string>(() => {
+        // URLからカテゴリーパラメータを取得
+        const params = new URLSearchParams(window.location.search);
+        const category = params.get("category");
+        return category || "all";
+    });
+    const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+    const categoryDropdownRef = useRef<HTMLDivElement>(null);
+    const categoryButtonRef = useRef<HTMLButtonElement>(null);
 
     // 並び替えオプションの状態
     const [sortOption, setSortOption] = useState<string>("latest");
     const [showSortDropdown, setShowSortDropdown] = useState(false);
+    const sortDropdownRef = useRef<HTMLDivElement>(null);
+    const sortButtonRef = useRef<HTMLButtonElement>(null);
 
     // モバイルメニュー関連の状態（未ログイン時のみ使用）
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -60,6 +71,26 @@ export default function JobListings({
             }
         }
     }, [mobileMenuOpen, auth?.user]);
+
+    // ソートメニュー外のクリックを検出してメニューを閉じる
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                sortDropdownRef.current &&
+                !sortDropdownRef.current.contains(event.target as Node) &&
+                sortButtonRef.current &&
+                !sortButtonRef.current.contains(event.target as Node) &&
+                showSortDropdown
+            ) {
+                setShowSortDropdown(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [showSortDropdown]);
 
     // メニュー外のクリックを検出してメニューを閉じる（未ログイン時のみ）
     useEffect(() => {
@@ -88,6 +119,42 @@ export default function JobListings({
         setMobileMenuOpen(!mobileMenuOpen);
     };
 
+    // カテゴリーの選択肢
+    const categoryOptions = [
+        "ウェブ開発",
+        "モバイルアプリ開発",
+        "デザイン",
+        "サーバー/インフラ",
+        "AI/機械学習",
+        "データ分析",
+        "ECサイト",
+        "API開発",
+        "WordPress開発",
+        "IT業界に詳しくないので分からない",
+        "エンジニアに気軽に相談",
+        "その他",
+    ];
+
+    // カテゴリードロップダウンの外側クリックを検出
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                categoryDropdownRef.current &&
+                !categoryDropdownRef.current.contains(event.target as Node) &&
+                categoryButtonRef.current &&
+                !categoryButtonRef.current.contains(event.target as Node) &&
+                showCategoryDropdown
+            ) {
+                setShowCategoryDropdown(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [showCategoryDropdown]);
+
     // フィルタリングされた案件リスト
     const filteredJobs = jobListings.data.filter((job) => {
         // 検索クエリのフィルタリング
@@ -101,7 +168,12 @@ export default function JobListings({
         // タイプフィルタリング（SPA対応）
         const matchesType = activeFilter === "all" || job.type === activeFilter;
 
-        return matchesQuery && matchesType;
+        // カテゴリーフィルタリング
+        const matchesCategory =
+            activeCategory === "all" ||
+            (job.category && job.category === activeCategory);
+
+        return matchesQuery && matchesType && matchesCategory;
     });
 
     // タイプフィルターの変更（SPA対応）
@@ -147,6 +219,30 @@ export default function JobListings({
 
         // クライアントサイドでの並び替え処理は実装済みのfilteredJobsに反映されるため
         // リロードする必要はありません
+    };
+
+    // カテゴリーフィルター変更時の処理
+    const handleCategoryChange = (category: string) => {
+        setActiveCategory(category);
+        setShowCategoryDropdown(false);
+
+        // カテゴリーをURLに反映（ただしリロードはしない）
+        const url = new URL(window.location.href);
+        if (category === "all") {
+            url.searchParams.delete("category");
+        } else {
+            url.searchParams.set("category", category);
+        }
+        window.history.pushState({}, "", url.toString());
+    };
+
+    // カテゴリー名の表示用テキストを取得
+    const getCategoryDisplayText = () => {
+        if (activeCategory === "all") {
+            return "カテゴリー選択";
+        }
+        // カテゴリー名はそのまま表示（CSSで省略表示される）
+        return activeCategory;
     };
 
     // クライアントサイドでの並び替え処理
@@ -212,7 +308,7 @@ export default function JobListings({
     // ページコンテンツ（共通部分）
     const pageContent = (
         <>
-            <Head title="案件一覧 - Match" />
+            <Head title="案件一覧 - match" />
 
             <div className="p-job-listings__container">
                 <div className="p-job-listings__header">
@@ -325,94 +421,176 @@ export default function JobListings({
                             </div>
                         </div>
 
-                        <div className="p-job-listings__sort">
-                            <div className="p-job-listings__sort-dropdown">
-                                <button
-                                    className="p-job-listings__sort-button"
-                                    onClick={() =>
-                                        setShowSortDropdown(!showSortDropdown)
-                                    }
-                                >
-                                    <span>{getSortOptionText(sortOption)}</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
+                        <div className="p-job-listings__filter-actions">
+                            <div className="p-job-listings__sort">
+                                <div className="p-job-listings__sort-dropdown">
+                                    <button
+                                        className="p-job-listings__sort-button"
+                                        onClick={() =>
+                                            setShowSortDropdown(
+                                                !showSortDropdown
+                                            )
+                                        }
+                                        ref={sortButtonRef}
                                     >
-                                        <path d="M6 9l6 6 6-6" />
-                                    </svg>
-                                </button>
+                                        <span>
+                                            {getSortOptionText(sortOption)}
+                                        </span>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M6 9l6 6 6-6" />
+                                        </svg>
+                                    </button>
 
-                                {showSortDropdown && (
-                                    <div className="p-job-listings__sort-options">
+                                    {showSortDropdown && (
                                         <div
-                                            className={`p-job-listings__sort-option ${
-                                                sortOption === "latest"
-                                                    ? "p-job-listings__sort-option--active"
-                                                    : ""
-                                            }`}
-                                            onClick={() =>
-                                                handleSortChange("latest")
-                                            }
+                                            className="p-job-listings__sort-options"
+                                            ref={sortDropdownRef}
                                         >
-                                            新着順
+                                            <div
+                                                className={`p-job-listings__sort-option ${
+                                                    sortOption === "latest"
+                                                        ? "p-job-listings__sort-option--active"
+                                                        : ""
+                                                }`}
+                                                onClick={() =>
+                                                    handleSortChange("latest")
+                                                }
+                                            >
+                                                新着順
+                                            </div>
+                                            <div
+                                                className={`p-job-listings__sort-option ${
+                                                    sortOption === "oldest"
+                                                        ? "p-job-listings__sort-option--active"
+                                                        : ""
+                                                }`}
+                                                onClick={() =>
+                                                    handleSortChange("oldest")
+                                                }
+                                            >
+                                                登録が古い順
+                                            </div>
+                                            <div
+                                                className={`p-job-listings__sort-option ${
+                                                    sortOption === "views"
+                                                        ? "p-job-listings__sort-option--active"
+                                                        : ""
+                                                }`}
+                                                onClick={() =>
+                                                    handleSortChange("views")
+                                                }
+                                            >
+                                                閲覧数順
+                                            </div>
+                                            <div
+                                                className={`p-job-listings__sort-option ${
+                                                    sortOption === "budget_high"
+                                                        ? "p-job-listings__sort-option--active"
+                                                        : ""
+                                                }`}
+                                                onClick={() =>
+                                                    handleSortChange(
+                                                        "budget_high"
+                                                    )
+                                                }
+                                            >
+                                                予算の高い順
+                                            </div>
+                                            <div
+                                                className={`p-job-listings__sort-option ${
+                                                    sortOption === "budget_low"
+                                                        ? "p-job-listings__sort-option--active"
+                                                        : ""
+                                                }`}
+                                                onClick={() =>
+                                                    handleSortChange(
+                                                        "budget_low"
+                                                    )
+                                                }
+                                            >
+                                                予算の低い順
+                                            </div>
                                         </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* カテゴリーフィルタードロップダウン */}
+                            <div className="p-job-listings__category-filter">
+                                <div className="p-job-listings__sort-dropdown">
+                                    <button
+                                        className="p-job-listings__sort-button"
+                                        onClick={() =>
+                                            setShowCategoryDropdown(
+                                                !showCategoryDropdown
+                                            )
+                                        }
+                                        ref={categoryButtonRef}
+                                    >
+                                        <span>{getCategoryDisplayText()}</span>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M6 9l6 6 6-6" />
+                                        </svg>
+                                    </button>
+
+                                    {showCategoryDropdown && (
                                         <div
-                                            className={`p-job-listings__sort-option ${
-                                                sortOption === "oldest"
-                                                    ? "p-job-listings__sort-option--active"
-                                                    : ""
-                                            }`}
-                                            onClick={() =>
-                                                handleSortChange("oldest")
-                                            }
+                                            className="p-job-listings__sort-options"
+                                            ref={categoryDropdownRef}
                                         >
-                                            登録が古い順
+                                            <div
+                                                className={`p-job-listings__sort-option ${
+                                                    activeCategory === "all"
+                                                        ? "p-job-listings__sort-option--active"
+                                                        : ""
+                                                }`}
+                                                onClick={() =>
+                                                    handleCategoryChange("all")
+                                                }
+                                            >
+                                                すべてのカテゴリー
+                                            </div>
+                                            {categoryOptions.map((category) => (
+                                                <div
+                                                    key={category}
+                                                    className={`p-job-listings__sort-option ${
+                                                        activeCategory ===
+                                                        category
+                                                            ? "p-job-listings__sort-option--active"
+                                                            : ""
+                                                    }`}
+                                                    onClick={() =>
+                                                        handleCategoryChange(
+                                                            category
+                                                        )
+                                                    }
+                                                >
+                                                    {category}
+                                                </div>
+                                            ))}
                                         </div>
-                                        <div
-                                            className={`p-job-listings__sort-option ${
-                                                sortOption === "views"
-                                                    ? "p-job-listings__sort-option--active"
-                                                    : ""
-                                            }`}
-                                            onClick={() =>
-                                                handleSortChange("views")
-                                            }
-                                        >
-                                            閲覧数順
-                                        </div>
-                                        <div
-                                            className={`p-job-listings__sort-option ${
-                                                sortOption === "budget_high"
-                                                    ? "p-job-listings__sort-option--active"
-                                                    : ""
-                                            }`}
-                                            onClick={() =>
-                                                handleSortChange("budget_high")
-                                            }
-                                        >
-                                            予算の高い順
-                                        </div>
-                                        <div
-                                            className={`p-job-listings__sort-option ${
-                                                sortOption === "budget_low"
-                                                    ? "p-job-listings__sort-option--active"
-                                                    : ""
-                                            }`}
-                                            onClick={() =>
-                                                handleSortChange("budget_low")
-                                            }
-                                        >
-                                            予算の低い順
-                                        </div>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>

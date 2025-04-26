@@ -63,7 +63,7 @@ export default function NotificationsIndex({
         <AuthenticatedLayout
             header={<div className="p-notifications__title">通知一覧</div>}
         >
-            <Head title="通知一覧 - Match" />
+            <Head title="通知一覧 - match" />
 
             <div className="p-notifications">
                 <div className="p-notifications__container">

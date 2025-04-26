@@ -81,7 +81,7 @@ export default function Apply({
         <AuthenticatedLayout
             header={<div className="p-apply__title">案件応募</div>}
         >
-            <Head title={`「${jobListing.title}」への応募 - Match`} />
+            <Head title={`「${jobListing.title}」への応募 - match`} />
 
             <div className="p-apply">
                 <div className="p-apply__container">

@@ -56,7 +56,7 @@ export default function Top({
 
     return (
         <>
-            <Head title="Match - エンジニア案件マッチングサービス" />
+            <Head title="match - エンジニア案件マッチングサービス" />
 
             {/* ヘッダー */}
             <header className="l-header">
@@ -816,7 +816,7 @@ export default function Top({
                     </section>
 
                     {/* よくある質問セクション */}
-                    <section className="p-top__faq">
+                    <section className="p-top__faq" id="faq">
                         <div className="p-top__container">
                             <h2 className="p-top__section-title">
                                 よくある質問
@@ -945,182 +945,6 @@ export default function Top({
                             </Link>
                         </div>
                     </section>
-
-                    {/* カテゴリーセクション */}
-                    {/* <section className="p-top__categories">
-                        <h2 className="p-top__categories-title">
-                            案件カテゴリーから探す
-                        </h2>
-                        <div className="p-top__category-list">
-                            <div className="p-top__category-item">
-                                <div className="p-top__category-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M16 18l6-6-6-6"></path>
-                                        <path d="M8 6l-6 6 6 6"></path>
-                                    </svg>
-                                </div>
-                                <div className="p-top__category-name">
-                                    フロントエンド
-                                </div>
-                            </div>
-
-                            <div className="p-top__category-item">
-                                <div className="p-top__category-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                        <polyline points="2 17 12 22 22 17"></polyline>
-                                        <polyline points="2 12 12 17 22 12"></polyline>
-                                    </svg>
-                                </div>
-                                <div className="p-top__category-name">
-                                    バックエンド
-                                </div>
-                            </div>
-
-                            <div className="p-top__category-item">
-                                <div className="p-top__category-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <rect
-                                            x="3"
-                                            y="3"
-                                            width="18"
-                                            height="18"
-                                            rx="2"
-                                            ry="2"
-                                        ></rect>
-                                        <circle
-                                            cx="8.5"
-                                            cy="8.5"
-                                            r="1.5"
-                                        ></circle>
-                                        <polyline points="21 15 16 10 5 21"></polyline>
-                                    </svg>
-                                </div>
-                                <div className="p-top__category-name">
-                                    デザイン
-                                </div>
-                            </div>
-
-                            <div className="p-top__category-item">
-                                <div className="p-top__category-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                                        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                                        <path d="M2 2l7.586 7.586"></path>
-                                        <circle cx="11" cy="11" r="2"></circle>
-                                    </svg>
-                                </div>
-                                <div className="p-top__category-name">
-                                    モバイルアプリ
-                                </div>
-                            </div>
-
-                            <div className="p-top__category-item">
-                                <div className="p-top__category-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <line
-                                            x1="4"
-                                            y1="9"
-                                            x2="20"
-                                            y2="9"
-                                        ></line>
-                                        <line
-                                            x1="4"
-                                            y1="15"
-                                            x2="20"
-                                            y2="15"
-                                        ></line>
-                                        <line
-                                            x1="10"
-                                            y1="3"
-                                            x2="8"
-                                            y2="21"
-                                        ></line>
-                                        <line
-                                            x1="16"
-                                            y1="3"
-                                            x2="14"
-                                            y2="21"
-                                        ></line>
-                                    </svg>
-                                </div>
-                                <div className="p-top__category-name">
-                                    インフラ
-                                </div>
-                            </div>
-
-                            <div className="p-top__category-item">
-                                <div className="p-top__category-icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                                    </svg>
-                                </div>
-                                <div className="p-top__category-name">
-                                    ツール開発
-                                </div>
-                            </div>
-                        </div>
-                    </section> */}
                 </div>
             </main>
 
@@ -1170,14 +994,6 @@ export default function Top({
                                         プライバシーポリシー
                                     </Link>
                                 </li>
-                                {/* <li className="l-footer__link-item">
-                                    <Link
-                                        href="/company"
-                                        className="l-footer__link"
-                                    >
-                                        運営会社
-                                    </Link>
-                                </li> */}
                             </ul>
                         </div>
 
@@ -1208,18 +1024,10 @@ export default function Top({
                             <ul className="l-footer__links">
                                 <li className="l-footer__link-item">
                                     <Link
-                                        href="/faq"
+                                        href="/#faq"
                                         className="l-footer__link"
                                     >
                                         よくある質問
-                                    </Link>
-                                </li>
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href="/guide"
-                                        className="l-footer__link"
-                                    >
-                                        ご利用ガイド
                                     </Link>
                                 </li>
                             </ul>

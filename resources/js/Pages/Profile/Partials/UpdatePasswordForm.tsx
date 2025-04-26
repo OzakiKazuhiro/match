@@ -54,7 +54,7 @@ export default function UpdatePasswordForm({
                 <h2 className="p-profile__section-title">パスワード変更</h2>
 
                 <p className="p-profile__section-description">
-                    安全性を保つため、長くてランダムなパスワードを設定してください。
+                    安全性を保つため、パスワードを半角英数字８文字以上で設定してください。
                 </p>
             </header>
 

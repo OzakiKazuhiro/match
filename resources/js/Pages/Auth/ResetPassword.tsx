@@ -30,7 +30,7 @@ export default function ResetPassword({
 
     return (
         <GuestLayout title="パスワードの再設定">
-            <Head title="パスワードの再設定 - Match" />
+            <Head title="パスワードの再設定 - match" />
 
             <div className="p-auth__message">
                 新しいパスワードを設定してください。安全のため、以前とは異なるパスワードをご使用ください。

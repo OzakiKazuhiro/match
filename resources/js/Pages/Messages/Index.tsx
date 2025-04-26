@@ -110,134 +110,148 @@ export default function Index({
                 </div>
             }
         >
-            <Head title="メッセージ" />
+            <Head title="match - ダイレクトメッセージ一覧" />
 
             <div className="p-messages">
                 <div className="p-messages__container">
                     <div className="p-messages__tabs">
                         <Link
+                            href={route("applications.index")}
+                            className="p-messages__tab"
+                        >
+                            応募した案件
+                        </Link>
+                        <Link
+                            href={route("applications.to-my-jobs")}
+                            className="p-messages__tab"
+                        >
+                            自分の案件への応募
+                        </Link>
+                        <Link
                             href={route("public-messages.index")}
                             className="p-messages__tab"
                         >
-                            パブリックメッセージ一覧
+                            パブリックメッセージ
                         </Link>
                         <Link
                             href={route("messages.index")}
                             className="p-messages__tab p-messages__tab--active"
                         >
-                            ダイレクトメッセージ一覧
+                            ダイレクトメッセージ
                         </Link>
                     </div>
 
-                    <div className="p-messages__list">
-                        {conversationGroups.length === 0 ? (
-                            <p className="p-messages__empty">
-                                メッセージはありません。
-                            </p>
-                        ) : (
-                            <ul className="p-messages__message-list">
-                                {conversationGroups.map((group) => {
-                                    // 自分以外の参加者を特定
-                                    const otherParticipant =
-                                        group.job_owner_id === currentUserId
-                                            ? group.applicant
-                                            : group.job_owner;
+                    {conversationGroups.length === 0 ? (
+                        <p className="p-messages__empty">
+                            ダイレクトメッセージはありません
+                        </p>
+                    ) : (
+                        <div className="p-messages__list">
+                            {conversationGroups.map((group) => {
+                                // 自分以外の参加者を特定
+                                const otherParticipant =
+                                    group.job_owner_id === currentUserId
+                                        ? group.applicant
+                                        : group.job_owner;
 
-                                    return (
-                                        <li
-                                            key={group.id}
-                                            className="p-messages__message-list-item"
-                                        >
-                                            <Link
-                                                href={`/messages/${group.id}`}
-                                            >
-                                                <div className="p-messages__list-content">
-                                                    <div className="p-messages__user-avatar">
-                                                        {otherParticipant.avatar ? (
-                                                            <img
-                                                                src={getAvatarUrl(
-                                                                    otherParticipant.avatar
-                                                                )}
-                                                                alt={
-                                                                    otherParticipant.name
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            <div className="p-messages__user-avatar-placeholder">
-                                                                {getInitials(
-                                                                    otherParticipant.name
-                                                                )}
-                                                            </div>
-                                                        )}
-                                                        {group.unread_count >
-                                                            0 && (
-                                                            <span className="p-messages__user-avatar-badge">
-                                                                {
-                                                                    group.unread_count
-                                                                }
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                    <div className="p-messages__list-details">
-                                                        <div className="p-messages__list-header">
-                                                            <p className="p-messages__user-name">
-                                                                {
-                                                                    otherParticipant.name
-                                                                }
-                                                            </p>
-                                                            {group.latest_message && (
-                                                                <div className="p-messages__timestamp">
-                                                                    {formatTimeAgo(
-                                                                        group
-                                                                            .latest_message
-                                                                            .created_at
-                                                                    )}
-                                                                </div>
+                                return (
+                                    <div
+                                        key={group.id}
+                                        className="p-messages__item"
+                                    >
+                                        <div className="p-messages__header">
+                                            <div className="p-messages__person-info">
+                                                <div className="p-messages__avatar">
+                                                    {otherParticipant.avatar ? (
+                                                        <img
+                                                            src={getAvatarUrl(
+                                                                otherParticipant.avatar
+                                                            )}
+                                                            alt={
+                                                                otherParticipant.name
+                                                            }
+                                                            className="p-messages__avatar-image"
+                                                        />
+                                                    ) : (
+                                                        <div className="p-messages__avatar-placeholder">
+                                                            {getInitials(
+                                                                otherParticipant.name
                                                             )}
                                                         </div>
-                                                        {group.job_listing && (
-                                                            <div className="p-messages__job-tag">
-                                                                案件:{" "}
-                                                                {
-                                                                    group
-                                                                        .job_listing
-                                                                        .title
-                                                                }
-                                                            </div>
-                                                        )}
-                                                        <p
-                                                            className={
-                                                                group.unread_count >
-                                                                0
-                                                                    ? "p-messages__preview p-messages__preview--unread"
-                                                                    : "p-messages__preview p-messages__preview--read"
-                                                            }
-                                                        >
-                                                            {group.latest_message
-                                                                ? `${
-                                                                      group
-                                                                          .latest_message
-                                                                          .sender
-                                                                          .id ===
-                                                                      currentUserId
-                                                                          ? "あなた: "
-                                                                          : ""
-                                                                  }${
-                                                                      group
-                                                                          .latest_message
-                                                                          .message
-                                                                  }`
-                                                                : "メッセージがありません"}
-                                                        </p>
-                                                    </div>
+                                                    )}
+                                                    {group.unread_count > 0 && (
+                                                        <span className="p-messages__unread-badge">
+                                                            {group.unread_count}
+                                                        </span>
+                                                    )}
                                                 </div>
+                                                <span className="p-messages__person-name">
+                                                    {otherParticipant.name}
+                                                </span>
+                                            </div>
+
+                                            {group.job_listing && (
+                                                <span className="p-messages__job-tag">
+                                                    {group.job_listing.title}
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        <div className="p-messages__message">
+                                            <div className="p-messages__message-header">
+                                                <div className="p-messages__message-content">
+                                                    <span className="p-messages__sender">
+                                                        {group.latest_message
+                                                            ?.sender_id ===
+                                                        currentUserId
+                                                            ? "あなた："
+                                                            : `${
+                                                                  group
+                                                                      .latest_message
+                                                                      ?.sender
+                                                                      .name ||
+                                                                  "不明なユーザー"
+                                                              }：`}
+                                                    </span>
+                                                    <span
+                                                        className={`p-messages__preview ${
+                                                            group.unread_count >
+                                                            0
+                                                                ? "p-messages__preview--unread"
+                                                                : ""
+                                                        }`}
+                                                    >
+                                                        {group.latest_message
+                                                            ? group
+                                                                  .latest_message
+                                                                  .message
+                                                            : "メッセージはありません"}
+                                                    </span>
+                                                </div>
+                                                {group.latest_message && (
+                                                    <span className="p-messages__date">
+                                                        {formatTimeAgo(
+                                                            group.latest_message
+                                                                .created_at
+                                                        )}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <div className="p-messages__footer">
+                                            <Link
+                                                href={`/messages/${group.id}`}
+                                                className="p-messages__view-all"
+                                            >
+                                                すべての会話を見る
                                             </Link>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        )}
-                    </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>

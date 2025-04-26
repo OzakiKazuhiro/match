@@ -109,11 +109,40 @@
         margin-bottom: 30px;
         flex-wrap: wrap;
         gap: 15px;
+
+        @media (max-width: 576px) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
     }
 
     &__filter-tabs {
         display: flex;
         gap: 10px;
+    }
+
+    &__filter-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+
+        @media (max-width: 576px) {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    &__filter-label {
+        margin-right: 8px;
+        font-size: 0.875rem;
+        color: #666;
+    }
+
+    &__category-filter {
+        display: flex;
+        align-items: center;
     }
 
     &__filter-tab {
@@ -153,9 +182,17 @@
         min-width: 120px;
         width: 160px;
 
+        span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 120px;
+        }
+
         svg {
             transition: transform 0.2s ease;
             margin-left: auto;
+            flex-shrink: 0;
         }
 
         &:hover {

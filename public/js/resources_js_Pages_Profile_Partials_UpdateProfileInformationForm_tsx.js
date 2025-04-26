@@ -396,12 +396,12 @@ function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i 
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 function PrimaryButton(_ref) {
   var _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className,
+    className = _ref$className === void 0 ? "" : _ref$className,
     disabled = _ref.disabled,
     children = _ref.children,
     props = _objectWithoutProperties(_ref, _excluded);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", _objectSpread(_objectSpread({}, props), {}, {
-    className: "inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 ".concat(disabled && 'opacity-25', " ") + className,
+    className: "p-auth__button p-auth__button--primary ".concat(disabled ? "p-auth__button--disabled" : "", " ").concat(className),
     disabled: disabled,
     children: children
   }));

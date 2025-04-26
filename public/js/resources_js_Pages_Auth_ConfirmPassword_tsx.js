@@ -86,12 +86,12 @@ function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i 
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 function PrimaryButton(_ref) {
   var _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className,
+    className = _ref$className === void 0 ? "" : _ref$className,
     disabled = _ref.disabled,
     children = _ref.children,
     props = _objectWithoutProperties(_ref, _excluded);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", _objectSpread(_objectSpread({}, props), {}, {
-    className: "inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 ".concat(disabled && 'opacity-25', " ") + className,
+    className: "p-auth__button p-auth__button--primary ".concat(disabled ? "p-auth__button--disabled" : "", " ").concat(className),
     disabled: disabled,
     children: children
   }));
@@ -241,7 +241,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function ConfirmPassword() {
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.useForm)({
-      password: ''
+      password: ""
     }),
     data = _useForm.data,
     setData = _useForm.setData,
@@ -251,18 +251,18 @@ function ConfirmPassword() {
     reset = _useForm.reset;
   var submit = function submit(e) {
     e.preventDefault();
-    post(route('password.confirm'), {
+    post(route("password.confirm"), {
       onFinish: function onFinish() {
-        return reset('password');
+        return reset("password");
       }
     });
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_4__["default"], {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Head, {
-      title: "Confirm Password"
+      title: "\u30D1\u30B9\u30EF\u30FC\u30C9\u78BA\u8A8D"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
       className: "mb-4 text-sm text-gray-600",
-      children: "This is a secure area of the application. Please confirm your password before continuing."
+      children: "\u3053\u306E\u30A2\u30D7\u30EA\u30B1\u30FC\u30B7\u30E7\u30F3\u306E\u5B89\u5168\u306A\u9818\u57DF\u3067\u3059\u3002\u7D9A\u3051\u308B\u524D\u306B\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: submit,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
@@ -278,7 +278,7 @@ function ConfirmPassword() {
           className: "mt-1 block w-full",
           isFocused: true,
           onChange: function onChange(e) {
-            return setData('password', e.target.value);
+            return setData("password", e.target.value);
           }
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.password,

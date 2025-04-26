@@ -396,12 +396,12 @@ function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i 
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 function PrimaryButton(_ref) {
   var _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className,
+    className = _ref$className === void 0 ? "" : _ref$className,
     disabled = _ref.disabled,
     children = _ref.children,
     props = _objectWithoutProperties(_ref, _excluded);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", _objectSpread(_objectSpread({}, props), {}, {
-    className: "inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 ".concat(disabled && 'opacity-25', " ") + className,
+    className: "p-auth__button p-auth__button--primary ".concat(disabled ? "p-auth__button--disabled" : "", " ").concat(className),
     disabled: disabled,
     children: children
   }));
@@ -538,7 +538,7 @@ function UpdatePasswordForm(_ref) {
         children: "\u30D1\u30B9\u30EF\u30FC\u30C9\u5909\u66F4"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
         className: "p-profile__section-description",
-        children: "\u5B89\u5168\u6027\u3092\u4FDD\u3064\u305F\u3081\u3001\u9577\u304F\u3066\u30E9\u30F3\u30C0\u30E0\u306A\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+        children: "\u5B89\u5168\u6027\u3092\u4FDD\u3064\u305F\u3081\u3001\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u534A\u89D2\u82F1\u6570\u5B57\uFF18\u6587\u5B57\u4EE5\u4E0A\u3067\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: updatePassword,

@@ -3,6 +3,7 @@ import { Head, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
+import axios from "axios";
 
 export default function PostJob({ auth }: PageProps) {
     const [customSkill, setCustomSkill] = useState("");
@@ -10,6 +11,7 @@ export default function PostJob({ auth }: PageProps) {
     // 表示用の実際の金額を保持する状態
     const [displayBudgetMin, setDisplayBudgetMin] = useState<string>("");
     const [displayBudgetMax, setDisplayBudgetMax] = useState<string>("");
+    const [submitting, setSubmitting] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         title: "",
@@ -20,7 +22,7 @@ export default function PostJob({ auth }: PageProps) {
         category: "",
         skills: [] as string[],
         preferred_skills: [] as string[],
-        location: "リモート",
+        location: "リモート（在宅勤務）",
     });
 
     // 予算入力時に実際の表示金額を更新
@@ -40,6 +42,8 @@ export default function PostJob({ auth }: PageProps) {
         "ECサイト",
         "API開発",
         "WordPress開発",
+        "IT業界に詳しくないので分からない",
+        "エンジニアに気軽に相談",
         "その他",
     ];
 
@@ -111,23 +115,56 @@ export default function PostJob({ auth }: PageProps) {
         );
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setSubmitting(true);
 
-        // 単発案件の場合のみ、送信前に金額を千円単位から円単位に変換
-        if (data.type === "one_time") {
-            // 予算の最小値と最大値を千円単位から円単位に変換（例：10 → 10000）
-            if (data.budget_min) {
-                setData("budget_min", String(parseInt(data.budget_min) * 1000));
+        try {
+            // 送信用のデータを準備
+            const submissionData = { ...data };
+
+            // 単発案件の場合のみ、送信前に金額を千円単位から円単位に変換
+            if (data.type === "one_time") {
+                if (data.budget_min) {
+                    submissionData.budget_min = String(
+                        parseInt(data.budget_min) * 1000
+                    );
+                }
+
+                if (data.budget_max) {
+                    submissionData.budget_max = String(
+                        parseInt(data.budget_max) * 1000
+                    );
+                }
             }
 
-            if (data.budget_max) {
-                setData("budget_max", String(parseInt(data.budget_max) * 1000));
+            // CSRFトークンを取得
+            const csrfToken = document
+                .querySelector('meta[name="csrf-token"]')
+                ?.getAttribute("content");
+
+            // 直接axiosを使って送信
+            const response = await axios.post(
+                route("job-listings.store"),
+                submissionData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                }
+            );
+
+            // 成功したら適切なページに遷移
+            if (response.data.url) {
+                window.location.href = response.data.url;
+            } else {
+                window.location.href = route("job-listings.index");
             }
+        } catch (error) {
+            console.error("送信エラー:", error);
+            setSubmitting(false);
         }
-
-        // フォームを送信
-        post(route("job-listings.store"));
     };
 
     // 入力された千円単位の金額を実際の金額に変換して表示する関数
@@ -154,7 +191,7 @@ export default function PostJob({ auth }: PageProps) {
         <AuthenticatedLayout
             header={<div className="p-post-job__header-title">案件を投稿</div>}
         >
-            <Head title="案件を投稿 - Match" />
+            <Head title="案件を投稿 - match" />
 
             <div className="p-post-job">
                 <div className="p-post-job__container">
@@ -427,12 +464,14 @@ export default function PostJob({ auth }: PageProps) {
                                     }
                                     required
                                 >
-                                    <option value="リモート">リモート</option>
-                                    <option value="オンサイト">
-                                        オンサイト
+                                    <option value="リモート（在宅勤務）">
+                                        リモート（在宅勤務）
                                     </option>
-                                    <option value="ハイブリッド">
-                                        ハイブリッド
+                                    <option value="現場勤務（オンサイト）">
+                                        現場勤務（オンサイト）
+                                    </option>
+                                    <option value="併用型（在宅＋現場）">
+                                        併用型（在宅＋現場）
                                     </option>
                                 </select>
                             </div>
@@ -714,8 +753,8 @@ export default function PostJob({ auth }: PageProps) {
                                     <strong>
                                         コミュニケーション方法を示す
                                     </strong>
-                                    ： 進捗報告の頻度やミーティングの有無など、
-                                    協業スタイルを明確にしておくと安心感につながります。
+                                    ：
+                                    進捗報告の頻度やミーティングの有無などを明確にしておくと安心感につながります。
                                 </div>
                             </li>
                         </ul>

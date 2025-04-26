@@ -28,7 +28,7 @@ class StoreJobListingRequest extends FormRequest
             'budget_min' => ['nullable', 'integer', 'min:0', 'required_if:type,one_time'],
             'budget_max' => ['nullable', 'integer', 'min:0', 'gte:budget_min', 'required_if:type,one_time'],
             'category' => ['nullable', 'string', 'max:100'],
-            'location' => ['nullable', 'string', 'in:リモート,オンサイト,ハイブリッド'],
+            'location' => ['nullable', 'string', 'in:リモート（在宅勤務）,現場勤務（オンサイト）,併用型（在宅＋現場）'],
             'skills' => ['nullable', 'array'],
             'skills.*' => ['string', 'max:100'],
             'preferred_skills' => ['nullable', 'array'],

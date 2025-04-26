@@ -150,7 +150,7 @@ export default function ApplicationsToMyJobs({
                 </div>
             }
         >
-            <Head title="自分の案件への応募一覧 - Match" />
+            <Head title="自分の案件への応募一覧 - match" />
 
             <div className="p-applications">
                 <div className="p-applications__container">
@@ -166,6 +166,18 @@ export default function ApplicationsToMyJobs({
                             className="p-applications__tab p-applications__tab--active"
                         >
                             自分の案件への応募
+                        </Link>
+                        <Link
+                            href={route("public-messages.index")}
+                            className="p-applications__tab"
+                        >
+                            パブリックメッセージ
+                        </Link>
+                        <Link
+                            href={route("messages.index")}
+                            className="p-applications__tab"
+                        >
+                            ダイレクトメッセージ
                         </Link>
                     </div>
 

@@ -45,13 +45,13 @@ class ApplicationReceived extends Notification
         $applicationUrl = route('applications.to-my-jobs');
 
         return (new MailMessage)
-                    ->subject('【Match】あなたの案件に新しい応募がありました')
+                    ->subject('【match】あなたの案件に新しい応募がありました')
                     ->greeting('こんにちは、' . $notifiable->name . 'さん')
                     ->line('あなたの案件「' . $jobListing->title . '」に新しい応募がありました。')
                     ->line('応募者: ' . $applicant->name)
                     ->line('応募メッセージ: ' . mb_substr($this->application->message, 0, 100) . (mb_strlen($this->application->message) > 100 ? '...' : ''))
                     ->action('応募を確認する', $applicationUrl)
-                    ->line('Match をご利用いただきありがとうございます。');
+                    ->line('match をご利用いただきありがとうございます。');
     }
 
     /**

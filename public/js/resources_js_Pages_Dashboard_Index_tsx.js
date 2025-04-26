@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_Messages_Index_tsx"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_Dashboard_Index_tsx"],{
 
 /***/ "./node_modules/ziggy-js/dist/index.js":
 /*!*********************************************!*\
@@ -1346,166 +1346,91 @@ function Authenticated(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/Pages/Messages/Index.tsx":
-/*!***********************************************!*\
-  !*** ./resources/js/Pages/Messages/Index.tsx ***!
-  \***********************************************/
+/***/ "./resources/js/Pages/Dashboard/Index.tsx":
+/*!************************************************!*\
+  !*** ./resources/js/Pages/Dashboard/Index.tsx ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Index)
+/* harmony export */   "default": () => (/* binding */ Dashboard)
 /* harmony export */ });
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
 /* harmony import */ var _Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/AuthenticatedLayout */ "./resources/js/Layouts/AuthenticatedLayout.tsx");
-/* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
 
-// 簡単な時間フォーマット関数
-function formatTimeAgo(dateString) {
-  var date = new Date(dateString);
-  var now = new Date();
-  var diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-  if (diffInSeconds < 60) {
-    return "".concat(diffInSeconds, "\u79D2\u524D");
-  }
-  var diffInMinutes = Math.floor(diffInSeconds / 60);
-  if (diffInMinutes < 60) {
-    return "".concat(diffInMinutes, "\u5206\u524D");
-  }
-  var diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) {
-    return "".concat(diffInHours, "\u6642\u9593\u524D");
-  }
-  var diffInDays = Math.floor(diffInHours / 24);
-  if (diffInDays < 30) {
-    return "".concat(diffInDays, "\u65E5\u524D");
-  }
-  var diffInMonths = Math.floor(diffInDays / 30);
-  if (diffInMonths < 12) {
-    return "".concat(diffInMonths, "\u30F6\u6708\u524D");
-  }
-  var diffInYears = Math.floor(diffInMonths / 12);
-  return "".concat(diffInYears, "\u5E74\u524D");
-}
 
-// アバターURLを取得する関数
-function getAvatarUrl(avatar) {
-  if (!avatar) return "";
-  // storage/avatarsで始まる場合は/を先頭に追加
-  if (avatar.startsWith("storage/avatars/")) {
-    return "/".concat(avatar);
-  }
-  // ファイル名のみの場合はパスを構築する
-  return "/storage/avatars/".concat(avatar);
-}
+function Dashboard(_ref) {
+  var auth = _ref.auth;
+  // タブの状態管理
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("my-applications"),
+    _useState2 = _slicedToArray(_useState, 2),
+    activeTab = _useState2[0],
+    setActiveTab = _useState2[1];
 
-// ユーザー名からイニシャルを取得する関数
-function getInitials(name) {
-  return name.split(" ").map(function (word) {
-    return word.charAt(0);
-  }).join("").toUpperCase().substring(0, 2);
-}
-function Index(_ref) {
-  var auth = _ref.auth,
-    conversationGroups = _ref.conversationGroups;
-  var currentUserId = auth.user.id;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-      className: "p-messages__title",
-      children: "\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u4E00\u89A7"
+  // タブの定義
+  var tabs = [{
+    id: "my-applications",
+    label: "応募した案件",
+    route: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("applications.index")
+  }, {
+    id: "applications-to-me",
+    label: "自分の案件への応募",
+    route: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("applications.to-my-jobs")
+  }, {
+    id: "public-messages",
+    label: "パブリックメッセージ一覧",
+    route: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("public-messages.index")
+  }, {
+    id: "direct-messages",
+    label: "ダイレクトメッセージ一覧",
+    route: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("messages.index")
+  }];
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "p-dashboard__title",
+      children: "\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9"
     }),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Head, {
-      title: "match - \u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u4E00\u89A7"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-      className: "p-messages",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: "p-messages__container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: "p-messages__tabs",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("applications.index"),
-            className: "p-messages__tab",
-            children: "\u5FDC\u52DF\u3057\u305F\u6848\u4EF6"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("applications.to-my-jobs"),
-            className: "p-messages__tab",
-            children: "\u81EA\u5206\u306E\u6848\u4EF6\u3078\u306E\u5FDC\u52DF"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("public-messages.index"),
-            className: "p-messages__tab",
-            children: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("messages.index"),
-            className: "p-messages__tab p-messages__tab--active",
-            children: "\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8"
-          })]
-        }), conversationGroups.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
-          className: "p-messages__empty",
-          children: "\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u306F\u3042\u308A\u307E\u305B\u3093"
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "p-messages__list",
-          children: conversationGroups.map(function (group) {
-            var _group$latest_message, _group$latest_message2;
-            // 自分以外の参加者を特定
-            var otherParticipant = group.job_owner_id === currentUserId ? group.applicant : group.job_owner;
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "p-messages__item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "p-messages__header",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                  className: "p-messages__person-info",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                    className: "p-messages__avatar",
-                    children: [otherParticipant.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-                      src: getAvatarUrl(otherParticipant.avatar),
-                      alt: otherParticipant.name,
-                      className: "p-messages__avatar-image"
-                    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                      className: "p-messages__avatar-placeholder",
-                      children: getInitials(otherParticipant.name)
-                    }), group.unread_count > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                      className: "p-messages__unread-badge",
-                      children: group.unread_count
-                    })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                    className: "p-messages__person-name",
-                    children: otherParticipant.name
-                  })]
-                }), group.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                  className: "p-messages__job-tag",
-                  children: group.job_listing.title
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "p-messages__message",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                  className: "p-messages__message-header",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                    className: "p-messages__message-content",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                      className: "p-messages__sender",
-                      children: ((_group$latest_message = group.latest_message) === null || _group$latest_message === void 0 ? void 0 : _group$latest_message.sender_id) === currentUserId ? "あなた：" : "".concat(((_group$latest_message2 = group.latest_message) === null || _group$latest_message2 === void 0 ? void 0 : _group$latest_message2.sender.name) || "不明なユーザー", "\uFF1A")
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                      className: "p-messages__preview ".concat(group.unread_count > 0 ? "p-messages__preview--unread" : ""),
-                      children: group.latest_message ? group.latest_message.message : "メッセージはありません"
-                    })]
-                  }), group.latest_message && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                    className: "p-messages__date",
-                    children: formatTimeAgo(group.latest_message.created_at)
-                  })]
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "p-messages__footer",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                  href: "/messages/".concat(group.id),
-                  className: "p-messages__view-all",
-                  children: "\u3059\u3079\u3066\u306E\u4F1A\u8A71\u3092\u898B\u308B"
-                })
-              })]
-            }, group.id);
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Head, {
+      title: "match - \u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "p-dashboard",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "p-dashboard__container",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "p-dashboard__tabs",
+          children: tabs.map(function (tab) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+              href: tab.route,
+              className: "p-dashboard__tab ".concat(activeTab === tab.id ? "p-dashboard__tab--active" : ""),
+              onClick: function onClick(e) {
+                e.preventDefault();
+                setActiveTab(tab.id);
+                window.location.href = tab.route;
+              },
+              children: tab.label
+            }, tab.id);
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "p-dashboard__content",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "p-dashboard__placeholder",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              children: "\u30BF\u30D6\u3092\u9078\u629E\u3059\u308B\u3068\u5BFE\u5FDC\u3059\u308B\u30B3\u30F3\u30C6\u30F3\u30C4\u304C\u8868\u793A\u3055\u308C\u307E\u3059\u3002"
+            })
           })
         })]
       })

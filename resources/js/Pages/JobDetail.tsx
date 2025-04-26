@@ -121,7 +121,7 @@ export default function JobDetail({
         <AuthenticatedLayout
             header={<h2 className="p-job-detail__title">案件詳細</h2>}
         >
-            <Head title={`${jobListing.title} - Match`} />
+            <Head title={`${jobListing.title} - match`} />
 
             <div className="p-job-detail">
                 <div className="p-job-detail__container">

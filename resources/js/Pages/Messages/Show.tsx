@@ -158,12 +158,12 @@ export default function Show({
         <AuthenticatedLayout
             header={
                 <div className="p-messages__header">
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                    <div className="p-messages__title">
                         {conversationGroup.job_listing && (
                             <>{conversationGroup.job_listing.title} - </>
                         )}
                         {otherParticipant?.name || "不明なユーザー"}との会話
-                    </h2>
+                    </div>
                     <Link
                         href={route("messages.index")}
                         className="p-messages__back-button"

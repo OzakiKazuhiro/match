@@ -135,7 +135,7 @@ export default function EditJob({
         <AuthenticatedLayout
             header={<div className="p-post-job__title">案件を編集</div>}
         >
-            <Head title="案件を編集 - Match" />
+            <Head title="案件を編集 - match" />
 
             <div className="p-post-job">
                 <div className="p-post-job__container">
@@ -357,12 +357,14 @@ export default function EditJob({
                                     }
                                     required
                                 >
-                                    <option value="リモート">リモート</option>
-                                    <option value="オンサイト">
-                                        オンサイト
+                                    <option value="リモート（在宅勤務）">
+                                        リモート（在宅勤務）
                                     </option>
-                                    <option value="ハイブリッド">
-                                        ハイブリッド
+                                    <option value="現場勤務（オンサイト）">
+                                        現場勤務（オンサイト）
+                                    </option>
+                                    <option value="併用型（在宅＋現場）">
+                                        併用型（在宅＋現場）
                                     </option>
                                 </select>
                             </div>

@@ -11,7 +11,7 @@ export default function Edit({
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
         <AuthenticatedLayout
-            header={<h2 className="p-profile__title">プロフィール</h2>}
+            header={<div className="p-profile__title">プロフィール</div>}
         >
             <Head title="プロフィール" />
 

@@ -14,22 +14,22 @@ export default function VerifyEmail({ status }: { status?: string }) {
 
     return (
         <GuestLayout title="メール認証">
-            <Head title="メール認証 - Match" />
+            <Head title="メール認証 - match" />
 
-            <div className="mb-4 text-sm text-gray-600">
+            <div className="p-auth__verify-email">
                 ご登録ありがとうございます！
                 始める前に、先ほどお送りしたメールのリンクをクリックして、メールアドレスを確認していただけますか？
                 メールが届いていない場合は、喜んで別のメールをお送りします。
             </div>
 
             {status === "verification-link-sent" && (
-                <div className="mb-4 text-sm font-medium text-green-600">
+                <div className="p-auth__success-message">
                     登録時に入力されたメールアドレスに新しい確認リンクを送信しました。
                 </div>
             )}
 
             <form onSubmit={submit}>
-                <div className="mt-4 flex items-center justify-between">
+                <div className="p-auth__verify-actions">
                     <PrimaryButton disabled={processing}>
                         確認メールを再送信
                     </PrimaryButton>
@@ -38,7 +38,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                         href={route("logout")}
                         method="post"
                         as="button"
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="p-auth__logout-link"
                     >
                         ログアウト
                     </Link>
