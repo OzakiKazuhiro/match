@@ -345,6 +345,22 @@ export default function Authenticated({
                                 </li>
                             </ul>
                         </div>
+
+                        <div>
+                            <h3 className="l-footer__heading">
+                                規約・ポリシー
+                            </h3>
+                            <ul className="l-footer__links">
+                                <li className="l-footer__link-item">
+                                    <Link
+                                        href={route("privacy")}
+                                        className="l-footer__link"
+                                    >
+                                        プライバシーポリシー
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                     <div className="l-footer__copyright">

@@ -6,6 +6,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DirectMessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PublicMessageController;
+use App\Http\Controllers\PrivacyController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -132,6 +133,9 @@ Route::middleware(['auth', 'verified'])->prefix('notifications')->name('notifica
     // 未読の通知数を取得するAPI
     Route::get('/unread-count', [NotificationController::class, 'getUnreadCount'])->name('unread-count');
 });
+
+// プライバシーポリシーページ
+Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy');
 
 require __DIR__.'/auth.php';
 

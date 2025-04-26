@@ -1,15 +1,4 @@
-// テキスト配置
-.u-text-center {
-    text-align: center !important;
-}
-
-.u-text-left {
-    text-align: left !important;
-}
-
-.u-text-right {
-    text-align: right !important;
-}
+// _utility.scss（統合版）
 
 // マージン
 .u-mt-0 {
@@ -216,12 +205,28 @@
 }
 
 // テキストスタイル
+.u-text-center {
+    text-align: center !important;
+}
+
+.u-text-left {
+    text-align: left !important;
+}
+
+.u-text-right {
+    text-align: right !important;
+}
+
 .u-font-bold {
     font-weight: bold !important;
 }
 
 .u-font-normal {
     font-weight: normal !important;
+}
+
+.u-text-bold {
+    font-weight: bold !important;
 }
 
 .u-text-small {
@@ -232,6 +237,10 @@
     font-size: 1.25rem !important;
 }
 
+.u-text-muted {
+    color: #888 !important;
+}
+
 // 色
 .u-text-primary {
     color: #6cc3e0 !important;
@@ -239,6 +248,14 @@
 
 .u-text-secondary {
     color: #ff6b6b !important;
+}
+
+.u-text-danger {
+    color: #ff6b6b !important;
+}
+
+.u-text-success {
+    color: #4caf50 !important;
 }
 
 .u-text-dark {
@@ -251,4 +268,15 @@
 
 .u-text-white {
     color: #fff !important;
+}
+
+// スマホ表示時の改行クラス
+@media (max-width: 767px) {
+    .u-break-sp {
+        display: block !important;
+    }
+
+    .u-no-break-sp {
+        display: inline !important;
+    }
 }

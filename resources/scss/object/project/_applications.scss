@@ -1,13 +1,10 @@
 .p-applications {
-    padding: 24px 1rem;
-
-    @media (min-width: 768px) {
-        padding: 2rem;
-    }
+    padding: 2rem 0;
 
     &__container {
         max-width: 1000px;
         margin: 0 auto;
+        padding: 0 16px;
     }
 
     &__title {
