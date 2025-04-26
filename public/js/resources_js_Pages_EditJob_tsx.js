@@ -422,22 +422,22 @@ function Authenticated(_ref) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
               className: "l-footer__heading",
-              children: "\u6848\u4EF6\u3092\u63A2\u3059"
+              children: "\u6848\u4EF6\u95A2\u9023"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
               className: "l-footer__links",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                  href: "/job-listings?type=onetime",
+                  href: "/job-listings",
                   className: "l-footer__link",
-                  children: "\u5358\u767A\u6848\u4EF6"
+                  children: "\u6848\u4EF6\u4E00\u89A7"
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                  href: "/job-listings?type=revenue",
+                  href: "/post-job",
                   className: "l-footer__link",
-                  children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6"
+                  children: "\u6848\u4EF6\u3092\u6295\u7A3F"
                 })
               })]
             })]
@@ -467,16 +467,23 @@ function Authenticated(_ref) {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
               className: "l-footer__heading",
               children: "\u898F\u7D04\u30FB\u30DD\u30EA\u30B7\u30FC"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("ul", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
               className: "l-footer__links",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+                className: "l-footer__link-item",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                  href: route("terms"),
+                  className: "l-footer__link",
+                  children: "\u5229\u7528\u898F\u7D04"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
                   href: route("privacy"),
                   className: "l-footer__link",
                   children: "\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC"
                 })
-              })
+              })]
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
@@ -505,7 +512,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
 /* harmony import */ var _Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Layouts/AuthenticatedLayout */ "./resources/js/Layouts/AuthenticatedLayout.tsx");
 /* harmony import */ var _Components_InputError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/InputError */ "./resources/js/Components/InputError.tsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -521,8 +538,8 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 function EditJob(_ref) {
-  var _jobListing$budget_mi, _jobListing$budget_ma;
   var auth = _ref.auth,
     jobListing = _ref.jobListing;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
@@ -533,14 +550,26 @@ function EditJob(_ref) {
     _useState4 = _slicedToArray(_useState3, 2),
     customPreferredSkill = _useState4[0],
     setCustomPreferredSkill = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState6 = _slicedToArray(_useState5, 2),
+    displayBudgetMin = _useState6[0],
+    setDisplayBudgetMin = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState8 = _slicedToArray(_useState7, 2),
+    displayBudgetMax = _useState8[0],
+    setDisplayBudgetMax = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState10 = _slicedToArray(_useState9, 2),
+    submitting = _useState10[0],
+    setSubmitting = _useState10[1];
 
   // 案件データをフォームに設定
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.useForm)({
       title: jobListing.title,
       type: jobListing.type,
       description: jobListing.description,
-      budget_min: ((_jobListing$budget_mi = jobListing.budget_min) === null || _jobListing$budget_mi === void 0 ? void 0 : _jobListing$budget_mi.toString()) || "",
-      budget_max: ((_jobListing$budget_ma = jobListing.budget_max) === null || _jobListing$budget_ma === void 0 ? void 0 : _jobListing$budget_ma.toString()) || "",
+      budget_min: jobListing.budget_min ? String(Math.floor(Number(jobListing.budget_min) / 1000)) : "",
+      budget_max: jobListing.budget_max ? String(Math.floor(Number(jobListing.budget_max) / 1000)) : "",
       category: jobListing.category || "",
       skills: jobListing.skills || [],
       preferred_skills: jobListing.preferred_skills || [],
@@ -555,10 +584,32 @@ function EditJob(_ref) {
     reset = _useForm.reset;
 
   // カテゴリーの選択肢
-  var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "その他"];
+  var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "IT業界に詳しくないので分からない", "エンジニアに気軽に相談", "その他"];
 
   // スキルの選択肢
   var skillOptions = ["HTML/CSS", "JavaScript", "TypeScript", "React", "Vue.js", "Angular", "Next.js", "PHP", "Laravel", "Ruby", "Ruby on Rails", "Python", "Django", "Java", "C#", "Swift", "Kotlin", "Flutter", "React Native", "AWS", "Docker", "Kubernetes", "UI/UXデザイン", "Figma", "Photoshop", "Illustrator", "WordPress", "データベース設計", "SQL", "NoSQL"];
+
+  // useEffectを追加して予算表示を更新
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    updateDisplayBudget(data.budget_min, setDisplayBudgetMin);
+    updateDisplayBudget(data.budget_max, setDisplayBudgetMax);
+  }, [data.budget_min, data.budget_max]);
+
+  // 金額表示更新関数
+  var updateDisplayBudget = function updateDisplayBudget(value, setter) {
+    if (!value) {
+      setter("");
+      return;
+    }
+    try {
+      // 数値に変換して千円単位を円単位に変換
+      var amount = parseInt(value) * 1000;
+      // 金額をカンマ区切りで表示
+      setter(amount.toLocaleString() + "円");
+    } catch (e) {
+      setter("");
+    }
+  };
   var addSkill = function addSkill() {
     if (customSkill && !data.skills.includes(customSkill)) {
       setData("skills", [].concat(_toConsumableArray(data.skills), [customSkill]));
@@ -581,18 +632,62 @@ function EditJob(_ref) {
       return skill !== skillToRemove;
     }));
   };
-  var handleSubmit = function handleSubmit(e) {
-    e.preventDefault();
-    // useFormのputメソッドを使って送信する
-    put(route("job-listings.update", jobListing.id), {
-      onSuccess: function onSuccess() {
-        console.log("更新成功");
-      }
-    });
-  };
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
+      var _document$querySelect, submissionData, csrfToken, response;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            e.preventDefault();
+            setSubmitting(true);
+            _context.prev = 2;
+            // 送信用のデータを準備
+            submissionData = _objectSpread(_objectSpread({}, data), {}, {
+              _method: "PUT" // Laravelの@methodをサポートするために必要
+            }); // 単発案件の場合のみ、送信前に金額を千円単位から円単位に変換
+
+            if (data.type === "one_time") {
+              if (data.budget_min) {
+                submissionData.budget_min = String(parseInt(data.budget_min) * 1000);
+              }
+              if (data.budget_max) {
+                submissionData.budget_max = String(parseInt(data.budget_max) * 1000);
+              }
+            }
+
+            // CSRFトークンを取得
+            csrfToken = (_document$querySelect = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.getAttribute("content"); // POSTを使用してLaravelの_methodでPUTをエミュレート
+            _context.next = 8;
+            return axios__WEBPACK_IMPORTED_MODULE_5__["default"].post(route("job-listings.update", jobListing.id), submissionData, {
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken
+              }
+            });
+          case 8:
+            response = _context.sent;
+            // 成功したらリストページに遷移
+            window.location.href = route("job-listings.index");
+            _context.next = 16;
+            break;
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](2);
+            console.error("送信エラー:", _context.t0);
+            setSubmitting(false);
+          case 16:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[2, 12]]);
+    }));
+    return function handleSubmit(_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-      className: "p-post-job__title",
+      className: "p-post-job__header-title",
       children: "\u6848\u4EF6\u3092\u7DE8\u96C6"
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
@@ -703,13 +798,21 @@ function EditJob(_ref) {
                     children: "\xA5"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                     type: "number",
-                    placeholder: "\u6700\u5C0F\u91D1\u984D",
+                    placeholder: "\u6700\u5C0F\u91D1\u984D\uFF08\u5343\u5186\u5358\u4F4D\uFF09",
                     value: data.budget_min,
                     onChange: function onChange(e) {
-                      return setData("budget_min", e.target.value);
+                      var value = e.target.value;
+                      setData("budget_min", value);
+                      updateDisplayBudget(value, setDisplayBudgetMin);
                     },
                     className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_min ? "p-post-job__input--error" : ""),
-                    min: "0"
+                    min: "0",
+                    style: {
+                      paddingRight: "45px"
+                    }
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "p-post-job__unit",
+                    children: "\u5343\u5186"
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
                   className: "p-post-job__budget-separator",
@@ -721,19 +824,45 @@ function EditJob(_ref) {
                     children: "\xA5"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                     type: "number",
-                    placeholder: "\u6700\u5927\u91D1\u984D",
+                    placeholder: "\u6700\u5927\u91D1\u984D\uFF08\u5343\u5186\u5358\u4F4D\uFF09",
                     value: data.budget_max,
                     onChange: function onChange(e) {
-                      return setData("budget_max", e.target.value);
+                      var value = e.target.value;
+                      setData("budget_max", value);
+                      updateDisplayBudget(value, setDisplayBudgetMax);
                     },
                     className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_max ? "p-post-job__input--error" : ""),
-                    min: "0"
+                    min: "0",
+                    style: {
+                      paddingRight: "45px"
+                    }
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "p-post-job__unit",
+                    children: "\u5343\u5186"
                   })]
                 })]
               }), (errors.budget_min || errors.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "p-post-job__error",
                 children: errors.budget_min || errors.budget_max
               })]
+            }), (displayBudgetMin || displayBudgetMax) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "p-post-job__budget-preview",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                className: "p-post-job__budget-preview-label",
+                children: "\u8868\u793A\u3055\u308C\u308B\u91D1\u984D\uFF1A"
+              }), displayBudgetMin && displayBudgetMax ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                className: "p-post-job__budget-preview-value",
+                children: [displayBudgetMin, " \u301C", " ", displayBudgetMax]
+              }) : displayBudgetMin ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                className: "p-post-job__budget-preview-value",
+                children: [displayBudgetMin, " \u301C"]
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                className: "p-post-job__budget-preview-value",
+                children: ["\u301C ", displayBudgetMax]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "p-post-job__budget-help",
+              children: "\u203B \u91D1\u984D\u306F\u5343\u5186\u5358\u4F4D\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A50 = 5\u4E07\u5186\u3001100 = 10\u4E07\u5186\uFF09"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "p-post-job__form-group",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
@@ -848,6 +977,11 @@ function EditJob(_ref) {
                         children: skill
                       }, skill);
                     })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                    type: "button",
+                    className: "p-post-job__add-button p-post-job__add-button--middle",
+                    onClick: addSkill,
+                    children: "\u8FFD\u52A0"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                     type: "text",
                     placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
@@ -858,7 +992,7 @@ function EditJob(_ref) {
                     className: "p-post-job__input p-post-job__input--skill"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                     type: "button",
-                    className: "p-post-job__add-button",
+                    className: "p-post-job__add-button p-post-job__add-button--end",
                     onClick: addSkill,
                     children: "\u8FFD\u52A0"
                   })]
@@ -906,6 +1040,11 @@ function EditJob(_ref) {
                         children: skill
                       }, skill);
                     })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                    type: "button",
+                    className: "p-post-job__add-button p-post-job__add-button--middle",
+                    onClick: addPreferredSkill,
+                    children: "\u8FFD\u52A0"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                     type: "text",
                     placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
@@ -916,7 +1055,7 @@ function EditJob(_ref) {
                     className: "p-post-job__input p-post-job__input--skill"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                     type: "button",
-                    className: "p-post-job__add-button",
+                    className: "p-post-job__add-button p-post-job__add-button--end",
                     onClick: addPreferredSkill,
                     children: "\u8FFD\u52A0"
                   })]
@@ -982,8 +1121,8 @@ function EditJob(_ref) {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
               type: "submit",
               className: "p-post-job__submit",
-              disabled: processing,
-              children: processing ? "更新中..." : "案件を更新する"
+              disabled: processing || submitting,
+              children: submitting ? "更新中..." : "案件を更新する"
             })
           })]
         })]

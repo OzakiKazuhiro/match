@@ -303,22 +303,22 @@ export default function Authenticated({
                         </div>
 
                         <div>
-                            <h3 className="l-footer__heading">案件を探す</h3>
+                            <h3 className="l-footer__heading">案件関連</h3>
                             <ul className="l-footer__links">
                                 <li className="l-footer__link-item">
                                     <Link
-                                        href="/job-listings?type=onetime"
+                                        href="/job-listings"
                                         className="l-footer__link"
                                     >
-                                        単発案件
+                                        案件一覧
                                     </Link>
                                 </li>
                                 <li className="l-footer__link-item">
                                     <Link
-                                        href="/job-listings?type=revenue"
+                                        href="/post-job"
                                         className="l-footer__link"
                                     >
-                                        レベニューシェア案件
+                                        案件を投稿
                                     </Link>
                                 </li>
                             </ul>
@@ -351,6 +351,14 @@ export default function Authenticated({
                                 規約・ポリシー
                             </h3>
                             <ul className="l-footer__links">
+                                <li className="l-footer__link-item">
+                                    <Link
+                                        href={route("terms")}
+                                        className="l-footer__link"
+                                    >
+                                        利用規約
+                                    </Link>
+                                </li>
                                 <li className="l-footer__link-item">
                                     <Link
                                         href={route("privacy")}

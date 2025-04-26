@@ -1009,22 +1009,22 @@ function Top(_ref) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
               className: "l-footer__heading",
-              children: "\u6848\u4EF6\u3092\u63A2\u3059"
+              children: "\u6848\u4EF6\u95A2\u9023"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
               className: "l-footer__links",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
                 className: "l-footer__link-item",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                  href: "/job-listings?type=onetime",
+                  href: "/job-listings",
                   className: "l-footer__link",
-                  children: "\u5358\u767A\u6848\u4EF6"
+                  children: "\u6848\u4EF6\u4E00\u89A7"
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
                 className: "l-footer__link-item",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                  href: "/job-listings?type=revenue",
+                  href: "/post-job",
                   className: "l-footer__link",
-                  children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6"
+                  children: "\u6848\u4EF6\u3092\u6295\u7A3F"
                 })
               })]
             })]

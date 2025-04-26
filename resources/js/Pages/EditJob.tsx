@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Head, useForm, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
+import axios from "axios";
 
 interface JobListingData {
     id: number;
@@ -24,14 +25,21 @@ export default function EditJob({
 }: PageProps<{ jobListing: JobListingData }>) {
     const [customSkill, setCustomSkill] = useState("");
     const [customPreferredSkill, setCustomPreferredSkill] = useState("");
+    const [displayBudgetMin, setDisplayBudgetMin] = useState<string>("");
+    const [displayBudgetMax, setDisplayBudgetMax] = useState<string>("");
+    const [submitting, setSubmitting] = useState(false);
 
     // 案件データをフォームに設定
     const { data, setData, put, processing, errors, reset } = useForm({
         title: jobListing.title,
         type: jobListing.type,
         description: jobListing.description,
-        budget_min: jobListing.budget_min?.toString() || "",
-        budget_max: jobListing.budget_max?.toString() || "",
+        budget_min: jobListing.budget_min
+            ? String(Math.floor(Number(jobListing.budget_min) / 1000))
+            : "",
+        budget_max: jobListing.budget_max
+            ? String(Math.floor(Number(jobListing.budget_max) / 1000))
+            : "",
         category: jobListing.category || "",
         skills: jobListing.skills || [],
         preferred_skills: jobListing.preferred_skills || [],
@@ -50,6 +58,8 @@ export default function EditJob({
         "ECサイト",
         "API開発",
         "WordPress開発",
+        "IT業界に詳しくないので分からない",
+        "エンジニアに気軽に相談",
         "その他",
     ];
 
@@ -87,6 +97,32 @@ export default function EditJob({
         "NoSQL",
     ];
 
+    // useEffectを追加して予算表示を更新
+    useEffect(() => {
+        updateDisplayBudget(data.budget_min, setDisplayBudgetMin);
+        updateDisplayBudget(data.budget_max, setDisplayBudgetMax);
+    }, [data.budget_min, data.budget_max]);
+
+    // 金額表示更新関数
+    const updateDisplayBudget = (
+        value: string,
+        setter: React.Dispatch<React.SetStateAction<string>>
+    ) => {
+        if (!value) {
+            setter("");
+            return;
+        }
+
+        try {
+            // 数値に変換して千円単位を円単位に変換
+            const amount = parseInt(value) * 1000;
+            // 金額をカンマ区切りで表示
+            setter(amount.toLocaleString() + "円");
+        } catch (e) {
+            setter("");
+        }
+    };
+
     const addSkill = () => {
         if (customSkill && !data.skills.includes(customSkill)) {
             setData("skills", [...data.skills, customSkill]);
@@ -121,19 +157,60 @@ export default function EditJob({
         );
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // useFormのputメソッドを使って送信する
-        put(route("job-listings.update", jobListing.id), {
-            onSuccess: () => {
-                console.log("更新成功");
-            },
-        });
+        setSubmitting(true);
+
+        try {
+            // 送信用のデータを準備
+            const submissionData = {
+                ...data,
+                _method: "PUT", // Laravelの@methodをサポートするために必要
+            };
+
+            // 単発案件の場合のみ、送信前に金額を千円単位から円単位に変換
+            if (data.type === "one_time") {
+                if (data.budget_min) {
+                    submissionData.budget_min = String(
+                        parseInt(data.budget_min) * 1000
+                    );
+                }
+
+                if (data.budget_max) {
+                    submissionData.budget_max = String(
+                        parseInt(data.budget_max) * 1000
+                    );
+                }
+            }
+
+            // CSRFトークンを取得
+            const csrfToken = document
+                .querySelector('meta[name="csrf-token"]')
+                ?.getAttribute("content");
+
+            // POSTを使用してLaravelの_methodでPUTをエミュレート
+            const response = await axios.post(
+                route("job-listings.update", jobListing.id),
+                submissionData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                }
+            );
+
+            // 成功したらリストページに遷移
+            window.location.href = route("job-listings.index");
+        } catch (error) {
+            console.error("送信エラー:", error);
+            setSubmitting(false);
+        }
     };
 
     return (
         <AuthenticatedLayout
-            header={<div className="p-post-job__title">案件を編集</div>}
+            header={<div className="p-post-job__header-title">案件を編集</div>}
         >
             <Head title="案件を編集 - match" />
 
@@ -249,21 +326,31 @@ export default function EditJob({
                                             </span>
                                             <input
                                                 type="number"
-                                                placeholder="最小金額"
+                                                placeholder="最小金額（千円単位）"
                                                 value={data.budget_min}
-                                                onChange={(e) =>
+                                                onChange={(e) => {
+                                                    const value =
+                                                        e.target.value;
                                                     setData(
                                                         "budget_min",
-                                                        e.target.value
-                                                    )
-                                                }
+                                                        value
+                                                    );
+                                                    updateDisplayBudget(
+                                                        value,
+                                                        setDisplayBudgetMin
+                                                    );
+                                                }}
                                                 className={`p-post-job__input p-post-job__input--budget ${
                                                     errors.budget_min
                                                         ? "p-post-job__input--error"
                                                         : ""
                                                 }`}
                                                 min="0"
+                                                style={{ paddingRight: "45px" }}
                                             />
+                                            <span className="p-post-job__unit">
+                                                千円
+                                            </span>
                                         </div>
                                         <span className="p-post-job__budget-separator">
                                             〜
@@ -274,21 +361,31 @@ export default function EditJob({
                                             </span>
                                             <input
                                                 type="number"
-                                                placeholder="最大金額"
+                                                placeholder="最大金額（千円単位）"
                                                 value={data.budget_max}
-                                                onChange={(e) =>
+                                                onChange={(e) => {
+                                                    const value =
+                                                        e.target.value;
                                                     setData(
                                                         "budget_max",
-                                                        e.target.value
-                                                    )
-                                                }
+                                                        value
+                                                    );
+                                                    updateDisplayBudget(
+                                                        value,
+                                                        setDisplayBudgetMax
+                                                    );
+                                                }}
                                                 className={`p-post-job__input p-post-job__input--budget ${
                                                     errors.budget_max
                                                         ? "p-post-job__input--error"
                                                         : ""
                                                 }`}
                                                 min="0"
+                                                style={{ paddingRight: "45px" }}
                                             />
+                                            <span className="p-post-job__unit">
+                                                千円
+                                            </span>
                                         </div>
                                     </div>
                                     {(errors.budget_min ||
@@ -300,6 +397,34 @@ export default function EditJob({
                                     )}
                                 </div>
                             )}
+
+                            {/* 実際の金額表示 */}
+                            {(displayBudgetMin || displayBudgetMax) && (
+                                <div className="p-post-job__budget-preview">
+                                    <span className="p-post-job__budget-preview-label">
+                                        表示される金額：
+                                    </span>
+                                    {displayBudgetMin && displayBudgetMax ? (
+                                        <span className="p-post-job__budget-preview-value">
+                                            {displayBudgetMin} 〜{" "}
+                                            {displayBudgetMax}
+                                        </span>
+                                    ) : displayBudgetMin ? (
+                                        <span className="p-post-job__budget-preview-value">
+                                            {displayBudgetMin} 〜
+                                        </span>
+                                    ) : (
+                                        <span className="p-post-job__budget-preview-value">
+                                            〜 {displayBudgetMax}
+                                        </span>
+                                    )}
+                                </div>
+                            )}
+
+                            <div className="p-post-job__budget-help">
+                                ※ 金額は千円単位で入力してください（例：50 =
+                                5万円、100 = 10万円）
+                            </div>
 
                             <div className="p-post-job__form-group">
                                 <label
@@ -436,6 +561,14 @@ export default function EditJob({
                                             ))}
                                         </select>
 
+                                        <button
+                                            type="button"
+                                            className="p-post-job__add-button p-post-job__add-button--middle"
+                                            onClick={addSkill}
+                                        >
+                                            追加
+                                        </button>
+
                                         <input
                                             type="text"
                                             placeholder="スキルを入力して追加ボタンで追加"
@@ -451,9 +584,10 @@ export default function EditJob({
                                             }
                                             className="p-post-job__input p-post-job__input--skill"
                                         />
+
                                         <button
                                             type="button"
-                                            className="p-post-job__add-button"
+                                            className="p-post-job__add-button p-post-job__add-button--end"
                                             onClick={addSkill}
                                         >
                                             追加
@@ -514,6 +648,15 @@ export default function EditJob({
                                                 </option>
                                             ))}
                                         </select>
+
+                                        <button
+                                            type="button"
+                                            className="p-post-job__add-button p-post-job__add-button--middle"
+                                            onClick={addPreferredSkill}
+                                        >
+                                            追加
+                                        </button>
+
                                         <input
                                             type="text"
                                             placeholder="スキルを入力して追加ボタンで追加"
@@ -531,9 +674,10 @@ export default function EditJob({
                                             }
                                             className="p-post-job__input p-post-job__input--skill"
                                         />
+
                                         <button
                                             type="button"
-                                            className="p-post-job__add-button"
+                                            className="p-post-job__add-button p-post-job__add-button--end"
                                             onClick={addPreferredSkill}
                                         >
                                             追加
@@ -611,9 +755,9 @@ export default function EditJob({
                             <button
                                 type="submit"
                                 className="p-post-job__submit"
-                                disabled={processing}
+                                disabled={processing || submitting}
                             >
-                                {processing ? "更新中..." : "案件を更新する"}
+                                {submitting ? "更新中..." : "案件を更新する"}
                             </button>
                         </div>
                     </form>

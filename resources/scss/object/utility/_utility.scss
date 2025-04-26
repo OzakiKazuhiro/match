@@ -279,4 +279,16 @@
     .u-no-break-sp {
         display: inline !important;
     }
+
+    // スマホでは非表示
+    .u-pc-only {
+        display: none !important;
+    }
+}
+
+// PC表示時のみ表示するクラス
+@media (min-width: 768px) {
+    .u-sp-only {
+        display: none !important;
+    }
 }

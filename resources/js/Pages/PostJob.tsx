@@ -199,6 +199,7 @@ export default function PostJob({ auth }: PageProps) {
                         <h1 className="p-post-job__title">案件を投稿する</h1>
                         <p className="p-post-job__subtitle">
                             あなたの案件情報を入力して、エンジニアを募集しましょう。
+                            <br className="u-pc-only" />
                             単発案件やレベニューシェア案件を簡単に投稿できます。
                         </p>
                     </div>
@@ -723,7 +724,7 @@ export default function PostJob({ auth }: PageProps) {
                                 </span>
                                 <div className="p-post-job__tips-content">
                                     <strong>具体的な説明を心がける</strong>：
-                                    作業内容、期待する成果物、納期などを明確に記載しましょう。
+                                    作業内容、期待する成果物、納期などを明確に記載しましょう
                                 </div>
                             </li>
                             <li className="p-post-job__tips-item">
@@ -732,7 +733,7 @@ export default function PostJob({ auth }: PageProps) {
                                 </span>
                                 <div className="p-post-job__tips-content">
                                     <strong>適切な予算を設定する</strong>：
-                                    作業量に見合った予算設定が重要です。適正な報酬が応募率を高めます。
+                                    作業量に見合った予算設定が重要です。適正な報酬が応募率を高めます
                                 </div>
                             </li>
                             <li className="p-post-job__tips-item">
@@ -742,7 +743,7 @@ export default function PostJob({ auth }: PageProps) {
                                 <div className="p-post-job__tips-content">
                                     <strong>必要なスキルを明記する</strong>：
                                     必須のスキルと歓迎するスキルを分けて記載することで、
-                                    応募者のスキルマッチ度がわかりやすくなります。
+                                    応募者のスキルマッチ度がわかりやすくなります
                                 </div>
                             </li>
                             <li className="p-post-job__tips-item">
@@ -754,7 +755,7 @@ export default function PostJob({ auth }: PageProps) {
                                         コミュニケーション方法を示す
                                     </strong>
                                     ：
-                                    進捗報告の頻度やミーティングの有無などを明確にしておくと安心感につながります。
+                                    進捗報告の頻度やミーティングの有無などを明確にしておくと安心感につながります
                                 </div>
                             </li>
                         </ul>

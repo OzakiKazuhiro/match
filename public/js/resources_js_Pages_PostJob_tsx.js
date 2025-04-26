@@ -422,22 +422,22 @@ function Authenticated(_ref) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
               className: "l-footer__heading",
-              children: "\u6848\u4EF6\u3092\u63A2\u3059"
+              children: "\u6848\u4EF6\u95A2\u9023"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
               className: "l-footer__links",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                  href: "/job-listings?type=onetime",
+                  href: "/job-listings",
                   className: "l-footer__link",
-                  children: "\u5358\u767A\u6848\u4EF6"
+                  children: "\u6848\u4EF6\u4E00\u89A7"
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-                  href: "/job-listings?type=revenue",
+                  href: "/post-job",
                   className: "l-footer__link",
-                  children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6"
+                  children: "\u6848\u4EF6\u3092\u6295\u7A3F"
                 })
               })]
             })]
@@ -467,16 +467,23 @@ function Authenticated(_ref) {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
               className: "l-footer__heading",
               children: "\u898F\u7D04\u30FB\u30DD\u30EA\u30B7\u30FC"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("ul", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
               className: "l-footer__links",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+                className: "l-footer__link-item",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                  href: route("terms"),
+                  className: "l-footer__link",
+                  children: "\u5229\u7528\u898F\u7D04"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
                   href: route("privacy"),
                   className: "l-footer__link",
                   children: "\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC"
                 })
-              })
+              })]
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
@@ -692,9 +699,11 @@ function PostJob(_ref) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
             className: "p-post-job__title",
             children: "\u6848\u4EF6\u3092\u6295\u7A3F\u3059\u308B"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
             className: "p-post-job__subtitle",
-            children: "\u3042\u306A\u305F\u306E\u6848\u4EF6\u60C5\u5831\u3092\u5165\u529B\u3057\u3066\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u3092\u52DF\u96C6\u3057\u307E\u3057\u3087\u3046\u3002 \u5358\u767A\u6848\u4EF6\u3084\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u3092\u7C21\u5358\u306B\u6295\u7A3F\u3067\u304D\u307E\u3059\u3002"
+            children: ["\u3042\u306A\u305F\u306E\u6848\u4EF6\u60C5\u5831\u3092\u5165\u529B\u3057\u3066\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u3092\u52DF\u96C6\u3057\u307E\u3057\u3087\u3046\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {
+              className: "u-pc-only"
+            }), "\u5358\u767A\u6848\u4EF6\u3084\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u3092\u7C21\u5358\u306B\u6295\u7A3F\u3067\u304D\u307E\u3059\u3002"]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
           onSubmit: handleSubmit,
@@ -1099,7 +1108,7 @@ function PostJob(_ref) {
                 className: "p-post-job__tips-content",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
                   children: "\u5177\u4F53\u7684\u306A\u8AAC\u660E\u3092\u5FC3\u304C\u3051\u308B"
-                }), "\uFF1A \u4F5C\u696D\u5185\u5BB9\u3001\u671F\u5F85\u3059\u308B\u6210\u679C\u7269\u3001\u7D0D\u671F\u306A\u3069\u3092\u660E\u78BA\u306B\u8A18\u8F09\u3057\u307E\u3057\u3087\u3046\u3002"]
+                }), "\uFF1A \u4F5C\u696D\u5185\u5BB9\u3001\u671F\u5F85\u3059\u308B\u6210\u679C\u7269\u3001\u7D0D\u671F\u306A\u3069\u3092\u660E\u78BA\u306B\u8A18\u8F09\u3057\u307E\u3057\u3087\u3046"]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
               className: "p-post-job__tips-item",
@@ -1110,7 +1119,7 @@ function PostJob(_ref) {
                 className: "p-post-job__tips-content",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
                   children: "\u9069\u5207\u306A\u4E88\u7B97\u3092\u8A2D\u5B9A\u3059\u308B"
-                }), "\uFF1A \u4F5C\u696D\u91CF\u306B\u898B\u5408\u3063\u305F\u4E88\u7B97\u8A2D\u5B9A\u304C\u91CD\u8981\u3067\u3059\u3002\u9069\u6B63\u306A\u5831\u916C\u304C\u5FDC\u52DF\u7387\u3092\u9AD8\u3081\u307E\u3059\u3002"]
+                }), "\uFF1A \u4F5C\u696D\u91CF\u306B\u898B\u5408\u3063\u305F\u4E88\u7B97\u8A2D\u5B9A\u304C\u91CD\u8981\u3067\u3059\u3002\u9069\u6B63\u306A\u5831\u916C\u304C\u5FDC\u52DF\u7387\u3092\u9AD8\u3081\u307E\u3059"]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
               className: "p-post-job__tips-item",
@@ -1121,7 +1130,7 @@ function PostJob(_ref) {
                 className: "p-post-job__tips-content",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
                   children: "\u5FC5\u8981\u306A\u30B9\u30AD\u30EB\u3092\u660E\u8A18\u3059\u308B"
-                }), "\uFF1A \u5FC5\u9808\u306E\u30B9\u30AD\u30EB\u3068\u6B53\u8FCE\u3059\u308B\u30B9\u30AD\u30EB\u3092\u5206\u3051\u3066\u8A18\u8F09\u3059\u308B\u3053\u3068\u3067\u3001 \u5FDC\u52DF\u8005\u306E\u30B9\u30AD\u30EB\u30DE\u30C3\u30C1\u5EA6\u304C\u308F\u304B\u308A\u3084\u3059\u304F\u306A\u308A\u307E\u3059\u3002"]
+                }), "\uFF1A \u5FC5\u9808\u306E\u30B9\u30AD\u30EB\u3068\u6B53\u8FCE\u3059\u308B\u30B9\u30AD\u30EB\u3092\u5206\u3051\u3066\u8A18\u8F09\u3059\u308B\u3053\u3068\u3067\u3001 \u5FDC\u52DF\u8005\u306E\u30B9\u30AD\u30EB\u30DE\u30C3\u30C1\u5EA6\u304C\u308F\u304B\u308A\u3084\u3059\u304F\u306A\u308A\u307E\u3059"]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
               className: "p-post-job__tips-item",
@@ -1132,7 +1141,7 @@ function PostJob(_ref) {
                 className: "p-post-job__tips-content",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
                   children: "\u30B3\u30DF\u30E5\u30CB\u30B1\u30FC\u30B7\u30E7\u30F3\u65B9\u6CD5\u3092\u793A\u3059"
-                }), "\uFF1A \u9032\u6357\u5831\u544A\u306E\u983B\u5EA6\u3084\u30DF\u30FC\u30C6\u30A3\u30F3\u30B0\u306E\u6709\u7121\u306A\u3069\u3092\u660E\u78BA\u306B\u3057\u3066\u304A\u304F\u3068\u5B89\u5FC3\u611F\u306B\u3064\u306A\u304C\u308A\u307E\u3059\u3002"]
+                }), "\uFF1A \u9032\u6357\u5831\u544A\u306E\u983B\u5EA6\u3084\u30DF\u30FC\u30C6\u30A3\u30F3\u30B0\u306E\u6709\u7121\u306A\u3069\u3092\u660E\u78BA\u306B\u3057\u3066\u304A\u304F\u3068\u5B89\u5FC3\u611F\u306B\u3064\u306A\u304C\u308A\u307E\u3059"]
               })]
             })]
           })]
