@@ -5,11 +5,8 @@ import JobCard, { JobType } from "@/Components/JobCard";
 import { route } from "ziggy-js";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-export default function JobListings({
-    auth,
-    jobListings,
-    filters,
-}: PageProps<{
+// 最初にインターフェイスを追加
+interface JobListingsProps extends PageProps {
     jobListings: {
         data: JobType[];
         current_page: number;
@@ -26,7 +23,17 @@ export default function JobListings({
     filters: {
         type?: string;
     };
-}>) {
+    userApplications: number[];
+    applicationStatuses?: { [key: number]: string }; // 追加：応募ステータス情報
+}
+
+export default function JobListings({
+    auth,
+    jobListings,
+    filters,
+    userApplications,
+    applicationStatuses = {}, // デフォルト値を空オブジェクトに設定
+}: JobListingsProps) {
     // 状態管理
     const [searchQuery, setSearchQuery] = useState("");
     const [activeFilter, setActiveFilter] = useState<
@@ -639,6 +646,10 @@ export default function JobListings({
                                         key={job.id}
                                         job={job}
                                         auth={auth}
+                                        userApplications={userApplications}
+                                        applicationStatuses={
+                                            applicationStatuses
+                                        }
                                     />
                                 ))}
                             </>

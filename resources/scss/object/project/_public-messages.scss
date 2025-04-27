@@ -149,6 +149,7 @@
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
+        line-clamp: 2;
     }
 
     &__footer {
@@ -221,10 +222,9 @@
     }
 
     &__title {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
         font-weight: 600;
-        color: #0081cc;
-        margin-bottom: 12px;
+        color: #fff;
     }
 
     &__meta {

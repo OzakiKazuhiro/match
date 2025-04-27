@@ -1536,7 +1536,11 @@ function JobDetail(_ref) {
   var auth = _ref.auth,
     jobListing = _ref.jobListing,
     canEdit = _ref.canEdit,
-    canApply = _ref.canApply;
+    canApply = _ref.canApply,
+    hasApplied = _ref.hasApplied,
+    _ref$applicationStatu = _ref.applicationStatus,
+    applicationStatus = _ref$applicationStatu === void 0 ? "pending" : _ref$applicationStatu,
+    totalJobListings = _ref.totalJobListings;
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.useForm)({
       message: ""
     }),
@@ -1546,6 +1550,21 @@ function JobDetail(_ref) {
     processing = _useForm.processing,
     errors = _useForm.errors,
     reset = _useForm.reset;
+
+  // ステータスのテキストを取得
+  var getStatusText = function getStatusText(status) {
+    switch (status) {
+      case "accepted":
+        return "承認済み";
+      default:
+        return "応募中";
+    }
+  };
+
+  // ステータスのクラスを取得
+  var getStatusClass = function getStatusClass(status) {
+    return status === "accepted" ? "p-job-detail__apply-button--applied p-job-detail__apply-button--accepted" : "p-job-detail__apply-button--applied";
+  };
   var handleSubmitMessage = function handleSubmitMessage(e) {
     e.preventDefault();
     post((0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("job-listings.messages.store", jobListing.id), {
@@ -1728,8 +1747,8 @@ function JobDetail(_ref) {
                     })]
                   }), canApply && !jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
                     href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("job-listings.apply.create", jobListing.id),
-                    className: "p-job-detail__apply-button",
-                    children: "\u5FDC\u52DF\u3059\u308B"
+                    className: "p-job-detail__apply-button ".concat(hasApplied ? getStatusClass(applicationStatus) : ""),
+                    children: hasApplied ? getStatusText(applicationStatus) : "応募する"
                   })]
                 })
               })]
@@ -1825,9 +1844,9 @@ function JobDetail(_ref) {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
                     className: "p-job-detail__author-stat-label",
                     children: "\u6295\u7A3F\u3057\u305F\u6848\u4EF6"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                     className: "p-job-detail__author-stat-value",
-                    children: "5\u4EF6"
+                    children: [totalJobListings, "\u4EF6"]
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                   className: "p-job-detail__author-stat",

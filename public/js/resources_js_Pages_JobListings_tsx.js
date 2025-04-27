@@ -925,11 +925,36 @@ __webpack_require__.r(__webpack_exports__);
 function JobCard(_ref) {
   var _job$user;
   var job = _ref.job,
-    auth = _ref.auth;
+    auth = _ref.auth,
+    _ref$userApplications = _ref.userApplications,
+    userApplications = _ref$userApplications === void 0 ? [] : _ref$userApplications,
+    _ref$applicationStatu = _ref.applicationStatuses,
+    applicationStatuses = _ref$applicationStatu === void 0 ? {} : _ref$applicationStatu;
+  // ユーザーが応募済みかをチェック
+  var hasApplied = userApplications.includes(job.id);
+
+  // 応募のステータスを取得
+  var applicationStatus = applicationStatuses[job.id] || "pending";
+
   // 案件タイプの表示名
   var jobTypeNames = {
     one_time: "単発案件",
     revenue_share: "レベニューシェア"
+  };
+
+  // ステータスのテキストを取得
+  var getStatusText = function getStatusText(status) {
+    switch (status) {
+      case "accepted":
+        return "承認済み";
+      default:
+        return "応募中";
+    }
+  };
+
+  // ステータスのクラスを取得
+  var getStatusClass = function getStatusClass(status) {
+    return status === "accepted" ? "p-job-listings__card-applied p-job-listings__card-applied--accepted" : "p-job-listings__card-applied";
   };
 
   // 予算表示のフォーマット
@@ -966,9 +991,15 @@ function JobCard(_ref) {
     className: "p-job-listings__card",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
       className: "p-job-listings__card-header",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-        className: "p-job-listings__card-type p-job-listings__card-type--".concat(job.type === "one_time" ? "onetime" : "revenue"),
-        children: jobTypeNames[job.type]
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "p-job-listings__card-tags",
+        children: [hasApplied && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+          className: getStatusClass(applicationStatus),
+          children: getStatusText(applicationStatus)
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+          className: "p-job-listings__card-type p-job-listings__card-type--".concat(job.type === "one_time" ? "onetime" : "revenue"),
+          children: jobTypeNames[job.type]
+        })]
       }), (job.budget_min || job.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
         className: "p-job-listings__card-budget",
         children: formatBudget(job.budget_min, job.budget_max)
@@ -980,7 +1011,7 @@ function JobCard(_ref) {
         children: job.title
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
         className: "p-job-listings__card-desc",
-        children: job.description
+        children: job.description.length > 100 ? "".concat(job.description.substring(0, 100), "...") : job.description
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "p-job-listings__card-meta",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
@@ -1517,10 +1548,15 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+// 最初にインターフェイスを追加
+
 function JobListings(_ref) {
   var auth = _ref.auth,
     jobListings = _ref.jobListings,
-    filters = _ref.filters;
+    filters = _ref.filters,
+    userApplications = _ref.userApplications,
+    _ref$applicationStatu = _ref.applicationStatuses,
+    applicationStatuses = _ref$applicationStatu === void 0 ? {} : _ref$applicationStatu;
   // 状態管理
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
@@ -2002,7 +2038,9 @@ function JobListings(_ref) {
             children: sortedJobs.map(function (job) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_JobCard__WEBPACK_IMPORTED_MODULE_2__["default"], {
                 job: job,
-                auth: auth
+                auth: auth,
+                userApplications: userApplications,
+                applicationStatuses: applicationStatuses
               }, job.id);
             })
           })

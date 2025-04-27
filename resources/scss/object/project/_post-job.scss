@@ -423,4 +423,18 @@
             font-weight: 600;
         }
     }
+
+    &__description-help {
+        margin-top: 8px;
+        font-size: 0.85rem;
+        color: #666;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__character-count {
+        color: #444;
+        font-weight: 500;
+    }
 }

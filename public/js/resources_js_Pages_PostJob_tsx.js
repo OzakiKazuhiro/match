@@ -539,8 +539,27 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-function PostJob(_ref) {
-  var auth = _ref.auth;
+// 文字数表示コンポーネント
+
+function DescriptionCount(_ref) {
+  var current = _ref.current,
+    max = _ref.max;
+  // 残り文字数に応じた色を設定
+  var getCountColor = function getCountColor() {
+    if (current > max) return "#dc3545"; // 赤（エラー）
+    if (current > max * 0.9) return "#ffc107"; // 黄色（警告）
+    return "#444"; // デフォルト色
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+    className: "p-post-job__character-count",
+    style: {
+      color: getCountColor()
+    },
+    children: [current, " / ", max, "\u6587\u5B57"]
+  });
+}
+function PostJob(_ref2) {
+  var auth = _ref2.auth;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
     customSkill = _useState2[0],
@@ -562,6 +581,11 @@ function PostJob(_ref) {
     _useState10 = _slicedToArray(_useState9, 2),
     submitting = _useState10[0],
     setSubmitting = _useState10[1];
+  // バリデーションエラーの状態
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState12 = _slicedToArray(_useState11, 2),
+    validationErrors = _useState12[0],
+    setValidationErrors = _useState12[1];
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.useForm)({
       title: "",
       type: "one_time",
@@ -614,14 +638,57 @@ function PostJob(_ref) {
     }));
   };
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
-      var _document$querySelect, submissionData, csrfToken, response;
+    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
+      var isValid, errorFields, _i, _errorFields, field, element, _document$querySelect, submissionData, csrfToken, response, firstErrorField, _element;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             e.preventDefault();
+
+            // フォームバリデーションを実行
+            isValid = validateForm(); // バリデーションエラーがある場合は送信を中止し、フォーカスを最初のエラーフィールドに移動
+            if (isValid) {
+              _context.next = 18;
+              break;
+            }
+            // エラーのある最初の要素を特定
+            errorFields = ["title", "category", "description"];
+            if (data.type === "one_time") {
+              errorFields.push("budget_min", "budget_max");
+            }
+
+            // 最初のエラーフィールドを探して、そこにフォーカスする
+            _i = 0, _errorFields = errorFields;
+          case 6:
+            if (!(_i < _errorFields.length)) {
+              _context.next = 17;
+              break;
+            }
+            field = _errorFields[_i];
+            if (!validationErrors[field]) {
+              _context.next = 14;
+              break;
+            }
+            element = document.getElementById(field);
+            if (!element) {
+              _context.next = 14;
+              break;
+            }
+            element.scrollIntoView({
+              behavior: "smooth",
+              block: "center"
+            });
+            element.focus();
+            return _context.abrupt("break", 17);
+          case 14:
+            _i++;
+            _context.next = 6;
+            break;
+          case 17:
+            return _context.abrupt("return");
+          case 18:
             setSubmitting(true);
-            _context.prev = 2;
+            _context.prev = 19;
             // 送信用のデータを準備
             submissionData = _objectSpread({}, data); // 単発案件の場合のみ、送信前に金額を千円単位から円単位に変換
             if (data.type === "one_time") {
@@ -635,14 +702,14 @@ function PostJob(_ref) {
 
             // CSRFトークンを取得
             csrfToken = (_document$querySelect = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.getAttribute("content"); // 直接axiosを使って送信
-            _context.next = 8;
+            _context.next = 25;
             return axios__WEBPACK_IMPORTED_MODULE_5__["default"].post(route("job-listings.store"), submissionData, {
               headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken
               }
             });
-          case 8:
+          case 25:
             response = _context.sent;
             // 成功したら適切なページに遷移
             if (response.data.url) {
@@ -650,21 +717,37 @@ function PostJob(_ref) {
             } else {
               window.location.href = route("job-listings.index");
             }
-            _context.next = 16;
+            _context.next = 34;
             break;
-          case 12:
-            _context.prev = 12;
-            _context.t0 = _context["catch"](2);
+          case 29:
+            _context.prev = 29;
+            _context.t0 = _context["catch"](19);
             console.error("送信エラー:", _context.t0);
+
+            // サーバーからのバリデーションエラーがある場合は表示
+            if (_context.t0.response && _context.t0.response.data && _context.t0.response.data.errors) {
+              setValidationErrors(_context.t0.response.data.errors);
+
+              // エラーのある最初のフィールドにスクロール
+              firstErrorField = Object.keys(_context.t0.response.data.errors)[0];
+              _element = document.getElementById(firstErrorField);
+              if (_element) {
+                _element.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center"
+                });
+                _element.focus();
+              }
+            }
             setSubmitting(false);
-          case 16:
+          case 34:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[2, 12]]);
+      }, _callee, null, [[19, 29]]);
     }));
     return function handleSubmit(_x) {
-      return _ref2.apply(this, arguments);
+      return _ref3.apply(this, arguments);
     };
   }();
 
@@ -682,6 +765,79 @@ function PostJob(_ref) {
     } catch (e) {
       setter("");
     }
+  };
+
+  // フォームバリデーション関数
+  var validateForm = function validateForm() {
+    var newErrors = {};
+
+    // タイトルのバリデーション
+    if (!data.title.trim()) {
+      newErrors.title = "タイトルは必須です";
+    } else if (data.title.length > 100) {
+      newErrors.title = "タイトルは100文字以内で入力してください";
+    }
+
+    // 予算のバリデーション（単発案件の場合）
+    if (data.type === "one_time") {
+      var minBudget = data.budget_min ? parseInt(data.budget_min) : 0;
+      var maxBudget = data.budget_max ? parseInt(data.budget_max) : 0;
+      if (!data.budget_min && !data.budget_max) {
+        newErrors.budget_min = "最小または最大予算を設定してください";
+      } else if (minBudget > 0 && maxBudget > 0 && minBudget > maxBudget) {
+        newErrors.budget_max = "最大予算は最小予算以上に設定してください";
+      }
+
+      // 予算の上限をチェック
+      if (minBudget > 50000) {
+        newErrors.budget_min = "最小予算は5,000万円（50,000千円）以下に設定してください";
+      }
+      if (maxBudget > 50000) {
+        newErrors.budget_max = "最大予算は5,000万円（50,000千円）以下に設定してください";
+      }
+    }
+
+    // カテゴリーのバリデーション
+    if (!data.category) {
+      newErrors.category = "カテゴリーを選択してください";
+    }
+
+    // 説明のバリデーション
+    if (!data.description.trim()) {
+      newErrors.description = "案件の説明は必須です";
+    } else if (data.description.length > 3000) {
+      newErrors.description = "案件の説明は3000文字以内で入力してください";
+    }
+    setValidationErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // 予算入力のリアルタイムバリデーション
+  var validateBudgetInput = function validateBudgetInput(value, field) {
+    if (!value) return;
+    var budget = parseInt(value);
+    var otherField = field === "budget_min" ? "budget_max" : "budget_min";
+    var otherBudget = data[otherField] ? parseInt(data[otherField]) : 0;
+
+    // 新しいエラーオブジェクトを作成
+    var newErrors = _objectSpread({}, validationErrors);
+
+    // 上限チェック
+    if (budget > 50000) {
+      newErrors[field] = "予算は5,000万円（50,000千円）以下に設定してください";
+    } else {
+      delete newErrors[field];
+
+      // 最小値と最大値の関係性チェック（両方の値が入力されている場合のみ）
+      if (field === "budget_max" && budget > 0 && otherBudget > 0 && budget < otherBudget) {
+        newErrors[field] = "最大予算は最小予算以上に設定してください";
+      } else if (field === "budget_min" && budget > 0 && otherBudget > 0 && budget > otherBudget) {
+        newErrors[otherField] = "最大予算は最小予算以上に設定してください";
+      } else {
+        delete newErrors[otherField];
+      }
+    }
+    setValidationErrors(newErrors);
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -725,15 +881,20 @@ function PostJob(_ref) {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                 id: "title",
                 type: "text",
-                className: "p-post-job__input ".concat(errors.title ? "p-post-job__input--error" : ""),
+                className: "p-post-job__input ".concat(errors.title || validationErrors.title ? "p-post-job__input--error" : ""),
                 placeholder: "\u4F8B\uFF1AReact\u3092\u4F7F\u7528\u3057\u305F\u30A6\u30A7\u30D6\u30A2\u30D7\u30EA\u958B\u767A",
                 value: data.title,
                 onChange: function onChange(e) {
-                  return setData("title", e.target.value);
-                },
-                required: true
-              }), errors.title && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                message: errors.title,
+                  setData("title", e.target.value);
+                  // 入力時にエラーをクリア
+                  if (validationErrors.title) {
+                    setValidationErrors(_objectSpread(_objectSpread({}, validationErrors), {}, {
+                      title: undefined
+                    }));
+                  }
+                }
+              }), (errors.title || validationErrors.title) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                message: errors.title || validationErrors.title,
                 className: "mt-1"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
@@ -804,9 +965,13 @@ function PostJob(_ref) {
                       var value = e.target.value;
                       setData("budget_min", value);
                       updateDisplayBudget(value, setDisplayBudgetMin);
+
+                      // リアルタイムバリデーション
+                      validateBudgetInput(value, "budget_min");
                     },
-                    className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_min ? "p-post-job__input--error" : ""),
+                    className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_min || validationErrors.budget_min ? "p-post-job__input--error" : ""),
                     min: "0",
+                    max: "50000",
                     style: {
                       paddingRight: "45px"
                     }
@@ -830,9 +995,13 @@ function PostJob(_ref) {
                       var value = e.target.value;
                       setData("budget_max", value);
                       updateDisplayBudget(value, setDisplayBudgetMax);
+
+                      // リアルタイムバリデーション
+                      validateBudgetInput(value, "budget_max");
                     },
-                    className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_max ? "p-post-job__input--error" : ""),
+                    className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_max || validationErrors.budget_max ? "p-post-job__input--error" : ""),
                     min: "0",
+                    max: "50000",
                     style: {
                       paddingRight: "45px"
                     }
@@ -856,12 +1025,12 @@ function PostJob(_ref) {
                   className: "p-post-job__budget-preview-value",
                   children: ["\u301C ", displayBudgetMax]
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: "p-post-job__budget-help",
-                children: "\u203B \u91D1\u984D\u306F\u5343\u5186\u5358\u4F4D\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A50 = 5\u4E07\u5186\u3001100 = 10\u4E07\u5186\uFF09"
-              }), (errors.budget_min || errors.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                children: ["\u203B \u91D1\u984D\u306F\u5343\u5186\u5358\u4F4D\u3067\u534A\u89D2\u6570\u5B57\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A50 = 5\u4E07\u5186\u3001100 = 10\u4E07\u5186\uFF09", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "\u203B \u4E88\u7B97\u306E\u4E0A\u9650\u306F5,000\u4E07\u5186\uFF0850,000\u5343\u5186\uFF09\u307E\u3067\u3068\u306A\u308A\u307E\u3059"]
+              }), (errors.budget_min || validationErrors.budget_min || errors.budget_max || validationErrors.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "p-post-job__error",
-                children: errors.budget_min || errors.budget_max
+                children: errors.budget_min || validationErrors.budget_min || errors.budget_max || validationErrors.budget_max
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "p-post-job__form-group",
@@ -874,12 +1043,17 @@ function PostJob(_ref) {
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
                 id: "category",
-                className: "p-post-job__select ".concat(errors.category ? "p-post-job__select--error" : ""),
+                className: "p-post-job__select ".concat(errors.category || validationErrors.category ? "p-post-job__select--error" : ""),
                 value: data.category,
                 onChange: function onChange(e) {
-                  return setData("category", e.target.value);
+                  setData("category", e.target.value);
+                  // 入力時にエラーをクリア
+                  if (validationErrors.category) {
+                    setValidationErrors(_objectSpread(_objectSpread({}, validationErrors), {}, {
+                      category: undefined
+                    }));
+                  }
                 },
-                required: true,
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
                   value: "",
                   children: "\u30AB\u30C6\u30B4\u30EA\u30FC\u3092\u9078\u629E"
@@ -889,9 +1063,9 @@ function PostJob(_ref) {
                     children: category
                   }, category);
                 })]
-              }), errors.category && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              }), (errors.category || validationErrors.category) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "p-post-job__error",
-                children: errors.category
+                children: errors.category || validationErrors.category
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "p-post-job__form-group",
@@ -909,7 +1083,6 @@ function PostJob(_ref) {
                 onChange: function onChange(e) {
                   return setData("location", e.target.value);
                 },
-                required: true,
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
                   value: "\u30EA\u30E2\u30FC\u30C8\uFF08\u5728\u5B85\u52E4\u52D9\uFF09",
                   children: "\u30EA\u30E2\u30FC\u30C8\uFF08\u5728\u5B85\u52E4\u52D9\uFF09"
@@ -938,17 +1111,28 @@ function PostJob(_ref) {
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("textarea", {
                 id: "description",
-                className: "p-post-job__textarea ".concat(errors.description ? "p-post-job__textarea--error" : ""),
+                className: "p-post-job__textarea ".concat(errors.description || validationErrors.description ? "p-post-job__textarea--error" : ""),
                 placeholder: "\u6848\u4EF6\u306E\u8A73\u7D30\u306A\u8AAC\u660E\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002\u4F5C\u696D\u5185\u5BB9\u3001\u6C42\u3081\u308B\u30B9\u30AD\u30EB\u3001\u6210\u679C\u7269\u3001\u7D0D\u671F\u306A\u3069\u3092\u5177\u4F53\u7684\u306B\u8A18\u8F09\u3059\u308B\u3068\u3001\u5FDC\u52DF\u304C\u96C6\u307E\u308A\u3084\u3059\u304F\u306A\u308A\u307E\u3059\u3002",
                 value: data.description,
                 onChange: function onChange(e) {
-                  return setData("description", e.target.value);
+                  setData("description", e.target.value);
+                  // 入力時にエラーをクリア
+                  if (validationErrors.description) {
+                    setValidationErrors(_objectSpread(_objectSpread({}, validationErrors), {}, {
+                      description: undefined
+                    }));
+                  }
                 },
-                rows: 8,
-                required: true
-              }), errors.description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                rows: 8
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "p-post-job__description-help",
+                children: "\u203B 3000\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(DescriptionCount, {
+                current: data.description.length,
+                max: 3000
+              }), (errors.description || validationErrors.description) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "p-post-job__error",
-                children: errors.description
+                children: errors.description || validationErrors.description
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "p-post-job__form-group",

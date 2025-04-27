@@ -49,6 +49,10 @@ export default function Show({
     const [messages, setMessages] =
         useState<DirectMessageType[]>(initialMessages);
     const [sending, setSending] = useState(false);
+    // 文字数カウンター用のstate
+    const [charCount, setCharCount] = useState(0);
+    // 最大文字数（サーバー側のバリデーションに合わせる）
+    const MAX_CHARS = 1000;
 
     // 会話相手を特定（自分以外の参加者）
     const otherParticipant = participants.find(
@@ -84,11 +88,24 @@ export default function Show({
         }
     };
 
+    // メッセージが変更されたときに文字数をカウント
+    const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const inputValue = e.target.value;
+        setCharCount(inputValue.length);
+        setData("message", inputValue);
+    };
+
     // メッセージ送信処理
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!data.message.trim() || sending) {
+            return;
+        }
+
+        // 文字数制限チェック
+        if (data.message.length > MAX_CHARS) {
+            alert(`メッセージは${MAX_CHARS}文字以内で入力してください。`);
             return;
         }
 
@@ -122,9 +139,22 @@ export default function Show({
 
                 setMessages([...messages, newMessage]);
                 reset("message");
+                setCharCount(0); // 文字数カウンターをリセット
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("メッセージ送信エラー:", error);
+
+            // エラーレスポンスのデータを取得して表示（デバッグ用）
+            if (error.response && error.response.data) {
+                console.error("エラー詳細:", error.response.data);
+
+                if (
+                    error.response.data.errors &&
+                    error.response.data.errors.message
+                ) {
+                    alert(error.response.data.errors.message[0]);
+                }
+            }
         } finally {
             setSending(false);
         }
@@ -247,21 +277,41 @@ export default function Show({
                                 <textarea
                                     id="message"
                                     value={data.message}
-                                    onChange={(e) =>
-                                        setData("message", e.target.value)
-                                    }
+                                    onChange={handleMessageChange}
                                     rows={3}
                                     className="p-messages__textarea"
                                     placeholder="メッセージを入力..."
                                     required
+                                    maxLength={MAX_CHARS}
                                 />
+                                <div className="p-messages__char-counter">
+                                    <span
+                                        className={
+                                            charCount > MAX_CHARS * 0.9
+                                                ? "p-messages__char-counter--near-limit"
+                                                : ""
+                                        }
+                                    >
+                                        {charCount}
+                                    </span>
+                                    <span className="p-messages__char-counter--max">
+                                        /{MAX_CHARS}
+                                    </span>
+                                </div>
                                 <InputError
                                     message={errors.message}
                                     className="c-form-error"
                                 />
                             </div>
                             <div className="p-messages__submit-container">
-                                <PrimaryButton type="submit" disabled={sending}>
+                                <PrimaryButton
+                                    type="submit"
+                                    disabled={
+                                        sending ||
+                                        charCount > MAX_CHARS ||
+                                        charCount === 0
+                                    }
+                                >
                                     送信
                                 </PrimaryButton>
                             </div>

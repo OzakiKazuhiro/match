@@ -5,6 +5,25 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import axios from "axios";
 
+// 文字数表示コンポーネント
+function DescriptionCount({ current, max }: { current: number; max: number }) {
+    // 残り文字数に応じた色を設定
+    const getCountColor = () => {
+        if (current > max) return "#dc3545"; // 赤（エラー）
+        if (current > max * 0.9) return "#ffc107"; // 黄色（警告）
+        return "#444"; // デフォルト色
+    };
+
+    return (
+        <span
+            className="p-post-job__character-count"
+            style={{ color: getCountColor() }}
+        >
+            {current} / {max}文字
+        </span>
+    );
+}
+
 export default function PostJob({ auth }: PageProps) {
     const [customSkill, setCustomSkill] = useState("");
     const [customPreferredSkill, setCustomPreferredSkill] = useState("");
@@ -12,6 +31,14 @@ export default function PostJob({ auth }: PageProps) {
     const [displayBudgetMin, setDisplayBudgetMin] = useState<string>("");
     const [displayBudgetMax, setDisplayBudgetMax] = useState<string>("");
     const [submitting, setSubmitting] = useState(false);
+    // バリデーションエラーの状態
+    const [validationErrors, setValidationErrors] = useState<{
+        title?: string;
+        budget_min?: string;
+        budget_max?: string;
+        category?: string;
+        description?: string;
+    }>({});
 
     const { data, setData, post, processing, errors, reset } = useForm({
         title: "",
@@ -117,6 +144,36 @@ export default function PostJob({ auth }: PageProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // フォームバリデーションを実行
+        const isValid = validateForm();
+
+        // バリデーションエラーがある場合は送信を中止し、フォーカスを最初のエラーフィールドに移動
+        if (!isValid) {
+            // エラーのある最初の要素を特定
+            const errorFields = ["title", "category", "description"];
+            if (data.type === "one_time") {
+                errorFields.push("budget_min", "budget_max");
+            }
+
+            // 最初のエラーフィールドを探して、そこにフォーカスする
+            for (const field of errorFields) {
+                if (validationErrors[field as keyof typeof validationErrors]) {
+                    const element = document.getElementById(field);
+                    if (element) {
+                        element.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                        });
+                        element.focus();
+                        break;
+                    }
+                }
+            }
+
+            return; // バリデーションエラーがある場合は処理を中断
+        }
+
         setSubmitting(true);
 
         try {
@@ -161,8 +218,31 @@ export default function PostJob({ auth }: PageProps) {
             } else {
                 window.location.href = route("job-listings.index");
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("送信エラー:", error);
+
+            // サーバーからのバリデーションエラーがある場合は表示
+            if (
+                error.response &&
+                error.response.data &&
+                error.response.data.errors
+            ) {
+                setValidationErrors(error.response.data.errors);
+
+                // エラーのある最初のフィールドにスクロール
+                const firstErrorField = Object.keys(
+                    error.response.data.errors
+                )[0];
+                const element = document.getElementById(firstErrorField);
+                if (element) {
+                    element.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+                    element.focus();
+                }
+            }
+
             setSubmitting(false);
         }
     };
@@ -185,6 +265,106 @@ export default function PostJob({ auth }: PageProps) {
         } catch (e) {
             setter("");
         }
+    };
+
+    // フォームバリデーション関数
+    const validateForm = (): boolean => {
+        const newErrors: typeof validationErrors = {};
+
+        // タイトルのバリデーション
+        if (!data.title.trim()) {
+            newErrors.title = "タイトルは必須です";
+        } else if (data.title.length > 100) {
+            newErrors.title = "タイトルは100文字以内で入力してください";
+        }
+
+        // 予算のバリデーション（単発案件の場合）
+        if (data.type === "one_time") {
+            const minBudget = data.budget_min ? parseInt(data.budget_min) : 0;
+            const maxBudget = data.budget_max ? parseInt(data.budget_max) : 0;
+
+            if (!data.budget_min && !data.budget_max) {
+                newErrors.budget_min = "最小または最大予算を設定してください";
+            } else if (
+                minBudget > 0 &&
+                maxBudget > 0 &&
+                minBudget > maxBudget
+            ) {
+                newErrors.budget_max =
+                    "最大予算は最小予算以上に設定してください";
+            }
+
+            // 予算の上限をチェック
+            if (minBudget > 50000) {
+                newErrors.budget_min =
+                    "最小予算は5,000万円（50,000千円）以下に設定してください";
+            }
+            if (maxBudget > 50000) {
+                newErrors.budget_max =
+                    "最大予算は5,000万円（50,000千円）以下に設定してください";
+            }
+        }
+
+        // カテゴリーのバリデーション
+        if (!data.category) {
+            newErrors.category = "カテゴリーを選択してください";
+        }
+
+        // 説明のバリデーション
+        if (!data.description.trim()) {
+            newErrors.description = "案件の説明は必須です";
+        } else if (data.description.length > 3000) {
+            newErrors.description =
+                "案件の説明は3000文字以内で入力してください";
+        }
+
+        setValidationErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    // 予算入力のリアルタイムバリデーション
+    const validateBudgetInput = (
+        value: string,
+        field: "budget_min" | "budget_max"
+    ) => {
+        if (!value) return;
+
+        const budget = parseInt(value);
+        const otherField = field === "budget_min" ? "budget_max" : "budget_min";
+        const otherBudget = data[otherField] ? parseInt(data[otherField]) : 0;
+
+        // 新しいエラーオブジェクトを作成
+        const newErrors = { ...validationErrors };
+
+        // 上限チェック
+        if (budget > 50000) {
+            newErrors[field] =
+                "予算は5,000万円（50,000千円）以下に設定してください";
+        } else {
+            delete newErrors[field];
+
+            // 最小値と最大値の関係性チェック（両方の値が入力されている場合のみ）
+            if (
+                field === "budget_max" &&
+                budget > 0 &&
+                otherBudget > 0 &&
+                budget < otherBudget
+            ) {
+                newErrors[field] = "最大予算は最小予算以上に設定してください";
+            } else if (
+                field === "budget_min" &&
+                budget > 0 &&
+                otherBudget > 0 &&
+                budget > otherBudget
+            ) {
+                newErrors[otherField] =
+                    "最大予算は最小予算以上に設定してください";
+            } else {
+                delete newErrors[otherField];
+            }
+        }
+
+        setValidationErrors(newErrors);
     };
 
     return (
@@ -224,20 +404,29 @@ export default function PostJob({ auth }: PageProps) {
                                     id="title"
                                     type="text"
                                     className={`p-post-job__input ${
-                                        errors.title
+                                        errors.title || validationErrors.title
                                             ? "p-post-job__input--error"
                                             : ""
                                     }`}
                                     placeholder="例：Reactを使用したウェブアプリ開発"
                                     value={data.title}
-                                    onChange={(e) =>
-                                        setData("title", e.target.value)
-                                    }
-                                    required
+                                    onChange={(e) => {
+                                        setData("title", e.target.value);
+                                        // 入力時にエラーをクリア
+                                        if (validationErrors.title) {
+                                            setValidationErrors({
+                                                ...validationErrors,
+                                                title: undefined,
+                                            });
+                                        }
+                                    }}
                                 />
-                                {errors.title && (
+                                {(errors.title || validationErrors.title) && (
                                     <InputError
-                                        message={errors.title}
+                                        message={
+                                            errors.title ||
+                                            validationErrors.title
+                                        }
                                         className="mt-1"
                                     />
                                 )}
@@ -320,13 +509,21 @@ export default function PostJob({ auth }: PageProps) {
                                                         value,
                                                         setDisplayBudgetMin
                                                     );
+
+                                                    // リアルタイムバリデーション
+                                                    validateBudgetInput(
+                                                        value,
+                                                        "budget_min"
+                                                    );
                                                 }}
                                                 className={`p-post-job__input p-post-job__input--budget ${
-                                                    errors.budget_min
+                                                    errors.budget_min ||
+                                                    validationErrors.budget_min
                                                         ? "p-post-job__input--error"
                                                         : ""
                                                 }`}
                                                 min="0"
+                                                max="50000"
                                                 style={{ paddingRight: "45px" }}
                                             />
                                             <span className="p-post-job__unit">
@@ -355,13 +552,21 @@ export default function PostJob({ auth }: PageProps) {
                                                         value,
                                                         setDisplayBudgetMax
                                                     );
+
+                                                    // リアルタイムバリデーション
+                                                    validateBudgetInput(
+                                                        value,
+                                                        "budget_max"
+                                                    );
                                                 }}
                                                 className={`p-post-job__input p-post-job__input--budget ${
-                                                    errors.budget_max
+                                                    errors.budget_max ||
+                                                    validationErrors.budget_max
                                                         ? "p-post-job__input--error"
                                                         : ""
                                                 }`}
                                                 min="0"
+                                                max="50000"
                                                 style={{ paddingRight: "45px" }}
                                             />
                                             <span className="p-post-job__unit">
@@ -396,14 +601,20 @@ export default function PostJob({ auth }: PageProps) {
 
                                     <div className="p-post-job__budget-help">
                                         ※
-                                        金額は千円単位で入力してください（例：50
+                                        金額は千円単位で半角数字で入力してください（例：50
                                         = 5万円、100 = 10万円）
+                                        <br />※
+                                        予算の上限は5,000万円（50,000千円）までとなります
                                     </div>
                                     {(errors.budget_min ||
-                                        errors.budget_max) && (
+                                        validationErrors.budget_min ||
+                                        errors.budget_max ||
+                                        validationErrors.budget_max) && (
                                         <div className="p-post-job__error">
                                             {errors.budget_min ||
-                                                errors.budget_max}
+                                                validationErrors.budget_min ||
+                                                errors.budget_max ||
+                                                validationErrors.budget_max}
                                         </div>
                                     )}
                                 </div>
@@ -422,15 +633,22 @@ export default function PostJob({ auth }: PageProps) {
                                 <select
                                     id="category"
                                     className={`p-post-job__select ${
-                                        errors.category
+                                        errors.category ||
+                                        validationErrors.category
                                             ? "p-post-job__select--error"
                                             : ""
                                     }`}
                                     value={data.category}
-                                    onChange={(e) =>
-                                        setData("category", e.target.value)
-                                    }
-                                    required
+                                    onChange={(e) => {
+                                        setData("category", e.target.value);
+                                        // 入力時にエラーをクリア
+                                        if (validationErrors.category) {
+                                            setValidationErrors({
+                                                ...validationErrors,
+                                                category: undefined,
+                                            });
+                                        }
+                                    }}
                                 >
                                     <option value="">カテゴリーを選択</option>
                                     {categoryOptions.map((category) => (
@@ -439,9 +657,11 @@ export default function PostJob({ auth }: PageProps) {
                                         </option>
                                     ))}
                                 </select>
-                                {errors.category && (
+                                {(errors.category ||
+                                    validationErrors.category) && (
                                     <div className="p-post-job__error">
-                                        {errors.category}
+                                        {errors.category ||
+                                            validationErrors.category}
                                     </div>
                                 )}
                             </div>
@@ -463,7 +683,6 @@ export default function PostJob({ auth }: PageProps) {
                                     onChange={(e) =>
                                         setData("location", e.target.value)
                                     }
-                                    required
                                 >
                                     <option value="リモート（在宅勤務）">
                                         リモート（在宅勤務）
@@ -496,21 +715,37 @@ export default function PostJob({ auth }: PageProps) {
                                 <textarea
                                     id="description"
                                     className={`p-post-job__textarea ${
-                                        errors.description
+                                        errors.description ||
+                                        validationErrors.description
                                             ? "p-post-job__textarea--error"
                                             : ""
                                     }`}
                                     placeholder="案件の詳細な説明を入力してください。作業内容、求めるスキル、成果物、納期などを具体的に記載すると、応募が集まりやすくなります。"
                                     value={data.description}
-                                    onChange={(e) =>
-                                        setData("description", e.target.value)
-                                    }
+                                    onChange={(e) => {
+                                        setData("description", e.target.value);
+                                        // 入力時にエラーをクリア
+                                        if (validationErrors.description) {
+                                            setValidationErrors({
+                                                ...validationErrors,
+                                                description: undefined,
+                                            });
+                                        }
+                                    }}
                                     rows={8}
-                                    required
                                 ></textarea>
-                                {errors.description && (
+                                <div className="p-post-job__description-help">
+                                    ※ 3000文字以内で入力してください
+                                </div>
+                                <DescriptionCount
+                                    current={data.description.length}
+                                    max={3000}
+                                />
+                                {(errors.description ||
+                                    validationErrors.description) && (
                                     <div className="p-post-job__error">
-                                        {errors.description}
+                                        {errors.description ||
+                                            validationErrors.description}
                                     </div>
                                 )}
                             </div>

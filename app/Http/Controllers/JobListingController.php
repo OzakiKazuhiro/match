@@ -48,9 +48,27 @@ class JobListingController extends Controller
         // 並び順（デフォルトは新しい順）に並べて6件ずつページネーション
         $jobListings = $query->latest()->paginate(6);
         
+        // ユーザーの応募状況を取得
+        $userApplications = [];
+        $applicationStatuses = [];
+        
+        if (Auth::check()) {
+            $applications = \App\Models\Application::where('user_id', Auth::id())
+                ->get(['job_listing_id', 'status']);
+                
+            $userApplications = $applications->pluck('job_listing_id')->toArray();
+            
+            // 応募ステータスのマッピングを作成
+            foreach ($applications as $application) {
+                $applicationStatuses[$application->job_listing_id] = $application->status;
+            }
+        }
+        
         return Inertia::render('JobListings', [
             'jobListings' => $jobListings,
             'filters' => $request->only(['type']),
+            'userApplications' => $userApplications,
+            'applicationStatuses' => $applicationStatuses,
         ]);
     }
 
@@ -91,13 +109,35 @@ class JobListingController extends Controller
         // 案件の投稿者情報とパブリックメッセージを取得
         $jobListing->load(['user', 'publicMessages.user']);
         
+        // 投稿者の総案件数を取得
+        $totalJobListings = JobListing::where('user_id', $jobListing->user_id)->count();
+        
         // 閲覧数をインクリメント
         $jobListing->incrementViewCount();
+        
+        // ユーザーが既に応募したかどうかとステータスをチェック
+        $hasApplied = false;
+        $applicationStatus = 'pending';
+        
+        if (Auth::check()) {
+            $application = \App\Models\Application::where('job_listing_id', $jobListing->id)
+                ->where('user_id', Auth::id())
+                ->first();
+                
+            $hasApplied = $application !== null;
+            
+            if ($application) {
+                $applicationStatus = $application->status;
+            }
+        }
         
         return Inertia::render('JobDetail', [
             'jobListing' => $jobListing,
             'canEdit' => Auth::check() && Auth::id() === $jobListing->user_id,
             'canApply' => Auth::check() && Auth::id() !== $jobListing->user_id && !$jobListing->is_closed,
+            'hasApplied' => $hasApplied,
+            'applicationStatus' => $applicationStatus,
+            'totalJobListings' => $totalJobListings,
         ]);
     }
 

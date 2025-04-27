@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Mail\Markdown;
 use Illuminate\View\Component;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\App;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,8 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Vite::prefetch(concurrency: 3); - Viteの代わりにWebpackを使用するため、削除
-
+        // 日本語をデフォルトロケールに設定
+        App::setLocale('ja');
+        
+        // ページネーションのデフォルトビューをTailwindに設定
+        Paginator::useTailwind();
+        
         // Webpackアセットを取得するヘルパー関数をBladeに登録
         Blade::directive('webpack', function ($expression) {
             return "<?php echo asset('assets/' . app(\App\Providers\AppServiceProvider::class)->getManifestAsset($expression)); ?>";

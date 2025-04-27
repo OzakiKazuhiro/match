@@ -269,7 +269,19 @@
         border-bottom: 1px solid #f0f0f0;
         display: flex;
         justify-content: space-between;
+        align-items: flex-start;
+
+        @media (max-width: 480px) {
+            align-items: center;
+        }
+    }
+
+    &__card-tags {
+        display: flex;
         align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        max-width: 70%;
     }
 
     &__card-type {
@@ -295,6 +307,14 @@
     &__card-budget {
         font-size: 0.9rem;
         color: #666;
+        margin-left: auto;
+        text-align: right;
+        white-space: nowrap;
+        flex-shrink: 0;
+
+        @media (max-width: 480px) {
+            min-width: 105px;
+        }
     }
 
     &__card-content {
@@ -366,11 +386,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-
-    &__card-tags {
-        display: flex;
-        gap: 8px;
     }
 
     &__card-tag {
@@ -589,6 +604,53 @@
 
         &:hover {
             color: #003d7a;
+        }
+    }
+
+    &__card-applied {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 12px;
+        border-radius: 20px;
+        background-color: #fbbf24;
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(251, 191, 36, 0.3);
+        animation: pulse 2s infinite;
+        position: relative;
+        z-index: 1;
+        white-space: nowrap;
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(251, 191, 36, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+            }
+        }
+
+        &--accepted {
+            background-color: #10b981;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+            animation: pulse-accepted 2s infinite;
+
+            @keyframes pulse-accepted {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+                }
+                70% {
+                    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+                }
+            }
         }
     }
 }

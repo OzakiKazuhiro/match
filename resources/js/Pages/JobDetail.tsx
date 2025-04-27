@@ -61,14 +61,37 @@ export default function JobDetail({
     jobListing,
     canEdit,
     canApply,
+    hasApplied,
+    applicationStatus = "pending",
+    totalJobListings,
 }: PageProps<{
     jobListing: JobListingData;
     canEdit: boolean;
     canApply: boolean;
+    hasApplied: boolean;
+    applicationStatus?: string;
+    totalJobListings: number;
 }>) {
     const { data, setData, post, processing, errors, reset } = useForm({
         message: "",
     });
+
+    // ステータスのテキストを取得
+    const getStatusText = (status: string) => {
+        switch (status) {
+            case "accepted":
+                return "承認済み";
+            default:
+                return "応募中";
+        }
+    };
+
+    // ステータスのクラスを取得
+    const getStatusClass = (status: string) => {
+        return status === "accepted"
+            ? "p-job-detail__apply-button--applied p-job-detail__apply-button--accepted"
+            : "p-job-detail__apply-button--applied";
+    };
 
     const handleSubmitMessage = (e: React.FormEvent) => {
         e.preventDefault();
@@ -304,9 +327,19 @@ export default function JobDetail({
                                                     "job-listings.apply.create",
                                                     jobListing.id
                                                 )}
-                                                className="p-job-detail__apply-button"
+                                                className={`p-job-detail__apply-button ${
+                                                    hasApplied
+                                                        ? getStatusClass(
+                                                              applicationStatus
+                                                          )
+                                                        : ""
+                                                }`}
                                             >
-                                                応募する
+                                                {hasApplied
+                                                    ? getStatusText(
+                                                          applicationStatus
+                                                      )
+                                                    : "応募する"}
                                             </Link>
                                         )}
                                     </div>
@@ -441,7 +474,7 @@ export default function JobDetail({
                                             投稿した案件
                                         </div>
                                         <div className="p-job-detail__author-stat-value">
-                                            5件
+                                            {totalJobListings}件
                                         </div>
                                     </div>
                                     <div className="p-job-detail__author-stat">

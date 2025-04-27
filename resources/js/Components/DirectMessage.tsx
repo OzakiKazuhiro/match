@@ -69,6 +69,15 @@ export default function DirectMessage({
         minute: "2-digit",
     });
 
+    // 「年/月/日 時間:分」形式に変換
+    const displayDate = formattedDate.replace(/\//g, "/").replace(/ /g, " ");
+
+    // 送信者の表示名を設定
+    const senderName = isSentByCurrentUser ? "あなた" : message.sender.name;
+
+    // 送信者名と日時を組み合わせたテキスト
+    const senderWithTime = `${senderName}：${displayDate}`;
+
     // アバター画像のURLをコンソールログに出力（デバッグ用）
     if (message.sender) {
         console.log("Sender:", JSON.stringify(message.sender));
@@ -120,11 +129,6 @@ export default function DirectMessage({
                         isSentByCurrentUser ? "sent" : "received"
                     }`}
                 >
-                    {!isSentByCurrentUser && (
-                        <p className="p-messages__sender-name">
-                            {message.sender.name}
-                        </p>
-                    )}
                     <p className="p-messages__message-text">
                         {message.message}
                     </p>
@@ -137,13 +141,13 @@ export default function DirectMessage({
                 }`}
             >
                 <span className="p-messages__message-time">
-                    {formattedDate}
+                    {senderWithTime}
+                    {isSentByCurrentUser && message.is_read && (
+                        <span className="p-messages__message-status p-messages__message-status--read">
+                            &nbsp;(既読)
+                        </span>
+                    )}
                 </span>
-                {isSentByCurrentUser && message.is_read && (
-                    <span className="p-messages__message-status p-messages__message-status--read">
-                        既読
-                    </span>
-                )}
             </div>
         </div>
     );

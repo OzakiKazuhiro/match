@@ -65,6 +65,15 @@ function DirectMessage(_ref) {
     minute: "2-digit"
   });
 
+  // 「年/月/日 時間:分」形式に変換
+  var displayDate = formattedDate.replace(/\//g, "/").replace(/ /g, " ");
+
+  // 送信者の表示名を設定
+  var senderName = isSentByCurrentUser ? "あなた" : message.sender.name;
+
+  // 送信者名と日時を組み合わせたテキスト
+  var senderWithTime = "".concat(senderName, "\uFF1A").concat(displayDate);
+
   // アバター画像のURLをコンソールログに出力（デバッグ用）
   if (message.sender) {
     console.log("Sender:", JSON.stringify(message.sender));
@@ -98,25 +107,22 @@ function DirectMessage(_ref) {
           className: "p-messages__avatar-placeholder",
           children: getInitials(message.sender.name)
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
         className: "p-messages__message-bubble p-messages__message-bubble--".concat(isSentByCurrentUser ? "sent" : "received"),
-        children: [!isSentByCurrentUser && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
-          className: "p-messages__sender-name",
-          children: message.sender.name
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
           className: "p-messages__message-text",
           children: message.message
-        })]
+        })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
       className: "p-messages__message-meta p-messages__message-meta--".concat(isSentByCurrentUser ? "sent" : "received"),
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("span", {
         className: "p-messages__message-time",
-        children: formattedDate
-      }), isSentByCurrentUser && message.is_read && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
-        className: "p-messages__message-status p-messages__message-status--read",
-        children: "\u65E2\u8AAD"
-      })]
+        children: [senderWithTime, isSentByCurrentUser && message.is_read && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+          className: "p-messages__message-status p-messages__message-status--read",
+          children: "\xA0(\u65E2\u8AAD)"
+        })]
+      })
     })]
   });
 }
@@ -715,6 +721,13 @@ function Show(_ref) {
     _useState4 = _slicedToArray(_useState3, 2),
     sending = _useState4[0],
     setSending = _useState4[1];
+  // 文字数カウンター用のstate
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState6 = _slicedToArray(_useState5, 2),
+    charCount = _useState6[0],
+    setCharCount = _useState6[1];
+  // 最大文字数（サーバー側のバリデーションに合わせる）
+  var MAX_CHARS = 1000;
 
   // 会話相手を特定（自分以外の参加者）
   var otherParticipant = participants.find(function (participant) {
@@ -763,6 +776,13 @@ function Show(_ref) {
     };
   }();
 
+  // メッセージが変更されたときに文字数をカウント
+  var handleMessageChange = function handleMessageChange(e) {
+    var inputValue = e.target.value;
+    setCharCount(inputValue.length);
+    setData("message", inputValue);
+  };
+
   // メッセージ送信処理
   var handleSubmit = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
@@ -777,18 +797,25 @@ function Show(_ref) {
             }
             return _context2.abrupt("return");
           case 3:
+            if (!(data.message.length > MAX_CHARS)) {
+              _context2.next = 6;
+              break;
+            }
+            alert("\u30E1\u30C3\u30BB\u30FC\u30B8\u306F".concat(MAX_CHARS, "\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"));
+            return _context2.abrupt("return");
+          case 6:
             setSending(true);
-            _context2.prev = 4;
+            _context2.prev = 7;
             // CSRFトークンの取得
             csrfToken = ((_document$querySelect2 = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.getAttribute("content")) || ""; // APIでメッセージを送信
-            _context2.next = 8;
+            _context2.next = 11;
             return axios__WEBPACK_IMPORTED_MODULE_7__["default"].post(route("messages.store", conversationGroup.id), data, {
               headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken
               }
             });
-          case 8:
+          case 11:
             response = _context2.sent;
             // 成功したら新しいメッセージを追加
             if (response.data && response.data.message) {
@@ -797,22 +824,31 @@ function Show(_ref) {
               });
               setMessages([].concat(_toConsumableArray(messages), [newMessage]));
               reset("message");
+              setCharCount(0); // 文字数カウンターをリセット
             }
-            _context2.next = 15;
+            _context2.next = 19;
             break;
-          case 12:
-            _context2.prev = 12;
-            _context2.t0 = _context2["catch"](4);
-            console.error("メッセージ送信エラー:", _context2.t0);
           case 15:
             _context2.prev = 15;
+            _context2.t0 = _context2["catch"](7);
+            console.error("メッセージ送信エラー:", _context2.t0);
+
+            // エラーレスポンスのデータを取得して表示（デバッグ用）
+            if (_context2.t0.response && _context2.t0.response.data) {
+              console.error("エラー詳細:", _context2.t0.response.data);
+              if (_context2.t0.response.data.errors && _context2.t0.response.data.errors.message) {
+                alert(_context2.t0.response.data.errors.message[0]);
+              }
+            }
+          case 19:
+            _context2.prev = 19;
             setSending(false);
-            return _context2.finish(15);
-          case 18:
+            return _context2.finish(19);
+          case 22:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[4, 12, 15, 18]]);
+      }, _callee2, null, [[7, 15, 19, 22]]);
     }));
     return function handleSubmit(_x) {
       return _ref3.apply(this, arguments);
@@ -915,13 +951,21 @@ function Show(_ref) {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("textarea", {
                 id: "message",
                 value: data.message,
-                onChange: function onChange(e) {
-                  return setData("message", e.target.value);
-                },
+                onChange: handleMessageChange,
                 rows: 3,
                 className: "p-messages__textarea",
                 placeholder: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5165\u529B...",
-                required: true
+                required: true,
+                maxLength: MAX_CHARS
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                className: "p-messages__char-counter",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                  className: charCount > MAX_CHARS * 0.9 ? "p-messages__char-counter--near-limit" : "",
+                  children: charCount
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
+                  className: "p-messages__char-counter--max",
+                  children: ["/", MAX_CHARS]
+                })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
                 message: errors.message,
                 className: "c-form-error"
@@ -930,7 +974,7 @@ function Show(_ref) {
               className: "p-messages__submit-container",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
                 type: "submit",
-                disabled: sending,
+                disabled: sending || charCount > MAX_CHARS || charCount === 0,
                 children: "\u9001\u4FE1"
               })
             })]
