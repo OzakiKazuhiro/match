@@ -7,6 +7,7 @@ use App\Models\JobListing;
 use App\Models\Application;
 use App\Models\ConversationGroup;
 use App\Notifications\ApplicationReceived;
+use App\Notifications\ApplicationAccepted;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -207,6 +208,11 @@ class ApplicationController extends Controller
             
             // 応募データに会話グループIDを保存
             $application->conversation_group_id = $conversationGroupId;
+            $application->save();
+            
+            // 応募者に承認通知を送信
+            $applicant = $application->user;
+            $applicant->notify(new ApplicationAccepted($application));
         }
         
         $statusText = $status === 'accepted' ? '承認' : '拒否';

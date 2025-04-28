@@ -22,7 +22,7 @@ class StorePublicMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'message' => 'required|string|max:1000',
+            'message' => 'required|string|max:500',
         ];
     }
 
@@ -35,7 +35,7 @@ class StorePublicMessageRequest extends FormRequest
     {
         return [
             'message.required' => 'メッセージを入力してください。',
-            'message.max' => 'メッセージは1000文字以内で入力してください。',
+            'message.max' => 'メッセージは500文字以内で入力してください。',
         ];
     }
-} 
+}

@@ -524,6 +524,16 @@ function NotificationsIndex(_ref) {
         actionText: "応募を確認する"
       };
     }
+    if (notification.type === "App\\Notifications\\ApplicationAccepted") {
+      return {
+        title: "応募が承認されました",
+        description: "\u300C".concat(data.job_listing_title, "\u300D\u3078\u306E\u5FDC\u52DF\u304C").concat(data.job_owner_name, "\u3055\u3093\u306B\u627F\u8A8D\u3055\u308C\u307E\u3057\u305F\u3002"),
+        url: route("messages.show", {
+          conversationGroup: data.conversation_group_id
+        }),
+        actionText: "メッセージを確認する"
+      };
+    }
     return {
       title: "通知",
       description: "新しい通知があります。",

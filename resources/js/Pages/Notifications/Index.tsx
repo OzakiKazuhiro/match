@@ -12,9 +12,12 @@ interface Notification {
         application_id: number;
         job_listing_id: number;
         job_listing_title: string;
-        applicant_id: number;
-        applicant_name: string;
-        message: string;
+        applicant_id?: number;
+        applicant_name?: string;
+        job_owner_id?: number;
+        job_owner_name?: string;
+        message?: string;
+        conversation_group_id?: number;
     };
     read_at: string | null;
     created_at: string;
@@ -48,6 +51,17 @@ export default function NotificationsIndex({
                 description: `「${data.job_listing_title}」に${data.applicant_name}さんから応募がありました。`,
                 url: route("applications.to-my-jobs"),
                 actionText: "応募を確認する",
+            };
+        }
+
+        if (notification.type === "App\\Notifications\\ApplicationAccepted") {
+            return {
+                title: "応募が承認されました",
+                description: `「${data.job_listing_title}」への応募が${data.job_owner_name}さんに承認されました。`,
+                url: route("messages.show", {
+                    conversationGroup: data.conversation_group_id,
+                }),
+                actionText: "メッセージを確認する",
             };
         }
 

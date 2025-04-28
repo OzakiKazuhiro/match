@@ -95,6 +95,13 @@ export default function JobDetail({
         message: "",
     });
 
+    // メッセージの最大文字数
+    const MAX_MESSAGE_LENGTH = 500;
+
+    // 残り文字数を計算
+    const remainingChars = MAX_MESSAGE_LENGTH - data.message.length;
+    const isOverLimit = remainingChars < 0;
+
     // ステータスのテキストを取得
     const getStatusText = (status: string) => {
         switch (status) {
@@ -114,6 +121,12 @@ export default function JobDetail({
 
     const handleSubmitMessage = (e: React.FormEvent) => {
         e.preventDefault();
+
+        // 文字数制限チェック
+        if (data.message.length > MAX_MESSAGE_LENGTH) {
+            return;
+        }
+
         post(route("job-listings.messages.store", jobListing.id), {
             onSuccess: () => setData("message", ""),
         });
@@ -658,7 +671,11 @@ export default function JobDetail({
                                         >
                                             <textarea
                                                 id="message"
-                                                className="p-job-detail__message-input"
+                                                className={`p-job-detail__message-input ${
+                                                    isOverLimit
+                                                        ? "p-job-detail__message-input--error"
+                                                        : ""
+                                                }`}
                                                 placeholder="質問や応募の意思などをメッセージしてください"
                                                 value={data.message}
                                                 onChange={(e) =>
@@ -669,7 +686,19 @@ export default function JobDetail({
                                                 }
                                                 rows={4}
                                                 required
+                                                maxLength={MAX_MESSAGE_LENGTH}
                                             ></textarea>
+                                            <div
+                                                className={`p-job-detail__character-counter ${
+                                                    isOverLimit
+                                                        ? "p-job-detail__character-counter--error"
+                                                        : ""
+                                                }`}
+                                            >
+                                                {isOverLimit
+                                                    ? "文字数制限を超えています"
+                                                    : `残り ${remainingChars} 文字`}
+                                            </div>
                                             {errors.message && (
                                                 <InputError
                                                     message={errors.message}
@@ -679,7 +708,9 @@ export default function JobDetail({
                                             <button
                                                 type="submit"
                                                 className="p-job-detail__message-submit"
-                                                disabled={processing}
+                                                disabled={
+                                                    processing || isOverLimit
+                                                }
                                             >
                                                 {processing
                                                     ? "送信中..."

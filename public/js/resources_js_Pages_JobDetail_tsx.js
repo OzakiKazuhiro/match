@@ -1605,6 +1605,13 @@ function JobDetail(_ref) {
     errors = _useForm.errors,
     reset = _useForm.reset;
 
+  // メッセージの最大文字数
+  var MAX_MESSAGE_LENGTH = 500;
+
+  // 残り文字数を計算
+  var remainingChars = MAX_MESSAGE_LENGTH - data.message.length;
+  var isOverLimit = remainingChars < 0;
+
   // ステータスのテキストを取得
   var getStatusText = function getStatusText(status) {
     switch (status) {
@@ -1621,6 +1628,11 @@ function JobDetail(_ref) {
   };
   var handleSubmitMessage = function handleSubmitMessage(e) {
     e.preventDefault();
+
+    // 文字数制限チェック
+    if (data.message.length > MAX_MESSAGE_LENGTH) {
+      return;
+    }
     post((0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("job-listings.messages.store", jobListing.id), {
       onSuccess: function onSuccess() {
         return setData("message", "");
@@ -1950,21 +1962,25 @@ function JobDetail(_ref) {
                   className: "p-job-detail__message-form",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("textarea", {
                     id: "message",
-                    className: "p-job-detail__message-input",
+                    className: "p-job-detail__message-input ".concat(isOverLimit ? "p-job-detail__message-input--error" : ""),
                     placeholder: "\u8CEA\u554F\u3084\u5FDC\u52DF\u306E\u610F\u601D\u306A\u3069\u3092\u30E1\u30C3\u30BB\u30FC\u30B8\u3057\u3066\u304F\u3060\u3055\u3044",
                     value: data.message,
                     onChange: function onChange(e) {
                       return setData("message", e.target.value);
                     },
                     rows: 4,
-                    required: true
+                    required: true,
+                    maxLength: MAX_MESSAGE_LENGTH
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                    className: "p-job-detail__character-counter ".concat(isOverLimit ? "p-job-detail__character-counter--error" : ""),
+                    children: isOverLimit ? "文字数制限を超えています" : "\u6B8B\u308A ".concat(remainingChars, " \u6587\u5B57")
                   }), errors.message && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_2__["default"], {
                     message: errors.message,
                     className: "mt-2"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                     type: "submit",
                     className: "p-job-detail__message-submit",
-                    disabled: processing,
+                    disabled: processing || isOverLimit,
                     children: processing ? "送信中..." : "メッセージを送信"
                   })]
                 })]

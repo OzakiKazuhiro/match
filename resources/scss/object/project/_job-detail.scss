@@ -415,6 +415,10 @@
             border-color: #6cc3e0;
             box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.2);
         }
+
+        &--error {
+            border-color: #ff4136;
+        }
     }
 
     &__message-submit {
@@ -430,6 +434,19 @@
 
         &:hover {
             background-color: darken(#6cc3e0, 10%);
+        }
+    }
+
+    &__character-counter {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: #6c757d;
+
+        &--error {
+            color: #ff4136;
+            font-weight: bold;
         }
     }
 

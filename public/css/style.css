@@ -3337,6 +3337,9 @@ textarea {
   border-color: #6cc3e0;
   box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.2);
 }
+.p-job-detail__message-input--error {
+  border-color: #ff4136;
+}
 .p-job-detail__message-submit {
   align-self: flex-end;
   padding: 10px 24px;
@@ -3350,6 +3353,17 @@ textarea {
 }
 .p-job-detail__message-submit:hover {
   background-color: rgb(65.8820224719, 177.808988764, 215.1179775281);
+}
+.p-job-detail__character-counter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+.p-job-detail__character-counter--error {
+  color: #ff4136;
+  font-weight: bold;
 }
 .p-job-detail__author {
   display: flex;
@@ -5819,6 +5833,7 @@ textarea {
 }
 .p-notifications__item-action:hover {
   background-color: rgb(65.8820224719, 177.808988764, 215.1179775281);
+  color: #fff;
 }
 .p-notifications__item-mark-read {
   background-color: transparent;
