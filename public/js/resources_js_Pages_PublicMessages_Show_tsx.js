@@ -1022,11 +1022,17 @@ function NotificationBadge() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ PublicMessage)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 // パブリックメッセージの型定義
@@ -1069,42 +1075,85 @@ var formatMessageDate = function formatMessageDate(dateString) {
  * パブリックメッセージコンポーネント
  * 案件詳細ページなどで表示される公開メッセージ
  */
-function PublicMessage(_ref) {
+var PublicMessage = function PublicMessage(_ref) {
   var message = _ref.message;
+  // 表示状態を管理するstate
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    isExpanded = _useState2[0],
+    setIsExpanded = _useState2[1];
+
+  // メッセージの長さ定数
+  var MAX_MESSAGE_LENGTH = 300; // 省略表示する文字数の閾値
+  var isLongMessage = message.message.length > MAX_MESSAGE_LENGTH;
+
+  // 日付のフォーマット
+  var formatDate = function formatDate(dateString) {
+    var date = new Date(dateString);
+    return date.toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  };
+
+  // 省略表示用のメッセージテキスト
+  var displayMessage = isLongMessage && !isExpanded ? "".concat(message.message.substring(0, MAX_MESSAGE_LENGTH), "...") : message.message;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-    className: "p-job-detail__message",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-      className: "p-job-detail__message-header",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-        className: "p-job-detail__message-user",
-        children: [message.user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
-          src: getAvatarUrl(message.user.avatar),
-          alt: message.user.name,
-          className: "p-job-detail__message-avatar",
-          onError: function onError(e) {
-            e.currentTarget.onerror = null;
-            e.currentTarget.src = "";
-            if (e.currentTarget.parentElement) {
-              e.currentTarget.parentElement.innerHTML = message.user.name.charAt(0).toUpperCase();
+    className: "p-public-message",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      className: "p-public-message__header",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "p-public-message__user",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "p-public-message__avatar",
+          children: message.user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+            src: getAvatarUrl(message.user.avatar),
+            alt: "".concat(message.user.name, "\u306E\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u753B\u50CF"),
+            className: "p-public-message__avatar-image",
+            onError: function onError(e) {
+              if (e.currentTarget.parentElement) {
+                e.currentTarget.parentElement.innerHTML = message.user.name.charAt(0).toUpperCase();
+              }
             }
-          }
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-          className: "p-job-detail__message-avatar-placeholder",
-          children: message.user.name.charAt(0)
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
-          className: "p-job-detail__message-name",
-          children: message.user.name
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "p-public-message__avatar-placeholder",
+            children: message.user.name.charAt(0).toUpperCase()
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "p-public-message__user-info",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "p-public-message__name",
+            children: message.user.name
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "p-public-message__date",
+            children: formatDate(message.created_at)
+          })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
-        className: "p-job-detail__message-date",
-        children: formatMessageDate(message.created_at)
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "p-public-message__body",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "p-public-message__content",
+        children: displayMessage.split("\n").map(function (line, index) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+            className: "p-public-message__line",
+            children: line
+          }, index);
+        })
+      }), isLongMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+        className: "p-public-message__toggle-button",
+        onClick: function onClick() {
+          return setIsExpanded(!isExpanded);
+        },
+        children: isExpanded ? "閉じる" : "続きを読む"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: "p-job-detail__message-content",
-      children: message.message
     })]
   });
-}
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PublicMessage);
 
 /***/ }),
 
@@ -1487,10 +1536,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+// ページネーション用のインターフェースを追加
+
 function Show(_ref) {
-  var _jobListing$public_me, _jobListing$public_me2;
-  var jobListing = _ref.jobListing;
-  console.log(jobListing);
+  var jobListing = _ref.jobListing,
+    publicMessages = _ref.publicMessages;
   // データのチェック
   if (!jobListing) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -1562,14 +1613,129 @@ function Show(_ref) {
           className: "p-public-messages-detail__messages",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h2", {
             className: "p-public-messages-detail__section-title",
-            children: ["\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\uFF08", ((_jobListing$public_me = jobListing.public_messages) === null || _jobListing$public_me === void 0 ? void 0 : _jobListing$public_me.length) || 0, "\u4EF6\uFF09"]
-          }), ((_jobListing$public_me2 = jobListing.public_messages) === null || _jobListing$public_me2 === void 0 ? void 0 : _jobListing$public_me2.length) > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            children: ["\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\uFF08", publicMessages.total, "\u4EF6\uFF09"]
+          }), publicMessages.data.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
             className: "p-public-messages-detail__messages-list",
-            children: jobListing.public_messages.map(function (message) {
+            children: [publicMessages.data.map(function (message) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PublicMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
                 message: message
               }, message.id);
-            })
+            }), publicMessages.last_page > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              className: "p-public-messages-detail__pagination",
+              children: [publicMessages.current_page > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                className: "p-public-messages-detail__pagination-button",
+                onClick: function onClick() {
+                  return _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("public-messages.show", jobListing.id), {
+                    page: publicMessages.current_page - 1
+                  }, {
+                    preserveState: true,
+                    only: ["publicMessages"]
+                  });
+                },
+                children: "\u524D\u3078"
+              }), function () {
+                var currentPage = publicMessages.current_page;
+                var lastPage = publicMessages.last_page;
+                var pages = [];
+
+                // 常に最初のページを表示
+                pages.push(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                  className: "p-public-messages-detail__pagination-number ".concat(currentPage === 1 ? "p-public-messages-detail__pagination-number--active" : ""),
+                  onClick: function onClick() {
+                    if (currentPage !== 1) {
+                      _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("public-messages.show", jobListing.id), {
+                        page: 1
+                      }, {
+                        preserveState: true,
+                        only: ["publicMessages"]
+                      });
+                    }
+                  },
+                  children: "1"
+                }, 1));
+
+                // 現在のページの周りのページを計算
+                var startPage = Math.max(2, currentPage - 1);
+                var endPage = Math.min(lastPage - 1, currentPage + 1);
+
+                // 最初のページと省略記号の間に十分なスペースがない場合は調整
+                if (startPage === 2) {
+                  endPage = Math.min(lastPage - 1, 3);
+                }
+
+                // 最後のページと省略記号の間に十分なスペースがない場合は調整
+                if (endPage === lastPage - 1) {
+                  startPage = Math.max(2, lastPage - 2);
+                }
+
+                // 省略記号を表示するかどうか
+                if (startPage > 2) {
+                  pages.push(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                    className: "p-public-messages-detail__pagination-ellipsis",
+                    children: "..."
+                  }, "ellipsis1"));
+                }
+
+                // 中間のページを表示
+                var _loop = function _loop(i) {
+                  pages.push(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                    className: "p-public-messages-detail__pagination-number ".concat(currentPage === i ? "p-public-messages-detail__pagination-number--active" : ""),
+                    onClick: function onClick() {
+                      if (currentPage !== i) {
+                        _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("public-messages.show", jobListing.id), {
+                          page: i
+                        }, {
+                          preserveState: true,
+                          only: ["publicMessages"]
+                        });
+                      }
+                    },
+                    children: i
+                  }, i));
+                };
+                for (var i = startPage; i <= endPage; i++) {
+                  _loop(i);
+                }
+
+                // 省略記号を表示するかどうか
+                if (endPage < lastPage - 1) {
+                  pages.push(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                    className: "p-public-messages-detail__pagination-ellipsis",
+                    children: "..."
+                  }, "ellipsis2"));
+                }
+
+                // 最後のページが2ページ目以降なら表示
+                if (lastPage > 1) {
+                  pages.push(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                    className: "p-public-messages-detail__pagination-number ".concat(currentPage === lastPage ? "p-public-messages-detail__pagination-number--active" : ""),
+                    onClick: function onClick() {
+                      if (currentPage !== lastPage) {
+                        _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("public-messages.show", jobListing.id), {
+                          page: lastPage
+                        }, {
+                          preserveState: true,
+                          only: ["publicMessages"]
+                        });
+                      }
+                    },
+                    children: lastPage
+                  }, lastPage));
+                }
+                return pages;
+              }(), publicMessages.current_page < publicMessages.last_page && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                className: "p-public-messages-detail__pagination-button",
+                onClick: function onClick() {
+                  return _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("public-messages.show", jobListing.id), {
+                    page: publicMessages.current_page + 1
+                  }, {
+                    preserveState: true,
+                    only: ["publicMessages"]
+                  });
+                },
+                children: "\u6B21\u3078"
+              })]
+            })]
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
             className: "p-public-messages-detail__empty",
             children: "\u307E\u3060\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u306F\u3042\u308A\u307E\u305B\u3093"

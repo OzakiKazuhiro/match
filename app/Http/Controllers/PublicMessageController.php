@@ -7,6 +7,7 @@ use App\Models\JobListing;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
 
 class PublicMessageController extends Controller
 {
@@ -55,11 +56,18 @@ class PublicMessageController extends Controller
      */
     public function show(JobListing $jobListing): Response
     {
-        // 案件の情報と関連するすべてのパブリックメッセージを取得
-        $jobListing->load(['user', 'publicMessages.user']);
+        // 案件の情報を取得
+        $jobListing->load('user');
+        
+        // パブリックメッセージをページネーションで取得（新しい順、10件ずつ）
+        $publicMessages = $jobListing->publicMessages()
+            ->with('user')
+            ->latest()
+            ->paginate(10);
         
         return Inertia::render('PublicMessages/Show', [
             'jobListing' => $jobListing,
+            'publicMessages' => $publicMessages,
         ]);
     }
 } 

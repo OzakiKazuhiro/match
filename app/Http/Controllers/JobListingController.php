@@ -106,8 +106,14 @@ class JobListingController extends Controller
             return redirect()->route('verification.notice');
         }
         
-        // 案件の投稿者情報とパブリックメッセージを取得
-        $jobListing->load(['user', 'publicMessages.user']);
+        // 案件の投稿者情報を取得
+        $jobListing->load('user');
+        
+        // パブリックメッセージをページネーションで取得（10件ずつ）
+        $publicMessages = $jobListing->publicMessages()
+            ->with('user')
+            ->latest()
+            ->paginate(10);
         
         // 投稿者の総案件数を取得
         $totalJobListings = JobListing::where('user_id', $jobListing->user_id)->count();
@@ -133,6 +139,7 @@ class JobListingController extends Controller
         
         return Inertia::render('JobDetail', [
             'jobListing' => $jobListing,
+            'publicMessages' => $publicMessages, // ページネーション情報を含むパブリックメッセージ
             'canEdit' => Auth::check() && Auth::id() === $jobListing->user_id,
             'canApply' => Auth::check() && Auth::id() !== $jobListing->user_id && !$jobListing->is_closed,
             'hasApplied' => $hasApplied,

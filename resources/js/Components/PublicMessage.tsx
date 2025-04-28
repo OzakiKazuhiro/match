@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { User } from "@/types";
 
 // パブリックメッセージの型定義
@@ -54,43 +54,89 @@ const formatMessageDate = (dateString: string) => {
  * パブリックメッセージコンポーネント
  * 案件詳細ページなどで表示される公開メッセージ
  */
-export default function PublicMessage({ message }: PublicMessageProps) {
+const PublicMessage = ({ message }: PublicMessageProps) => {
+    // 表示状態を管理するstate
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    // メッセージの長さ定数
+    const MAX_MESSAGE_LENGTH = 300; // 省略表示する文字数の閾値
+    const isLongMessage = message.message.length > MAX_MESSAGE_LENGTH;
+
+    // 日付のフォーマット
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("ja-JP", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    };
+
+    // 省略表示用のメッセージテキスト
+    const displayMessage =
+        isLongMessage && !isExpanded
+            ? `${message.message.substring(0, MAX_MESSAGE_LENGTH)}...`
+            : message.message;
+
     return (
-        <div className="p-job-detail__message">
-            <div className="p-job-detail__message-header">
-                <div className="p-job-detail__message-user">
-                    {message.user.avatar ? (
-                        <img
-                            src={getAvatarUrl(message.user.avatar)}
-                            alt={message.user.name}
-                            className="p-job-detail__message-avatar"
-                            onError={(e) => {
-                                e.currentTarget.onerror = null;
-                                e.currentTarget.src = "";
-                                if (e.currentTarget.parentElement) {
-                                    e.currentTarget.parentElement.innerHTML =
-                                        message.user.name
-                                            .charAt(0)
-                                            .toUpperCase();
-                                }
-                            }}
-                        />
-                    ) : (
-                        <div className="p-job-detail__message-avatar-placeholder">
-                            {message.user.name.charAt(0)}
+        <div className="p-public-message">
+            <div className="p-public-message__header">
+                <div className="p-public-message__user">
+                    <div className="p-public-message__avatar">
+                        {message.user.avatar ? (
+                            <img
+                                src={getAvatarUrl(message.user.avatar)}
+                                alt={`${message.user.name}のプロフィール画像`}
+                                className="p-public-message__avatar-image"
+                                onError={(e) => {
+                                    if (e.currentTarget.parentElement) {
+                                        e.currentTarget.parentElement.innerHTML =
+                                            message.user.name
+                                                .charAt(0)
+                                                .toUpperCase();
+                                    }
+                                }}
+                            />
+                        ) : (
+                            <div className="p-public-message__avatar-placeholder">
+                                {message.user.name.charAt(0).toUpperCase()}
+                            </div>
+                        )}
+                    </div>
+                    <div className="p-public-message__user-info">
+                        <div className="p-public-message__name">
+                            {message.user.name}
                         </div>
-                    )}
-                    <span className="p-job-detail__message-name">
-                        {message.user.name}
-                    </span>
+                        <div className="p-public-message__date">
+                            {formatDate(message.created_at)}
+                        </div>
+                    </div>
                 </div>
-                <span className="p-job-detail__message-date">
-                    {formatMessageDate(message.created_at)}
-                </span>
             </div>
-            <div className="p-job-detail__message-content">
-                {message.message}
+            <div className="p-public-message__body">
+                {/* 改行を維持しながらメッセージを表示 */}
+                <div className="p-public-message__content">
+                    {displayMessage.split("\n").map((line, index) => (
+                        <p key={index} className="p-public-message__line">
+                            {line}
+                        </p>
+                    ))}
+                </div>
+
+                {/* 長いメッセージの場合に「続きを読む/閉じる」ボタンを表示 */}
+                {isLongMessage && (
+                    <button
+                        className="p-public-message__toggle-button"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                    >
+                        {isExpanded ? "閉じる" : "続きを読む"}
+                    </button>
+                )}
             </div>
         </div>
     );
-}
+};
+
+export default PublicMessage;
