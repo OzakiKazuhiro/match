@@ -4666,6 +4666,7 @@ textarea {
   background-color: #f5f7fa;
   min-height: calc(100vh - 64px);
   padding: 2rem 0;
+  /* ヘッダー部分のスタイル */
   /* LINE風レイアウト用コンテナ */
   /* チャット領域 (左側) */
   /* メッセージ一覧 */
@@ -4693,6 +4694,40 @@ textarea {
   font-size: 1.75rem;
   font-weight: 600;
   color: #fff;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.p-messages__header-avatar, .p-messages__header-avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.p-messages__header-avatar-placeholder {
+  background-color: #e0e0e0;
+  color: #757575;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.p-messages__header-text {
+  display: flex;
+  flex-direction: column;
+}
+.p-messages__header-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+.p-messages__header-job {
+  font-size: 0.9rem;
+  margin-top: 2px;
+  opacity: 0.9;
 }
 .p-messages__container {
   max-width: 1000px;
@@ -5015,6 +5050,20 @@ textarea {
   display: flex;
   align-items: center;
 }
+.p-messages__person-details {
+  display: flex;
+  flex-direction: column;
+}
+.p-messages__person-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1a202c;
+}
+.p-messages__person-job {
+  font-size: 0.8rem;
+  color: #4a5568;
+  margin-top: 2px;
+}
 .p-messages__avatar {
   position: relative;
   width: 40px;
@@ -5057,10 +5106,6 @@ textarea {
   border: 2px solid white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   z-index: 10;
-}
-.p-messages__person-name {
-  font-weight: 600;
-  color: #1a202c;
 }
 .p-messages__job-tag {
   display: inline-block;

@@ -261,10 +261,34 @@ export default function Show({
             header={
                 <div className="p-messages__header">
                     <div className="p-messages__title">
-                        {conversationGroup.job_listing && (
-                            <>{conversationGroup.job_listing.title} - </>
+                        {otherParticipant?.avatar ? (
+                            <img
+                                src={
+                                    otherParticipant.avatar.startsWith("/")
+                                        ? otherParticipant.avatar
+                                        : `/${otherParticipant.avatar}`
+                                }
+                                alt={otherParticipant.name}
+                                className="p-messages__header-avatar"
+                            />
+                        ) : (
+                            <div className="p-messages__header-avatar-placeholder">
+                                {otherParticipant?.name
+                                    ?.charAt(0)
+                                    .toUpperCase() || "?"}
+                            </div>
                         )}
-                        {otherParticipant?.name || "不明なユーザー"}との会話
+                        <span className="p-messages__header-text">
+                            <span className="p-messages__header-name">
+                                {otherParticipant?.name || "不明なユーザー"}
+                            </span>
+                            {conversationGroup.job_listing && (
+                                <span className="p-messages__header-job">
+                                    案件：【
+                                    {conversationGroup.job_listing.title}】
+                                </span>
+                            )}
+                        </span>
                     </div>
                     <Link
                         href={route("messages.index")}
@@ -277,11 +301,11 @@ export default function Show({
             showFooter={false}
         >
             <Head
-                title={`${
+                title={`${otherParticipant?.name || "不明なユーザー"} - ${
                     conversationGroup.job_listing
-                        ? conversationGroup.job_listing.title + " - "
-                        : ""
-                }${otherParticipant?.name || "不明なユーザー"}との会話`}
+                        ? conversationGroup.job_listing.title
+                        : "会話"
+                }`}
             />
 
             <div className="p-messages__line-container">
@@ -390,7 +414,8 @@ export default function Show({
                                 </h3>
                                 {conversationGroup.job_listing && (
                                     <div className="p-messages__job-title">
-                                        {conversationGroup.job_listing.title}
+                                        案件：【
+                                        {conversationGroup.job_listing.title}】
                                     </div>
                                 )}
                             </div>

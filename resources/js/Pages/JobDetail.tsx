@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, useForm, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
@@ -7,7 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { route } from "ziggy-js";
 import PublicMessage, { PublicMessageType } from "@/Components/PublicMessage";
 import axios from "axios";
-import { router } from "@inertiajs/react";
+import Modal from "@/Components/Modal";
 
 /**
  * アバター画像のURLを適切な形式に変換する
@@ -172,6 +172,29 @@ export default function JobDetail({
         });
     };
 
+    const [confirmingClose, setConfirmingClose] = useState(false);
+
+    // 募集終了確認モーダルを開く
+    const confirmJobClose = () => {
+        setConfirmingClose(true);
+    };
+
+    // 募集終了確認モーダルを閉じる
+    const closeModal = () => {
+        setConfirmingClose(false);
+    };
+
+    // 募集終了の実行
+    const handleJobClose = () => {
+        router.patch(
+            route("job-listings.close", jobListing.id),
+            {},
+            {
+                onSuccess: () => closeModal(),
+            }
+        );
+    };
+
     return (
         <AuthenticatedLayout
             header={<div className="p-job-detail__title">案件詳細</div>}
@@ -218,7 +241,7 @@ export default function JobDetail({
                                             </span>
                                         )}
                                         <span className="p-job-detail__date">
-                                            投稿日:{" "}
+                                            投稿日：{" "}
                                             {formatDate(jobListing.created_at)}
                                         </span>
                                     </div>
@@ -227,7 +250,7 @@ export default function JobDetail({
                                     </h1>
                                     {formatBudget() && (
                                         <div className="p-job-detail__budget">
-                                            予算: {formatBudget()}
+                                            予算： {formatBudget()}
                                         </div>
                                     )}
                                 </div>
@@ -292,7 +315,7 @@ export default function JobDetail({
                                     <div className="p-job-detail__info">
                                         <div className="p-job-detail__info-item">
                                             <span className="p-job-detail__info-label">
-                                                作業場所:
+                                                作業場所：
                                             </span>
                                             <span className="p-job-detail__info-value">
                                                 {jobListing.location}
@@ -300,7 +323,7 @@ export default function JobDetail({
                                         </div>
                                         <div className="p-job-detail__info-item">
                                             <span className="p-job-detail__info-label">
-                                                ステータス:
+                                                ステータス：
                                             </span>
                                             <span
                                                 className={`p-job-detail__info-value p-job-detail__status p-job-detail__status--${
@@ -316,7 +339,7 @@ export default function JobDetail({
                                         </div>
                                         <div className="p-job-detail__info-item">
                                             <span className="p-job-detail__info-label">
-                                                閲覧数:
+                                                閲覧数：
                                             </span>
                                             <span className="p-job-detail__info-value">
                                                 {jobListing.view_count}
@@ -329,27 +352,26 @@ export default function JobDetail({
                                     <div className="p-job-detail__actions">
                                         {canEdit && (
                                             <>
-                                                <Link
-                                                    href={route(
-                                                        "job-listings.edit",
-                                                        jobListing.id
-                                                    )}
-                                                    className="p-job-detail__message-button"
-                                                >
-                                                    編集する
-                                                </Link>
                                                 {!jobListing.is_closed && (
-                                                    <Link
-                                                        href={route(
-                                                            "job-listings.close",
-                                                            jobListing.id
-                                                        )}
-                                                        method="patch"
-                                                        as="button"
-                                                        className="p-job-detail__message-button"
-                                                    >
-                                                        募集を終了する
-                                                    </Link>
+                                                    <>
+                                                        <Link
+                                                            href={route(
+                                                                "job-listings.edit",
+                                                                jobListing.id
+                                                            )}
+                                                            className="p-job-detail__message-button"
+                                                        >
+                                                            編集する
+                                                        </Link>
+                                                        <button
+                                                            onClick={
+                                                                confirmJobClose
+                                                            }
+                                                            className="p-job-detail__message-button"
+                                                        >
+                                                            募集を終了する
+                                                        </button>
+                                                    </>
                                                 )}
                                             </>
                                         )}
@@ -800,53 +822,87 @@ export default function JobDetail({
                             </div>
 
                             {/* シェアボタン */}
-                            <div className="p-job-detail__card p-job-detail__card--share">
-                                <h2 className="p-job-detail__section-title">
-                                    この案件をシェアする
-                                </h2>
-                                <div className="p-job-detail__share-buttons">
-                                    <a
-                                        href={`https://x.com/intent/tweet?text=${encodeURIComponent(
-                                            `【案件情報】${
-                                                jobListing.title
-                                            } | ${
-                                                jobListing.type === "one_time"
-                                                    ? "単発案件"
-                                                    : "レベニューシェア"
-                                            } | Match`
-                                        )}&url=${encodeURIComponent(
-                                            window.location.href
-                                        )}&hashtags=${encodeURIComponent(
-                                            "エンジニア,案件募集,Match"
-                                        )}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="p-job-detail__share-button p-job-detail__share-button--twitter"
-                                        onClick={() => {
-                                            console.log(
-                                                "案件がシェアされました:",
-                                                jobListing.id
-                                            );
-                                        }}
-                                    >
-                                        <div className="p-job-detail__share-button-content">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                            >
-                                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                            </svg>
-                                        </div>
-                                    </a>
+                            {!jobListing.is_closed && (
+                                <div className="p-job-detail__card p-job-detail__card--share">
+                                    <h2 className="p-job-detail__section-title">
+                                        この案件をシェアする
+                                    </h2>
+                                    <div className="p-job-detail__share-buttons">
+                                        <a
+                                            href={`https://x.com/intent/tweet?text=${encodeURIComponent(
+                                                `【案件情報】${
+                                                    jobListing.title
+                                                } | ${
+                                                    jobListing.type ===
+                                                    "one_time"
+                                                        ? "単発案件"
+                                                        : "レベニューシェア"
+                                                } | Match`
+                                            )}&url=${encodeURIComponent(
+                                                window.location.href
+                                            )}&hashtags=${encodeURIComponent(
+                                                "エンジニア,案件募集,Match"
+                                            )}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="p-job-detail__share-button p-job-detail__share-button--twitter"
+                                            onClick={() => {
+                                                console.log(
+                                                    "案件がシェアされました:",
+                                                    jobListing.id
+                                                );
+                                            }}
+                                        >
+                                            <div className="p-job-detail__share-button-content">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                    fill="currentColor"
+                                                >
+                                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                                </svg>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* 募集終了確認モーダル */}
+            <Modal show={confirmingClose} onClose={closeModal} maxWidth="md">
+                <div className="p-6">
+                    <h2 className="text-lg font-medium text-gray-900">
+                        募集終了の確認
+                    </h2>
+
+                    <p className="mt-3 text-sm text-gray-600">
+                        一度、募集を終了すると、案件一覧から表示されなくなり、この操作は取り消せません。よろしいですか？
+                    </p>
+
+                    <div className="mt-6 flex justify-end space-x-3">
+                        <button
+                            type="button"
+                            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            onClick={closeModal}
+                        >
+                            キャンセル
+                        </button>
+
+                        <button
+                            type="button"
+                            className="ml-3 inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                            onClick={handleJobClose}
+                        >
+                            募集を終了する
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </AuthenticatedLayout>
     );
 }

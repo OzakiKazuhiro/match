@@ -48,10 +48,13 @@ var getInitials = function getInitials(name) {
 };
 
 /**
- * 時刻のみを抽出するフォーマット関数
+ * 日付と時刻をフォーマットする関数
  */
-var formatTimeOnly = function formatTimeOnly(dateString) {
-  return new Date(dateString).toLocaleTimeString("ja-JP", {
+var formatDateTime = function formatDateTime(dateString) {
+  return new Date(dateString).toLocaleString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
     hour: "2-digit",
     minute: "2-digit"
   });
@@ -66,8 +69,8 @@ function DirectMessage(_ref) {
     currentUserId = _ref.currentUserId;
   var isSentByCurrentUser = message.sender_id === currentUserId;
 
-  // 時刻のみのフォーマット
-  var timeOnly = formatTimeOnly(message.created_at);
+  // 日時のフォーマット
+  var dateTime = formatDateTime(message.created_at);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: "p-messages__message-item ".concat(isSentByCurrentUser ? "p-messages__message-item--sent" : "p-messages__message-item--received"),
     children: [!isSentByCurrentUser && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
@@ -101,7 +104,7 @@ function DirectMessage(_ref) {
           children: [isSentByCurrentUser && message.is_read && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
             className: "p-messages__message-read",
             children: "\u65E2\u8AAD"
-          }), timeOnly]
+          }), dateTime]
         })]
       })]
     })]
@@ -653,7 +656,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 function Show(_ref) {
-  var _otherParticipant$nam;
+  var _otherParticipant$nam, _otherParticipant$nam2;
   var auth = _ref.auth,
     conversationGroup = _ref.conversationGroup,
     initialMessages = _ref.messages,
@@ -941,9 +944,23 @@ function Show(_ref) {
       className: "p-messages__header",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "p-messages__title",
-        children: [conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-          children: [conversationGroup.job_listing.title, " - "]
-        }), (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", "\u3068\u306E\u4F1A\u8A71"]
+        children: [otherParticipant !== null && otherParticipant !== void 0 && otherParticipant.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+          src: otherParticipant.avatar.startsWith("/") ? otherParticipant.avatar : "/".concat(otherParticipant.avatar),
+          alt: otherParticipant.name,
+          className: "p-messages__header-avatar"
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "p-messages__header-avatar-placeholder",
+          children: (otherParticipant === null || otherParticipant === void 0 || (_otherParticipant$nam = otherParticipant.name) === null || _otherParticipant$nam === void 0 ? void 0 : _otherParticipant$nam.charAt(0).toUpperCase()) || "?"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
+          className: "p-messages__header-text",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "p-messages__header-name",
+            children: (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー"
+          }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
+            className: "p-messages__header-job",
+            children: ["\u6848\u4EF6\uFF1A\u3010", conversationGroup.job_listing.title, "\u3011"]
+          })]
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
         href: route("messages.index"),
         className: "p-messages__back-button",
@@ -952,7 +969,7 @@ function Show(_ref) {
     }),
     showFooter: false,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
-      title: "".concat(conversationGroup.job_listing ? conversationGroup.job_listing.title + " - " : "").concat((otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", "\u3068\u306E\u4F1A\u8A71")
+      title: "".concat((otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", " - ").concat(conversationGroup.job_listing ? conversationGroup.job_listing.title : "会話")
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "p-messages__line-container",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -1025,15 +1042,15 @@ function Show(_ref) {
               className: "p-messages__user-avatar"
             }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
               className: "p-messages__user-avatar-placeholder",
-              children: (otherParticipant === null || otherParticipant === void 0 || (_otherParticipant$nam = otherParticipant.name) === null || _otherParticipant$nam === void 0 ? void 0 : _otherParticipant$nam.charAt(0).toUpperCase()) || "?"
+              children: (otherParticipant === null || otherParticipant === void 0 || (_otherParticipant$nam2 = otherParticipant.name) === null || _otherParticipant$nam2 === void 0 ? void 0 : _otherParticipant$nam2.charAt(0).toUpperCase()) || "?"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "p-messages__user-details",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
                 className: "p-messages__user-name",
                 children: (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー"
-              }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                 className: "p-messages__job-title",
-                children: conversationGroup.job_listing.title
+                children: ["\u6848\u4EF6\uFF1A\u3010", conversationGroup.job_listing.title, "\u3011"]
               })]
             })]
           }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {

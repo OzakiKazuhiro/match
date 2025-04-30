@@ -10,6 +10,47 @@
         font-size: 1.75rem;
         font-weight: 600;
         color: #fff;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    /* ヘッダー部分のスタイル */
+    &__header-avatar,
+    &__header-avatar-placeholder {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        flex-shrink: 0;
+    }
+
+    &__header-avatar-placeholder {
+        background-color: #e0e0e0;
+        color: #757575;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    &__header-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__header-name {
+        font-weight: bold;
+        font-size: 1.1rem;
+        line-height: 1.2;
+    }
+
+    &__header-job {
+        font-size: 0.9rem;
+        margin-top: 2px;
+        opacity: 0.9;
     }
 
     &__container {
@@ -387,6 +428,23 @@
         align-items: center;
     }
 
+    &__person-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__person-name {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #1a202c;
+    }
+
+    &__person-job {
+        font-size: 0.8rem;
+        color: #4a5568;
+        margin-top: 2px;
+    }
+
     &__avatar {
         position: relative;
         width: 40px;
@@ -431,11 +489,6 @@
         border: 2px solid white;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         z-index: 10;
-    }
-
-    &__person-name {
-        font-weight: 600;
-        color: #1a202c;
     }
 
     &__job-tag {

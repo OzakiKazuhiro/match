@@ -1,7 +1,9 @@
 import { Head, Link, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Modal from "@/Components/Modal";
+import { route } from "ziggy-js";
 
 interface User {
     id: number;
@@ -61,6 +63,11 @@ export default function ApplicationsToMyJobs({
     const [expandedJobs, setExpandedJobs] = useState<{
         [key: string]: boolean;
     }>({});
+
+    // 募集終了確認モーダル用の状態
+    const [confirmingCloseId, setConfirmingCloseId] = useState<number | null>(
+        null
+    );
 
     // 案件カードの開閉切り替え
     const toggleJobExpand = (jobId: string) => {
@@ -141,6 +148,29 @@ export default function ApplicationsToMyJobs({
         }
         groupedApplications[application.job_listing_id].push(application);
     });
+
+    // 募集終了確認モーダルを開く
+    const confirmJobClose = (jobId: number) => {
+        setConfirmingCloseId(jobId);
+    };
+
+    // 募集終了確認モーダルを閉じる
+    const closeModal = () => {
+        setConfirmingCloseId(null);
+    };
+
+    // 募集終了の実行
+    const handleJobClose = () => {
+        if (confirmingCloseId !== null) {
+            router.patch(
+                route("job-listings.close", confirmingCloseId),
+                {},
+                {
+                    onSuccess: () => closeModal(),
+                }
+            );
+        }
+    };
 
     return (
         <AuthenticatedLayout
@@ -468,17 +498,18 @@ export default function ApplicationsToMyJobs({
                                                                 )}
                                                             </div>
                                                             <div className="p-applications__job-card-footer">
-                                                                <Link
-                                                                    href={route(
-                                                                        "job-listings.close",
-                                                                        jobListing.id
-                                                                    )}
-                                                                    method="patch"
-                                                                    as="button"
-                                                                    className="p-applications__close-job-button"
-                                                                >
-                                                                    案件の募集を終了する
-                                                                </Link>
+                                                                {!jobListing.is_closed && (
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            confirmJobClose(
+                                                                                jobListing.id
+                                                                            )
+                                                                        }
+                                                                        className="p-applications__close-job-button"
+                                                                    >
+                                                                        案件の募集を終了する
+                                                                    </button>
+                                                                )}
                                                                 <Link
                                                                     href={route(
                                                                         "job-listings.show",
@@ -501,6 +532,41 @@ export default function ApplicationsToMyJobs({
                     </div>
                 </div>
             </div>
+
+            {/* 募集終了確認モーダル */}
+            <Modal
+                show={confirmingCloseId !== null}
+                onClose={closeModal}
+                maxWidth="md"
+            >
+                <div className="p-6">
+                    <h2 className="text-lg font-medium text-gray-900">
+                        募集終了の確認
+                    </h2>
+
+                    <p className="mt-3 text-sm text-gray-600">
+                        一度、募集を終了すると、案件一覧から表示されなくなり、この操作は取り消せません。よろしいですか？
+                    </p>
+
+                    <div className="mt-6 flex justify-end space-x-3">
+                        <button
+                            type="button"
+                            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            onClick={closeModal}
+                        >
+                            キャンセル
+                        </button>
+
+                        <button
+                            type="button"
+                            className="ml-3 inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                            onClick={handleJobClose}
+                        >
+                            募集を終了する
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </AuthenticatedLayout>
     );
 }

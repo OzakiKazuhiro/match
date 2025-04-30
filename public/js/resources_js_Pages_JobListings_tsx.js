@@ -1752,7 +1752,7 @@ function JobListings(_ref) {
   // カテゴリー名の表示用テキストを取得
   var getCategoryDisplayText = function getCategoryDisplayText() {
     if (activeCategory === "all") {
-      return "カテゴリー選択";
+      return "カテゴリー";
     }
     // カテゴリー名はそのまま表示（CSSで省略表示される）
     return activeCategory;

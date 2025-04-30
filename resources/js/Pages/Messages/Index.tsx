@@ -185,16 +185,23 @@ export default function Index({
                                                         </span>
                                                     )}
                                                 </div>
-                                                <span className="p-messages__person-name">
-                                                    {otherParticipant.name}
-                                                </span>
+                                                <div className="p-messages__person-details">
+                                                    <div className="p-messages__person-name">
+                                                        {otherParticipant.name}
+                                                    </div>
+                                                    {group.job_listing && (
+                                                        <div className="p-messages__person-job">
+                                                            案件：【
+                                                            {
+                                                                group
+                                                                    .job_listing
+                                                                    .title
+                                                            }
+                                                            】
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
-
-                                            {group.job_listing && (
-                                                <span className="p-messages__job-tag">
-                                                    {group.job_listing.title}
-                                                </span>
-                                            )}
                                         </div>
 
                                         <div className="p-messages__message">

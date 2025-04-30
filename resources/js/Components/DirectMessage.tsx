@@ -51,10 +51,13 @@ const getInitials = (name: string): string => {
 };
 
 /**
- * 時刻のみを抽出するフォーマット関数
+ * 日付と時刻をフォーマットする関数
  */
-const formatTimeOnly = (dateString: string): string => {
-    return new Date(dateString).toLocaleTimeString("ja-JP", {
+const formatDateTime = (dateString: string): string => {
+    return new Date(dateString).toLocaleString("ja-JP", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
     });
@@ -70,8 +73,8 @@ export default function DirectMessage({
 }: DirectMessageProps) {
     const isSentByCurrentUser = message.sender_id === currentUserId;
 
-    // 時刻のみのフォーマット
-    const timeOnly = formatTimeOnly(message.created_at);
+    // 日時のフォーマット
+    const dateTime = formatDateTime(message.created_at);
 
     return (
         <div
@@ -125,7 +128,7 @@ export default function DirectMessage({
                                 既読
                             </span>
                         )}
-                        {timeOnly}
+                        {dateTime}
                     </div>
                 </div>
             </div>
