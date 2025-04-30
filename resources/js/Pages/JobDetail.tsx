@@ -874,8 +874,8 @@ export default function JobDetail({
 
                             {auth.user && (
                                 <div className="p-job-detail__card p-job-detail__card--favorite">
-                                    <h2 className="p-job-detail__section-title">
-                                        お気に入り
+                                    <h2 className="p-job-detail__section-like-title">
+                                        お気に入り登録する
                                     </h2>
                                     <FavoriteButton
                                         jobId={jobListing.id}

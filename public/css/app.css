@@ -745,9 +745,6 @@ select {
   margin-left: auto;
   margin-right: auto;
 }
-.-me-0\.5 {
-  margin-inline-end: -0.125rem;
-}
 .-ml-px {
   margin-left: -1px;
 }
@@ -780,12 +777,6 @@ select {
 }
 .mr-2 {
   margin-right: 0.5rem;
-}
-.ms-2 {
-  margin-inline-start: 0.5rem;
-}
-.ms-3 {
-  margin-inline-start: 0.75rem;
 }
 .mt-1 {
   margin-top: 0.25rem;
@@ -826,9 +817,6 @@ select {
 .h-16 {
   height: 4rem;
 }
-.h-4 {
-  height: 1rem;
-}
 .h-5 {
   height: 1.25rem;
 }
@@ -843,9 +831,6 @@ select {
 }
 .w-10 {
   width: 2.5rem;
-}
-.w-4 {
-  width: 1rem;
 }
 .w-48 {
   width: 12rem;
@@ -1161,9 +1146,6 @@ select {
 .uppercase {
   text-transform: uppercase;
 }
-.leading-4 {
-  line-height: 1rem;
-}
 .leading-5 {
   line-height: 1.25rem;
 }
@@ -1443,10 +1425,6 @@ select {
   .sm\:mx-auto {
     margin-left: auto;
     margin-right: auto;
-  }
-
-  .sm\:ms-6 {
-    margin-inline-start: 1.5rem;
   }
 
   .sm\:flex {

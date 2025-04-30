@@ -3329,8 +3329,8 @@ function JobDetail(_ref) {
             }), auth.user && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-job-detail__card p-job-detail__card--favorite",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
-                className: "p-job-detail__section-title",
-                children: "\u304A\u6C17\u306B\u5165\u308A"
+                className: "p-job-detail__section-like-title",
+                children: "\u304A\u6C17\u306B\u5165\u308A\u767B\u9332\u3059\u308B"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_FavoriteButton__WEBPACK_IMPORTED_MODULE_7__["default"], {
                 jobId: jobListing.id,
                 initialIsFavorited: isFavorited,

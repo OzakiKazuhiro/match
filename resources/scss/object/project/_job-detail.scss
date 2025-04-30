@@ -94,8 +94,10 @@
         }
 
         &--favorite {
+            position: sticky;
+            top: 555px;
             display: flex;
-            flex-direction: column;
+            // flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -182,6 +184,12 @@
         font-size: 1.125rem;
         font-weight: 600;
         margin-bottom: 16px;
+        color: #333;
+    }
+
+    &__section-like-title {
+        font-size: 1.125rem;
+        font-weight: 600;
         color: #333;
     }
 
@@ -691,9 +699,5 @@
         align-items: center;
         font-size: 1rem;
         color: #6b7280;
-    }
-
-    &__favorite-button {
-        margin-top: 15px;
     }
 }
