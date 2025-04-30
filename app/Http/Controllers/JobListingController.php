@@ -23,52 +23,54 @@ class JobListingController extends Controller
      */
     public function index(Request $request): Response
     {
-        // 案件種別による絞り込み
-        $query = JobListing::query()->with('user');
+        // クエリパラメータからフィルタータイプを取得
+        $type = $request->input('type');
         
-        if ($request->has('type')) {
-            // typeパラメータのマッピング
-            $typeMap = [
-                'onetime' => 'one_time',
-                'revenue' => 'revenue_share'
-            ];
-            
-            $type = $request->type;
-            // URLが古い形式（onetimeやrevenue）の場合、新しい形式にマッピング
-            if (isset($typeMap[$type])) {
-                $type = $typeMap[$type];
-            }
-            
-            $query->where('type', $type);
-        }
-        
-        // 閉じられていない案件のみ表示
-        $query->where('is_closed', false);
-        
-        // 並び順（デフォルトは新しい順）に並べて6件ずつページネーション
-        $jobListings = $query->latest()->paginate(6);
-        
-        // ユーザーの応募状況を取得
+        // 認証されているユーザーの応募済み案件IDを取得
         $userApplications = [];
         $applicationStatuses = [];
         
-        if (Auth::check()) {
-            $applications = \App\Models\Application::where('user_id', Auth::id())
-                ->get(['job_listing_id', 'status']);
-                
+        // 認証されているユーザーのお気に入り案件IDを取得
+        $userFavorites = [];
+        
+        if (auth()->check()) {
+            $user = auth()->user();
+            
+            // ユーザーの応募済み案件IDを取得
+            $applications = $user->applications()->get();
             $userApplications = $applications->pluck('job_listing_id')->toArray();
             
-            // 応募ステータスのマッピングを作成
+            // ステータス情報も取得
             foreach ($applications as $application) {
                 $applicationStatuses[$application->job_listing_id] = $application->status;
             }
+            
+            // ユーザーのお気に入り案件IDを取得
+            $userFavorites = $user->favorites()->pluck('job_listing_id')->toArray();
         }
+        
+        // 案件一覧を取得
+        $query = JobListing::with('user')
+            ->orderBy('created_at', 'desc');
+        
+        // タイプフィルターの適用
+        if ($type === 'one_time') {
+            $query->where('type', 'one_time');
+        } elseif ($type === 'revenue_share') {
+            $query->where('type', 'revenue_share');
+        }
+        
+        // ページネーション
+        $jobListings = $query->paginate(12);
         
         return Inertia::render('JobListings', [
             'jobListings' => $jobListings,
-            'filters' => $request->only(['type']),
+            'filters' => [
+                'type' => $type,
+            ],
             'userApplications' => $userApplications,
             'applicationStatuses' => $applicationStatuses,
+            'userFavorites' => $userFavorites,
         ]);
     }
 
@@ -99,52 +101,60 @@ class JobListingController extends Controller
     /**
      * 案件の詳細を表示
      */
-    public function show(JobListing $jobListing): Response|RedirectResponse
+    public function show(JobListing $jobListing)
     {
-        // メール認証が必要なルートであることを確認
-        if (Auth::check() && !Auth::user()->hasVerifiedEmail()) {
-            return redirect()->route('verification.notice');
-        }
-        
-        // 案件の投稿者情報を取得
-        $jobListing->load('user');
-        
-        // パブリックメッセージをページネーションで取得（10件ずつ）
-        $publicMessages = $jobListing->publicMessages()
-            ->with('user')
-            ->latest()
-            ->paginate(10);
-        
-        // 投稿者の総案件数を取得
-        $totalJobListings = JobListing::where('user_id', $jobListing->user_id)->count();
-        
-        // 閲覧数をインクリメント
+        // 閲覧数をインクリメント（セッションが無い場合のみ）
         $jobListing->incrementViewCount();
         
-        // ユーザーが既に応募したかどうかとステータスをチェック
-        $hasApplied = false;
-        $applicationStatus = 'pending';
-        
-        if (Auth::check()) {
-            $application = \App\Models\Application::where('job_listing_id', $jobListing->id)
-                ->where('user_id', Auth::id())
-                ->first();
-                
-            $hasApplied = $application !== null;
-            
-            if ($application) {
-                $applicationStatus = $application->status;
-            }
+        // ユーザーが未ログインまたはメール未認証の場合、リダイレクト
+        if (!auth()->check() || !auth()->user()->email_verified_at) {
+            return redirect()->route('login')->with('status', 'メールアドレスの認証が必要です。');
         }
+        
+        $user = auth()->user();
+        
+        // 案件詳細を読み込み
+        $jobListing->load('user', 'user.profile');
+        
+        // 公開メッセージを取得（ページネーション付き）
+        $publicMessages = $jobListing->publicMessages()
+            ->with('user', 'user.profile')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+        
+        // 応募済みかどうかを確認
+        $hasApplied = $user->applications()
+            ->where('job_listing_id', $jobListing->id)
+            ->exists();
+        
+        // 応募のステータスを取得
+        $application = $user->applications()
+            ->where('job_listing_id', $jobListing->id)
+            ->first();
+        
+        $applicationStatus = $application ? $application->status : null;
+        
+        // 編集可能かどうかを確認（投稿者自身かつ募集中の場合）
+        $canEdit = $user->id === $jobListing->user_id && !$jobListing->is_closed;
+        
+        // 応募可能かどうかを確認（自分の案件ではなく、まだ応募していない場合）
+        $canApply = $user->id !== $jobListing->user_id && !$hasApplied && !$jobListing->is_closed;
+        
+        // 総案件数を取得（ナビゲーション用）
+        $totalJobListings = JobListing::count();
+        
+        // お気に入り状態を確認
+        $isFavorited = $jobListing->isFavoritedBy($user);
         
         return Inertia::render('JobDetail', [
             'jobListing' => $jobListing,
-            'publicMessages' => $publicMessages, // ページネーション情報を含むパブリックメッセージ
-            'canEdit' => Auth::check() && Auth::id() === $jobListing->user_id,
-            'canApply' => Auth::check() && Auth::id() !== $jobListing->user_id && !$jobListing->is_closed,
+            'publicMessages' => $publicMessages,
+            'canEdit' => $canEdit,
+            'canApply' => $canApply,
             'hasApplied' => $hasApplied,
             'applicationStatus' => $applicationStatus,
             'totalJobListings' => $totalJobListings,
+            'isFavorited' => $isFavorited,
         ]);
     }
 

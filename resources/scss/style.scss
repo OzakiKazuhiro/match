@@ -12,6 +12,7 @@
 @forward "object/component/button";
 @forward "object/component/form";
 @forward "object/component/input";
+@forward "object/component/favorite-button";
 
 // Project
 @forward "object/project/project";
@@ -29,6 +30,7 @@
 @forward "object/project/terms";
 @forward "object/project/notifications";
 @forward "object/project/profile";
+@forward "object/project/favorites";
 
 // Utility
 @forward "object/utility/utility";

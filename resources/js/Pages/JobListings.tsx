@@ -25,6 +25,7 @@ interface JobListingsProps extends PageProps {
     };
     userApplications: number[];
     applicationStatuses?: { [key: number]: string }; // 追加：応募ステータス情報
+    userFavorites: number[]; // 追加：ユーザーのお気に入り案件ID配列
 }
 
 export default function JobListings({
@@ -33,6 +34,7 @@ export default function JobListings({
     filters,
     userApplications,
     applicationStatuses = {}, // デフォルト値を空オブジェクトに設定
+    userFavorites = [], // 追加：デフォルト値を空配列に設定
 }: JobListingsProps) {
     // 状態管理
     const [searchQuery, setSearchQuery] = useState("");
@@ -61,6 +63,9 @@ export default function JobListings({
     const [animating, setAnimating] = useState(false);
     const mobileMenuRef = useRef<HTMLDivElement>(null);
     const mobileButtonRef = useRef<HTMLButtonElement>(null);
+
+    // 追加：お気に入りのみ表示するかのフィルター
+    const [showFavoritesOnly, setShowFavoritesOnly] = useState<boolean>(false);
 
     // メニューの表示状態が変更されたときの処理（未ログイン時のみ）
     useEffect(() => {
@@ -180,7 +185,13 @@ export default function JobListings({
             activeCategory === "all" ||
             (job.category && job.category === activeCategory);
 
-        return matchesQuery && matchesType && matchesCategory;
+        // お気に入りフィルタリング（追加）
+        const matchesFavorite =
+            !showFavoritesOnly || userFavorites.includes(job.id);
+
+        return (
+            matchesQuery && matchesType && matchesCategory && matchesFavorite
+        );
     });
 
     // タイプフィルターの変更（SPA対応）
@@ -311,6 +322,11 @@ export default function JobListings({
                 return 0;
         }
     });
+
+    // 追加：お気に入りフィルタートグル
+    const toggleFavoritesFilter = () => {
+        setShowFavoritesOnly(!showFavoritesOnly);
+    };
 
     // ページコンテンツ（共通部分）
     const pageContent = (
@@ -620,6 +636,48 @@ export default function JobListings({
                                     )}
                                 </div>
                             </div>
+
+                            {/* お気に入りフィルター（追加） */}
+                            {auth?.user && auth?.user.email_verified_at && (
+                                <div className="p-job-listings__favorite-filter">
+                                    <button
+                                        className={`p-job-listings__favorite-button ${
+                                            showFavoritesOnly
+                                                ? "p-job-listings__favorite-button--active"
+                                                : ""
+                                        }`}
+                                        onClick={toggleFavoritesFilter}
+                                        title={
+                                            showFavoritesOnly
+                                                ? "すべての案件を表示"
+                                                : "お気に入りのみ表示"
+                                        }
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill={
+                                                showFavoritesOnly
+                                                    ? "currentColor"
+                                                    : "none"
+                                            }
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                        </svg>
+                                        <span className="p-job-listings__favorite-text">
+                                            {showFavoritesOnly
+                                                ? "お気に入りのみ"
+                                                : "お気に入り"}
+                                        </span>
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -671,6 +729,7 @@ export default function JobListings({
                                         applicationStatuses={
                                             applicationStatuses
                                         }
+                                        userFavorites={userFavorites}
                                     />
                                 ))}
                             </>

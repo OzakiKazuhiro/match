@@ -8,6 +8,7 @@ import { route } from "ziggy-js";
 import PublicMessage, { PublicMessageType } from "@/Components/PublicMessage";
 import axios from "axios";
 import Modal from "@/Components/Modal";
+import FavoriteButton from "@/Components/FavoriteButton";
 
 /**
  * アバター画像のURLを適切な形式に変換する
@@ -82,6 +83,7 @@ export default function JobDetail({
     hasApplied,
     applicationStatus = "pending",
     totalJobListings,
+    isFavorited,
 }: PageProps<{
     jobListing: JobListingData;
     publicMessages: Paginator<PublicMessageType>; // ページネーション情報を含むパブリックメッセージ
@@ -90,6 +92,7 @@ export default function JobDetail({
     hasApplied: boolean;
     applicationStatus?: string;
     totalJobListings: number;
+    isFavorited: boolean;
 }>) {
     const { data, setData, post, processing, errors, reset } = useForm({
         message: "",
@@ -866,6 +869,20 @@ export default function JobDetail({
                                             </div>
                                         </a>
                                     </div>
+                                </div>
+                            )}
+
+                            {auth.user && (
+                                <div className="p-job-detail__card p-job-detail__card--favorite">
+                                    <h2 className="p-job-detail__section-title">
+                                        お気に入り
+                                    </h2>
+                                    <FavoriteButton
+                                        jobId={jobListing.id}
+                                        initialIsFavorited={isFavorited}
+                                        size="lg"
+                                        className="p-job-detail__favorite-button"
+                                    />
                                 </div>
                             )}
                         </div>

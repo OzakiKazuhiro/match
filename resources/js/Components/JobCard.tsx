@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
 import { route } from "ziggy-js";
+import FavoriteButton from "./FavoriteButton";
 
 // ジョブタイプの定義
 export interface JobType {
@@ -31,6 +32,7 @@ interface JobCardProps {
     } | null;
     userApplications?: number[];
     applicationStatuses?: { [key: number]: string };
+    userFavorites?: number[];
 }
 
 export default function JobCard({
@@ -38,6 +40,7 @@ export default function JobCard({
     auth,
     userApplications = [],
     applicationStatuses = {},
+    userFavorites = [],
 }: JobCardProps) {
     // ユーザーが応募済みかをチェック
     const hasApplied = userApplications.includes(job.id);
@@ -104,6 +107,9 @@ export default function JobCard({
         }
     };
 
+    // お気に入り登録済みかをチェック
+    const isFavorited = userFavorites.includes(job.id);
+
     return (
         <div className="p-job-listings__card">
             <div className="p-job-listings__card-header">
@@ -121,11 +127,13 @@ export default function JobCard({
                         {jobTypeNames[job.type as keyof typeof jobTypeNames]}
                     </span>
                 </div>
-                {(job.budget_min || job.budget_max) && (
-                    <span className="p-job-listings__card-budget">
-                        {formatBudget(job.budget_min, job.budget_max)}
-                    </span>
-                )}
+                <div className="p-job-listings__card-header-right">
+                    {(job.budget_min || job.budget_max) && (
+                        <span className="p-job-listings__card-budget">
+                            {formatBudget(job.budget_min, job.budget_max)}
+                        </span>
+                    )}
+                </div>
             </div>
             <div className="p-job-listings__card-content">
                 <h3 className="p-job-listings__card-title">{job.title}</h3>
@@ -144,6 +152,25 @@ export default function JobCard({
                                 <span className="p-job-listings__card-views">
                                     閲覧数{job.view_count}
                                 </span>
+                            )}
+                        {auth?.user &&
+                            auth?.user.email_verified_at &&
+                            isFavorited && (
+                                <div className="p-job-listings__card-favorite-icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                    </svg>
+                                </div>
                             )}
                     </div>
                     <span className="p-job-listings__card-author">

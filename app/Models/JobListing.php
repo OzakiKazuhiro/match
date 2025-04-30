@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class JobListing extends Model
 {
@@ -67,6 +68,35 @@ class JobListing extends Model
     public function publicMessages(): HasMany
     {
         return $this->hasMany(PublicMessage::class);
+    }
+    
+    /**
+     * この案件のお気に入り情報を取得
+     */
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+    
+    /**
+     * この案件をお気に入りしているユーザーを取得
+     */
+    public function favoritedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorites')
+            ->withTimestamps();
+    }
+    
+    /**
+     * 特定のユーザーがこの案件をお気に入りしているかを確認
+     */
+    public function isFavoritedBy(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+        
+        return $this->favorites()->where('user_id', $user->id)->exists();
     }
     
     /**

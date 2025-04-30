@@ -687,6 +687,68 @@ textarea {
   font-size: 11px;
   font-weight: bold;
 }
+.c-favorite-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  color: #ff6b6b;
+  transition: all 0.3s ease;
+  position: relative;
+  outline: none;
+}
+.c-favorite-button:hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 107, 107, 0.1);
+}
+.c-favorite-button:active {
+  transform: scale(0.95);
+}
+.c-favorite-button:focus {
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.3);
+}
+.c-favorite-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.c-favorite-button--active {
+  color: #ff6b6b;
+}
+.c-favorite-button--active svg {
+  animation: favorite-pop 0.4s ease-out;
+}
+.c-favorite-button__icon {
+  transition: all 0.3s ease;
+}
+.c-favorite-button__icon--processing {
+  animation: favorite-processing 1s infinite ease-in-out;
+}
+@keyframes favorite-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes favorite-processing {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .p-top {
   /* 納品までの流れセクション */
   /* 人気の案件例セクション */
@@ -2417,6 +2479,11 @@ textarea {
   margin: 0 auto;
   padding: 1.5rem;
 }
+.p-job-listings {
+  /*
+   * お気に入りフィルター
+   */
+}
 .p-job-listings__container {
   width: 100%;
   max-width: 1200px;
@@ -2718,6 +2785,22 @@ textarea {
   .p-job-listings__card-header {
     align-items: center;
   }
+}
+.p-job-listings__card-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.p-job-listings__card-favorite {
+  margin-right: 4px;
+}
+.p-job-listings__card-favorite-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff5a5f;
+  margin-right: 8px;
 }
 .p-job-listings__card-tags {
   display: flex;
@@ -3050,6 +3133,45 @@ textarea {
     box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
   }
 }
+.p-job-listings__favorite-filter {
+  margin-left: 10px;
+}
+.p-job-listings__favorite-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 6px;
+  color: var(--color-gray-700);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.p-job-listings__favorite-button:hover {
+  background-color: var(--color-gray-50);
+}
+.p-job-listings__favorite-button svg {
+  transition: all 0.2s ease;
+}
+.p-job-listings__favorite-button--active {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary-200);
+  color: var(--color-primary-600);
+}
+.p-job-listings__favorite-button--active svg {
+  color: var(--color-primary-500);
+}
+.p-job-listings__favorite-button--active:hover {
+  background-color: var(--color-primary-100);
+}
+@media (max-width: 768px) {
+  .p-job-listings__favorite-text {
+    display: none;
+  }
+}
 .p-job-detail {
   padding: 24px 0;
   background-color: #f8f9fa;
@@ -3128,6 +3250,14 @@ textarea {
     top: 400px;
     margin-top: -12px;
   }
+}
+.p-job-detail__card--favorite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
 }
 .p-job-detail__header {
   margin-bottom: 24px;
@@ -3625,6 +3755,9 @@ textarea {
   align-items: center;
   font-size: 1rem;
   color: #6b7280;
+}
+.p-job-detail__favorite-button {
+  margin-top: 15px;
 }
 .p-post-job {
   padding: 24px 0;
@@ -6651,6 +6784,136 @@ textarea {
   justify-content: flex-end;
   gap: 0.75rem;
   margin-top: 1.5rem;
+}
+.p-favorites__container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.p-favorites__header {
+  margin: 40px 0;
+  text-align: center;
+}
+.p-favorites__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+.p-favorites__title-text {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #333;
+}
+.p-favorites__description {
+  font-size: 1rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.p-favorites__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+@media (max-width: 768px) {
+  .p-favorites__grid {
+    grid-template-columns: 1fr;
+  }
+}
+.p-favorites__no-results {
+  text-align: center;
+  padding: 60px 0;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  width: 100%;
+  grid-column: 1/-1;
+}
+.p-favorites__no-results-icon {
+  color: #ccc;
+  margin-bottom: 20px;
+}
+.p-favorites__no-results-icon svg {
+  color: #ff6b6b;
+  opacity: 0.3;
+}
+.p-favorites__no-results-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #555;
+}
+.p-favorites__no-results-description {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 25px;
+  max-width: 520px;
+  text-align: center;
+}
+.p-favorites__browse-button {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: #ff6b6b;
+  color: white;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.p-favorites__browse-button:hover {
+  background-color: #ff3838;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.p-favorites__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+  gap: 8px;
+}
+.p-favorites__pagination-link {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f5f7fa;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #555;
+  font-weight: 500;
+  text-decoration: none;
+}
+.p-favorites__pagination-link:hover {
+  background-color: #e0e5ea;
+  color: #333;
+}
+.p-favorites__pagination-link--active {
+  background-color: #ff6b6b;
+  color: white;
+}
+.p-favorites__pagination-link--active:hover {
+  background-color: #ff3838;
+  color: white;
+}
+.p-favorites__pagination-link--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.p-favorites__pagination-link--disabled:hover {
+  background-color: #f5f7fa;
+  color: #555;
 }
 .u-mt-0 {
   margin-top: 0 !important;

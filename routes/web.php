@@ -7,6 +7,7 @@ use App\Http\Controllers\DirectMessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PublicMessageController;
 use App\Http\Controllers\PrivacyController;
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -149,4 +150,13 @@ Route::middleware(['auth'])->group(function () {
         ->name('conversation.memo.store');
     Route::get('/conversations/{conversationGroup}/memo', [App\Http\Controllers\MemoController::class, 'show'])
         ->name('conversation.memo.show');
+});
+
+// お気に入り関連ルート
+Route::middleware(['auth', 'verified'])->prefix('favorites')->name('favorites.')->group(function () {
+    // お気に入り一覧
+    Route::get('/', [FavoriteController::class, 'index'])->name('index');
+    
+    // お気に入り切り替え（追加/削除）
+    Route::post('/{jobListing}', [FavoriteController::class, 'toggle'])->name('toggle');
 });

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -113,6 +114,31 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->conversationGroupsAsUser1()->union(
             $this->conversationGroupsAsUser2()
         );
+    }
+
+    /**
+     * ユーザーのお気に入り情報を取得
+     */
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+    
+    /**
+     * ユーザーがお気に入りした案件を取得
+     */
+    public function favoriteJobListings(): BelongsToMany
+    {
+        return $this->belongsToMany(JobListing::class, 'favorites')
+            ->withTimestamps();
+    }
+    
+    /**
+     * 指定した案件をお気に入りしているかを確認
+     */
+    public function isFavoriting(int $jobListingId): bool
+    {
+        return $this->favorites()->where('job_listing_id', $jobListingId)->exists();
     }
 
     public function sendEmailVerificationNotification(){
