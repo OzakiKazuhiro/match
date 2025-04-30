@@ -17652,8 +17652,7 @@ function Register() {
           isFocused: true,
           onChange: function onChange(e) {
             return setData("name", e.target.value);
-          },
-          required: true
+          }
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.name,
           className: "p-auth__error"
@@ -17672,8 +17671,7 @@ function Register() {
           autoComplete: "username",
           onChange: function onChange(e) {
             return setData("email", e.target.value);
-          },
-          required: true
+          }
         }), isValidatingEmail && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
           className: "p-auth__input-help",
           children: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u78BA\u8A8D\u4E2D..."
@@ -17700,8 +17698,7 @@ function Register() {
             autoComplete: "new-password",
             onChange: function onChange(e) {
               return setData("password", e.target.value);
-            },
-            required: true
+            }
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
             type: "button",
             className: "p-auth__password-toggle",
@@ -17736,8 +17733,7 @@ function Register() {
             autoComplete: "new-password",
             onChange: function onChange(e) {
               return setData("password_confirmation", e.target.value);
-            },
-            required: true
+            }
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
             type: "button",
             className: "p-auth__password-toggle",

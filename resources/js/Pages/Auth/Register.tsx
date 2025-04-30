@@ -200,7 +200,6 @@ export default function Register() {
                         autoComplete="name"
                         isFocused={true}
                         onChange={(e) => setData("name", e.target.value)}
-                        required
                     />
 
                     <InputError
@@ -222,7 +221,6 @@ export default function Register() {
                         }`}
                         autoComplete="username"
                         onChange={(e) => setData("email", e.target.value)}
-                        required
                     />
 
                     {isValidatingEmail && (
@@ -261,7 +259,6 @@ export default function Register() {
                             onChange={(e) =>
                                 setData("password", e.target.value)
                             }
-                            required
                         />
                         <button
                             type="button"
@@ -312,7 +309,6 @@ export default function Register() {
                             onChange={(e) =>
                                 setData("password_confirmation", e.target.value)
                             }
-                            required
                         />
                         <button
                             type="button"
