@@ -737,7 +737,6 @@ textarea {
   color: #ffffff;
   letter-spacing: 4px;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.4);
-  animation: pulse 2s ease-in-out infinite;
 }
 @keyframes pulse {
   0% {
@@ -2091,6 +2090,23 @@ textarea {
     order: 2;
   }
 }
+.p-auth__confirm-password-message {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+.p-auth__confirm-password-form-group {
+  margin-top: 1rem;
+}
+.p-auth__confirm-password-actions {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.p-auth__confirm-password-button {
+  margin-left: 1rem;
+}
 .p-dashboard__container {
   width: 100%;
   max-width: 1200px;
@@ -2425,6 +2441,14 @@ textarea {
   font-size: 1.75rem;
   font-weight: 700;
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.p-job-listings__title svg {
+  margin-left: 8px;
+  color: #fff;
+  flex-shrink: 0;
 }
 .p-job-listings__subtitle {
   font-size: 1.1rem;
@@ -2511,11 +2535,22 @@ textarea {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
+    width: 100%;
   }
 }
 .p-job-listings__filter-tabs {
   display: flex;
   gap: 10px;
+}
+@media (max-width: 576px) {
+  .p-job-listings__filter-tabs {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
 }
 .p-job-listings__filter-actions {
   display: flex;
@@ -2524,15 +2559,23 @@ textarea {
 }
 @media (max-width: 576px) {
   .p-job-listings__filter-actions {
+    width: auto;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: nowrap;
   }
 }
 .p-job-listings__filter-label {
   margin-right: 8px;
   font-size: 0.875rem;
   color: #666;
+}
+@media (max-width: 576px) {
+  .p-job-listings__filter-label {
+    font-size: 0.8rem;
+    margin-right: 4px;
+  }
 }
 .p-job-listings__category-filter {
   display: flex;
@@ -2544,6 +2587,14 @@ textarea {
   cursor: pointer;
   font-weight: 500;
   transition: all 0.3s;
+}
+@media (max-width: 576px) {
+  .p-job-listings__filter-tab {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
 }
 .p-job-listings__filter-tab--active {
   background-color: #6cc3e0;
@@ -2571,11 +2622,24 @@ textarea {
   min-width: 120px;
   width: 160px;
 }
+@media (max-width: 576px) {
+  .p-job-listings__sort-button {
+    padding: 6px 10px;
+    min-width: 100px;
+    width: 120px;
+    font-size: 0.8rem;
+  }
+}
 .p-job-listings__sort-button span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 120px;
+}
+@media (max-width: 576px) {
+  .p-job-listings__sort-button span {
+    max-width: 80px;
+  }
 }
 .p-job-listings__sort-button svg {
   transition: transform 0.2s ease;

@@ -374,7 +374,7 @@ export default function EditJob({
         <AuthenticatedLayout
             header={<div className="p-post-job__header-title">案件を編集</div>}
         >
-            <Head title="案件を編集 - match" />
+            <Head title="案件を編集" />
 
             <div className="p-post-job">
                 <div className="p-post-job__container">

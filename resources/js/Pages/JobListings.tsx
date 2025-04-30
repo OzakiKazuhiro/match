@@ -315,12 +315,33 @@ export default function JobListings({
     // ページコンテンツ（共通部分）
     const pageContent = (
         <>
-            <Head title="案件一覧 - match" />
+            <Head title="案件一覧" />
 
             <div className="p-job-listings__container">
                 <div className="p-job-listings__header">
                     <div className="p-job-listings__header-inner">
-                        <h1 className="p-job-listings__title">案件を探す</h1>
+                        <h1 className="p-job-listings__title">
+                            案件を探す
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line
+                                    x1="21"
+                                    y1="21"
+                                    x2="16.65"
+                                    y2="16.65"
+                                ></line>
+                            </svg>
+                        </h1>
 
                         {(!auth?.user || !auth?.user.email_verified_at) && (
                             <div className="p-job-listings__login-notice">

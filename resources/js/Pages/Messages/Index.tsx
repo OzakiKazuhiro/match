@@ -110,7 +110,7 @@ export default function Index({
                 </div>
             }
         >
-            <Head title="match - ダイレクトメッセージ一覧" />
+            <Head title="ダイレクトメッセージ一覧" />
 
             <div className="p-messages">
                 <div className="p-messages__container">

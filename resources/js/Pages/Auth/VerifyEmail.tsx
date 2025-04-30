@@ -14,7 +14,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
 
     return (
         <GuestLayout title="メール認証">
-            <Head title="メール認証 - match" />
+            <Head title="メール認証" />
 
             <div className="p-auth__verify-email">
                 ご登録ありがとうございます！

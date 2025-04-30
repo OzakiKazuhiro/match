@@ -835,7 +835,7 @@ function EditJob(_ref2) {
       children: "\u6848\u4EF6\u3092\u7DE8\u96C6"
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
-      title: "\u6848\u4EF6\u3092\u7DE8\u96C6 - match"
+      title: "\u6848\u4EF6\u3092\u7DE8\u96C6"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "p-post-job",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {

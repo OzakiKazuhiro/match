@@ -549,7 +549,7 @@ function NotificationsIndex(_ref) {
       children: "\u901A\u77E5\u4E00\u89A7"
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Head, {
-      title: "\u901A\u77E5\u4E00\u89A7 - match"
+      title: "\u901A\u77E5\u4E00\u89A7"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "p-notifications",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {

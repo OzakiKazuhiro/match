@@ -127,7 +127,7 @@ function VerifyEmail(_ref) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
     title: "\u30E1\u30FC\u30EB\u8A8D\u8A3C",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
-      title: "\u30E1\u30FC\u30EB\u8A8D\u8A3C - match"
+      title: "\u30E1\u30FC\u30EB\u8A8D\u8A3C"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "p-auth__verify-email",
       children: "\u3054\u767B\u9332\u3042\u308A\u304C\u3068\u3046\u3054\u3056\u3044\u307E\u3059\uFF01 \u59CB\u3081\u308B\u524D\u306B\u3001\u5148\u307B\u3069\u304A\u9001\u308A\u3057\u305F\u30E1\u30FC\u30EB\u306E\u30EA\u30F3\u30AF\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u3001\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u3044\u305F\u3060\u3051\u307E\u3059\u304B\uFF1F \u30E1\u30FC\u30EB\u304C\u5C4A\u3044\u3066\u3044\u306A\u3044\u5834\u5408\u306F\u3001\u559C\u3093\u3067\u5225\u306E\u30E1\u30FC\u30EB\u3092\u304A\u9001\u308A\u3057\u307E\u3059\u3002"

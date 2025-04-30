@@ -261,35 +261,35 @@ function ConfirmPassword() {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Head, {
       title: "\u30D1\u30B9\u30EF\u30FC\u30C9\u78BA\u8A8D"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-      className: "mb-4 text-sm text-gray-600",
+      className: "p-auth__confirm-password-message",
       children: "\u3053\u306E\u30A2\u30D7\u30EA\u30B1\u30FC\u30B7\u30E7\u30F3\u306E\u5B89\u5168\u306A\u9818\u57DF\u3067\u3059\u3002\u7D9A\u3051\u308B\u524D\u306B\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: submit,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "mt-4",
+        className: "p-auth__confirm-password-form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password",
-          value: "Password"
+          value: "\u30D1\u30B9\u30EF\u30FC\u30C9"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "password",
           type: "password",
           name: "password",
           value: data.password,
-          className: "mt-1 block w-full",
+          className: "p-auth__input",
           isFocused: true,
           onChange: function onChange(e) {
             return setData("password", e.target.value);
           }
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.password,
-          className: "mt-2"
+          className: "p-auth__error"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "mt-4 flex items-center justify-end",
+        className: "p-auth__confirm-password-actions",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          className: "ms-4",
+          className: "p-auth__confirm-password-button",
           disabled: processing,
-          children: "Confirm"
+          children: "\u78BA\u8A8D"
         })
       })]
     })]

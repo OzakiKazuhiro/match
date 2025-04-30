@@ -26,6 +26,15 @@
         font-size: 1.75rem;
         font-weight: 700;
         color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            margin-left: 8px;
+            color: #fff;
+            flex-shrink: 0;
+        }
     }
 
     &__subtitle {
@@ -114,12 +123,22 @@
             flex-direction: column;
             align-items: flex-start;
             gap: 15px;
+            width: 100%;
         }
     }
 
     &__filter-tabs {
         display: flex;
         gap: 10px;
+
+        @media (max-width: 576px) {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            gap: 6px;
+        }
     }
 
     &__filter-actions {
@@ -128,9 +147,11 @@
         align-items: center;
 
         @media (max-width: 576px) {
+            width: auto;
             flex-direction: row;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: nowrap;
         }
     }
 
@@ -138,6 +159,11 @@
         margin-right: 8px;
         font-size: 0.875rem;
         color: #666;
+
+        @media (max-width: 576px) {
+            font-size: 0.8rem;
+            margin-right: 4px;
+        }
     }
 
     &__category-filter {
@@ -151,6 +177,13 @@
         cursor: pointer;
         font-weight: 500;
         transition: all 0.3s;
+
+        @media (max-width: 576px) {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
 
         &--active {
             background-color: #6cc3e0;
@@ -182,11 +215,22 @@
         min-width: 120px;
         width: 160px;
 
+        @media (max-width: 576px) {
+            padding: 6px 10px;
+            min-width: 100px;
+            width: 120px;
+            font-size: 0.8rem;
+        }
+
         span {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 120px;
+
+            @media (max-width: 576px) {
+                max-width: 80px;
+            }
         }
 
         svg {

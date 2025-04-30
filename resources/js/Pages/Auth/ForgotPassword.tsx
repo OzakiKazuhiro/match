@@ -19,7 +19,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
     return (
         <GuestLayout title="パスワードリセット">
-            <Head title="パスワードリセット - match" />
+            <Head title="パスワードリセット" />
 
             <div className="p-auth__message">
                 パスワードをお忘れですか？メールアドレスを入力していただければ、パスワードリセットのリンクをメールでお送りします。

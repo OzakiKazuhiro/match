@@ -180,7 +180,7 @@ export default function ApplicationsToMyJobs({
                 </div>
             }
         >
-            <Head title="自分の案件への応募一覧 - match" />
+            <Head title="自分の案件への応募一覧" />
 
             <div className="p-applications">
                 <div className="p-applications__container">

@@ -186,7 +186,7 @@ export default function Register() {
 
     return (
         <GuestLayout title="会員登録">
-            <Head title="会員登録 - match" />
+            <Head title="会員登録" />
 
             <form onSubmit={submit} className="p-auth__form">
                 <div className="p-auth__form-group">

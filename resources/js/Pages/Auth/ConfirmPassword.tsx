@@ -23,30 +23,36 @@ export default function ConfirmPassword() {
         <GuestLayout>
             <Head title="パスワード確認" />
 
-            <div className="mb-4 text-sm text-gray-600">
+            <div className="p-auth__confirm-password-message">
                 このアプリケーションの安全な領域です。続ける前にパスワードを確認してください。
             </div>
 
             <form onSubmit={submit}>
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                <div className="p-auth__confirm-password-form-group">
+                    <InputLabel htmlFor="password" value="パスワード" />
 
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="p-auth__input"
                         isFocused={true}
                         onChange={(e) => setData("password", e.target.value)}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError
+                        message={errors.password}
+                        className="p-auth__error"
+                    />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Confirm
+                <div className="p-auth__confirm-password-actions">
+                    <PrimaryButton
+                        className="p-auth__confirm-password-button"
+                        disabled={processing}
+                    >
+                        確認
                     </PrimaryButton>
                 </div>
             </form>

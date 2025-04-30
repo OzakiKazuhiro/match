@@ -293,4 +293,28 @@
             order: 2;
         }
     }
+
+    // パスワード確認ページのスタイル
+    &__confirm-password {
+        &-message {
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        &-form-group {
+            margin-top: 1rem;
+        }
+
+        &-actions {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        &-button {
+            margin-left: 1rem;
+        }
+    }
 }

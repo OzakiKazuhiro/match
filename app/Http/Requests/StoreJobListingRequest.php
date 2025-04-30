@@ -21,12 +21,12 @@ class StoreJobListingRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'title' => ['required', 'string', 'max:100'],
             'type' => ['required', 'string', 'in:one_time,revenue_share'],
             'description' => ['required', 'string', 'min:1', 'max:3000'],
-            'budget_min' => ['nullable', 'integer', 'min:0', 'max:50000', 'required_if:type,one_time'],
-            'budget_max' => ['nullable', 'integer', 'min:0', 'max:50000', 'gte:budget_min', 'required_if:type,one_time'],
+            'budget_min' => ['nullable', 'integer', 'min:0', 'max:50000000', 'required_if:type,one_time'],
+            'budget_max' => ['nullable', 'integer', 'min:0', 'max:50000000', 'required_if:type,one_time'],
             'category' => ['nullable', 'string', 'max:100'],
             'location' => ['nullable', 'string', 'in:リモート（在宅勤務）,現場勤務（オンサイト）,併用型（在宅＋現場）'],
             'skills' => ['nullable', 'array'],
@@ -34,6 +34,7 @@ class StoreJobListingRequest extends FormRequest
             'preferred_skills' => ['nullable', 'array'],
             'preferred_skills.*' => ['string', 'max:100'],
         ];
+        return $rules;
     }
 
     /**

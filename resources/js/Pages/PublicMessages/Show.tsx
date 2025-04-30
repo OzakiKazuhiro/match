@@ -54,7 +54,7 @@ export default function Show({ jobListing, publicMessages }: Props) {
                     </div>
                 }
             >
-                <Head title="エラー - Match" />
+                <Head title="エラー" />
                 <div className="p-public-messages-detail">
                     <div className="p-public-messages-detail__container">
                         <p className="p-public-messages-detail__empty">
@@ -74,7 +74,7 @@ export default function Show({ jobListing, publicMessages }: Props) {
                 </div>
             }
         >
-            <Head title={`${jobListing.title}のパブリックメッセージ - Match`} />
+            <Head title={`${jobListing.title}のパブリックメッセージ`} />
 
             <div className="p-public-messages-detail">
                 <div className="p-public-messages-detail__container">

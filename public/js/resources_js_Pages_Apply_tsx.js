@@ -568,7 +568,7 @@ function Apply(_ref) {
       children: "\u6848\u4EF6\u5FDC\u52DF"
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Head, {
-      title: "\u300C".concat(jobListing.title, "\u300D\u3078\u306E\u5FDC\u52DF - match")
+      title: "\u300C".concat(jobListing.title, "\u300D\u3078\u306E\u5FDC\u52DF")
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "p-apply",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {

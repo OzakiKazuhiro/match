@@ -110,7 +110,7 @@ export default function Applications({
                 <div className="p-applications__title">応募した案件一覧</div>
             }
         >
-            <Head title="match - 応募一覧" />
+            <Head title="応募一覧" />
 
             <div className="p-applications">
                 <div className="p-applications__container">
