@@ -225,10 +225,6 @@
     font-weight: normal !important;
 }
 
-.u-text-bold {
-    font-weight: bold !important;
-}
-
 .u-text-small {
     font-size: 0.875rem !important;
 }
@@ -237,37 +233,46 @@
     font-size: 1.25rem !important;
 }
 
-.u-text-muted {
-    color: #888 !important;
-}
+// 共通カラー変数
+$color-primary: #6cc3e0;
+$color-danger: #ff6b6b;
+$color-success: #4caf50;
+$color-dark: #333;
+$color-light: #999;
+$color-white: #fff;
+$color-muted: #888;
 
 // 色
 .u-text-primary {
-    color: #6cc3e0 !important;
+    color: $color-primary !important;
 }
 
 .u-text-secondary {
-    color: #ff6b6b !important;
+    color: $color-danger !important; // 同じ #ff6b6b カラーを使用
 }
 
 .u-text-danger {
-    color: #ff6b6b !important;
+    color: $color-danger !important;
 }
 
 .u-text-success {
-    color: #4caf50 !important;
+    color: $color-success !important;
 }
 
 .u-text-dark {
-    color: #333 !important;
+    color: $color-dark !important;
 }
 
 .u-text-light {
-    color: #999 !important;
+    color: $color-light !important;
 }
 
 .u-text-white {
-    color: #fff !important;
+    color: $color-white !important;
+}
+
+.u-text-muted {
+    color: $color-muted !important;
 }
 
 // スマホ表示時の改行クラス

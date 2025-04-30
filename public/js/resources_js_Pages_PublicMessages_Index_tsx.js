@@ -1042,7 +1042,9 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function Authenticated(_ref) {
   var _user$name2, _user$name4;
   var header = _ref.header,
-    children = _ref.children;
+    children = _ref.children,
+    _ref$showFooter = _ref.showFooter,
+    showFooter = _ref$showFooter === void 0 ? true : _ref$showFooter;
   var user = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.auth.user;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
@@ -1272,7 +1274,7 @@ function Authenticated(_ref) {
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("main", {
       children: children
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("footer", {
+    }), showFooter && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("footer", {
       className: "l-footer",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "l-footer__container",

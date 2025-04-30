@@ -141,3 +141,12 @@ require __DIR__.'/auth.php';
 
 // メールアドレス検証ルート
 Route::post('/validate-email', [App\Http\Controllers\Auth\EmailValidationController::class, 'validateEmail'])->name('validate.email');
+
+// メモ関連のルートを追加
+Route::middleware(['auth'])->group(function () {
+    // メモの保存と取得のためのルート
+    Route::post('/conversations/{conversationGroup}/memo', [App\Http\Controllers\MemoController::class, 'store'])
+        ->name('conversation.memo.store');
+    Route::get('/conversations/{conversationGroup}/memo', [App\Http\Controllers\MemoController::class, 'show'])
+        ->name('conversation.memo.show');
+});

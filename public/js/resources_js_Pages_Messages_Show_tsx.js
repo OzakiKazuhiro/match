@@ -252,42 +252,6 @@ function NotificationBadge() {
 
 /***/ }),
 
-/***/ "./resources/js/Components/PrimaryButton.tsx":
-/*!***************************************************!*\
-  !*** ./resources/js/Components/PrimaryButton.tsx ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ PrimaryButton)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _excluded = ["className", "disabled", "children"];
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-
-function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
-function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
-function PrimaryButton(_ref) {
-  var _ref$className = _ref.className,
-    className = _ref$className === void 0 ? "" : _ref$className,
-    disabled = _ref.disabled,
-    children = _ref.children,
-    props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", _objectSpread(_objectSpread({}, props), {}, {
-    className: "p-auth__button p-auth__button--primary ".concat(disabled ? "p-auth__button--disabled" : "", " ").concat(className),
-    disabled: disabled,
-    children: children
-  }));
-}
-
-/***/ }),
-
 /***/ "./resources/js/Layouts/AuthenticatedLayout.tsx":
 /*!******************************************************!*\
   !*** ./resources/js/Layouts/AuthenticatedLayout.tsx ***!
@@ -316,7 +280,9 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function Authenticated(_ref) {
   var _user$name2, _user$name4;
   var header = _ref.header,
-    children = _ref.children;
+    children = _ref.children,
+    _ref$showFooter = _ref.showFooter,
+    showFooter = _ref$showFooter === void 0 ? true : _ref$showFooter;
   var user = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.auth.user;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
@@ -546,7 +512,7 @@ function Authenticated(_ref) {
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("main", {
       children: children
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("footer", {
+    }), showFooter && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("footer", {
       className: "l-footer",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "l-footer__container",
@@ -657,10 +623,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
 /* harmony import */ var _Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Layouts/AuthenticatedLayout */ "./resources/js/Layouts/AuthenticatedLayout.tsx");
 /* harmony import */ var _Components_InputError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/InputError */ "./resources/js/Components/InputError.tsx");
-/* harmony import */ var _Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/PrimaryButton */ "./resources/js/Components/PrimaryButton.tsx");
-/* harmony import */ var _Components_DirectMessage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/DirectMessage */ "./resources/js/Components/DirectMessage.tsx");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _Components_DirectMessage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/DirectMessage */ "./resources/js/Components/DirectMessage.tsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -680,7 +645,6 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-
 
 
 
@@ -715,6 +679,21 @@ function Show(_ref) {
     _useState8 = _slicedToArray(_useState7, 2),
     memo = _useState8[0],
     setMemo = _useState8[1];
+  // メモの保存中状態を管理するState
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState10 = _slicedToArray(_useState9, 2),
+    savingMemo = _useState10[0],
+    setSavingMemo = _useState10[1];
+  // モーダル表示状態
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    showMemoModal = _useState12[0],
+    setShowMemoModal = _useState12[1];
+  // 編集中のメモ（下書き）
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState14 = _slicedToArray(_useState13, 2),
+    draftMemo = _useState14[0],
+    setDraftMemo = _useState14[1];
 
   // 会話相手を特定（自分以外の参加者）
   var otherParticipant = participants.find(function (participant) {
@@ -739,7 +718,7 @@ function Show(_ref) {
             // CSRFトークンの取得
             csrfToken = ((_document$querySelect = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.getAttribute("content")) || ""; // 既読APIを呼び出し
             _context.next = 4;
-            return axios__WEBPACK_IMPORTED_MODULE_7__["default"].post(route("messages.mark-as-read", conversationGroup.id), {}, {
+            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].post(route("messages.mark-as-read", conversationGroup.id), {}, {
               headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken
@@ -772,45 +751,98 @@ function Show(_ref) {
 
   // メモが変更されたときのハンドラ
   var handleMemoChange = function handleMemoChange(e) {
-    setMemo(e.target.value);
-    // ここでメモをローカルストレージに保存するなどの処理を追加できます
-    localStorage.setItem("memo_".concat(conversationGroup.id), e.target.value);
+    var newContent = e.target.value;
+    setDraftMemo(newContent);
   };
 
-  // メッセージ送信処理
-  var handleSubmit = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-      var _document$querySelect2, csrfToken, response, newMessage;
+  // メモを保存するAPI呼び出し関数
+  var handleSaveMemo = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var _document$querySelect2, csrfToken;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
+            setSavingMemo(true);
+            _context2.prev = 1;
+            // CSRFトークンの取得
+            csrfToken = ((_document$querySelect2 = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.getAttribute("content")) || ""; // メモ保存APIを呼び出し
+            _context2.next = 5;
+            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].post(route("conversation.memo.store", conversationGroup.id), {
+              content: draftMemo
+            }, {
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken
+              }
+            });
+          case 5:
+            // 保存成功したら表示用メモを更新
+            setMemo(draftMemo);
+            // モーダルを閉じる
+            setShowMemoModal(false);
+            _context2.next = 13;
+            break;
+          case 9:
+            _context2.prev = 9;
+            _context2.t0 = _context2["catch"](1);
+            console.error("メモ保存エラー:", _context2.t0);
+            alert("メモの保存に失敗しました。");
+          case 13:
+            _context2.prev = 13;
+            setSavingMemo(false);
+            return _context2.finish(13);
+          case 16:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[1, 9, 13, 16]]);
+    }));
+    return function handleSaveMemo() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+
+  // モーダルを開くときに現在のメモを下書きにセット
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (showMemoModal) {
+      setDraftMemo(memo);
+    }
+  }, [showMemoModal, memo]);
+
+  // メッセージ送信処理
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
+      var _document$querySelect3, csrfToken, response, newMessage;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
             e.preventDefault();
             if (!(!data.message.trim() || sending)) {
-              _context2.next = 3;
+              _context3.next = 3;
               break;
             }
-            return _context2.abrupt("return");
+            return _context3.abrupt("return");
           case 3:
             if (!(data.message.length > MAX_CHARS)) {
-              _context2.next = 6;
+              _context3.next = 6;
               break;
             }
             alert("\u30E1\u30C3\u30BB\u30FC\u30B8\u306F".concat(MAX_CHARS, "\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"));
-            return _context2.abrupt("return");
+            return _context3.abrupt("return");
           case 6:
             setSending(true);
-            _context2.prev = 7;
+            _context3.prev = 7;
             // CSRFトークンの取得
-            csrfToken = ((_document$querySelect2 = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.getAttribute("content")) || ""; // APIでメッセージを送信
-            _context2.next = 11;
-            return axios__WEBPACK_IMPORTED_MODULE_7__["default"].post(route("messages.store", conversationGroup.id), data, {
+            csrfToken = ((_document$querySelect3 = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect3 === void 0 ? void 0 : _document$querySelect3.getAttribute("content")) || ""; // APIでメッセージを送信
+            _context3.next = 11;
+            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].post(route("messages.store", conversationGroup.id), data, {
               headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken
               }
             });
           case 11:
-            response = _context2.sent;
+            response = _context3.sent;
             // 成功したら新しいメッセージを追加
             if (response.data && response.data.message) {
               newMessage = _objectSpread(_objectSpread({}, response.data.message), {}, {
@@ -820,32 +852,32 @@ function Show(_ref) {
               reset("message");
               setCharCount(0); // 文字数カウンターをリセット
             }
-            _context2.next = 19;
+            _context3.next = 19;
             break;
           case 15:
-            _context2.prev = 15;
-            _context2.t0 = _context2["catch"](7);
-            console.error("メッセージ送信エラー:", _context2.t0);
+            _context3.prev = 15;
+            _context3.t0 = _context3["catch"](7);
+            console.error("メッセージ送信エラー:", _context3.t0);
 
             // エラーレスポンスのデータを取得して表示（デバッグ用）
-            if (_context2.t0.response && _context2.t0.response.data) {
-              console.error("エラー詳細:", _context2.t0.response.data);
-              if (_context2.t0.response.data.errors && _context2.t0.response.data.errors.message) {
-                alert(_context2.t0.response.data.errors.message[0]);
+            if (_context3.t0.response && _context3.t0.response.data) {
+              console.error("エラー詳細:", _context3.t0.response.data);
+              if (_context3.t0.response.data.errors && _context3.t0.response.data.errors.message) {
+                alert(_context3.t0.response.data.errors.message[0]);
               }
             }
           case 19:
-            _context2.prev = 19;
+            _context3.prev = 19;
             setSending(false);
-            return _context2.finish(19);
+            return _context3.finish(19);
           case 22:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
-      }, _callee2, null, [[7, 15, 19, 22]]);
+      }, _callee3, null, [[7, 15, 19, 22]]);
     }));
     return function handleSubmit(_x) {
-      return _ref3.apply(this, arguments);
+      return _ref4.apply(this, arguments);
     };
   }();
 
@@ -861,11 +893,38 @@ function Show(_ref) {
     // 初回ロード時に既読APIを呼び出し
     markMessagesAsRead();
 
-    // ローカルストレージからメモを読み込む
-    var savedMemo = localStorage.getItem("memo_".concat(conversationGroup.id));
-    if (savedMemo) {
-      setMemo(savedMemo);
-    }
+    // メモの取得処理を追加
+    var fetchMemo = /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_6__["default"].get(route("conversation.memo.show", conversationGroup.id));
+            case 3:
+              response = _context4.sent;
+              if (response.data.memo) {
+                setMemo(response.data.memo.content || "");
+              }
+              _context4.next = 10;
+              break;
+            case 7:
+              _context4.prev = 7;
+              _context4.t0 = _context4["catch"](0);
+              console.error("メモ取得エラー:", _context4.t0);
+            case 10:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, null, [[0, 7]]);
+      }));
+      return function fetchMemo() {
+        return _ref5.apply(this, arguments);
+      };
+    }();
+    fetchMemo();
 
     // 一定間隔で既読APIを呼び出し（ポーリング）
     var interval = setInterval(function () {
@@ -877,119 +936,200 @@ function Show(_ref) {
       clearInterval(interval);
     };
   }, [conversationGroup.id]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "p-messages__header",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "p-messages__title",
-        children: [conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+        children: [conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
           children: [conversationGroup.job_listing.title, " - "]
         }), (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", "\u3068\u306E\u4F1A\u8A71"]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
         href: route("messages.index"),
         className: "p-messages__back-button",
         children: "\u623B\u308B"
       })]
     }),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
+    showFooter: false,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
       title: "".concat(conversationGroup.job_listing ? conversationGroup.job_listing.title + " - " : "").concat((otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", "\u3068\u306E\u4F1A\u8A71")
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "p-messages__line-container",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "p-messages__chat-container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
           ref: messagesContainerRef,
           className: "p-messages__conversation",
-          children: messages.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          children: messages.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: "p-messages__empty",
             children: "\u30E1\u30C3\u30BB\u30FC\u30B8\u304C\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002\u6700\u521D\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u9001\u4FE1\u3057\u307E\u3057\u3087\u3046\u3002"
           }) : messages.map(function (message) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_DirectMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_DirectMessage__WEBPACK_IMPORTED_MODULE_4__["default"], {
               message: message,
               currentUserId: auth.user.id
             }, message.id);
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
           className: "p-messages__input-container",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("form", {
             onSubmit: handleSubmit,
             className: "p-messages__form",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              className: "p-messages__input-wrapper",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("textarea", {
-                value: data.message,
-                onChange: handleMessageChange,
-                className: "p-messages__textarea",
-                placeholder: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5165\u529B...",
-                required: true,
-                maxLength: MAX_CHARS
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: "p-messages__char-counter",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-                  className: charCount > MAX_CHARS * 0.9 ? "p-messages__char-counter--near-limit" : "",
-                  children: charCount
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
-                  className: "p-messages__char-counter--max",
-                  children: ["/", MAX_CHARS]
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "p-messages__input-row",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                className: "p-messages__input-wrapper",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("textarea", {
+                  value: data.message,
+                  onChange: handleMessageChange,
+                  className: "p-messages__textarea",
+                  placeholder: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5165\u529B...",
+                  required: true,
+                  maxLength: MAX_CHARS
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                  className: "p-messages__char-counter",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                    className: charCount > MAX_CHARS * 0.9 ? "p-messages__char-counter--near-limit" : "",
+                    children: charCount
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
+                    className: "p-messages__char-counter--max",
+                    children: ["/", MAX_CHARS]
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                  message: errors.message,
+                  className: "c-form-error"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                message: errors.message,
-                className: "c-form-error"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                className: "p-messages__submit-container",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                  type: "submit",
+                  className: "p-messages__send-button",
+                  disabled: sending || charCount > MAX_CHARS || charCount === 0,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                    className: "p-messages__send-button-text",
+                    children: "\u9001\u4FE1"
+                  })
+                })
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-              className: "p-messages__submit-container",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
-                type: "submit",
-                disabled: sending || charCount > MAX_CHARS || charCount === 0,
-                children: "\u9001\u4FE1"
-              })
-            })]
+            })
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         className: "p-messages__info-panel",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "p-messages__user-info",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "p-messages__user-header",
-            children: [otherParticipant !== null && otherParticipant !== void 0 && otherParticipant.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+            children: [otherParticipant !== null && otherParticipant !== void 0 && otherParticipant.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
               src: otherParticipant.avatar.startsWith("/") ? otherParticipant.avatar : "/".concat(otherParticipant.avatar),
               alt: otherParticipant.name,
               className: "p-messages__user-avatar"
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
               className: "p-messages__user-avatar-placeholder",
               children: (otherParticipant === null || otherParticipant === void 0 || (_otherParticipant$nam = otherParticipant.name) === null || _otherParticipant$nam === void 0 ? void 0 : _otherParticipant$nam.charAt(0).toUpperCase()) || "?"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "p-messages__user-details",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h3", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
                 className: "p-messages__user-name",
                 children: (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー"
-              }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
                 className: "p-messages__job-title",
                 children: conversationGroup.job_listing.title
               })]
             })]
-          }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: "p-messages__job-actions",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
               href: route("job-listings.show", conversationGroup.job_listing.id),
               className: "p-messages__job-link",
               children: "\u6848\u4EF6\u8A73\u7D30\u3092\u898B\u308B"
             })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "p-messages__memo-section",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h4", {
-            className: "p-messages__memo-title",
-            children: "\u30E1\u30E2"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("textarea", {
-            value: memo,
-            onChange: handleMemoChange,
-            className: "p-messages__memo-textarea",
-            placeholder: "\u30E1\u30E2\u3092\u5165\u529B\uFF08\u81EA\u5206\u3060\u3051\u304C\u898B\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\uFF09"
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "p-messages__memo-header",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
+              className: "p-messages__memo-title",
+              children: "\u30E1\u30E2"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
+              className: "p-messages__memo-char-counter ".concat(memo.length > MAX_CHARS * 0.9 ? "p-messages__memo-char-counter--near-limit" : ""),
+              children: [memo.length, "/", MAX_CHARS]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "p-messages__memo-content",
+            children: memo ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                className: "p-messages__memo-text",
+                children: memo
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                className: "p-messages__memo-edit-button",
+                onClick: function onClick() {
+                  return setShowMemoModal(true);
+                },
+                children: "\u7DE8\u96C6"
+              })]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              className: "p-messages__memo-add-button",
+              onClick: function onClick() {
+                return setShowMemoModal(true);
+              },
+              children: "\u30E1\u30E2\u3092\u8FFD\u52A0"
+            })
           })]
         })]
       })]
+    }), showMemoModal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "p-messages__modal-overlay",
+      onClick: function onClick() {
+        return setShowMemoModal(false);
+      },
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "p-messages__modal",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "p-messages__modal-header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
+            children: "\u30E1\u30E2\u3092\u7DE8\u96C6"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: "p-messages__modal-close",
+            onClick: function onClick() {
+              return setShowMemoModal(false);
+            },
+            type: "button",
+            children: "\xD7"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "p-messages__modal-body",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("textarea", {
+            value: draftMemo,
+            onChange: handleMemoChange,
+            className: "p-messages__modal-textarea",
+            placeholder: "\u30E1\u30E2\u3092\u5165\u529B\uFF08\u3053\u306E\u30E1\u30E2\u306F\u3042\u306A\u305F\u3060\u3051\u304C\u898B\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\uFF09",
+            maxLength: MAX_CHARS
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "p-messages__modal-char-counter",
+            children: [draftMemo.length, "/", MAX_CHARS]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "p-messages__modal-footer",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: "p-messages__modal-cancel",
+            onClick: function onClick() {
+              return setShowMemoModal(false);
+            },
+            type: "button",
+            children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: "p-messages__modal-save",
+            onClick: handleSaveMemo,
+            disabled: draftMemo === memo || savingMemo,
+            type: "button",
+            children: savingMemo ? "保存中..." : "保存"
+          })]
+        })]
+      })
     })]
   });
 }

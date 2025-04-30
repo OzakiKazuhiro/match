@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -6,6 +6,7 @@ import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import DirectMessage, { DirectMessageType } from "@/Components/DirectMessage";
 import axios from "axios";
+import { debounce } from "lodash";
 
 type User = {
     id: number;
@@ -55,6 +56,12 @@ export default function Show({
     const MAX_CHARS = 1000;
     // メモ欄のState
     const [memo, setMemo] = useState<string>("");
+    // メモの保存中状態を管理するState
+    const [savingMemo, setSavingMemo] = useState<boolean>(false);
+    // モーダル表示状態
+    const [showMemoModal, setShowMemoModal] = useState<boolean>(false);
+    // 編集中のメモ（下書き）
+    const [draftMemo, setDraftMemo] = useState<string>("");
 
     // 会話相手を特定（自分以外の参加者）
     const otherParticipant = participants.find(
@@ -99,10 +106,50 @@ export default function Show({
 
     // メモが変更されたときのハンドラ
     const handleMemoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setMemo(e.target.value);
-        // ここでメモをローカルストレージに保存するなどの処理を追加できます
-        localStorage.setItem(`memo_${conversationGroup.id}`, e.target.value);
+        const newContent = e.target.value;
+        setDraftMemo(newContent);
     };
+
+    // メモを保存するAPI呼び出し関数
+    const handleSaveMemo = async () => {
+        setSavingMemo(true);
+        try {
+            // CSRFトークンの取得
+            const csrfToken =
+                document
+                    .querySelector('meta[name="csrf-token"]')
+                    ?.getAttribute("content") || "";
+
+            // メモ保存APIを呼び出し
+            await axios.post(
+                route("conversation.memo.store", conversationGroup.id),
+                { content: draftMemo },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                }
+            );
+
+            // 保存成功したら表示用メモを更新
+            setMemo(draftMemo);
+            // モーダルを閉じる
+            setShowMemoModal(false);
+        } catch (error) {
+            console.error("メモ保存エラー:", error);
+            alert("メモの保存に失敗しました。");
+        } finally {
+            setSavingMemo(false);
+        }
+    };
+
+    // モーダルを開くときに現在のメモを下書きにセット
+    useEffect(() => {
+        if (showMemoModal) {
+            setDraftMemo(memo);
+        }
+    }, [showMemoModal, memo]);
 
     // メッセージ送信処理
     const handleSubmit = async (e: React.FormEvent) => {
@@ -182,11 +229,21 @@ export default function Show({
         // 初回ロード時に既読APIを呼び出し
         markMessagesAsRead();
 
-        // ローカルストレージからメモを読み込む
-        const savedMemo = localStorage.getItem(`memo_${conversationGroup.id}`);
-        if (savedMemo) {
-            setMemo(savedMemo);
-        }
+        // メモの取得処理を追加
+        const fetchMemo = async () => {
+            try {
+                const response = await axios.get(
+                    route("conversation.memo.show", conversationGroup.id)
+                );
+                if (response.data.memo) {
+                    setMemo(response.data.memo.content || "");
+                }
+            } catch (error) {
+                console.error("メモ取得エラー:", error);
+            }
+        };
+
+        fetchMemo();
 
         // 一定間隔で既読APIを呼び出し（ポーリング）
         const interval = setInterval(() => {
@@ -217,6 +274,7 @@ export default function Show({
                     </Link>
                 </div>
             }
+            showFooter={false}
         >
             <Head
                 title={`${
@@ -255,45 +313,50 @@ export default function Show({
                             onSubmit={handleSubmit}
                             className="p-messages__form"
                         >
-                            <div className="p-messages__input-wrapper">
-                                <textarea
-                                    value={data.message}
-                                    onChange={handleMessageChange}
-                                    className="p-messages__textarea"
-                                    placeholder="メッセージを入力..."
-                                    required
-                                    maxLength={MAX_CHARS}
-                                />
-                                <div className="p-messages__char-counter">
-                                    <span
-                                        className={
-                                            charCount > MAX_CHARS * 0.9
-                                                ? "p-messages__char-counter--near-limit"
-                                                : ""
+                            <div className="p-messages__input-row">
+                                <div className="p-messages__input-wrapper">
+                                    <textarea
+                                        value={data.message}
+                                        onChange={handleMessageChange}
+                                        className="p-messages__textarea"
+                                        placeholder="メッセージを入力..."
+                                        required
+                                        maxLength={MAX_CHARS}
+                                    />
+                                    <div className="p-messages__char-counter">
+                                        <span
+                                            className={
+                                                charCount > MAX_CHARS * 0.9
+                                                    ? "p-messages__char-counter--near-limit"
+                                                    : ""
+                                            }
+                                        >
+                                            {charCount}
+                                        </span>
+                                        <span className="p-messages__char-counter--max">
+                                            /{MAX_CHARS}
+                                        </span>
+                                    </div>
+                                    <InputError
+                                        message={errors.message}
+                                        className="c-form-error"
+                                    />
+                                </div>
+                                <div className="p-messages__submit-container">
+                                    <button
+                                        type="submit"
+                                        className="p-messages__send-button"
+                                        disabled={
+                                            sending ||
+                                            charCount > MAX_CHARS ||
+                                            charCount === 0
                                         }
                                     >
-                                        {charCount}
-                                    </span>
-                                    <span className="p-messages__char-counter--max">
-                                        /{MAX_CHARS}
-                                    </span>
+                                        <span className="p-messages__send-button-text">
+                                            送信
+                                        </span>
+                                    </button>
                                 </div>
-                                <InputError
-                                    message={errors.message}
-                                    className="c-form-error"
-                                />
-                            </div>
-                            <div className="p-messages__submit-container">
-                                <PrimaryButton
-                                    type="submit"
-                                    disabled={
-                                        sending ||
-                                        charCount > MAX_CHARS ||
-                                        charCount === 0
-                                    }
-                                >
-                                    送信
-                                </PrimaryButton>
                             </div>
                         </form>
                     </div>
@@ -348,18 +411,101 @@ export default function Show({
                         )}
                     </div>
 
-                    {/* メモ欄 */}
+                    {/* メモ欄 - 更新部分 */}
                     <div className="p-messages__memo-section">
-                        <h4 className="p-messages__memo-title">メモ</h4>
-                        <textarea
-                            value={memo}
-                            onChange={handleMemoChange}
-                            className="p-messages__memo-textarea"
-                            placeholder="メモを入力（自分だけが見ることができます）"
-                        />
+                        <div className="p-messages__memo-header">
+                            <h4 className="p-messages__memo-title">メモ</h4>
+                            <span
+                                className={`p-messages__memo-char-counter ${
+                                    memo.length > MAX_CHARS * 0.9
+                                        ? "p-messages__memo-char-counter--near-limit"
+                                        : ""
+                                }`}
+                            >
+                                {memo.length}/{MAX_CHARS}
+                            </span>
+                        </div>
+
+                        <div className="p-messages__memo-content">
+                            {memo ? (
+                                <>
+                                    <p className="p-messages__memo-text">
+                                        {memo}
+                                    </p>
+                                    <button
+                                        className="p-messages__memo-edit-button"
+                                        onClick={() => setShowMemoModal(true)}
+                                    >
+                                        編集
+                                    </button>
+                                </>
+                            ) : (
+                                <button
+                                    className="p-messages__memo-add-button"
+                                    onClick={() => setShowMemoModal(true)}
+                                >
+                                    メモを追加
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* メモ編集モーダル */}
+            {showMemoModal && (
+                <div
+                    className="p-messages__modal-overlay"
+                    onClick={() => setShowMemoModal(false)}
+                >
+                    <div
+                        className="p-messages__modal"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="p-messages__modal-header">
+                            <h3>メモを編集</h3>
+                            <button
+                                className="p-messages__modal-close"
+                                onClick={() => setShowMemoModal(false)}
+                                type="button"
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <div className="p-messages__modal-body">
+                            <textarea
+                                value={draftMemo}
+                                onChange={handleMemoChange}
+                                className="p-messages__modal-textarea"
+                                placeholder="メモを入力（このメモはあなただけが見ることができます）"
+                                maxLength={MAX_CHARS}
+                            />
+                            <div className="p-messages__modal-char-counter">
+                                {draftMemo.length}/{MAX_CHARS}
+                            </div>
+                        </div>
+
+                        <div className="p-messages__modal-footer">
+                            <button
+                                className="p-messages__modal-cancel"
+                                onClick={() => setShowMemoModal(false)}
+                                type="button"
+                            >
+                                キャンセル
+                            </button>
+                            <button
+                                className="p-messages__modal-save"
+                                onClick={handleSaveMemo}
+                                disabled={draftMemo === memo || savingMemo}
+                                type="button"
+                            >
+                                {savingMemo ? "保存中..." : "保存"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </AuthenticatedLayout>
     );
 }

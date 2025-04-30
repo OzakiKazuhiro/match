@@ -11,7 +11,8 @@ import NotificationBadge from "@/Components/NotificationBadge";
 export default function Authenticated({
     header,
     children,
-}: PropsWithChildren<{ header?: ReactNode }>) {
+    showFooter = true,
+}: PropsWithChildren<{ header?: ReactNode; showFooter?: boolean }>) {
     const user = usePage().props.auth.user;
     const [showingUserDropdown, setShowingUserDropdown] = useState(false);
     const [showingMobileMenu, setShowingMobileMenu] = useState(false);
@@ -285,98 +286,102 @@ export default function Authenticated({
             {/* メインコンテンツ */}
             <main>{children}</main>
 
-            {/* フッター */}
-            <footer className="l-footer">
-                <div className="l-footer__container">
-                    <div className="l-footer__content">
-                        <div>
-                            <Link href="/" className="l-footer__logo">
-                                <span className="l-footer__logo-accent">
-                                    match
-                                </span>
-                            </Link>
-                            <p className="l-footer__description">
-                                エンジニア向けの案件マッチングサービス。
-                                単発案件からレベニューシェア案件まで、
-                                シンプルに探せて、すぐに応募できます
-                            </p>
+            {/* フッター - showFooterオプションが真の場合のみ表示 */}
+            {showFooter && (
+                <footer className="l-footer">
+                    <div className="l-footer__container">
+                        <div className="l-footer__content">
+                            <div>
+                                <Link href="/" className="l-footer__logo">
+                                    <span className="l-footer__logo-accent">
+                                        match
+                                    </span>
+                                </Link>
+                                <p className="l-footer__description">
+                                    エンジニア向けの案件マッチングサービス。
+                                    単発案件からレベニューシェア案件まで、
+                                    シンプルに探せて、すぐに応募できます
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 className="l-footer__heading">案件関連</h3>
+                                <ul className="l-footer__links">
+                                    <li className="l-footer__link-item">
+                                        <Link
+                                            href="/job-listings"
+                                            className="l-footer__link"
+                                        >
+                                            案件一覧
+                                        </Link>
+                                    </li>
+                                    <li className="l-footer__link-item">
+                                        <Link
+                                            href="/post-job"
+                                            className="l-footer__link"
+                                        >
+                                            案件を投稿
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h3 className="l-footer__heading">
+                                    アカウント
+                                </h3>
+                                <ul className="l-footer__links">
+                                    <li className="l-footer__link-item">
+                                        <Link
+                                            href={route("dashboard")}
+                                            className="l-footer__link"
+                                        >
+                                            マイページ
+                                        </Link>
+                                    </li>
+                                    <li className="l-footer__link-item">
+                                        <Link
+                                            href={route("profile.edit")}
+                                            className="l-footer__link"
+                                        >
+                                            プロフィール編集
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h3 className="l-footer__heading">
+                                    規約・ポリシー
+                                </h3>
+                                <ul className="l-footer__links">
+                                    <li className="l-footer__link-item">
+                                        <Link
+                                            href={route("terms")}
+                                            className="l-footer__link"
+                                        >
+                                            利用規約
+                                        </Link>
+                                    </li>
+                                    <li className="l-footer__link-item">
+                                        <Link
+                                            href={route("privacy")}
+                                            className="l-footer__link"
+                                        >
+                                            プライバシーポリシー
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
 
-                        <div>
-                            <h3 className="l-footer__heading">案件関連</h3>
-                            <ul className="l-footer__links">
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href="/job-listings"
-                                        className="l-footer__link"
-                                    >
-                                        案件一覧
-                                    </Link>
-                                </li>
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href="/post-job"
-                                        className="l-footer__link"
-                                    >
-                                        案件を投稿
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h3 className="l-footer__heading">アカウント</h3>
-                            <ul className="l-footer__links">
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href={route("dashboard")}
-                                        className="l-footer__link"
-                                    >
-                                        マイページ
-                                    </Link>
-                                </li>
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href={route("profile.edit")}
-                                        className="l-footer__link"
-                                    >
-                                        プロフィール編集
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h3 className="l-footer__heading">
-                                規約・ポリシー
-                            </h3>
-                            <ul className="l-footer__links">
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href={route("terms")}
-                                        className="l-footer__link"
-                                    >
-                                        利用規約
-                                    </Link>
-                                </li>
-                                <li className="l-footer__link-item">
-                                    <Link
-                                        href={route("privacy")}
-                                        className="l-footer__link"
-                                    >
-                                        プライバシーポリシー
-                                    </Link>
-                                </li>
-                            </ul>
+                        <div className="l-footer__copyright">
+                            &copy; {new Date().getFullYear()} match. All rights
+                            reserved.
                         </div>
                     </div>
-
-                    <div className="l-footer__copyright">
-                        &copy; {new Date().getFullYear()} match. All rights
-                        reserved.
-                    </div>
-                </div>
-            </footer>
+                </footer>
+            )}
         </div>
     );
 }
