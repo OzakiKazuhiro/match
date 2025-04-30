@@ -51,6 +51,16 @@ const getInitials = (name: string): string => {
 };
 
 /**
+ * 時刻のみを抽出するフォーマット関数
+ */
+const formatTimeOnly = (dateString: string): string => {
+    return new Date(dateString).toLocaleTimeString("ja-JP", {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+};
+
+/**
  * ダイレクトメッセージコンポーネント
  * メッセージ一覧画面などで表示されるダイレクトメッセージ
  */
@@ -60,94 +70,64 @@ export default function DirectMessage({
 }: DirectMessageProps) {
     const isSentByCurrentUser = message.sender_id === currentUserId;
 
-    // 日時のフォーマット
-    const formattedDate = new Date(message.created_at).toLocaleString("ja-JP", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-
-    // 「年/月/日 時間:分」形式に変換
-    const displayDate = formattedDate.replace(/\//g, "/").replace(/ /g, " ");
-
-    // 送信者の表示名を設定
-    const senderName = isSentByCurrentUser ? "あなた" : message.sender.name;
-
-    // 送信者名と日時を組み合わせたテキスト
-    const senderWithTime = `${senderName}：${displayDate}`;
-
-    // アバター画像のURLをコンソールログに出力（デバッグ用）
-    if (message.sender) {
-        console.log("Sender:", JSON.stringify(message.sender));
-        if (message.sender.avatar) {
-            const avatarUrl = getAvatarUrl(message.sender.avatar);
-            console.log("Avatar original:", message.sender.avatar);
-            console.log("Avatar URL constructed:", avatarUrl);
-        } else {
-            console.log("No avatar found in sender object");
-        }
-    }
+    // 時刻のみのフォーマット
+    const timeOnly = formatTimeOnly(message.created_at);
 
     return (
         <div
-            className={`p-messages__message-wrapper p-messages__message-wrapper--${
-                isSentByCurrentUser ? "sent" : "received"
+            className={`p-messages__message-item ${
+                isSentByCurrentUser
+                    ? "p-messages__message-item--sent"
+                    : "p-messages__message-item--received"
             }`}
         >
+            {!isSentByCurrentUser && (
+                <div className="p-messages__message-avatar">
+                    {message.sender.avatar ? (
+                        <img
+                            src={getAvatarUrl(message.sender.avatar)}
+                            alt={message.sender.name}
+                            onError={(e) => {
+                                // 画像読み込みエラー時に頭文字を表示
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = "none";
+                                if (target.parentElement) {
+                                    target.parentElement.innerText =
+                                        getInitials(message.sender.name);
+                                }
+                            }}
+                        />
+                    ) : (
+                        <span>{getInitials(message.sender.name)}</span>
+                    )}
+                </div>
+            )}
+
             <div className="p-messages__message-content">
                 {!isSentByCurrentUser && (
-                    <div className="p-messages__avatar">
-                        {message.sender.avatar ? (
-                            <img
-                                src={getAvatarUrl(message.sender.avatar)}
-                                alt={message.sender.name}
-                                onError={(e) => {
-                                    // 画像読み込みエラー時に頭文字を表示
-                                    const target = e.target as HTMLImageElement;
-                                    target.style.display = "none";
-                                    if (target.parentElement) {
-                                        target.parentElement.innerText =
-                                            getInitials(message.sender.name);
-                                    }
-                                    console.error(
-                                        "アバター画像の読み込みに失敗:",
-                                        getAvatarUrl(message.sender.avatar)
-                                    );
-                                }}
-                            />
-                        ) : (
-                            <div className="p-messages__avatar-placeholder">
-                                {getInitials(message.sender.name)}
-                            </div>
-                        )}
+                    <div className="p-messages__message-sender">
+                        {message.sender.name}
                     </div>
                 )}
-                <div
-                    className={`p-messages__message-bubble p-messages__message-bubble--${
-                        isSentByCurrentUser ? "sent" : "received"
-                    }`}
-                >
-                    <p className="p-messages__message-text">
-                        {message.message}
-                    </p>
-                </div>
-            </div>
 
-            <div
-                className={`p-messages__message-meta p-messages__message-meta--${
-                    isSentByCurrentUser ? "sent" : "received"
-                }`}
-            >
-                <span className="p-messages__message-time">
-                    {senderWithTime}
-                    {isSentByCurrentUser && message.is_read && (
-                        <span className="p-messages__message-status p-messages__message-status--read">
-                            &nbsp;(既読)
-                        </span>
-                    )}
-                </span>
+                <div className="p-messages__message-bubble-container">
+                    <div
+                        className={`p-messages__message-bubble p-messages__message-bubble--${
+                            isSentByCurrentUser ? "sent" : "received"
+                        }`}
+                    >
+                        {message.message}
+                    </div>
+
+                    <div className="p-messages__message-time">
+                        {isSentByCurrentUser && message.is_read && (
+                            <span className="p-messages__message-read">
+                                既読
+                            </span>
+                        )}
+                        {timeOnly}
+                    </div>
+                </div>
             </div>
         </div>
     );

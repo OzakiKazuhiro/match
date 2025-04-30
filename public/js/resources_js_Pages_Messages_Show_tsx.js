@@ -48,6 +48,16 @@ var getInitials = function getInitials(name) {
 };
 
 /**
+ * 時刻のみを抽出するフォーマット関数
+ */
+var formatTimeOnly = function formatTimeOnly(dateString) {
+  return new Date(dateString).toLocaleTimeString("ja-JP", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+};
+
+/**
  * ダイレクトメッセージコンポーネント
  * メッセージ一覧画面などで表示されるダイレクトメッセージ
  */
@@ -56,73 +66,44 @@ function DirectMessage(_ref) {
     currentUserId = _ref.currentUserId;
   var isSentByCurrentUser = message.sender_id === currentUserId;
 
-  // 日時のフォーマット
-  var formattedDate = new Date(message.created_at).toLocaleString("ja-JP", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-
-  // 「年/月/日 時間:分」形式に変換
-  var displayDate = formattedDate.replace(/\//g, "/").replace(/ /g, " ");
-
-  // 送信者の表示名を設定
-  var senderName = isSentByCurrentUser ? "あなた" : message.sender.name;
-
-  // 送信者名と日時を組み合わせたテキスト
-  var senderWithTime = "".concat(senderName, "\uFF1A").concat(displayDate);
-
-  // アバター画像のURLをコンソールログに出力（デバッグ用）
-  if (message.sender) {
-    console.log("Sender:", JSON.stringify(message.sender));
-    if (message.sender.avatar) {
-      var avatarUrl = getAvatarUrl(message.sender.avatar);
-      console.log("Avatar original:", message.sender.avatar);
-      console.log("Avatar URL constructed:", avatarUrl);
-    } else {
-      console.log("No avatar found in sender object");
-    }
-  }
+  // 時刻のみのフォーマット
+  var timeOnly = formatTimeOnly(message.created_at);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-    className: "p-messages__message-wrapper p-messages__message-wrapper--".concat(isSentByCurrentUser ? "sent" : "received"),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: "p-messages__message-item ".concat(isSentByCurrentUser ? "p-messages__message-item--sent" : "p-messages__message-item--received"),
+    children: [!isSentByCurrentUser && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      className: "p-messages__message-avatar",
+      children: message.sender.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+        src: getAvatarUrl(message.sender.avatar),
+        alt: message.sender.name,
+        onError: function onError(e) {
+          // 画像読み込みエラー時に頭文字を表示
+          var target = e.target;
+          target.style.display = "none";
+          if (target.parentElement) {
+            target.parentElement.innerText = getInitials(message.sender.name);
+          }
+        }
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+        children: getInitials(message.sender.name)
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
       className: "p-messages__message-content",
       children: [!isSentByCurrentUser && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-        className: "p-messages__avatar",
-        children: message.sender.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
-          src: getAvatarUrl(message.sender.avatar),
-          alt: message.sender.name,
-          onError: function onError(e) {
-            // 画像読み込みエラー時に頭文字を表示
-            var target = e.target;
-            target.style.display = "none";
-            if (target.parentElement) {
-              target.parentElement.innerText = getInitials(message.sender.name);
-            }
-            console.error("アバター画像の読み込みに失敗:", getAvatarUrl(message.sender.avatar));
-          }
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-          className: "p-messages__avatar-placeholder",
-          children: getInitials(message.sender.name)
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-        className: "p-messages__message-bubble p-messages__message-bubble--".concat(isSentByCurrentUser ? "sent" : "received"),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
-          className: "p-messages__message-text",
+        className: "p-messages__message-sender",
+        children: message.sender.name
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "p-messages__message-bubble-container",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "p-messages__message-bubble p-messages__message-bubble--".concat(isSentByCurrentUser ? "sent" : "received"),
           children: message.message
-        })
-      })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: "p-messages__message-meta p-messages__message-meta--".concat(isSentByCurrentUser ? "sent" : "received"),
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("span", {
-        className: "p-messages__message-time",
-        children: [senderWithTime, isSentByCurrentUser && message.is_read && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
-          className: "p-messages__message-status p-messages__message-status--read",
-          children: "\xA0(\u65E2\u8AAD)"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "p-messages__message-time",
+          children: [isSentByCurrentUser && message.is_read && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+            className: "p-messages__message-read",
+            children: "\u65E2\u8AAD"
+          }), timeOnly]
         })]
-      })
+      })]
     })]
   });
 }
@@ -708,6 +689,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 function Show(_ref) {
+  var _otherParticipant$nam;
   var auth = _ref.auth,
     conversationGroup = _ref.conversationGroup,
     initialMessages = _ref.messages,
@@ -728,6 +710,11 @@ function Show(_ref) {
     setCharCount = _useState6[1];
   // 最大文字数（サーバー側のバリデーションに合わせる）
   var MAX_CHARS = 1000;
+  // メモ欄のState
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState8 = _slicedToArray(_useState7, 2),
+    memo = _useState8[0],
+    setMemo = _useState8[1];
 
   // 会話相手を特定（自分以外の参加者）
   var otherParticipant = participants.find(function (participant) {
@@ -781,6 +768,13 @@ function Show(_ref) {
     var inputValue = e.target.value;
     setCharCount(inputValue.length);
     setData("message", inputValue);
+  };
+
+  // メモが変更されたときのハンドラ
+  var handleMemoChange = function handleMemoChange(e) {
+    setMemo(e.target.value);
+    // ここでメモをローカルストレージに保存するなどの処理を追加できます
+    localStorage.setItem("memo_".concat(conversationGroup.id), e.target.value);
   };
 
   // メッセージ送信処理
@@ -867,6 +861,12 @@ function Show(_ref) {
     // 初回ロード時に既読APIを呼び出し
     markMessagesAsRead();
 
+    // ローカルストレージからメモを読み込む
+    var savedMemo = localStorage.getItem("memo_".concat(conversationGroup.id));
+    if (savedMemo) {
+      setMemo(savedMemo);
+    }
+
     // 一定間隔で既読APIを呼び出し（ポーリング）
     var interval = setInterval(function () {
       markMessagesAsRead();
@@ -894,65 +894,31 @@ function Show(_ref) {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
       title: "".concat(conversationGroup.job_listing ? conversationGroup.job_listing.title + " - " : "").concat((otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー", "\u3068\u306E\u4F1A\u8A71")
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-      className: "p-messages__container",
-      children: [conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "p-messages__card mb-4",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "p-messages__card-body",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-            className: "p-messages__job-info",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              className: "p-messages__job-info-content",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-                className: "p-messages__job-info-label",
-                children: "\u95A2\u9023\u6848\u4EF6"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h3", {
-                className: "p-messages__job-info-title",
-                children: conversationGroup.job_listing.title
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-              href: route("job-listings.show", conversationGroup.job_listing.id),
-              className: "p-messages__job-info-link",
-              children: "\u6848\u4EF6\u8A73\u7D30\u3092\u898B\u308B"
-            })]
+      className: "p-messages__line-container",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-messages__chat-container",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          ref: messagesContainerRef,
+          className: "p-messages__conversation",
+          children: messages.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            className: "p-messages__empty",
+            children: "\u30E1\u30C3\u30BB\u30FC\u30B8\u304C\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002\u6700\u521D\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u9001\u4FE1\u3057\u307E\u3057\u3087\u3046\u3002"
+          }) : messages.map(function (message) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_DirectMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              message: message,
+              currentUserId: auth.user.id
+            }, message.id);
           })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "p-messages__card",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "p-messages__card-body",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            ref: messagesContainerRef,
-            className: "p-messages__conversation",
-            children: messages.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-              className: "p-messages__empty",
-              children: "\u30E1\u30C3\u30BB\u30FC\u30B8\u304C\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002\u6700\u521D\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u9001\u4FE1\u3057\u307E\u3057\u3087\u3046\u3002"
-            }) : messages.map(function (message) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_DirectMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
-                message: message,
-                currentUserId: auth.user.id
-              }, message.id);
-            })
-          })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "p-messages__card",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "p-messages__card-body",
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: "p-messages__input-container",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
             onSubmit: handleSubmit,
             className: "p-messages__form",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              className: "c-form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                htmlFor: "message",
-                className: "c-form-label",
-                children: "\u30E1\u30C3\u30BB\u30FC\u30B8"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("textarea", {
-                id: "message",
+              className: "p-messages__input-wrapper",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("textarea", {
                 value: data.message,
                 onChange: handleMessageChange,
-                rows: 3,
                 className: "p-messages__textarea",
                 placeholder: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5165\u529B...",
                 required: true,
@@ -979,7 +945,50 @@ function Show(_ref) {
               })
             })]
           })
-        })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "p-messages__info-panel",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+          className: "p-messages__user-info",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            className: "p-messages__user-header",
+            children: [otherParticipant !== null && otherParticipant !== void 0 && otherParticipant.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+              src: otherParticipant.avatar.startsWith("/") ? otherParticipant.avatar : "/".concat(otherParticipant.avatar),
+              alt: otherParticipant.name,
+              className: "p-messages__user-avatar"
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              className: "p-messages__user-avatar-placeholder",
+              children: (otherParticipant === null || otherParticipant === void 0 || (_otherParticipant$nam = otherParticipant.name) === null || _otherParticipant$nam === void 0 ? void 0 : _otherParticipant$nam.charAt(0).toUpperCase()) || "?"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              className: "p-messages__user-details",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h3", {
+                className: "p-messages__user-name",
+                children: (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー"
+              }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                className: "p-messages__job-title",
+                children: conversationGroup.job_listing.title
+              })]
+            })]
+          }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            className: "p-messages__job-actions",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: route("job-listings.show", conversationGroup.job_listing.id),
+              className: "p-messages__job-link",
+              children: "\u6848\u4EF6\u8A73\u7D30\u3092\u898B\u308B"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+          className: "p-messages__memo-section",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h4", {
+            className: "p-messages__memo-title",
+            children: "\u30E1\u30E2"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("textarea", {
+            value: memo,
+            onChange: handleMemoChange,
+            className: "p-messages__memo-textarea",
+            placeholder: "\u30E1\u30E2\u3092\u5165\u529B\uFF08\u81EA\u5206\u3060\u3051\u304C\u898B\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\uFF09"
+          })]
+        })]
       })]
     })]
   });
