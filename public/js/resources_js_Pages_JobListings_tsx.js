@@ -1723,7 +1723,10 @@ function JobListings(_ref) {
 
     // お気に入りフィルタリング（追加）
     var matchesFavorite = !showFavoritesOnly || userFavorites.includes(job.id);
-    return matchesQuery && matchesType && matchesCategory && matchesFavorite;
+
+    // 募集終了した案件を除外
+    var isActive = !job.is_closed;
+    return matchesQuery && matchesType && matchesCategory && matchesFavorite && isActive;
   });
 
   // タイプフィルターの変更（SPA対応）

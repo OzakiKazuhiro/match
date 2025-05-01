@@ -3247,13 +3247,12 @@ textarea {
   }
   .p-job-detail__card--share {
     position: sticky;
-    top: 400px;
-    margin-top: -12px;
+    top: 310px;
   }
 }
 .p-job-detail__card--favorite {
   position: sticky;
-  top: 555px;
+  top: 460px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3414,16 +3413,22 @@ textarea {
 }
 .p-job-detail__apply-button--applied {
   background-color: #fbbf24;
+  cursor: default;
+  pointer-events: none;
 }
 .p-job-detail__apply-button--applied:hover {
-  background-color: #f59e0b;
+  background-color: #fbbf24;
+  transform: none;
   color: #fff;
 }
 .p-job-detail__apply-button--accepted {
   background-color: #10b981;
+  cursor: default;
+  pointer-events: none;
 }
 .p-job-detail__apply-button--accepted:hover {
-  background-color: #059669;
+  background-color: #10b981;
+  transform: none;
   color: #fff;
 }
 .p-job-detail__message-button {
@@ -4713,6 +4718,11 @@ textarea {
   font-size: 0.875rem;
   transition: all 0.3s;
   text-decoration: none;
+  text-align: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 200px;
+  max-width: 100%;
 }
 .p-applications__message-button:hover {
   background-color: #93d4ea;
@@ -4805,6 +4815,22 @@ textarea {
   border-top: 1px solid #e5e7eb;
   gap: 0.75rem;
 }
+.p-applications__button-text-pc {
+  display: inline;
+}
+@media (max-width: 768px) {
+  .p-applications__button-text-pc {
+    display: none;
+  }
+}
+.p-applications__button-text-sp {
+  display: none;
+}
+@media (max-width: 768px) {
+  .p-applications__button-text-sp {
+    display: inline;
+  }
+}
 .p-applications__view-job-button {
   display: inline-flex;
   align-items: center;
@@ -4855,6 +4881,7 @@ textarea {
   border-radius: 6px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 .p-applications__contact-info p {
   margin-bottom: 8px;
@@ -5016,7 +5043,7 @@ textarea {
   color: #9ca3af;
 }
 .p-messages__send-button {
-  background-color: #f6adb1;
+  background-color: #ff6b6b;
   color: white;
   border: none;
   border-radius: 50px;
@@ -5031,7 +5058,7 @@ textarea {
   justify-content: center;
 }
 .p-messages__send-button:hover {
-  background-color: #e4989c;
+  background-color: #ff9e9e;
 }
 .p-messages__send-button:focus {
   outline: none;
@@ -5576,8 +5603,8 @@ textarea {
   white-space: pre-wrap;
 }
 .p-messages__message-bubble--sent {
-  background-color: #44bd32;
-  color: white;
+  background-color: #7df36b;
+  color: #333;
   border-radius: 16px;
 }
 .p-messages__message-bubble--received {

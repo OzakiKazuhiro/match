@@ -176,15 +176,22 @@ export default function JobDetail({
     };
 
     const [confirmingClose, setConfirmingClose] = useState(false);
+    const [confirmingApply, setConfirmingApply] = useState(false);
 
     // 募集終了確認モーダルを開く
     const confirmJobClose = () => {
         setConfirmingClose(true);
     };
 
-    // 募集終了確認モーダルを閉じる
+    // 応募確認モーダルを開く
+    const confirmApply = () => {
+        setConfirmingApply(true);
+    };
+
+    // モーダルを閉じる
     const closeModal = () => {
         setConfirmingClose(false);
+        setConfirmingApply(false);
     };
 
     // 募集終了の実行
@@ -195,6 +202,14 @@ export default function JobDetail({
             {
                 onSuccess: () => closeModal(),
             }
+        );
+    };
+
+    // 応募の実行
+    const handleApply = () => {
+        window.location.href = route(
+            "job-listings.apply.create",
+            jobListing.id
         );
     };
 
@@ -378,27 +393,33 @@ export default function JobDetail({
                                                 )}
                                             </>
                                         )}
-                                        {canApply && !jobListing.is_closed && (
-                                            <Link
-                                                href={route(
-                                                    "job-listings.apply.create",
-                                                    jobListing.id
-                                                )}
-                                                className={`p-job-detail__apply-button ${
-                                                    hasApplied
-                                                        ? getStatusClass(
+                                        {!jobListing.is_closed &&
+                                            (canApply || hasApplied) && (
+                                                <Link
+                                                    href={
+                                                        hasApplied ? "#" : "#"
+                                                    }
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        if (!hasApplied) {
+                                                            confirmApply();
+                                                        }
+                                                    }}
+                                                    className={`p-job-detail__apply-button ${
+                                                        hasApplied
+                                                            ? getStatusClass(
+                                                                  applicationStatus
+                                                              )
+                                                            : ""
+                                                    }`}
+                                                >
+                                                    {hasApplied
+                                                        ? getStatusText(
                                                               applicationStatus
                                                           )
-                                                        : ""
-                                                }`}
-                                            >
-                                                {hasApplied
-                                                    ? getStatusText(
-                                                          applicationStatus
-                                                      )
-                                                    : "応募する"}
-                                            </Link>
-                                        )}
+                                                        : "応募する"}
+                                                </Link>
+                                            )}
                                     </div>
                                 </div>
                             </div>
@@ -685,7 +706,7 @@ export default function JobDetail({
                                     )}
                                 </div>
 
-                                {auth.user && (
+                                {auth.user && !jobListing.is_closed && (
                                     <div className="p-job-detail__message-form-wrapper">
                                         <h3 className="p-job-detail__message-form-title">
                                             メッセージを投稿
@@ -742,6 +763,14 @@ export default function JobDetail({
                                                     : "メッセージを送信"}
                                             </button>
                                         </form>
+                                    </div>
+                                )}
+
+                                {auth.user && jobListing.is_closed && (
+                                    <div className="p-job-detail__closed-message">
+                                        <p>
+                                            この案件は募集が終了しているため、新しいメッセージは投稿できません。
+                                        </p>
                                     </div>
                                 )}
 
@@ -810,17 +839,6 @@ export default function JobDetail({
                                             {totalJobListings}件
                                         </div>
                                     </div>
-                                    <div className="p-job-detail__author-stat">
-                                        <div className="p-job-detail__author-stat-label">
-                                            会員登録日
-                                        </div>
-                                        <div className="p-job-detail__author-stat-value">
-                                            {formatDate(
-                                                jobListing.user.created_at ||
-                                                    jobListing.created_at
-                                            )}
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -872,7 +890,7 @@ export default function JobDetail({
                                 </div>
                             )}
 
-                            {auth.user && (
+                            {auth.user && !jobListing.is_closed && (
                                 <div className="p-job-detail__card p-job-detail__card--favorite">
                                     <h2 className="p-job-detail__section-like-title">
                                         お気に入り登録する
@@ -916,6 +934,37 @@ export default function JobDetail({
                             onClick={handleJobClose}
                         >
                             募集を終了する
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+
+            {/* 応募確認モーダル */}
+            <Modal show={confirmingApply} onClose={closeModal} maxWidth="md">
+                <div className="p-6">
+                    <h2 className="text-lg font-medium text-gray-900">
+                        応募の確認
+                    </h2>
+
+                    <p className="mt-3 text-sm text-gray-600">
+                        この案件に応募しますか？一度応募すると取り消すことができません。
+                    </p>
+
+                    <div className="mt-6 flex justify-end space-x-3">
+                        <button
+                            type="button"
+                            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            onClick={closeModal}
+                        >
+                            キャンセル
+                        </button>
+
+                        <button
+                            type="button"
+                            className="ml-3 inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                            onClick={handleApply}
+                        >
+                            応募する
                         </button>
                     </div>
                 </div>

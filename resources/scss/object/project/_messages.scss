@@ -157,7 +157,7 @@
 
     /* 送信ボタン */
     &__send-button {
-        background-color: #f6adb1;
+        background-color: #ff6b6b;
         color: white;
         border: none;
         border-radius: 50px;
@@ -172,7 +172,7 @@
         justify-content: center;
 
         &:hover {
-            background-color: #e4989c;
+            background-color: #ff9e9e;
         }
 
         &:focus {
@@ -814,8 +814,8 @@
         white-space: pre-wrap;
 
         &--sent {
-            background-color: #44bd32;
-            color: white;
+            background-color: #7df36b;
+            color: #333;
             border-radius: 16px;
         }
 

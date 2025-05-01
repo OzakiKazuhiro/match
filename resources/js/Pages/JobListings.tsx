@@ -189,8 +189,15 @@ export default function JobListings({
         const matchesFavorite =
             !showFavoritesOnly || userFavorites.includes(job.id);
 
+        // 募集終了した案件を除外
+        const isActive = !job.is_closed;
+
         return (
-            matchesQuery && matchesType && matchesCategory && matchesFavorite
+            matchesQuery &&
+            matchesType &&
+            matchesCategory &&
+            matchesFavorite &&
+            isActive
         );
     });
 

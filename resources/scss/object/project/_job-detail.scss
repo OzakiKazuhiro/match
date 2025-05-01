@@ -88,16 +88,14 @@
         &--share {
             @media (min-width: 992px) {
                 position: sticky;
-                top: 400px;
-                margin-top: -12px;
+                top: 310px;
             }
         }
 
         &--favorite {
             position: sticky;
-            top: 555px;
+            top: 460px;
             display: flex;
-            // flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -150,7 +148,6 @@
     &__title {
         font-size: 1.75rem;
         font-weight: 700;
-        // color: #fff;
 
         @media (min-width: 768px) {
             font-size: 1.75rem;
@@ -286,9 +283,12 @@
 
         &--applied {
             background-color: #fbbf24;
+            cursor: default;
+            pointer-events: none;
 
             &:hover {
-                background-color: #f59e0b;
+                background-color: #fbbf24;
+                transform: none;
                 color: #fff;
             }
         }
@@ -296,9 +296,12 @@
         // 承認済みボタンのスタイル
         &--accepted {
             background-color: #10b981;
+            cursor: default;
+            pointer-events: none;
 
             &:hover {
-                background-color: #059669;
+                background-color: #10b981;
+                transform: none;
                 color: #fff;
             }
         }

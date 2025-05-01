@@ -2611,7 +2611,10 @@ function ApplicationsToMyJobs(_ref) {
     if (confirmingCloseId !== null) {
       _inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.router.patch((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.close", confirmingCloseId), {}, {
         onSuccess: function onSuccess() {
-          return closeModal();
+          // モーダルを閉じる
+          closeModal();
+          // ページをリロードして状態を更新
+          window.location.reload();
         }
       });
     }
@@ -2811,7 +2814,7 @@ function ApplicationsToMyJobs(_ref) {
                                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
                                   href: application.conversation_group_id ? (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("messages.show", application.conversation_group_id) : (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("messages.index"),
                                   className: "p-applications__message-button",
-                                  children: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u9001\u308B"
+                                  children: "\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u9001\u308B"
                                 })]
                               })]
                             })]
@@ -2820,16 +2823,28 @@ function ApplicationsToMyJobs(_ref) {
                       })
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                       className: "p-applications__job-card-footer",
-                      children: [!jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                      children: [!jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
                         onClick: function onClick() {
                           return confirmJobClose(jobListing.id);
                         },
                         className: "p-applications__close-job-button",
-                        children: "\u6848\u4EF6\u306E\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__button-text-pc",
+                          children: "\u6848\u4EF6\u306E\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__button-text-sp",
+                          children: "\u52DF\u96C6\u7D42\u4E86"
+                        })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
                         href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.show", jobListing.id),
                         className: "p-applications__view-job-button",
-                        children: "\u6848\u4EF6\u8A73\u7D30\u3092\u898B\u308B"
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__button-text-pc",
+                          children: "\u6848\u4EF6\u8A73\u7D30\u3092\u898B\u308B"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__button-text-sp",
+                          children: "\u6848\u4EF6\u8A73\u7D30"
+                        })]
                       })]
                     })]
                   })]
@@ -2850,7 +2865,7 @@ function ApplicationsToMyJobs(_ref) {
           children: "\u52DF\u96C6\u7D42\u4E86\u306E\u78BA\u8A8D"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
           className: "mt-3 text-sm text-gray-600",
-          children: "\u4E00\u5EA6\u3001\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B\u3068\u3001\u6848\u4EF6\u4E00\u89A7\u304B\u3089\u8868\u793A\u3055\u308C\u306A\u304F\u306A\u308A\u3001\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"
+          children: "\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B\u3068\u3001\u6848\u4EF6\u4E00\u89A7\u304B\u3089\u8868\u793A\u3055\u308C\u306A\u304F\u306A\u308A\u3001\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "mt-6 flex justify-end space-x-3",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {

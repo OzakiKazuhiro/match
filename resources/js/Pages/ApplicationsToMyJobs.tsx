@@ -166,7 +166,12 @@ export default function ApplicationsToMyJobs({
                 route("job-listings.close", confirmingCloseId),
                 {},
                 {
-                    onSuccess: () => closeModal(),
+                    onSuccess: () => {
+                        // モーダルを閉じる
+                        closeModal();
+                        // ページをリロードして状態を更新
+                        window.location.reload();
+                    },
                 }
             );
         }
@@ -487,7 +492,7 @@ export default function ApplicationsToMyJobs({
                                                                                                 }
                                                                                                 className="p-applications__message-button"
                                                                                             >
-                                                                                                メッセージを送る
+                                                                                                ダイレクトメッセージを送る
                                                                                             </Link>
                                                                                         </div>
                                                                                     </div>
@@ -507,7 +512,12 @@ export default function ApplicationsToMyJobs({
                                                                         }
                                                                         className="p-applications__close-job-button"
                                                                     >
-                                                                        案件の募集を終了する
+                                                                        <span className="p-applications__button-text-pc">
+                                                                            案件の募集を終了する
+                                                                        </span>
+                                                                        <span className="p-applications__button-text-sp">
+                                                                            募集終了
+                                                                        </span>
                                                                     </button>
                                                                 )}
                                                                 <Link
@@ -517,7 +527,12 @@ export default function ApplicationsToMyJobs({
                                                                     )}
                                                                     className="p-applications__view-job-button"
                                                                 >
-                                                                    案件詳細を見る
+                                                                    <span className="p-applications__button-text-pc">
+                                                                        案件詳細を見る
+                                                                    </span>
+                                                                    <span className="p-applications__button-text-sp">
+                                                                        案件詳細
+                                                                    </span>
                                                                 </Link>
                                                             </div>
                                                         </div>
@@ -545,7 +560,7 @@ export default function ApplicationsToMyJobs({
                     </h2>
 
                     <p className="mt-3 text-sm text-gray-600">
-                        一度、募集を終了すると、案件一覧から表示されなくなり、この操作は取り消せません。よろしいですか？
+                        募集を終了すると、案件一覧から表示されなくなり、この操作は取り消せません。よろしいですか？
                     </p>
 
                     <div className="mt-6 flex justify-end space-x-3">

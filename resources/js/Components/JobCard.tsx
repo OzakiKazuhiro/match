@@ -16,6 +16,7 @@ export interface JobType {
     created_at: string;
     updated_at: string;
     view_count?: number | null;
+    is_closed?: boolean;
     user: {
         id: number;
         name: string;

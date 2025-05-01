@@ -2904,15 +2904,25 @@ function JobDetail(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     confirmingClose = _useState2[0],
     setConfirmingClose = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    confirmingApply = _useState4[0],
+    setConfirmingApply = _useState4[1];
 
   // 募集終了確認モーダルを開く
   var confirmJobClose = function confirmJobClose() {
     setConfirmingClose(true);
   };
 
-  // 募集終了確認モーダルを閉じる
+  // 応募確認モーダルを開く
+  var confirmApply = function confirmApply() {
+    setConfirmingApply(true);
+  };
+
+  // モーダルを閉じる
   var closeModal = function closeModal() {
     setConfirmingClose(false);
+    setConfirmingApply(false);
   };
 
   // 募集終了の実行
@@ -2922,6 +2932,11 @@ function JobDetail(_ref) {
         return closeModal();
       }
     });
+  };
+
+  // 応募の実行
+  var handleApply = function handleApply() {
+    window.location.href = (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.apply.create", jobListing.id);
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
@@ -3059,8 +3074,14 @@ function JobDetail(_ref) {
                         children: "\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B"
                       })]
                     })
-                  }), canApply && !jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-                    href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.apply.create", jobListing.id),
+                  }), !jobListing.is_closed && (canApply || hasApplied) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+                    href: hasApplied ? "#" : "#",
+                    onClick: function onClick(e) {
+                      e.preventDefault();
+                      if (!hasApplied) {
+                        confirmApply();
+                      }
+                    },
                     className: "p-job-detail__apply-button ".concat(hasApplied ? getStatusClass(applicationStatus) : ""),
                     children: hasApplied ? getStatusText(applicationStatus) : "応募する"
                   })]
@@ -3200,7 +3221,7 @@ function JobDetail(_ref) {
                   className: "p-job-detail__no-messages",
                   children: "\u307E\u3060\u30E1\u30C3\u30BB\u30FC\u30B8\u306F\u3042\u308A\u307E\u305B\u3093\u3002\u6700\u521D\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u6295\u7A3F\u3057\u307E\u3057\u3087\u3046\u3002"
                 })
-              }), auth.user && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+              }), auth.user && !jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "p-job-detail__message-form-wrapper",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h3", {
                   className: "p-job-detail__message-form-title",
@@ -3232,6 +3253,11 @@ function JobDetail(_ref) {
                     children: processing ? "送信中..." : "メッセージを送信"
                   })]
                 })]
+              }), auth.user && jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+                className: "p-job-detail__closed-message",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
+                  children: "\u3053\u306E\u6848\u4EF6\u306F\u52DF\u96C6\u304C\u7D42\u4E86\u3057\u3066\u3044\u308B\u305F\u3081\u3001\u65B0\u3057\u3044\u30E1\u30C3\u30BB\u30FC\u30B8\u306F\u6295\u7A3F\u3067\u304D\u307E\u305B\u3093\u3002"
+                })
               }), !auth.user && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "p-job-detail__login-prompt",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
@@ -3274,9 +3300,9 @@ function JobDetail(_ref) {
                     children: jobListing.user.name
                   })
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "p-job-detail__author-stats",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                   className: "p-job-detail__author-stat",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                     className: "p-job-detail__author-stat-label",
@@ -3285,16 +3311,7 @@ function JobDetail(_ref) {
                     className: "p-job-detail__author-stat-value",
                     children: [totalJobListings, "\u4EF6"]
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-                  className: "p-job-detail__author-stat",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-                    className: "p-job-detail__author-stat-label",
-                    children: "\u4F1A\u54E1\u767B\u9332\u65E5"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-                    className: "p-job-detail__author-stat-value",
-                    children: formatDate(jobListing.user.created_at || jobListing.created_at)
-                  })]
-                })]
+                })
               })]
             }), !jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-job-detail__card p-job-detail__card--share",
@@ -3326,7 +3343,7 @@ function JobDetail(_ref) {
                   })
                 })
               })]
-            }), auth.user && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+            }), auth.user && !jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-job-detail__card p-job-detail__card--favorite",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
                 className: "p-job-detail__section-like-title",
@@ -3365,6 +3382,33 @@ function JobDetail(_ref) {
             className: "ml-3 inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
             onClick: handleJobClose,
             children: "\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B"
+          })]
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      show: confirmingApply,
+      onClose: closeModal,
+      maxWidth: "md",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+        className: "p-6",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
+          className: "text-lg font-medium text-gray-900",
+          children: "\u5FDC\u52DF\u306E\u78BA\u8A8D"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
+          className: "mt-3 text-sm text-gray-600",
+          children: "\u3053\u306E\u6848\u4EF6\u306B\u5FDC\u52DF\u3057\u307E\u3059\u304B\uFF1F\u4E00\u5EA6\u5FDC\u52DF\u3059\u308B\u3068\u53D6\u308A\u6D88\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u305B\u3093\u3002"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+          className: "mt-6 flex justify-end space-x-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
+            type: "button",
+            className: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
+            onClick: closeModal,
+            children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
+            type: "button",
+            className: "ml-3 inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+            onClick: handleApply,
+            children: "\u5FDC\u52DF\u3059\u308B"
           })]
         })]
       })
