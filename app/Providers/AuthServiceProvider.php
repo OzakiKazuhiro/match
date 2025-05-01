@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\JobListing;
+use App\Notifications\NewResetPassword;
 use App\Policies\JobListingPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
