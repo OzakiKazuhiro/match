@@ -25,9 +25,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 function Top(_ref) {
-  var auth = _ref.auth,
-    laravelVersion = _ref.laravelVersion,
-    phpVersion = _ref.phpVersion;
+  var auth = _ref.auth;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     mobileMenuOpen = _useState2[0],
@@ -46,16 +44,18 @@ function Top(_ref) {
   // メニューの表示状態が変更されたときの処理
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     if (mobileMenuOpen) {
-      setMenuVisible(true);
-      setAnimating(true);
+      // メニューを開く場合
+      setMenuVisible(true); // まずDOMに表示
+      setAnimating(true); // アニメーション開始
       setTimeout(function () {
         return setAnimating(false);
-      }, 300);
+      }, 300); // アニメーション終了
     } else if (menuVisible) {
-      setAnimating(true);
+      // メニューを閉じる場合
+      setAnimating(true); // アニメーション開始
       setTimeout(function () {
-        setMenuVisible(false);
-        setAnimating(false);
+        setMenuVisible(false); // アニメーション後にDOMから削除
+        setAnimating(false); // アニメーション終了
       }, 300);
     }
   }, [mobileMenuOpen]);
@@ -64,7 +64,8 @@ function Top(_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     var handleClickOutside = function handleClickOutside(event) {
       // ボタン自体のクリックは無視（トグル動作は別のハンドラで処理）
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && mobileButtonRef.current && !mobileButtonRef.current.contains(event.target) && menuVisible && !animating) {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && mobileButtonRef.current && !mobileButtonRef.current.contains(event.target) && menuVisible && !animating // アニメーション中でない場合のみ処理
+      ) {
         setMobileMenuOpen(false);
       }
     };

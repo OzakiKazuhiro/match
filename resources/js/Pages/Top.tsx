@@ -2,11 +2,7 @@ import { PageProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import { useState, useEffect, useRef } from "react";
 
-export default function Top({
-    auth,
-    laravelVersion,
-    phpVersion,
-}: PageProps<{ laravelVersion: string; phpVersion: string }>) {
+export default function Top({ auth }: PageProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [menuVisible, setMenuVisible] = useState(false);
     const [animating, setAnimating] = useState(false);
@@ -16,14 +12,16 @@ export default function Top({
     // メニューの表示状態が変更されたときの処理
     useEffect(() => {
         if (mobileMenuOpen) {
-            setMenuVisible(true);
-            setAnimating(true);
-            setTimeout(() => setAnimating(false), 300);
+            // メニューを開く場合
+            setMenuVisible(true); // まずDOMに表示
+            setAnimating(true); // アニメーション開始
+            setTimeout(() => setAnimating(false), 300); // アニメーション終了
         } else if (menuVisible) {
-            setAnimating(true);
+            // メニューを閉じる場合
+            setAnimating(true); // アニメーション開始
             setTimeout(() => {
-                setMenuVisible(false);
-                setAnimating(false);
+                setMenuVisible(false); // アニメーション後にDOMから削除
+                setAnimating(false); // アニメーション終了
             }, 300);
         }
     }, [mobileMenuOpen]);
@@ -38,7 +36,7 @@ export default function Top({
                 mobileButtonRef.current &&
                 !mobileButtonRef.current.contains(event.target as Node) &&
                 menuVisible &&
-                !animating
+                !animating // アニメーション中でない場合のみ処理
             ) {
                 setMobileMenuOpen(false);
             }
