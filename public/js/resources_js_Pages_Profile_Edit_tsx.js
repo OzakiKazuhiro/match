@@ -19838,29 +19838,29 @@ function UpdateProfileInformation(_ref) {
           type: "email",
           className: "p-profile__form-input",
           value: data.email,
-          onChange: function onChange(e) {
-            return setData("email", e.target.value);
-          },
+          disabled: true,
           required: true,
           autoComplete: "username"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "p-profile__input-help",
+          children: "\u203B\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306F\u5909\u66F4\u3067\u304D\u307E\u305B\u3093\u3002"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           className: "p-profile__form-error",
           message: errors.email
-        })]
-      }), mustVerifyEmail && user.email_verified_at === null && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-        className: "p-profile__verification",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
-          className: "p-profile__verification-text",
-          children: ["\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u304C\u672A\u78BA\u8A8D\u3067\u3059\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Link, {
-            href: route("verification.send"),
-            method: "post",
-            as: "button",
-            className: "p-profile__verification-link",
-            children: "\u3053\u3061\u3089\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u78BA\u8A8D\u30E1\u30FC\u30EB\u3092\u518D\u9001\u4FE1\u3057\u307E\u3059\u3002"
+        }), mustVerifyEmail && user.email_verified_at === null && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+            className: "p-profile__verification-text",
+            children: ["\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u304C\u672A\u8A8D\u8A3C\u3067\u3059\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Link, {
+              href: route("verification.send"),
+              method: "post",
+              as: "button",
+              className: "p-profile__resend-link",
+              children: "\u8A8D\u8A3C\u30E1\u30FC\u30EB\u3092\u518D\u9001\u4FE1"
+            }), "\u3057\u3066\u304F\u3060\u3055\u3044\u3002"]
+          }), status === "verification-link-sent" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: "p-profile__alert-success",
+            children: "\u65B0\u3057\u3044\u8A8D\u8A3C\u30EA\u30F3\u30AF\u3092\u3042\u306A\u305F\u306E\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306B\u9001\u4FE1\u3057\u307E\u3057\u305F\u3002"
           })]
-        }), status === "verification-link-sent" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          className: "p-profile__verification-sent",
-          children: "\u65B0\u3057\u3044\u78BA\u8A8D\u30EA\u30F3\u30AF\u304C\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306B\u9001\u4FE1\u3055\u308C\u307E\u3057\u305F\u3002"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "p-profile__form-actions",

@@ -32,13 +32,13 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         
-        // 基本情報の更新
-        $user->fill($request->validated());
+        // 基本情報の更新（メールアドレスは除外）
+        $user->fill([
+            'name' => $request->name,
+            // emailは更新しない
+        ]);
 
-        // メールアドレス変更時は確認ステータスをリセット
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
+        // メールアドレスの変更は許可しないので、email_verified_atの変更処理を削除
         
         // アバター画像の処理
         if ($request->hasFile('avatar')) {

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJobListingRequest;
-use App\Http\Requests\UpdateJobListingRequest;
 use App\Http\Requests\StorePublicMessageRequest;
 use App\Models\JobListing;
 use App\Models\PublicMessage;
@@ -158,28 +157,6 @@ class JobListingController extends Controller
         ]);
     }
 
-    /**
-     * 案件編集フォームを表示
-     */
-    public function edit(JobListing $jobListing): RedirectResponse
-    {
-        // 権限チェック
-        $this->authorize('update', $jobListing);
-        
-        // 編集機能は無効化されたため、エラーメッセージを表示して案件一覧にリダイレクト
-        return redirect()->route('job-listings.index')
-            ->with('error', '案件の編集機能は無効化されています。変更が必要な場合は、案件を削除して新規に作成してください。');
-    }
-
-    /**
-     * 案件を更新
-     */
-    public function update(UpdateJobListingRequest $request, JobListing $jobListing): RedirectResponse
-    {
-        // 編集機能は無効化されたため、エラーメッセージを表示して案件一覧にリダイレクト
-        return redirect()->route('job-listings.index')
-            ->with('error', '案件の編集機能は無効化されています。変更が必要な場合は、案件を削除して新規に作成してください。');
-    }
 
     /**
      * 案件を削除

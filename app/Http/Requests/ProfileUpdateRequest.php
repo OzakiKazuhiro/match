@@ -23,10 +23,20 @@ class ProfileUpdateRequest extends FormRequest
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($this->user()->id),
+                'in:' . $this->user()->email,
             ],
             'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
             'remove_avatar' => ['nullable', 'boolean'],
+        ];
+    }
+
+    /**
+     * バリデーションエラーメッセージをカスタマイズ
+     */
+    public function messages(): array
+    {
+        return [
+            'email.in' => 'セキュリティ上の理由からメールアドレスは変更できません。',
         ];
     }
 }

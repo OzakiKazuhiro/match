@@ -996,24 +996,22 @@ export default function JobListings({
                             </div>
 
                             <div>
-                                <h3 className="l-footer__heading">
-                                    案件を探す
-                                </h3>
+                                <h3 className="l-footer__heading">案件関連</h3>
                                 <ul className="l-footer__links">
                                     <li className="l-footer__link-item">
                                         <Link
-                                            href="/job-listings?type=one_time"
+                                            href="/job-listings"
                                             className="l-footer__link"
                                         >
-                                            単発案件
+                                            案件一覧
                                         </Link>
                                     </li>
                                     <li className="l-footer__link-item">
                                         <Link
-                                            href="/job-listings?type=revenue_share"
+                                            href="/post-job"
                                             className="l-footer__link"
                                         >
-                                            レベニューシェア案件
+                                            案件を投稿
                                         </Link>
                                     </li>
                                 </ul>

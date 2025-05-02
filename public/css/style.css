@@ -6764,6 +6764,11 @@ textarea {
   font-size: 0.875rem;
   color: #dc2626;
 }
+.p-profile__input-help {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
 .p-profile__form-actions {
   display: flex;
   align-items: center;

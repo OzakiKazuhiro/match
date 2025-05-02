@@ -257,38 +257,43 @@ export default function UpdateProfileInformation({
                         type="email"
                         className="p-profile__form-input"
                         value={data.email}
-                        onChange={(e) => setData("email", e.target.value)}
+                        disabled={true}
                         required
                         autoComplete="username"
                     />
+
+                    <div className="p-profile__input-help">
+                        ※メールアドレスは変更できません。
+                    </div>
 
                     <InputError
                         className="p-profile__form-error"
                         message={errors.email}
                     />
+
+                    {mustVerifyEmail && user.email_verified_at === null && (
+                        <div>
+                            <p className="p-profile__verification-text">
+                                メールアドレスが未認証です。
+                                <Link
+                                    href={route("verification.send")}
+                                    method="post"
+                                    as="button"
+                                    className="p-profile__resend-link"
+                                >
+                                    認証メールを再送信
+                                </Link>
+                                してください。
+                            </p>
+
+                            {status === "verification-link-sent" && (
+                                <div className="p-profile__alert-success">
+                                    新しい認証リンクをあなたのメールアドレスに送信しました。
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
-
-                {mustVerifyEmail && user.email_verified_at === null && (
-                    <div className="p-profile__verification">
-                        <p className="p-profile__verification-text">
-                            メールアドレスが未確認です。
-                            <Link
-                                href={route("verification.send")}
-                                method="post"
-                                as="button"
-                                className="p-profile__verification-link"
-                            >
-                                こちらをクリックして確認メールを再送信します。
-                            </Link>
-                        </p>
-
-                        {status === "verification-link-sent" && (
-                            <div className="p-profile__verification-sent">
-                                新しい確認リンクがメールアドレスに送信されました。
-                            </div>
-                        )}
-                    </div>
-                )}
 
                 <div className="p-profile__form-actions">
                     <PrimaryButton

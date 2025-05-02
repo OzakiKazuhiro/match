@@ -8,7 +8,6 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PublicMessageController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\FavoriteController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,8 +15,6 @@ Route::get('/', function () {
     return Inertia::render('Top', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
     ]);
 });
 
@@ -49,11 +46,6 @@ Route::prefix('job-listings')->name('job-listings.')->group(function () {
     
     // 認証が必要なルート - jobListingパラメータを含むルート
     Route::middleware(['auth', 'verified'])->group(function () {
-        // 案件編集フォーム - 編集機能を無効化
-        // Route::get('/{jobListing}/edit', [JobListingController::class, 'edit'])->name('edit');
-        
-        // 案件更新処理 - 編集機能を無効化
-        // Route::put('/{jobListing}', [JobListingController::class, 'update'])->name('update');
         
         // 案件削除処理
         Route::delete('/{jobListing}', [JobListingController::class, 'destroy'])->name('destroy');
