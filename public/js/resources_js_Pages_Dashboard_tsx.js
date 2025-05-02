@@ -845,9 +845,7 @@ function Dashboard(_ref) {
             children: "\u4E00\u89A7\u3092\u898B\u308B"
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-          href: route("public-messages.index")
-          // href={route("applications.to-my-jobs")}
-          ,
+          href: route("public-messages.index"),
           className: "p-dashboard__menu-card",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "p-dashboard__menu-card-content",

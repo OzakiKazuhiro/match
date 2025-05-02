@@ -617,7 +617,7 @@ function EditJob(_ref2) {
   // スキルの選択肢
   var skillOptions = ["HTML/CSS", "JavaScript", "TypeScript", "React", "Vue.js", "Angular", "Next.js", "PHP", "Laravel", "Ruby", "Ruby on Rails", "Python", "Django", "Java", "C#", "Swift", "Kotlin", "Flutter", "React Native", "AWS", "Docker", "Kubernetes", "UI/UXデザイン", "Figma", "Photoshop", "Illustrator", "WordPress", "データベース設計", "SQL", "NoSQL"];
 
-  // useEffectを追加して予算表示を更新
+  // useEffectを使って予算表示を更新
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     updateDisplayBudget(data.budget_min, setDisplayBudgetMin);
     updateDisplayBudget(data.budget_max, setDisplayBudgetMax);

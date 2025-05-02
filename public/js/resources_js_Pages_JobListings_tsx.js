@@ -1574,8 +1574,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-// 最初にインターフェイスを追加
-
 function JobListings(_ref) {
   var auth = _ref.auth,
     jobListings = _ref.jobListings,
@@ -1585,17 +1583,21 @@ function JobListings(_ref) {
     applicationStatuses = _ref$applicationStatu === void 0 ? {} : _ref$applicationStatu,
     _ref$userFavorites = _ref.userFavorites,
     userFavorites = _ref$userFavorites === void 0 ? [] : _ref$userFavorites;
-  // 状態管理
+  // 検索関連の状態管理
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
     searchQuery = _useState2[0],
     setSearchQuery = _useState2[1];
+
+  // 案件タイプフィルター (単発/レベニューシェア/全て)
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(filters.type ? filters.type : "all"),
     _useState4 = _slicedToArray(_useState3, 2),
     activeFilter = _useState4[0],
     setActiveFilter = _useState4[1];
+
+  // カテゴリーフィルター関連の状態
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(function () {
-      // URLからカテゴリーパラメータを取得
+      // URLからカテゴリーパラメータを取得して初期値に設定
       var params = new URLSearchParams(window.location.search);
       var category = params.get("category");
       return category || "all";
@@ -1610,7 +1612,7 @@ function JobListings(_ref) {
   var categoryDropdownRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var categoryButtonRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
 
-  // 並び替えオプションの状態
+  // 並び替えオプション関連の状態
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("latest"),
     _useState10 = _slicedToArray(_useState9, 2),
     sortOption = _useState10[0],
@@ -1638,13 +1640,16 @@ function JobListings(_ref) {
   var mobileMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var mobileButtonRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
 
-  // 追加：お気に入りのみ表示するかのフィルター
+  // お気に入りフィルター関連の状態
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState20 = _slicedToArray(_useState19, 2),
     showFavoritesOnly = _useState20[0],
     setShowFavoritesOnly = _useState20[1];
 
-  // メニューの表示状態が変更されたときの処理（未ログイン時のみ）
+  /**
+   * モバイルメニューのアニメーション制御（未ログイン時のみ）
+   * メニューの開閉状態が変わった時に適切なアニメーションを適用
+   */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (!(auth !== null && auth !== void 0 && auth.user)) {
       if (mobileMenuOpen) {
@@ -1663,7 +1668,10 @@ function JobListings(_ref) {
     }
   }, [mobileMenuOpen, auth === null || auth === void 0 ? void 0 : auth.user]);
 
-  // ソートメニュー外のクリックを検出してメニューを閉じる
+  /**
+   * ソートドロップダウンメニュー外クリック検知
+   * メニュー外をクリックした時に自動的に閉じる
+   */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var handleClickOutside = function handleClickOutside(event) {
       if (sortDropdownRef.current && !sortDropdownRef.current.contains(event.target) && sortButtonRef.current && !sortButtonRef.current.contains(event.target) && showSortDropdown) {
@@ -1676,7 +1684,10 @@ function JobListings(_ref) {
     };
   }, [showSortDropdown]);
 
-  // メニュー外のクリックを検出してメニューを閉じる（未ログイン時のみ）
+  /**
+   * モバイルメニュー外クリック検知（未ログイン時のみ）
+   * メニュー外をクリックした時に自動的に閉じる
+   */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (!(auth !== null && auth !== void 0 && auth.user)) {
       var handleClickOutside = function handleClickOutside(event) {
@@ -1690,14 +1701,23 @@ function JobListings(_ref) {
       };
     }
   }, [menuVisible, animating, auth === null || auth === void 0 ? void 0 : auth.user]);
+
+  /**
+   * モバイルメニューの表示/非表示切り替え
+   */
   var toggleMobileMenu = function toggleMobileMenu() {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  // カテゴリーの選択肢
+  /**
+   * 案件カテゴリーの選択肢一覧
+   */
   var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "IT業界に詳しくないので分からない", "エンジニアに気軽に相談", "その他"];
 
-  // カテゴリードロップダウンの外側クリックを検出
+  /**
+   * カテゴリードロップダウンメニュー外クリック検知
+   * メニュー外をクリックした時に自動的に閉じる
+   */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var handleClickOutside = function handleClickOutside(event) {
       if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target) && categoryButtonRef.current && !categoryButtonRef.current.contains(event.target) && showCategoryDropdown) {
@@ -1710,26 +1730,38 @@ function JobListings(_ref) {
     };
   }, [showCategoryDropdown]);
 
-  // フィルタリングされた案件リスト
+  /**
+   * 各種条件に基づいて案件リストをフィルタリング
+   * - キーワード検索
+   * - 案件タイプ (単発/レベニューシェア)
+   * - カテゴリー
+   * - お気に入り
+   * - 募集ステータス（終了した案件は除外）
+   */
   var filteredJobs = jobListings.data.filter(function (job) {
-    // 検索クエリのフィルタリング
+    // 検索クエリのフィルタリング（タイトル、説明文、カテゴリーで検索）
     var matchesQuery = searchQuery === "" || job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.description.toLowerCase().includes(searchQuery.toLowerCase()) || job.category && job.category.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // タイプフィルタリング（SPA対応）
+    // タイプフィルタリング（単発/レベニューシェア）
     var matchesType = activeFilter === "all" || job.type === activeFilter;
 
     // カテゴリーフィルタリング
     var matchesCategory = activeCategory === "all" || job.category && job.category === activeCategory;
 
-    // お気に入りフィルタリング（追加）
+    // お気に入りフィルタリング
     var matchesFavorite = !showFavoritesOnly || userFavorites.includes(job.id);
 
     // 募集終了した案件を除外
     var isActive = !job.is_closed;
+
+    // すべての条件に一致するものだけを表示
     return matchesQuery && matchesType && matchesCategory && matchesFavorite && isActive;
   });
 
-  // タイプフィルターの変更（SPA対応）
+  /**
+   * 案件タイプフィルター（単発/レベニューシェア/全て）の変更処理
+   * URLを更新し、ブラウザの履歴にも反映する（SPA対応）
+   */
   var handleFilterChange = function handleFilterChange(type) {
     setActiveFilter(type);
 
@@ -1740,7 +1772,9 @@ function JobListings(_ref) {
     window.history.pushState({}, "", url);
   };
 
-  // 並び替えオプションの表示テキストを取得
+  /**
+   * 並び替えオプションの表示テキストを取得
+   */
   var getSortOptionText = function getSortOptionText(option) {
     switch (option) {
       case "latest":
@@ -1758,7 +1792,10 @@ function JobListings(_ref) {
     }
   };
 
-  // 並び替えオプション変更時の処理
+  /**
+   * 並び替えオプション変更時の処理
+   * URLを更新するが、ページリロードはせずにクライアントサイドで並び替え
+   */
   var handleSortChange = function handleSortChange(option) {
     setSortOption(option);
     setShowSortDropdown(false);
@@ -1767,12 +1804,12 @@ function JobListings(_ref) {
     var url = new URL(window.location.href);
     url.searchParams.set("sort", option);
     window.history.pushState({}, "", url.toString());
-
-    // クライアントサイドでの並び替え処理は実装済みのfilteredJobsに反映されるため
-    // リロードする必要はありません
   };
 
-  // カテゴリーフィルター変更時の処理
+  /**
+   * カテゴリーフィルター変更時の処理
+   * URLを更新するが、ページリロードはせずにクライアントサイドでフィルタリング
+   */
   var handleCategoryChange = function handleCategoryChange(category) {
     setActiveCategory(category);
     setShowCategoryDropdown(false);
@@ -1787,7 +1824,10 @@ function JobListings(_ref) {
     window.history.pushState({}, "", url.toString());
   };
 
-  // カテゴリー名の表示用テキストを取得
+  /**
+   * カテゴリーボタンに表示するテキストを取得
+   * 「全て」のときは「カテゴリー」と表示し、それ以外はカテゴリー名を表示
+   */
   var getCategoryDisplayText = function getCategoryDisplayText() {
     if (activeCategory === "all") {
       return "カテゴリー";
@@ -1796,26 +1836,39 @@ function JobListings(_ref) {
     return activeCategory;
   };
 
-  // クライアントサイドでの並び替え処理
+  /**
+   * フィルタリングした案件リストを並び替え
+   * 選択された並び替え条件に応じてクライアントサイドで並び替え処理を行う
+   */
   var sortedJobs = _toConsumableArray(filteredJobs).sort(function (a, b) {
     switch (sortOption) {
       case "latest":
+        // 新着順（作成日時の降順）
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
       case "oldest":
+        // 古い順（作成日時の昇順）
         return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
       case "views":
+        // 閲覧数順
         return (b.view_count || 0) - (a.view_count || 0);
       case "budget_high":
+        // 予算の高い順（最大予算を比較）
         var aMaxBudget = Math.max(a.budget_max || 0, a.budget_min || 0);
         var bMaxBudget = Math.max(b.budget_max || 0, b.budget_min || 0);
         return bMaxBudget - aMaxBudget;
       case "budget_low":
-        // 予算が設定されていない場合（レベニューシェア）は最後に表示
+        // 予算の低い順（最小予算を比較、予算未設定は後ろに表示）
         var aHasBudget = a.budget_min !== null && a.budget_min !== undefined || a.budget_max !== null && a.budget_max !== undefined;
         var bHasBudget = b.budget_min !== null && b.budget_min !== undefined || b.budget_max !== null && b.budget_max !== undefined;
+
+        // 両方予算未設定なら同等
         if (!aHasBudget && !bHasBudget) return 0;
+        // aが予算未設定ならbを先に
         if (!aHasBudget) return 1;
+        // bが予算未設定ならaを先に
         if (!bHasBudget) return -1;
+
+        // 両方予算があれば低い方を比較
         var aMinBudget = Math.min(a.budget_min !== null && a.budget_min !== undefined ? a.budget_min : Infinity, a.budget_max !== null && a.budget_max !== undefined ? a.budget_max : Infinity);
         var bMinBudget = Math.min(b.budget_min !== null && b.budget_min !== undefined ? b.budget_min : Infinity, b.budget_max !== null && b.budget_max !== undefined ? b.budget_max : Infinity);
         return aMinBudget - bMinBudget;
@@ -1824,7 +1877,9 @@ function JobListings(_ref) {
     }
   });
 
-  // 追加：お気に入りフィルタートグル
+  /**
+   * お気に入りのみ表示するフィルターのトグル処理
+   */
   var toggleFavoritesFilter = function toggleFavoritesFilter() {
     setShowFavoritesOnly(!showFavoritesOnly);
   };
@@ -2079,7 +2134,7 @@ function JobListings(_ref) {
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
                   className: "p-job-listings__favorite-text",
-                  children: showFavoritesOnly ? "お気に入りのみ" : "お気に入り"
+                  children: "\u304A\u6C17\u306B\u5165\u308A"
                 })]
               })
             })]

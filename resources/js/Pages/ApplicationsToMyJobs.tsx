@@ -1,7 +1,7 @@
 import { Head, Link, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Modal from "@/Components/Modal";
 import { route } from "ziggy-js";
 
@@ -69,6 +69,16 @@ export default function ApplicationsToMyJobs({
         null
     );
 
+    // 承認モーダル用の状態
+    const [confirmingAccept, setConfirmingAccept] = useState<number | null>(
+        null
+    );
+
+    // 拒否モーダル用の状態
+    const [confirmingDecline, setConfirmingDecline] = useState<number | null>(
+        null
+    );
+
     // 案件カードの開閉切り替え
     const toggleJobExpand = (jobId: string) => {
         setExpandedJobs((prev) => ({
@@ -120,17 +130,58 @@ export default function ApplicationsToMyJobs({
         }
     };
 
-    // ステータス更新処理
-    const handleStatusUpdate = (applicationId: number, status: string) => {
-        if (
-            confirm(
-                `この応募を${
-                    status === "accepted" ? "承認" : "拒否"
-                }してよろしいですか？`
-            )
-        ) {
+    // 承認確認モーダルを開く
+    const confirmAccept = (applicationId: number) => {
+        setConfirmingAccept(applicationId);
+    };
+
+    // 拒否確認モーダルを開く
+    const confirmDecline = (applicationId: number) => {
+        setConfirmingDecline(applicationId);
+    };
+
+    // 承認モーダルを閉じる
+    const closeAcceptModal = () => {
+        setConfirmingAccept(null);
+    };
+
+    // 拒否モーダルを閉じる
+    const closeDeclineModal = () => {
+        setConfirmingDecline(null);
+    };
+
+    // 承認処理
+    const handleAccept = () => {
+        if (confirmingAccept !== null) {
             router.patch(
-                route("applications.update-status", [applicationId, status])
+                route("applications.update-status", [
+                    confirmingAccept,
+                    "accepted",
+                ]),
+                {},
+                {
+                    onSuccess: () => {
+                        closeAcceptModal();
+                    },
+                }
+            );
+        }
+    };
+
+    // 拒否処理
+    const handleDecline = () => {
+        if (confirmingDecline !== null) {
+            router.patch(
+                route("applications.update-status", [
+                    confirmingDecline,
+                    "declined",
+                ]),
+                {},
+                {
+                    onSuccess: () => {
+                        closeDeclineModal();
+                    },
+                }
             );
         }
     };
@@ -439,9 +490,8 @@ export default function ApplicationsToMyJobs({
                                                                                         <div className="p-applications__actions">
                                                                                             <button
                                                                                                 onClick={() =>
-                                                                                                    handleStatusUpdate(
-                                                                                                        application.id,
-                                                                                                        "accepted"
+                                                                                                    confirmAccept(
+                                                                                                        application.id
                                                                                                     )
                                                                                                 }
                                                                                                 className="p-applications__accept-button"
@@ -450,9 +500,8 @@ export default function ApplicationsToMyJobs({
                                                                                             </button>
                                                                                             <button
                                                                                                 onClick={() =>
-                                                                                                    handleStatusUpdate(
-                                                                                                        application.id,
-                                                                                                        "declined"
+                                                                                                    confirmDecline(
+                                                                                                        application.id
                                                                                                     )
                                                                                                 }
                                                                                                 className="p-applications__decline-button"
@@ -554,19 +603,17 @@ export default function ApplicationsToMyJobs({
                 onClose={closeModal}
                 maxWidth="md"
             >
-                <div className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">
-                        募集終了の確認
-                    </h2>
+                <div className="p-modal__container">
+                    <h2 className="p-modal__title">募集終了の確認</h2>
 
-                    <p className="mt-3 text-sm text-gray-600">
+                    <p className="p-modal__text">
                         募集を終了すると、案件一覧から表示されなくなり、この操作は取り消せません。よろしいですか？
                     </p>
 
-                    <div className="mt-6 flex justify-end space-x-3">
+                    <div className="p-modal__buttons">
                         <button
                             type="button"
-                            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="p-modal__button p-modal__button--cancel"
                             onClick={closeModal}
                         >
                             キャンセル
@@ -574,10 +621,76 @@ export default function ApplicationsToMyJobs({
 
                         <button
                             type="button"
-                            className="ml-3 inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                            className="p-modal__button p-modal__button--danger"
                             onClick={handleJobClose}
                         >
                             募集を終了する
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+
+            {/* 応募承認確認モーダル */}
+            <Modal
+                show={confirmingAccept !== null}
+                onClose={closeAcceptModal}
+                maxWidth="md"
+            >
+                <div className="p-modal__container">
+                    <h2 className="p-modal__title">応募承認の確認</h2>
+
+                    <p className="p-modal__text">
+                        この応募を承認しますか？承認すると応募者に通知されます。
+                    </p>
+
+                    <div className="p-modal__buttons">
+                        <button
+                            type="button"
+                            className="p-modal__button p-modal__button--cancel"
+                            onClick={closeAcceptModal}
+                        >
+                            キャンセル
+                        </button>
+
+                        <button
+                            type="button"
+                            className="p-modal__button p-modal__button--success"
+                            onClick={handleAccept}
+                        >
+                            承認する
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+
+            {/* 応募拒否確認モーダル */}
+            <Modal
+                show={confirmingDecline !== null}
+                onClose={closeDeclineModal}
+                maxWidth="md"
+            >
+                <div className="p-modal__container">
+                    <h2 className="p-modal__title">応募拒否の確認</h2>
+
+                    <p className="p-modal__text">
+                        この応募を見送りますか？この操作は取り消せません。
+                    </p>
+
+                    <div className="p-modal__buttons">
+                        <button
+                            type="button"
+                            className="p-modal__button p-modal__button--cancel"
+                            onClick={closeDeclineModal}
+                        >
+                            キャンセル
+                        </button>
+
+                        <button
+                            type="button"
+                            className="p-modal__button p-modal__button--danger"
+                            onClick={handleDecline}
+                        >
+                            見送る
                         </button>
                     </div>
                 </div>

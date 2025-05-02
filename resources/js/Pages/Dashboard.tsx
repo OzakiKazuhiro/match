@@ -109,7 +109,6 @@ export default function Dashboard({ auth }: PageProps) {
 
                     <Link
                         href={route("public-messages.index")}
-                        // href={route("applications.to-my-jobs")}
                         className="p-dashboard__menu-card"
                     >
                         <div className="p-dashboard__menu-card-content">

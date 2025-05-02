@@ -40,7 +40,7 @@ export default function PostJob({ auth }: PageProps) {
         description?: string;
     }>({});
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, processing, errors } = useForm({
         title: "",
         type: "one_time" as "one_time" | "revenue_share",
         description: "",

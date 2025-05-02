@@ -2527,6 +2527,18 @@ function ApplicationsToMyJobs(_ref) {
     confirmingCloseId = _useState4[0],
     setConfirmingCloseId = _useState4[1];
 
+  // 承認モーダル用の状態
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
+    _useState6 = _slicedToArray(_useState5, 2),
+    confirmingAccept = _useState6[0],
+    setConfirmingAccept = _useState6[1];
+
+  // 拒否モーダル用の状態
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    confirmingDecline = _useState8[0],
+    setConfirmingDecline = _useState8[1];
+
   // 案件カードの開閉切り替え
   var toggleJobExpand = function toggleJobExpand(jobId) {
     setExpandedJobs(function (prev) {
@@ -2577,10 +2589,45 @@ function ApplicationsToMyJobs(_ref) {
     }
   };
 
-  // ステータス更新処理
-  var handleStatusUpdate = function handleStatusUpdate(applicationId, status) {
-    if (confirm("\u3053\u306E\u5FDC\u52DF\u3092".concat(status === "accepted" ? "承認" : "拒否", "\u3057\u3066\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"))) {
-      _inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.router.patch((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("applications.update-status", [applicationId, status]));
+  // 承認確認モーダルを開く
+  var confirmAccept = function confirmAccept(applicationId) {
+    setConfirmingAccept(applicationId);
+  };
+
+  // 拒否確認モーダルを開く
+  var confirmDecline = function confirmDecline(applicationId) {
+    setConfirmingDecline(applicationId);
+  };
+
+  // 承認モーダルを閉じる
+  var closeAcceptModal = function closeAcceptModal() {
+    setConfirmingAccept(null);
+  };
+
+  // 拒否モーダルを閉じる
+  var closeDeclineModal = function closeDeclineModal() {
+    setConfirmingDecline(null);
+  };
+
+  // 承認処理
+  var handleAccept = function handleAccept() {
+    if (confirmingAccept !== null) {
+      _inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.router.patch((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("applications.update-status", [confirmingAccept, "accepted"]), {}, {
+        onSuccess: function onSuccess() {
+          closeAcceptModal();
+        }
+      });
+    }
+  };
+
+  // 拒否処理
+  var handleDecline = function handleDecline() {
+    if (confirmingDecline !== null) {
+      _inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.router.patch((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("applications.update-status", [confirmingDecline, "declined"]), {}, {
+        onSuccess: function onSuccess() {
+          closeDeclineModal();
+        }
+      });
     }
   };
 
@@ -2790,13 +2837,13 @@ function ApplicationsToMyJobs(_ref) {
                               className: "p-applications__actions",
                               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                                 onClick: function onClick() {
-                                  return handleStatusUpdate(application.id, "accepted");
+                                  return confirmAccept(application.id);
                                 },
                                 className: "p-applications__accept-button",
                                 children: "\u627F\u8A8D\u3059\u308B"
                               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                                 onClick: function onClick() {
-                                  return handleStatusUpdate(application.id, "declined");
+                                  return confirmDecline(application.id);
                                 },
                                 className: "p-applications__decline-button",
                                 children: "\u898B\u9001\u308B"
@@ -2859,25 +2906,79 @@ function ApplicationsToMyJobs(_ref) {
       onClose: closeModal,
       maxWidth: "md",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        className: "p-6",
+        className: "p-modal__container",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
-          className: "text-lg font-medium text-gray-900",
+          className: "p-modal__title",
           children: "\u52DF\u96C6\u7D42\u4E86\u306E\u78BA\u8A8D"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-          className: "mt-3 text-sm text-gray-600",
+          className: "p-modal__text",
           children: "\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B\u3068\u3001\u6848\u4EF6\u4E00\u89A7\u304B\u3089\u8868\u793A\u3055\u308C\u306A\u304F\u306A\u308A\u3001\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "mt-6 flex justify-end space-x-3",
+          className: "p-modal__buttons",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
             type: "button",
-            className: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
+            className: "p-modal__button p-modal__button--cancel",
             onClick: closeModal,
             children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
             type: "button",
-            className: "ml-3 inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
+            className: "p-modal__button p-modal__button--danger",
             onClick: handleJobClose,
             children: "\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B"
+          })]
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      show: confirmingAccept !== null,
+      onClose: closeAcceptModal,
+      maxWidth: "md",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "p-modal__container",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
+          className: "p-modal__title",
+          children: "\u5FDC\u52DF\u627F\u8A8D\u306E\u78BA\u8A8D"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+          className: "p-modal__text",
+          children: "\u3053\u306E\u5FDC\u52DF\u3092\u627F\u8A8D\u3057\u307E\u3059\u304B\uFF1F\u627F\u8A8D\u3059\u308B\u3068\u5FDC\u52DF\u8005\u306B\u901A\u77E5\u3055\u308C\u307E\u3059\u3002"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "p-modal__buttons",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            type: "button",
+            className: "p-modal__button p-modal__button--cancel",
+            onClick: closeAcceptModal,
+            children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            type: "button",
+            className: "p-modal__button p-modal__button--success",
+            onClick: handleAccept,
+            children: "\u627F\u8A8D\u3059\u308B"
+          })]
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      show: confirmingDecline !== null,
+      onClose: closeDeclineModal,
+      maxWidth: "md",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "p-modal__container",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
+          className: "p-modal__title",
+          children: "\u5FDC\u52DF\u62D2\u5426\u306E\u78BA\u8A8D"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+          className: "p-modal__text",
+          children: "\u3053\u306E\u5FDC\u52DF\u3092\u898B\u9001\u308A\u307E\u3059\u304B\uFF1F\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "p-modal__buttons",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            type: "button",
+            className: "p-modal__button p-modal__button--cancel",
+            onClick: closeDeclineModal,
+            children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            type: "button",
+            className: "p-modal__button p-modal__button--danger",
+            onClick: handleDecline,
+            children: "\u898B\u9001\u308B"
           })]
         })]
       })

@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { Head, Link, useForm, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
-import PrimaryButton from "@/Components/PrimaryButton";
 import { route } from "ziggy-js";
 import PublicMessage, { PublicMessageType } from "@/Components/PublicMessage";
-import axios from "axios";
 import Modal from "@/Components/Modal";
 import FavoriteButton from "@/Components/FavoriteButton";
 
@@ -58,7 +56,10 @@ interface JobListingData {
     user: User;
 }
 
-// ページネーション用のインターフェースを追加
+/**
+ * ページネーション用のインターフェース
+ * ページネーションをサポートするデータ構造
+ */
 interface Paginator<T> {
     data: T[];
     links: Array<{
@@ -74,19 +75,22 @@ interface Paginator<T> {
     total: number;
 }
 
+/**
+ * 案件詳細ページのメインコンポーネント
+ */
 export default function JobDetail({
     auth,
     jobListing,
-    publicMessages, // 新しく追加
-    canEdit,
-    canApply,
-    hasApplied,
-    applicationStatus = "pending",
-    totalJobListings,
-    isFavorited,
+    publicMessages,
+    canEdit, // 現在のユーザーが案件を編集できるかどうか
+    canApply, // 現在のユーザーが案件に応募できるかどうか
+    hasApplied, // 現在のユーザーが既に応募しているかどうか
+    applicationStatus = "pending", // 応募状態（pending:応募中, accepted:承認済み）
+    totalJobListings, // 投稿者が投稿した案件の総数
+    isFavorited, // 現在のユーザーがお気に入り登録しているかどうか
 }: PageProps<{
     jobListing: JobListingData;
-    publicMessages: Paginator<PublicMessageType>; // ページネーション情報を含むパブリックメッセージ
+    publicMessages: Paginator<PublicMessageType>;
     canEdit: boolean;
     canApply: boolean;
     hasApplied: boolean;
@@ -94,14 +98,13 @@ export default function JobDetail({
     totalJobListings: number;
     isFavorited: boolean;
 }>) {
+    // パブリックメッセージのフォーム管理
     const { data, setData, post, processing, errors, reset } = useForm({
         message: "",
     });
 
-    // メッセージの最大文字数
+    // メッセージの最大文字数と入力チェック用の状態
     const MAX_MESSAGE_LENGTH = 500;
-
-    // 残り文字数を計算
     const remainingChars = MAX_MESSAGE_LENGTH - data.message.length;
     const isOverLimit = remainingChars < 0;
 
@@ -916,7 +919,7 @@ export default function JobDetail({
                     </h2>
 
                     <p className="mt-3 text-sm text-gray-600">
-                        一度、募集を終了すると、案件一覧から表示されなくなり、この操作は取り消せません。よろしいですか？
+                        募集を終了すると、案件一覧から表示されなくなり、この操作は取り消せません。よろしいですか？
                     </p>
 
                     <div className="mt-6 flex justify-end space-x-3">
@@ -947,7 +950,7 @@ export default function JobDetail({
                     </h2>
 
                     <p className="mt-3 text-sm text-gray-600">
-                        この案件に応募しますか？一度応募すると取り消すことができません。
+                        この案件に本当に応募しますか？一度、応募すると操作を取り消すことができません。
                     </p>
 
                     <div className="mt-6 flex justify-end space-x-3">

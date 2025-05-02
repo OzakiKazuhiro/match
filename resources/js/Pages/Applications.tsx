@@ -32,7 +32,6 @@ interface Application {
 }
 
 export default function Applications({
-    auth,
     applications,
 }: PageProps<{
     applications: Application[];

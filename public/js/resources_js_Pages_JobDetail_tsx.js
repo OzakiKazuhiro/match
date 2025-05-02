@@ -2807,8 +2807,14 @@ var getAvatarUrl = function getAvatarUrl(avatarPath) {
   return "/storage/".concat(avatarPath);
 };
 
-// ページネーション用のインターフェースを追加
+/**
+ * ページネーション用のインターフェース
+ * ページネーションをサポートするデータ構造
+ */
 
+/**
+ * 案件詳細ページのメインコンポーネント
+ */
 function JobDetail(_ref) {
   var auth = _ref.auth,
     jobListing = _ref.jobListing,
@@ -2820,6 +2826,7 @@ function JobDetail(_ref) {
     applicationStatus = _ref$applicationStatu === void 0 ? "pending" : _ref$applicationStatu,
     totalJobListings = _ref.totalJobListings,
     isFavorited = _ref.isFavorited;
+  // パブリックメッセージのフォーム管理
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.useForm)({
       message: ""
     }),
@@ -2830,10 +2837,8 @@ function JobDetail(_ref) {
     errors = _useForm.errors,
     reset = _useForm.reset;
 
-  // メッセージの最大文字数
+  // メッセージの最大文字数と入力チェック用の状態
   var MAX_MESSAGE_LENGTH = 500;
-
-  // 残り文字数を計算
   var remainingChars = MAX_MESSAGE_LENGTH - data.message.length;
   var isOverLimit = remainingChars < 0;
 
@@ -3369,7 +3374,7 @@ function JobDetail(_ref) {
           children: "\u52DF\u96C6\u7D42\u4E86\u306E\u78BA\u8A8D"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
           className: "mt-3 text-sm text-gray-600",
-          children: "\u4E00\u5EA6\u3001\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B\u3068\u3001\u6848\u4EF6\u4E00\u89A7\u304B\u3089\u8868\u793A\u3055\u308C\u306A\u304F\u306A\u308A\u3001\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"
+          children: "\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B\u3068\u3001\u6848\u4EF6\u4E00\u89A7\u304B\u3089\u8868\u793A\u3055\u308C\u306A\u304F\u306A\u308A\u3001\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "mt-6 flex justify-end space-x-3",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
@@ -3396,7 +3401,7 @@ function JobDetail(_ref) {
           children: "\u5FDC\u52DF\u306E\u78BA\u8A8D"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
           className: "mt-3 text-sm text-gray-600",
-          children: "\u3053\u306E\u6848\u4EF6\u306B\u5FDC\u52DF\u3057\u307E\u3059\u304B\uFF1F\u4E00\u5EA6\u5FDC\u52DF\u3059\u308B\u3068\u53D6\u308A\u6D88\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u305B\u3093\u3002"
+          children: "\u3053\u306E\u6848\u4EF6\u306B\u672C\u5F53\u306B\u5FDC\u52DF\u3057\u307E\u3059\u304B\uFF1F\u4E00\u5EA6\u3001\u5FDC\u52DF\u3059\u308B\u3068\u64CD\u4F5C\u3092\u53D6\u308A\u6D88\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u305B\u3093\u3002"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "mt-6 flex justify-end space-x-3",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {

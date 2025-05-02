@@ -71,249 +71,246 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Privacy)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
-/* harmony import */ var _Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Layouts/GuestLayout */ "./resources/js/Layouts/GuestLayout.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
+/* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
+/* harmony import */ var _Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/GuestLayout */ "./resources/js/Layouts/GuestLayout.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
 function Privacy() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
     title: "\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Head, {
       title: "\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "p-terms__header",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "p-terms__updated",
         children: "2025\u5E744\u67081\u65E5 \u5236\u5B9A\u30FB\u65BD\u884C"
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "p-terms__content",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "p-terms__section",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
           children: "\u672C\u30B5\u30FC\u30D3\u30B9\u300Cmatch\u300D\uFF08\u4EE5\u4E0B\u300C\u672C\u30B5\u30FC\u30D3\u30B9\u300D\u3068\u3044\u3044\u307E\u3059\u3002\uFF09\u306F\u3001\u304A\u5BA2\u69D8\uFF08\u5229\u7528\u4F1A\u54E1\u3001\u51FA\u54C1\u8005\u3001\u53CA\u3073\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306E\u95B2\u89A7\u8005\u3092\u7DCF\u79F0\u3059\u308B\u3082\u306E\u3067\u3059\uFF09\u306E\u500B\u4EBA\u3092\u8B58\u5225\u3057\u3046\u308B\u60C5\u5831\u3092\u9069\u5207\u306B\u4FDD\u8B77\u3059\u308B\u3053\u3068\u304C\u793E\u4F1A\u7684\u8CAC\u52D9\u3068\u3057\u3066\u91CD\u8981\u3068\u8003\u3048\u3001\u4E0B\u8A18\u306E\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\uFF08\u4EE5\u4E0B\u300C\u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u300D\u3068\u3044\u3044\u307E\u3059\u3002\uFF09\u306B\u57FA\u3065\u304D\u3001\u500B\u4EBA\u60C5\u5831\u306E\u4FDD\u8B77\u306B\u95A2\u3059\u308B\u6CD5\u5F8B\u305D\u306E\u4ED6\u306E\u6CD5\u4EE4\u30FB\u30AC\u30A4\u30C9\u30E9\u30A4\u30F3\u7B49\u3092\u9075\u5B88\u3057\u3066\u3001\u304A\u5BA2\u69D8\u306E\u500B\u4EBA\u60C5\u5831\u3092\u53D6\u5F97\u3001\u5229\u7528\u3001\u7B2C\u4E09\u8005\u306B\u9810\u8A17\u307E\u305F\u306F\u63D0\u4F9B\u3055\u305B\u3066\u3044\u305F\u3060\u304D\u307E\u3059\u3002\u304A\u5BA2\u69D8\u304C\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u304C\u904B\u55B6\u3059\u308B\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\uFF08\u4EE5\u4E0B\u300C\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u300D\u3068\u3044\u3044\u307E\u3059\u3002\uFF09\u306E\u3054\u5229\u7528\u3092\u3055\u308C\u308B\u305F\u3081\u306B\u306F\u3001\u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u3092\u719F\u8AAD\u306E\u3046\u3048\u3001\u5185\u5BB9\u306B\u540C\u610F\u3057\u3066\u3044\u305F\u3060\u304F\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002\u540C\u610F\u3044\u305F\u3060\u3051\u306A\u3044\u5834\u5408\u306F\u3001\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u3078\u306E\u30A2\u30AF\u30BB\u30B9\u53CA\u3073\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u3092\u901A\u3058\u3066\u63D0\u4F9B\u3055\u308C\u308B\u5404\u30B5\u30FC\u30D3\u30B9\uFF08\u4EE5\u4E0B\u300C\u672C\u30B5\u30FC\u30D3\u30B9\u300D\u3068\u3044\u3044\u307E\u3059\u3002\uFF09\u306E\u3054\u5229\u7528\u306F\u304A\u65AD\u308A\u3057\u307E\u3059\u3002"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "1. \u53D6\u5F97\u3059\u308B\u60C5\u5831\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "p-terms__section-content",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u304C\u300C3.\u53D6\u5F97\u60C5\u5831\u306E\u5229\u7528\u76EE\u7684\u306B\u3064\u3044\u3066\u300D\u306B\u5B9A\u3081\u308B\u76EE\u7684\u3092\u9054\u6210\u3059\u308B\u305F\u3081\u306B\u53D6\u5F97\u3059\u308B\u60C5\u5831\u306B\u306F\u3001\u6B21\u306E\u3082\u306E\u304C\u542B\u307E\u308C\u307E\u3059\uFF08\u4EE5\u4E0B\uFF081\uFF09\u304A\u3088\u3073\uFF082\uFF09\u3092\u5408\u308F\u305B\u3066\u300C\u53D6\u5F97\u60C5\u5831\u300D\u3068\u3044\u3044\u307E\u3059\u3002\uFF09"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
             className: "p-terms__section-title",
             children: "\uFF081\uFF09\u500B\u4EBA\u60C5\u5831\u306B\u3064\u3044\u3066"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u500B\u4EBA\u60C5\u5831\u3068\u306F\u3001\u500B\u4EBA\u60C5\u5831\u306E\u4FDD\u8B77\u306B\u95A2\u3059\u308B\u6CD5\u5F8B\uFF08\u5E73\u621015\u5E74\u6CD5\u5F8B\u7B2C57\u53F7\u3001\u4EE5\u4E0B\u300C\u500B\u4EBA\u60C5\u5831\u4FDD\u8B77\u6CD5\u300D\u3068\u3044\u3044\u307E\u3059\uFF092\u67611\u9805\u306B\u5B9A\u3081\u308B\u500B\u4EBA\u60C5\u5831\u3092\u3044\u3044\u3001\u4E0B\u8A18\u3092\u542B\u3080\u3082\u306E\u3068\u3057\u307E\u3059\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
             className: "p-terms__list",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u304A\u5BA2\u69D8\u306E\u304A\u540D\u524D\u3001\u751F\u5E74\u6708\u65E5\u3001\u6027\u5225\u3001\u305D\u306E\u4ED6\u306E\u7279\u5B9A\u306E\u500B\u4EBA\u3092\u8B58\u5225\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u308B\u60C5\u5831"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u7279\u5B9A\u306E\u500B\u4EBA\u60C5\u5831\u306B\u7D50\u3073\u3064\u3044\u3066\u4F7F\u7528\u3055\u308C\u308B\u3054\u4F4F\u6240\u3001\u96FB\u8A71\u756A\u53F7\u3001\u6240\u5C5E\u3059\u308B\u4F1A\u793E\u305D\u306E\u4ED6\u306E\u7D44\u7E54\u306E\u540D\u79F0\u3001\u6240\u5C5E\u3059\u308B\u90E8\u7F72\u306E\u540D\u79F0\u3001\u30ED\u30B0\u30A4\u30F3ID\u3001\u30CB\u30C3\u30AF\u30CD\u30FC\u30E0\u3001\u96FB\u5B50\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3001\u30D1\u30B9\u30EF\u30FC\u30C9\u7B49\u306E\u4F1A\u54E1\u306B\u95A2\u3059\u308B\u60C5\u5831"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u30AF\u30EC\u30B8\u30C3\u30C8\u30AB\u30FC\u30C9\u756A\u53F7\u3001\u305D\u306E\u4ED6\u306E\u30AF\u30EC\u30B8\u30C3\u30C8\u30AB\u30FC\u30C9\u306B\u95A2\u3059\u308B\u60C5\u5831\u3001\u9280\u884C\u53E3\u5EA7\u756A\u53F7"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u304A\u5BA2\u69D8\u306E\u672C\u4EBA\u78BA\u8A8D\u306B\u95A2\u3059\u308B\u60C5\u5831"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
             className: "p-terms__section-title",
             children: "\uFF082\uFF09\u305D\u306E\u4ED6\u306E\u304A\u5BA2\u69D8\u306B\u95A2\u9023\u3059\u308B\u60C5\u5831\u306B\u3064\u3044\u3066"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u3001\u500B\u4EBA\u60C5\u5831\u306B\u8A72\u5F53\u3059\u308B\u304B\u5426\u304B\u306B\u304B\u304B\u308F\u3089\u305A\u3001\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306E\u5229\u7528\u306B\u95A2\u3059\u308B\u304A\u5BA2\u69D8\u306E\u60C5\u5831\u3092\u53D6\u5F97\u3057\u307E\u3059\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
             className: "p-terms__list",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u304A\u5BA2\u69D8\u304C\u3054\u5229\u7528\u306B\u306A\u3063\u305F\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306E\u5185\u5BB9\u3001\u3054\u5229\u7528\u65E5\u6642\u3001\u3054\u5229\u7528\u56DE\u6570\u306A\u3069\u306E\u3054\u5229\u7528\u5185\u5BB9\u30FB\u3054\u5229\u7528\u5C65\u6B74\u306B\u95A2\u3059\u308B\u60C5\u5831\uFF08\u3053\u308C\u3089\u306E\u60C5\u5831\u306B\u306F\u304A\u5BA2\u69D8\u304C\u5229\u7528\u3055\u308C\u308B\uFF35\uFF32\uFF2C\u3001\u30D6\u30E9\u30A6\u30B6\u3084\u643A\u5E2F\u96FB\u8A71\u306E\u7A2E\u985E\u3084IP\u30A2\u30C9\u30EC\u30B9\u3001\u30AF\u30C3\u30AD\u30FC\u60C5\u5831\u306A\u3069\u306E\u60C5\u5831\u3092\u542B\u307F\u307E\u3059\u3002\uFF09"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u304A\u5BA2\u69D8\u306E\u3054\u5229\u7528\u306B\u95A2\u9023\u3057\u305F\u6C7A\u6E08\u72B6\u6CC1\u306B\u95A2\u3059\u308B\u60C5\u5831"
             })]
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "2. \u53D6\u5F97\u60C5\u5831\u306E\u53CE\u96C6\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "p-terms__section-content",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u3001\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u3092\u3054\u5229\u7528\u306B\u306A\u308B\u304A\u5BA2\u69D8\u306E\u53D6\u5F97\u60C5\u5831\u3092\u3001\u4EE5\u4E0B\u306E\u65B9\u6CD5\u306B\u3088\u308A\u53CE\u96C6\u3057\u307E\u3059\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
             className: "p-terms__list",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u4E0A\u3067\u304A\u5BA2\u69D8\u81EA\u8EAB\u306B\u76F4\u63A5\u5165\u529B\u3044\u305F\u3060\u304F\u65B9\u6CD5"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u304A\u5BA2\u69D8\u304B\u3089\u672C\u30B5\u30FC\u30D3\u30B9\u904B\u55B6\u8005\u306B\u5BFE\u3057\u3001\u96FB\u5B50\u30E1\u30FC\u30EB\u3001\u90F5\u4FBF\u3001\u66F8\u9762\u3001\u96FB\u8A71\u7B49\u306E\u624B\u6BB5\u306B\u3088\u308A\u3054\u63D0\u4F9B\u3044\u305F\u3060\u304F\u65B9\u6CD5\uFF08\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u304A\u5BA2\u69D8\u3068\u306E\u96FB\u8A71\u5FDC\u5BFE\u6642\u3001\u54C1\u8CEA\u5411\u4E0A\u7B49\u3092\u76EE\u7684\u3068\u3057\u3001\u901A\u8A71\u3092\u9332\u97F3\u3059\u308B\u3053\u3068\u304C\u3042\u308A\u307E\u3059\u3002\uFF09"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u304A\u5BA2\u69D8\u304C\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u3078\u30A2\u30AF\u30BB\u30B9\u3055\u308C\u305F\u969B\u306B\u53CE\u96C6\u3059\u308B\u65B9\u6CD5"
             })]
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "3. \u53D6\u5F97\u60C5\u5831\u306E\u5229\u7528\u76EE\u7684\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "p-terms__section-content",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u3001\u53D6\u5F97\u60C5\u5831\u3092\u53D6\u5F97\u30FB\u53CE\u96C6\u3059\u308B\u969B\u306B\u304A\u5BA2\u69D8\u306B\u304A\u77E5\u3089\u305B\u3057\u305F\u5229\u7528\u76EE\u7684\u307E\u305F\u306F\u4EE5\u4E0B\u306E\u76EE\u7684\u306E\u305F\u3081\u306B\u3001\u5229\u7528\u3055\u305B\u3066\u3044\u305F\u3060\u304D\u307E\u3059\u3002\u3053\u308C\u3089\u306E\u5229\u7528\u76EE\u7684\u4EE5\u5916\u306B\u306F\u3001\u4E0B\u8A18\u300C4.\u53D6\u5F97\u60C5\u5831\u306E\u7B2C\u4E09\u8005\u3078\u306E\u9810\u8A17\u3001\u63D0\u4F9B\u306B\u3064\u3044\u3066\u300D\u306B\u8A18\u8F09\u3059\u308B\u5834\u5408\u307E\u305F\u306F\u4E8B\u524D\u306B\u304A\u5BA2\u69D8\u306B\u540C\u610F\u3092\u3044\u305F\u3060\u3044\u305F\u5834\u5408\u3092\u9664\u304D\u3001\u5229\u7528\u81F4\u3057\u307E\u305B\u3093\u3002\u306A\u304A\u3001\u304A\u5BA2\u69D8\u306F\u3001\u304A\u5BA2\u69D8\u306B\u5BFE\u3059\u308B\u60C5\u5831\u63D0\u4F9B\u306B\u3064\u3044\u3066\u3001\u4F1A\u54E1\u767B\u9332\u6642\u53CA\u3073\u767B\u9332\u5F8C\u306B\u3001\u60C5\u5831\u63D0\u4F9B\u3092\u65AD\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002\u4F46\u3057\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u904B\u55B6\u4E0A\u5FC5\u8981\u3068\u306A\u308B\u60C5\u5831\u63D0\u4F9B\u306B\u3064\u3044\u3066\u306F\u3001\u60C5\u5831\u63D0\u4F9B\u3092\u65AD\u3063\u305F\u5834\u5408\u306B\u306F\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u3092\u3054\u5229\u7528\u306A\u308C\u306A\u3044\u5834\u5408\u304C\u3042\u308A\u307E\u3059\u306E\u3067\u3001\u3042\u3089\u304B\u3058\u3081\u3054\u4E86\u627F\u304F\u3060\u3055\u3044\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
             className: "p-terms__list",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u3067\u5B89\u5168\u304B\u3064\u78BA\u5B9F\u306B\u53D6\u5F15\u3092\u3057\u3066\u9802\u304F\u305F\u3081\u306B \u5229\u7528\u8005\u306B\u96FB\u5B50\u30E1\u30FC\u30EB\u7B49\u3067\u53D6\u5F15\u306E\u72B6\u614B\u3084\u91CD\u8981\u306A\u4E8B\u9805\u3092\u9023\u7D61\u3055\u305B\u3066\u9802\u304F\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u53D6\u5F15\uFF08\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306B\u304A\u3044\u3066\u304A\u5BA2\u69D8\u9593\u3067\u30B5\u30FC\u30D3\u30B9\u306E\u8CFC\u5165\u306B\u95A2\u3059\u308B\u53D6\u5F15\u3092\u884C\u3046\u3053\u3068\u3092\u3044\u3044\u3001\u4EE5\u4E0B\u540C\u69D8\u3068\u3057\u307E\u3059\u3002\uFF09\u306E\u8CFC\u5165\u78BA\u8A8D\u3092\u3059\u308B\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u3067\u672C\u30B5\u30FC\u30D3\u30B9\u3068\u304A\u5BA2\u69D8\u3068\u306E\u9593\u3067\u884C\u3046\u53D6\u5F15\uFF08\u4EE5\u4E0B\u300C\u76F4\u63A5\u53D6\u5F15\u300D\u3068\u3044\u3044\u307E\u3059\u3002\uFF09\u306E\u624B\u7D9A\u304D\u3001\u5C65\u884C\u53CA\u3073\u7BA1\u7406\u306E\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u96FB\u5B50\u30E1\u30FC\u30EB\u914D\u4FE1\u30B5\u30FC\u30D3\u30B9\u306E\u304A\u7533\u3057\u8FBC\u307F\u306E\u78BA\u8A8D\u3084\u30E1\u30FC\u30EB\u3092\u914D\u4FE1\u3059\u308B\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u30B5\u30FC\u30D3\u30B9\u3078\u306E\u767B\u9332\u306E\u78BA\u8A8D\u3084\u672C\u30B5\u30FC\u30D3\u30B9\u3092\u63D0\u4F9B\u3059\u308B\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u53D6\u5F15\u30FB\u672C\u30B5\u30FC\u30D3\u30B9\u306E\u3054\u8ACB\u6C42\u3001\u304A\u652F\u6255\u3044\u3068\u305D\u306E\u78BA\u8A8D\u3092\u3059\u308B\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u53D6\u5F15\u306B\u3064\u3044\u3066\u3001\u5F8C\u6255\u3044\u3067\u306E\u6C7A\u6E08\u624B\u6BB5\u3092\u5229\u7528\u3059\u308B\u5834\u5408\u306B\u3001\u5B89\u5168\u304B\u3064\u78BA\u5B9F\u306B\u5229\u7528\u3057\u3066\u9802\u304F\u76EE\u7684\u3067\u304A\u5BA2\u69D8\u306E\u4E0E\u4FE1\u5BE9\u67FB\u3092\u884C\u3046\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u904B\u55B6\u4E0A\u306E\u30C8\u30E9\u30D6\u30EB\u306E\u89E3\u6C7A\u306E\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306E\u4E0D\u6B63\u5229\u7528\u30FB\u30C8\u30E9\u30D6\u30EB\u306E\u9632\u6B62\u53CA\u3073\u4E0D\u6B63\u5229\u7528\u306E\u8ABF\u67FB\u306E\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u53D6\u5F15\u30FB\u672C\u30B5\u30FC\u30D3\u30B9\u30FB\u76F4\u63A5\u53D6\u5F15\u3001\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306A\u3069\u306E\u5185\u5BB9\u3092\u7686\u3055\u307E\u304C\u3088\u308A\u3054\u6E80\u8DB3\u3044\u305F\u3060\u3051\u308B\u3088\u3046\u6539\u826F\u3059\u308B\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u7686\u3055\u307E\u304C\u6CE8\u6587\u3055\u308C\u305F\u60C5\u5831\u3084\u672C\u53D6\u5F15\u3001\u76F4\u63A5\u53D6\u5F15\u306A\u3069\u306B\u95A2\u3059\u308B\u6E80\u8DB3\u5EA6\u3092\u8ABF\u67FB\u3059\u308B\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u500B\u4EBA\u60C5\u5831\u3092\u7D71\u8A08\u7684\u306B\u51E6\u7406\u3057\u305F\u60C5\u5831\u3092\u96C6\u7D04\u3057\u8ABF\u67FB\u7D50\u679C\u3068\u3057\u3066\u516C\u8868\u3059\u308B\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u7686\u3055\u307E\u306E\u3054\u5229\u7528\u72B6\u6CC1\u3092\u628A\u63E1\u3057\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u306E\u6539\u5584\u3084\u65B0\u6A5F\u80FD\u3001\u65B0\u30B5\u30FC\u30D3\u30B9\u306E\u958B\u767A\u306B\u5F79\u7ACB\u3066\u308B\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u5404\u7A2E\u4F1A\u54E1\u5236\u30B5\u30FC\u30D3\u30B9\u3001\u305D\u306E\u4ED6\u5404\u7A2E\u30B5\u30FC\u30D3\u30B9\u306E\u3054\u6848\u5185\u3092\u304A\u5C4A\u3051\u3059\u308B\u305F\u3081"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u30B5\u30FC\u30D3\u30B9\u307E\u305F\u306F\u7B2C\u4E09\u8005\u306B\u3088\u308B\u5E83\u544A\u306E\u914D\u4FE1\u30FB\u8868\u793A\u306E\u305F\u3081"
             })]
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "4. \u53D6\u5F97\u60C5\u5831\u306E\u7B2C\u4E09\u8005\u3078\u306E\u9810\u8A17\u3001\u63D0\u4F9B\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "p-terms__section-content",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u3001\u4EE5\u4E0B\u306B\u5B9A\u3081\u308B\u5834\u5408\u3092\u9664\u304D\u3001\u4E8B\u524D\u306B\u304A\u5BA2\u69D8\u306E\u540C\u610F\u3092\u5F97\u308B\u3053\u3068\u306A\u3057\u3067\u53D6\u5F97\u60C5\u5831\u3092\u7B2C\u4E09\u8005\u306B\u9810\u8A17\u3001\u63D0\u4F9B\u3057\u307E\u305B\u3093\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
             className: "p-terms__section-title",
             children: "\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u3067\u672C\u30B5\u30FC\u30D3\u30B9\u3092\u63D0\u4F9B\u3059\u308B\u305F\u3081\u306B\u672C\u30B5\u30FC\u30D3\u30B9\u904B\u55B6\u8005\u304C\u5FC5\u8981\u3068\u5224\u65AD\u3057\u305F\u5834\u5408"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u4E0A\u3067\u306E\u60C5\u5831\u306E\u958B\u793A\u3084\u5171\u6709\u516C\u958B\u3055\u308C\u305F\u53D6\u5F15\u76F8\u624B\u306E\u60C5\u5831\u306F\u3001\u5F53\u8A72\u53D6\u5F15\u306E\u305F\u3081\u306B\u306E\u307F\u5229\u7528\u3059\u308B\u3082\u306E\u3068\u3057\u3001\u3054\u8CFC\u5165\u8005\u306E\u304A\u5BA2\u69D8\u306E\u4E8B\u524D\u306E\u540C\u610F\u306A\u304F\u3001\u3053\u308C\u3092\u7B2C\u4E09\u8005\u306B\u958B\u793A\u3044\u305F\u3057\u307E\u305B\u3093\u3002\u307E\u305F\u304A\u5BA2\u69D8\u306E\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u5229\u7528\u5C65\u6B74\u3084\u4E00\u90E8\u306E\u516C\u958B\u7528\u306E\u53D6\u5F97\u60C5\u5831\uFF08\u30CB\u30C3\u30AF\u30CD\u30FC\u30E0\u3001\u6027\u5225\u3001\u81EA\u5DF1\u7D39\u4ECB\u6587\u7B49\uFF09\u306F\u3001\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u4E0A\u3067\u672C\u30B5\u30FC\u30D3\u30B9\u304C\u5B9A\u3081\u308B\u671F\u9593\u3001\u516C\u958B\u3055\u308C\u307E\u3059\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
             className: "p-terms__section-title",
             children: "\u696D\u52D9\u59D4\u8A17\u5148\u3078\u306E\u9810\u8A17\u30FB\u63D0\u4F9B"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u3001\u300C3. \u53D6\u5F97\u60C5\u5831\u306E\u5229\u7528\u76EE\u7684\u306B\u3064\u3044\u3066\u300D\u306B\u898F\u5B9A\u3055\u308C\u308B\u5229\u7528\u76EE\u7684\u3092\u9054\u6210\u3059\u308B\u305F\u3081\u306B\u5FC5\u8981\u306A\u7BC4\u56F2\u306B\u304A\u3044\u3066\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u304C\u4FE1\u983C\u306B\u8DB3\u308B\u3068\u5224\u65AD\u3057\u500B\u4EBA\u60C5\u5831\u306E\u5B88\u79D8\u7FA9\u52D9\u5951\u7D04\u3092\u7D50\u3093\u3060\u4F01\u696D\u306B\u3001\u696D\u52D9\u306E\u5168\u90E8\u307E\u305F\u306F\u4E00\u90E8\u3092\u59D4\u8A17\u3059\u308B\u5834\u5408\u304C\u3042\u308A\u3001\u3053\u306E\u5834\u5408\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u306E\u53B3\u6B63\u306A\u7BA1\u7406\u4E0B\u306E\u3082\u3068\u3001\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306E\u5229\u7528\u76EE\u7684\u306B\u5FC5\u8981\u306A\u7BC4\u56F2\u3001\u304B\u3064\u696D\u52D9\u3092\u884C\u3046\u306E\u306B\u5FC5\u8981\u6700\u5C0F\u9650\u306E\u7BC4\u56F2\u3067\u3001\u5F53\u8A72\u696D\u52D9\u59D4\u8A17\u5148\u4F01\u696D\u306B\u53D6\u5F97\u60C5\u5831\u3092\u9810\u8A17\u3001\u63D0\u4F9B\u3055\u305B\u3066\u3044\u305F\u3060\u304F\u3053\u3068\u304C\u3042\u308A\u307E\u3059\u3002\u306A\u304A\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u59D4\u8A17\u5148\u306B\u304A\u3051\u308B\u60C5\u5831\u7BA1\u7406\u304C\u9069\u5207\u306B\u884C\u308F\u308C\u3066\u3044\u308B\u3053\u3068\u3092\u9069\u5B9C\u78BA\u8A8D\u3057\u3001\u53D6\u5F97\u60C5\u5831\u304C\u9069\u6B63\u306B\u7BA1\u7406\u3055\u308C\u308B\u3088\u3046\u306B\u78BA\u4FDD\u3057\u307E\u3059\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
             className: "p-terms__section-title",
             children: "\u6CD5\u4EE4\u7B49\u306B\u57FA\u3065\u304F\u63D0\u4F9B"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u3001\u88C1\u5224\u6240\u3001\u884C\u653F\u6A5F\u95A2\u3001\u76E3\u7763\u5B98\u5E81\u305D\u306E\u4ED6\u306E\u516C\u7684\u6A5F\u95A2\u304B\u3089\u53D6\u5F97\u60C5\u5831\u3092\u63D0\u4F9B\u3059\u308B\u3088\u3046\u6C42\u3081\u3089\u308C\u305F\u5834\u5408\u3001\u63D0\u4F9B\u3092\u62D2\u5426\u3059\u308B\u5408\u7406\u7684\u306A\u7406\u7531\u304C\u306A\u3044\u5834\u5408\u306B\u306F\u3001\u53D6\u5F97\u60C5\u5831\u3092\u63D0\u4F9B\u3055\u305B\u3066\u3044\u305F\u3060\u304F\u3053\u3068\u304C\u3042\u308A\u307E\u3059\u3002"
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "5. \u30AF\u30C3\u30AD\u30FC\u306E\u4F7F\u7528\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "p-terms__section-content",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306F\u3001\u304A\u5BA2\u69D8\u306E\u30B3\u30F3\u30D4\u30E5\u30FC\u30BF\u306E\u8A18\u61B6\u88C5\u7F6E\u306B\u3001\u300C\u30AF\u30C3\u30AD\u30FC\u300D\u3068\u547C\u3070\u308C\u308B\u30C6\u30AD\u30B9\u30C8\u30D5\u30A1\u30A4\u30EB\u3092\u9001\u4ED8\u3057\u3001\u4FDD\u5B58\u30FB\u5229\u7528\u3055\u305B\u3066\u3044\u305F\u3060\u304F\u3053\u3068\u304C\u3054\u3056\u3044\u307E\u3059\u3002\u30AF\u30C3\u30AD\u30FC\u306E\u5229\u7528\u76EE\u7684\u306F\u304A\u5BA2\u69D8\u306E\u30B5\u30FC\u30D3\u30B9\u30ED\u30B0\u30A4\u30F3\u6642\u306E\u5FC5\u8981\u60C5\u5831\u306E\u81EA\u52D5\u5165\u529B\u3059\u308B\u3053\u3068\u3084\u8208\u5473\u3092\u304A\u6301\u3061\u3067\u3042\u308D\u3046\u5206\u91CE\u306E\u30B3\u30F3\u30C6\u30F3\u30C4\u3092\u8868\u793A\u3059\u308B\u306A\u3069\u306E\u5229\u4FBF\u6027\u5411\u4E0A\u306E\u305F\u3081\u306B\u4F7F\u7528\u3057\u307E\u3059\u3002\u306A\u304A\u3001\u304A\u5BA2\u69D8\u306F\u3001\u300C\u30AF\u30C3\u30AD\u30FC\u300D\u3092\u53D7\u3051\u53D6\u308B\u524D\u306B\u30D6\u30E9\u30A6\u30B6\u304C\u8B66\u544A\u3092\u51FA\u3059\u69D8\u306B\u8A2D\u5B9A\u3057\u3066\u304A\u304F\u4E8B\u306B\u3088\u308A\u3001\u304A\u5BA2\u69D8\u306E\u5224\u65AD\u3067\u300C\u30AF\u30C3\u30AD\u30FC\u300D\u3092\u53D7\u3051\u53D6\u308B\u4E8B\u3092\u62D2\u5426\u3067\u304D\u307E\u3059\u304C\u3001\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306E\u6A5F\u80FD\u307E\u305F\u306F\u672C\u30B5\u30FC\u30D3\u30B9\u304C\u3054\u5229\u7528\u306B\u306A\u308C\u306A\u3044\u5834\u5408\u304C\u3042\u308A\u307E\u3059\u3002"
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "6. \u53D6\u5F97\u60C5\u5831\u306E\u7BA1\u7406\u304A\u3088\u3073\u30BB\u30AD\u30E5\u30EA\u30C6\u30A3\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "p-terms__section-content",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u3067\u306F\u3001\u53CE\u96C6\u3055\u305B\u3066\u3044\u305F\u3060\u3044\u305F\u53D6\u5F97\u60C5\u5831\u3092\u3001\u4E00\u822C\u306E\u5229\u7528\u8005\u304C\u30A2\u30AF\u30BB\u30B9\u3067\u304D\u306A\u3044\u74B0\u5883\u4E0B\u306B\u3042\u308B\u3001\u30D5\u30A1\u30A4\u30E4\u30FC\u30A6\u30A9\u30FC\u30EB\u3067\u4FDD\u8B77\u3055\u308C\u305F\u30B5\u30FC\u30D0\u30FC\u306B\u3066\u5B89\u5168\u306B\u4FDD\u7BA1\u3057\u3001\u4E0D\u6B63\u30A2\u30AF\u30BB\u30B9\u30FB\u7D1B\u5931\u30FB\u7834\u58CA\u30FB\u6539\u3056\u3093\u307E\u305F\u306F\u6F0F\u6D29\u306E\u9632\u6B62\u305D\u306E\u4ED6\u306E\u500B\u4EBA\u30C7\u30FC\u30BF\u306E\u5B89\u5168\u7BA1\u7406\u306E\u305F\u3081\u306B\u5FC5\u8981\u304B\u3064\u9069\u5207\u306A\u63AA\u7F6E\u3092\u8B1B\u3058\u307E\u3059\u3002\u306A\u304A\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u3067\u306F\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u304C\u4FE1\u983C\u306B\u8DB3\u308B\u3068\u5224\u65AD\u3057\u500B\u4EBA\u60C5\u5831\u306E\u5B88\u79D8\u7FA9\u52D9\u5951\u7D04\u3092\u7D50\u3093\u3060\u4F01\u696D\u306B\u3001\u500B\u4EBA\u60C5\u5831\u306E\u53D6\u308A\u6271\u3044\u3092\u59D4\u8A17\u3059\u308B\u5834\u5408\u304C\u3042\u308A\u307E\u3059\u304C\u3001\u3053\u306E\u5834\u5408\u306B\u3082\u3001\u53D6\u5F97\u60C5\u5831\u306F\u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u306E\u3082\u3068\u3067\u4FDD\u8B77\u3055\u308C\u307E\u3059\u3002"
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "7. \u514D\u8CAC\u30FB\u6CE8\u610F\u4E8B\u9805\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "p-terms__section-content",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
             className: "p-terms__list",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u3001\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306E\u30A6\u30A7\u30D6\u30DA\u30FC\u30B8\u306B\u30EA\u30F3\u30AF\u3055\u308C\u3066\u3044\u308B\u4ED6\u306E\u4E8B\u696D\u8005\u307E\u305F\u306F\u500B\u4EBA\u306E\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u306B\u304A\u3051\u308B\u304A\u5BA2\u69D8\u306E\u500B\u4EBA\u60C5\u5831\u7B49\u306E\u4FDD\u8B77\u306B\u3064\u3044\u3066\u3001\u8CAC\u4EFB\u3092\u8CA0\u3046\u3082\u306E\u3067\u306F\u3042\u308A\u307E\u305B\u3093\u3002\u304A\u5BA2\u69D8\u3054\u81EA\u8EAB\u306B\u3066\u5F53\u8A72\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u306E\u5185\u5BB9\u3092\u3088\u304F\u3054\u78BA\u8A8D\u306E\u4E0A\u3067\u3001\u95B2\u89A7\u304A\u3088\u3073\u3054\u5229\u7528\u3092\u304A\u9858\u3044\u3044\u305F\u3057\u307E\u3059\u3002"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u3001\u304A\u5BA2\u69D8\u306E\u500B\u4EBA\u60C5\u5831\u3092\u4E0D\u6B63\u306A\u30A2\u30AF\u30BB\u30B9\u304B\u3089\u5B88\u308B\u305F\u3081\uFF64\u30C7\u30FC\u30BF\u306E\u4FDD\u8B77\u304C\u5FC5\u8981\u3067\u3042\u308B\u3068\u5224\u65AD\u3057\u305F\u5834\u5408\u3001\u30C7\u30FC\u30BF\u8EE2\u9001\u306BSSL(Secure Socket Layer)\u3068\u3044\u3046\u696D\u754C\u6A19\u6E96\u306E\u6697\u53F7\u65B9\u5F0F\u3092\u4F7F\u7528\u3057\u3066\u3044\u307E\u3059\u3002SSL\u975E\u5BFE\u5FDC\u30D6\u30E9\u30A6\u30B6\u306B\u3088\u308B\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u4E0A\u3067\u306E\u767B\u9332\u3001\u7533\u8FBC\u3082\u3057\u304F\u306F\u6CE8\u6587\u3001\u307E\u305F\u306F\u96FB\u5B50\u30E1\u30FC\u30EB\u3082\u3057\u304F\u306F\u90F5\u4FBF\u306B\u3088\u308A\u53D6\u5F97\u60C5\u5831\u3092\u3054\u63D0\u4F9B\u3044\u305F\u3060\u304F\u5834\u5408\u306F\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u3078\u306E\u60C5\u5831\u5230\u9054\u904E\u7A0B\u306B\u3066\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u306E\u7BA1\u7406\u5916\u306E\u7B2C\u4E09\u8005\u306B\u95B2\u89A7\u3001\u7A83\u53D6\u3055\u308C\u308B\u5371\u967A\u6027\u304C\u9AD8\u307E\u308A\u307E\u3059\u306E\u3067\u3001\u3053\u308C\u3089\u306E\u5371\u967A\u6027\u3092\u3054\u4E86\u89E3\u306E\u4E0A\u3053\u308C\u3089\u306E\u624B\u6BB5\u3092\u3054\u5229\u7528\u304F\u3060\u3055\u3044\u3002"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
               children: "\u4E07\u4E00\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u306B\u3088\u308B\u30BB\u30AD\u30E5\u30EA\u30C6\u30A3\u65BD\u7B56\u306B\u3082\u304B\u304B\u308F\u3089\u305A\u3001\u30CF\u30C3\u30AB\u30FC\u7B49\u306B\u3088\u308B\u4E0D\u5F53\u306A\u884C\u70BA\u306B\u3088\u308A\u3001\u304A\u5BA2\u69D8\u304A\u3088\u3073\u7B2C\u4E09\u8005\u306B\u640D\u5BB3\u304C\u751F\u3058\u305F\u5834\u5408\u306B\u3064\u3044\u3066\u306F\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u8CAC\u4EFB\u3092\u8CA0\u3044\u304B\u306D\u307E\u3059\u306E\u3067\u3054\u4E86\u627F\u304F\u3060\u3055\u3044\u3002 \u304A\u5BA2\u69D8\u3054\u672C\u4EBA\u3092\u78BA\u8A8D\u3059\u308B\u305F\u3081\u306E\u60C5\u5831\u306B\u3064\u304D\u307E\u3057\u3066\u306F\u3001\u304A\u5BA2\u69D8\u306B\u3066\u3001\u7D1B\u5931\u3001\u5FD8\u5931\u307E\u305F\u306F\u7B2C\u4E09\u8005\u306B\u77E5\u3089\u308C\u308B\u3053\u3068\u306E\u306A\u3044\u3088\u3046\u53B3\u91CD\u306A\u7BA1\u7406\u3092\u304A\u9858\u3044\u3044\u305F\u3057\u307E\u3059\u3002"
             })]
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "8. \u6D77\u5916\u304B\u3089\u306E\u30A2\u30AF\u30BB\u30B9\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "p-terms__section-content",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306E\u5229\u7528\u3001\u7BA1\u7406\u3001\u904B\u7528\u65B9\u6CD5\u304A\u3088\u3073\u63B2\u8F09\u5185\u5BB9\u304C\u9055\u6CD5\u307E\u305F\u306F\u4E0D\u9069\u5207\u3068\u3055\u308C\u308B\u56FD\u307E\u305F\u306F\u5730\u57DF\u304B\u3089\u306E\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u3078\u306E\u30A2\u30AF\u30BB\u30B9\u306F\u3054\u9060\u616E\u3092\u9858\u3044\u307E\u3059\u3002"
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "9. \u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u306E\u6539\u5584\u304A\u3088\u3073\u6700\u65B0\u306E\u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u306E\u78BA\u8A8D\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "p-terms__section-content",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u306B\u3064\u3044\u3066\u3001\u9069\u5B9C\u305D\u306E\u6539\u5584\u306B\u52AA\u3081\u3066\u3044\u304D\u307E\u3059\u3002\u6700\u65B0\u306E\u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u306F\u3001\u672C\u30B5\u30FC\u30D3\u30B9\u306E\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u3067\u3054\u89A7\u306B\u306A\u308C\u307E\u3059\u3002 \u304A\u5BA2\u69D8\u306F\u3001\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306B\u30A2\u30AF\u30BB\u30B9\u3059\u308B\u304B\u672C\u30B5\u30FC\u30D3\u30B9\u3092\u3054\u5229\u7528\u306B\u306A\u308B\u524D\u306B\u3001\u5FC5\u305A\u6700\u65B0\u306E\u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u3092\u3054\u78BA\u8A8D\u304F\u3060\u3055\u3044\u3002\u304A\u5BA2\u69D8\u304C\u672C\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u7B49\u306B\u30A2\u30AF\u30BB\u30B9\u3055\u308C\u308B\u304B\u672C\u30B5\u30FC\u30D3\u30B9\u3092\u3054\u5229\u7528\u306B\u306A\u3089\u308C\u305F\u5834\u5408\u306F\u3001\u6700\u65B0\u306E\u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u306E\u5185\u5BB9\u306B\u540C\u610F\u3055\u308C\u305F\u3082\u306E\u3068\u307F\u306A\u3057\u307E\u3059\u3002"
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "10. \u53D6\u5F97\u60C5\u5831\u306E\u958B\u793A\u30FB\u8A02\u6B63\u30FB\u5229\u7528\u505C\u6B62\u7B49\u306E\u624B\u7D9A\u306B\u3064\u3044\u3066"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "p-terms__section-content",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30B5\u30FC\u30D3\u30B9\u306F\u3001\u304A\u5BA2\u69D8\u3054\u672C\u4EBA\u304B\u3089\u3001\u6CD5\u4EE4\u7B49\u306B\u5B9A\u3081\u308B\u7406\u7531\u306B\u3088\u3063\u3066\u3001\u53D6\u5F97\u60C5\u5831\u306E\u5185\u5BB9\u306E\u8A02\u6B63\u3001\u8FFD\u52A0\u3082\u3057\u304F\u306F\u524A\u9664\u53C8\u306F\u7B2C\u4E09\u8005\u63D0\u4F9B\u8A18\u9332\u306E\u78BA\u8A8D\u3092\u6C42\u3081\u3089\u308C\u305F\u5834\u5408\u306B\u306F\u3001\u4ED6\u306E\u6CD5\u4EE4\u306E\u898F\u5B9A\u306B\u3088\u308A\u7279\u5225\u306E\u624B\u7D9A\u304D\u304C\u5B9A\u3081\u3089\u308C\u3066\u3044\u308B\u5834\u5408\u3092\u9664\u304D\u3001\u5229\u7528\u76EE\u7684\u306E\u9054\u6210\u306B\u5FC5\u8981\u306A\u7BC4\u56F2\u5185\u306B\u304A\u3044\u3066\u3001\u9045\u6EDE\u306A\u304F\u5FC5\u8981\u306A\u8ABF\u67FB\u3092\u884C\u3044\u3001\u305D\u306E\u7D50\u679C\u306B\u57FA\u3065\u304D\u3001\u53D6\u5F97\u60C5\u5831\u306E\u5185\u5BB9\u306E\u8A02\u6B63\u3001\u8FFD\u52A0\u307E\u305F\u306F\u524A\u9664\u7B49\u6CD5\u4EE4\u4E0A\u5FC5\u8981\u306A\u63AA\u7F6E\u3092\u884C\u3044\u3001\u305D\u306E\u65E8\u3054\u672C\u4EBA\u306B\u901A\u77E5\u3057\u307E\u3059\u3002"
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("section", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("section", {
         className: "p-terms__section",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
           className: "p-terms__section-title",
           children: "11. \u304A\u554F\u3044\u5408\u308F\u305B\u5148"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "p-terms__section-content",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
             children: "\u672C\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC\u306B\u95A2\u3059\u308B\u304A\u554F\u3044\u5408\u308F\u305B\u306F\u3001\u4E0B\u8A18\u306E\u304A\u554F\u3044\u5408\u308F\u305B\u5148\u307E\u3067\u304A\u9858\u3044\u3044\u305F\u3057\u307E\u3059\u3002"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
             className: "p-terms__section-title",
             children: "\u904B\u55B6\u8005\u60C5\u5831"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
-            children: ["match", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("br", {}), "\u904B\u55B6\u8005: \u677E\u4E0B \u548C\u5F18", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("br", {}), "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9: support@match-service.com"]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+            children: ["match", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), "\u904B\u55B6\u8005: \u677E\u4E0B \u548C\u5F18", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9: support@match-service.com"]
           })]
         })]
       })]

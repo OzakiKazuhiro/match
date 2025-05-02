@@ -601,10 +601,8 @@ function PostJob(_ref2) {
     }),
     data = _useForm.data,
     setData = _useForm.setData,
-    post = _useForm.post,
     processing = _useForm.processing,
-    errors = _useForm.errors,
-    reset = _useForm.reset;
+    errors = _useForm.errors;
 
   // 予算入力時に実際の表示金額を更新
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {

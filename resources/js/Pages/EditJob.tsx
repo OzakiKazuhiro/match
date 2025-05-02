@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Head, useForm, router } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
@@ -129,7 +129,7 @@ export default function EditJob({
         "NoSQL",
     ];
 
-    // useEffectを追加して予算表示を更新
+    // useEffectを使って予算表示を更新
     useEffect(() => {
         updateDisplayBudget(data.budget_min, setDisplayBudgetMin);
         updateDisplayBudget(data.budget_max, setDisplayBudgetMax);

@@ -489,8 +489,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Applications(_ref) {
-  var auth = _ref.auth,
-    applications = _ref.applications;
+  var applications = _ref.applications;
   // 日付のフォーマット
   var formatDate = function formatDate(dateString) {
     var date = new Date(dateString);
