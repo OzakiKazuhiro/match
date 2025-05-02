@@ -269,7 +269,7 @@ function Authenticated(_ref) {
                   children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
                   className: "l-header__user-name",
-                  children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
+                  children: [user !== null && user !== void 0 && user.name && user.name.length > 10 ? "".concat(user.name.substring(0, 10), "...") : (user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
@@ -361,7 +361,7 @@ function Authenticated(_ref) {
             className: "l-header__mobile-user-info",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
               className: "l-header__mobile-user-name",
-              children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
+              children: [user !== null && user !== void 0 && user.name && user.name.length > 10 ? "".concat(user.name.substring(0, 10), "...") : (user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
               className: "l-header__mobile-login-status",
               children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
@@ -612,7 +612,7 @@ function EditJob(_ref2) {
     reset = _useForm.reset;
 
   // カテゴリーの選択肢
-  var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "IT業界に詳しくないので分からない", "エンジニアに気軽に相談", "その他"];
+  var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "エンジニアに相談", "その他"];
 
   // スキルの選択肢
   var skillOptions = ["HTML/CSS", "JavaScript", "TypeScript", "React", "Vue.js", "Angular", "Next.js", "PHP", "Laravel", "Ruby", "Ruby on Rails", "Python", "Django", "Java", "C#", "Swift", "Kotlin", "Flutter", "React Native", "AWS", "Docker", "Kubernetes", "UI/UXデザイン", "Figma", "Photoshop", "Illustrator", "WordPress", "データベース設計", "SQL", "NoSQL"];
@@ -639,7 +639,8 @@ function EditJob(_ref2) {
     }
   };
   var addSkill = function addSkill() {
-    if (customSkill && !data.skills.includes(customSkill)) {
+    // 15文字以上の場合は追加しない
+    if (customSkill && customSkill.length <= 15 && !data.skills.includes(customSkill)) {
       setData("skills", [].concat(_toConsumableArray(data.skills), [customSkill]));
       setCustomSkill("");
     }
@@ -650,7 +651,8 @@ function EditJob(_ref2) {
     }));
   };
   var addPreferredSkill = function addPreferredSkill() {
-    if (customPreferredSkill && !data.preferred_skills.includes(customPreferredSkill)) {
+    // 15文字以上の場合は追加しない
+    if (customPreferredSkill && customPreferredSkill.length <= 15 && !data.preferred_skills.includes(customPreferredSkill)) {
       setData("preferred_skills", [].concat(_toConsumableArray(data.preferred_skills), [customPreferredSkill]));
       setCustomPreferredSkill("");
     }
@@ -661,6 +663,20 @@ function EditJob(_ref2) {
     }));
   };
 
+  // タイトル入力のリアルタイムバリデーション
+  var validateTitleInput = function validateTitleInput(value) {
+    // 新しいエラーオブジェクトを作成
+    var newErrors = _objectSpread({}, validationErrors);
+    if (!value.trim()) {
+      newErrors.title = "タイトルは必須です";
+    } else if (value.length > 50) {
+      newErrors.title = "タイトルは50文字以内で入力してください";
+    } else {
+      delete newErrors.title;
+    }
+    setValidationErrors(newErrors);
+  };
+
   // フォームバリデーション関数
   var validateForm = function validateForm() {
     var newErrors = {};
@@ -668,8 +684,8 @@ function EditJob(_ref2) {
     // タイトルのバリデーション
     if (!data.title.trim()) {
       newErrors.title = "タイトルは必須です";
-    } else if (data.title.length > 100) {
-      newErrors.title = "タイトルは100文字以内で入力してください";
+    } else if (data.title.length > 50) {
+      newErrors.title = "タイトルは50文字以内で入力してください";
     }
 
     // 予算のバリデーション（単発案件の場合）
@@ -677,7 +693,7 @@ function EditJob(_ref2) {
       var minBudget = data.budget_min ? parseInt(data.budget_min) : 0;
       var maxBudget = data.budget_max ? parseInt(data.budget_max) : 0;
       if (!data.budget_min && !data.budget_max) {
-        newErrors.budget_min = "最小または最大予算を設定してください";
+        newErrors.budget_min = "最小・最大予算を設定してください";
       } else if (minBudget > 0 && maxBudget > 0 && minBudget > maxBudget) {
         newErrors.budget_max = "最大予算は最小予算以上に設定してください";
       }
@@ -735,7 +751,7 @@ function EditJob(_ref2) {
   };
   var handleSubmit = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
-      var isValid, errorFields, _i, _errorFields, field, element, _document$querySelect, submissionData, csrfToken, response;
+      var isValid, errorFields, _i, _errorFields, field, element, _document$querySelect, submissionData, csrfToken, response, firstErrorField, _element;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -800,7 +816,7 @@ function EditJob(_ref2) {
             }
 
             // CSRFトークンを取得
-            csrfToken = (_document$querySelect = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.getAttribute("content"); // POSTを使用してLaravelの_methodでPUTをエミュレート
+            csrfToken = (_document$querySelect = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.getAttribute("content"); // 直接axiosを使って送信
             _context.next = 25;
             return axios__WEBPACK_IMPORTED_MODULE_5__["default"].post(route("job-listings.update", jobListing.id), submissionData, {
               headers: {
@@ -810,16 +826,36 @@ function EditJob(_ref2) {
             });
           case 25:
             response = _context.sent;
-            // 成功したらリストページに遷移
-            window.location.href = route("job-listings.index");
-            _context.next = 33;
+            // 成功したら適切なページに遷移
+            if (response.data.url) {
+              window.location.href = response.data.url;
+            } else {
+              window.location.href = route("job-listings.index");
+            }
+            _context.next = 34;
             break;
           case 29:
             _context.prev = 29;
             _context.t0 = _context["catch"](19);
             console.error("送信エラー:", _context.t0);
+
+            // サーバーからのバリデーションエラーがある場合は表示
+            if (_context.t0.response && _context.t0.response.data && _context.t0.response.data.errors) {
+              setValidationErrors(_context.t0.response.data.errors);
+
+              // エラーのある最初のフィールドにスクロール
+              firstErrorField = Object.keys(_context.t0.response.data.errors)[0];
+              _element = document.getElementById(firstErrorField);
+              if (_element) {
+                _element.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center"
+                });
+                _element.focus();
+              }
+            }
             setSubmitting(false);
-          case 33:
+          case 34:
           case "end":
             return _context.stop();
         }
@@ -873,15 +909,19 @@ function EditJob(_ref2) {
                 placeholder: "\u4F8B\uFF1AReact\u3092\u4F7F\u7528\u3057\u305F\u30A6\u30A7\u30D6\u30A2\u30D7\u30EA\u958B\u767A",
                 value: data.title,
                 onChange: function onChange(e) {
-                  setData("title", e.target.value);
-                  // 入力時にエラーをクリア
-                  if (validationErrors.title) {
-                    setValidationErrors(_objectSpread(_objectSpread({}, validationErrors), {}, {
-                      title: undefined
-                    }));
-                  }
+                  var value = e.target.value;
+                  setData("title", value);
+                  // リアルタイムバリデーション
+                  validateTitleInput(value);
                 },
-                required: true
+                required: true,
+                maxLength: 50
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "p-post-job__title-help",
+                children: "\u203B 50\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(DescriptionCount, {
+                current: data.title.length,
+                max: 50
               }), (errors.title || validationErrors.title) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
                 message: errors.title || validationErrors.title,
                 className: "mt-1"
@@ -947,6 +987,7 @@ function EditJob(_ref2) {
                     className: "p-post-job__currency",
                     children: "\xA5"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                    id: "budget_min",
                     type: "number",
                     placeholder: "\u6700\u5C0F\u91D1\u984D\uFF08\u5343\u5186\u5358\u4F4D\uFF09",
                     value: data.budget_min,
@@ -958,6 +999,7 @@ function EditJob(_ref2) {
                     },
                     className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_min || validationErrors.budget_min ? "p-post-job__input--error" : ""),
                     min: "0",
+                    max: "50000",
                     style: {
                       paddingRight: "45px"
                     }
@@ -974,6 +1016,7 @@ function EditJob(_ref2) {
                     className: "p-post-job__currency",
                     children: "\xA5"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                    id: "budget_max",
                     type: "number",
                     placeholder: "\u6700\u5927\u91D1\u984D\uFF08\u5343\u5186\u5358\u4F4D\uFF09",
                     value: data.budget_max,
@@ -985,6 +1028,7 @@ function EditJob(_ref2) {
                     },
                     className: "p-post-job__input p-post-job__input--budget ".concat(errors.budget_max || validationErrors.budget_max ? "p-post-job__input--error" : ""),
                     min: "0",
+                    max: "50000",
                     style: {
                       paddingRight: "45px"
                     }
@@ -1160,9 +1204,13 @@ function EditJob(_ref2) {
                     placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
                     value: !skillOptions.includes(customSkill) ? customSkill : "",
                     onChange: function onChange(e) {
-                      return setCustomSkill(e.target.value);
+                      // 15文字までの入力に制限
+                      if (e.target.value.length <= 15) {
+                        setCustomSkill(e.target.value);
+                      }
                     },
-                    className: "p-post-job__input p-post-job__input--skill"
+                    className: "p-post-job__input p-post-job__input--skill",
+                    maxLength: 15
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                     type: "button",
                     className: "p-post-job__add-button p-post-job__add-button--end",
@@ -1223,9 +1271,13 @@ function EditJob(_ref2) {
                     placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
                     value: !skillOptions.includes(customPreferredSkill) ? customPreferredSkill : "",
                     onChange: function onChange(e) {
-                      return setCustomPreferredSkill(e.target.value);
+                      // 15文字までの入力に制限
+                      if (e.target.value.length <= 15) {
+                        setCustomPreferredSkill(e.target.value);
+                      }
                     },
-                    className: "p-post-job__input p-post-job__input--skill"
+                    className: "p-post-job__input p-post-job__input--skill",
+                    maxLength: 15
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                     type: "button",
                     className: "p-post-job__add-button p-post-job__add-button--end",
@@ -1247,45 +1299,6 @@ function EditJob(_ref2) {
                       })]
                     }, skill);
                   })
-                })]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-              className: "p-post-job__form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
-                className: "p-post-job__label",
-                children: "\u52DF\u96C6\u30B9\u30C6\u30FC\u30BF\u30B9"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                className: "p-post-job__radio-group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
-                  className: "p-post-job__radio",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-                    type: "radio",
-                    name: "status",
-                    value: "open",
-                    checked: !data.is_closed,
-                    onChange: function onChange() {
-                      return setData("is_closed", false);
-                    },
-                    className: "p-post-job__radio-input"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                    className: "p-post-job__radio-text",
-                    children: "\u52DF\u96C6\u4E2D"
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
-                  className: "p-post-job__radio",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-                    type: "radio",
-                    name: "status",
-                    value: "closed",
-                    checked: data.is_closed,
-                    onChange: function onChange() {
-                      return setData("is_closed", true);
-                    },
-                    className: "p-post-job__radio-input"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                    className: "p-post-job__radio-text",
-                    children: "\u52DF\u96C6\u7D42\u4E86"
-                  })]
                 })]
               })]
             })]

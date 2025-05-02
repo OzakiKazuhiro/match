@@ -4,6 +4,8 @@ import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import axios from "axios";
+import { route } from "ziggy-js";
+import Modal from "@/Components/Modal";
 
 // 文字数表示コンポーネント
 function DescriptionCount({ current, max }: { current: number; max: number }) {
@@ -31,6 +33,7 @@ export default function PostJob({ auth }: PageProps) {
     const [displayBudgetMin, setDisplayBudgetMin] = useState<string>("");
     const [displayBudgetMax, setDisplayBudgetMax] = useState<string>("");
     const [submitting, setSubmitting] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
     // バリデーションエラーの状態
     const [validationErrors, setValidationErrors] = useState<{
         title?: string;
@@ -69,8 +72,7 @@ export default function PostJob({ auth }: PageProps) {
         "ECサイト",
         "API開発",
         "WordPress開発",
-        "IT業界に詳しくないので分からない",
-        "エンジニアに気軽に相談",
+        "エンジニアに相談",
         "その他",
     ];
 
@@ -109,7 +111,12 @@ export default function PostJob({ auth }: PageProps) {
     ];
 
     const addSkill = () => {
-        if (customSkill && !data.skills.includes(customSkill)) {
+        // 15文字以上の場合は追加しない
+        if (
+            customSkill &&
+            customSkill.length <= 15 &&
+            !data.skills.includes(customSkill)
+        ) {
             setData("skills", [...data.skills, customSkill]);
             setCustomSkill("");
         }
@@ -123,8 +130,10 @@ export default function PostJob({ auth }: PageProps) {
     };
 
     const addPreferredSkill = () => {
+        // 15文字以上の場合は追加しない
         if (
             customPreferredSkill &&
+            customPreferredSkill.length <= 15 &&
             !data.preferred_skills.includes(customPreferredSkill)
         ) {
             setData("preferred_skills", [
@@ -174,6 +183,12 @@ export default function PostJob({ auth }: PageProps) {
             return; // バリデーションエラーがある場合は処理を中断
         }
 
+        // バリデーションが通った場合は確認モーダルを表示
+        setShowConfirmModal(true);
+    };
+
+    // 実際の送信処理
+    const submitForm = async () => {
         setSubmitting(true);
 
         try {
@@ -244,6 +259,7 @@ export default function PostJob({ auth }: PageProps) {
             }
 
             setSubmitting(false);
+            setShowConfirmModal(false);
         }
     };
 
@@ -274,8 +290,8 @@ export default function PostJob({ auth }: PageProps) {
         // タイトルのバリデーション
         if (!data.title.trim()) {
             newErrors.title = "タイトルは必須です";
-        } else if (data.title.length > 100) {
-            newErrors.title = "タイトルは100文字以内で入力してください";
+        } else if (data.title.length > 50) {
+            newErrors.title = "タイトルは50文字以内で入力してください";
         }
 
         // 予算のバリデーション（単発案件の場合）
@@ -284,7 +300,7 @@ export default function PostJob({ auth }: PageProps) {
             const maxBudget = data.budget_max ? parseInt(data.budget_max) : 0;
 
             if (!data.budget_min && !data.budget_max) {
-                newErrors.budget_min = "最小または最大予算を設定してください";
+                newErrors.budget_min = "最小・最大予算を設定してください";
             } else if (
                 minBudget > 0 &&
                 maxBudget > 0 &&
@@ -367,22 +383,35 @@ export default function PostJob({ auth }: PageProps) {
         setValidationErrors(newErrors);
     };
 
+    // タイトル入力のリアルタイムバリデーション
+    const validateTitleInput = (value: string) => {
+        // 新しいエラーオブジェクトを作成
+        const newErrors = { ...validationErrors };
+
+        if (!value.trim()) {
+            newErrors.title = "タイトルは必須です";
+        } else if (value.length > 50) {
+            newErrors.title = "タイトルは50文字以内で入力してください";
+        } else {
+            delete newErrors.title;
+        }
+
+        setValidationErrors(newErrors);
+    };
+
     return (
         <AuthenticatedLayout
-            header={<div className="p-post-job__header-title">案件を投稿</div>}
+            header={
+                <h2 className="c-heading c-heading--lv2">
+                    新しい案件を登録する
+                </h2>
+            }
         >
-            <Head title="案件を投稿" />
+            <Head title="案件登録" />
 
             <div className="p-post-job">
                 <div className="p-post-job__container">
-                    <div className="p-post-job__header">
-                        <h1 className="p-post-job__title">案件を投稿する</h1>
-                        <p className="p-post-job__subtitle">
-                            あなたの案件情報を入力して、エンジニアを募集しましょう。
-                            <br className="u-pc-only" />
-                            単発案件やレベニューシェア案件を簡単に投稿できます。
-                        </p>
-                    </div>
+                    <h1 className="p-post-job__title">案件登録</h1>
 
                     <form onSubmit={handleSubmit} className="p-post-job__form">
                         <div className="p-post-job__section">
@@ -411,15 +440,19 @@ export default function PostJob({ auth }: PageProps) {
                                     placeholder="例：Reactを使用したウェブアプリ開発"
                                     value={data.title}
                                     onChange={(e) => {
-                                        setData("title", e.target.value);
-                                        // 入力時にエラーをクリア
-                                        if (validationErrors.title) {
-                                            setValidationErrors({
-                                                ...validationErrors,
-                                                title: undefined,
-                                            });
-                                        }
+                                        const value = e.target.value;
+                                        setData("title", value);
+                                        // リアルタイムバリデーション
+                                        validateTitleInput(value);
                                     }}
+                                    maxLength={50}
+                                />
+                                <div className="p-post-job__title-help">
+                                    ※ 50文字以内で入力してください
+                                </div>
+                                <DescriptionCount
+                                    current={data.title.length}
+                                    max={50}
                                 />
                                 {(errors.title || validationErrors.title) && (
                                     <InputError
@@ -720,7 +753,7 @@ export default function PostJob({ auth }: PageProps) {
                                             ? "p-post-job__textarea--error"
                                             : ""
                                     }`}
-                                    placeholder="案件の詳細な説明を入力してください。作業内容、求めるスキル、成果物、納期などを具体的に記載すると、応募が集まりやすくなります。"
+                                    placeholder="案件の詳細な説明を入力してください。作業内容、求めるスキル、成果物、納期などを具体的に記載すると、応募が集まりやすくなります"
                                     value={data.description}
                                     onChange={(e) => {
                                         setData("description", e.target.value);
@@ -800,12 +833,19 @@ export default function PostJob({ auth }: PageProps) {
                                                         ? customSkill
                                                         : ""
                                                 }
-                                                onChange={(e) =>
-                                                    setCustomSkill(
-                                                        e.target.value
-                                                    )
-                                                }
+                                                onChange={(e) => {
+                                                    // 15文字までの入力に制限
+                                                    if (
+                                                        e.target.value.length <=
+                                                        15
+                                                    ) {
+                                                        setCustomSkill(
+                                                            e.target.value
+                                                        );
+                                                    }
+                                                }}
                                                 className="p-post-job__input p-post-job__input--skill"
+                                                maxLength={15}
                                             />
                                             <button
                                                 type="button"
@@ -891,12 +931,19 @@ export default function PostJob({ auth }: PageProps) {
                                                         ? customPreferredSkill
                                                         : ""
                                                 }
-                                                onChange={(e) =>
-                                                    setCustomPreferredSkill(
-                                                        e.target.value
-                                                    )
-                                                }
+                                                onChange={(e) => {
+                                                    // 15文字までの入力に制限
+                                                    if (
+                                                        e.target.value.length <=
+                                                        15
+                                                    ) {
+                                                        setCustomPreferredSkill(
+                                                            e.target.value
+                                                        );
+                                                    }
+                                                }}
                                                 className="p-post-job__input p-post-job__input--skill"
+                                                maxLength={15}
                                             />
                                             <button
                                                 type="button"
@@ -997,6 +1044,40 @@ export default function PostJob({ auth }: PageProps) {
                     </div>
                 </div>
             </div>
+
+            {/* 確認モーダル */}
+            <Modal
+                show={showConfirmModal}
+                onClose={() => setShowConfirmModal(false)}
+                maxWidth="md"
+            >
+                <div className="p-modal__container">
+                    <h2 className="p-modal__title">案件投稿の確認</h2>
+                    <p className="p-modal__text">
+                        一度投稿した案件は編集することができません。
+                        <br />
+                        内容を変更する必要がある場合は、案件を削除して新規に作り直す必要があります。
+                        <br />
+                        <br />
+                        この案件を投稿してもよろしいですか？
+                    </p>
+                    <div className="p-modal__buttons">
+                        <button
+                            className="p-modal__button p-modal__button--cancel"
+                            onClick={() => setShowConfirmModal(false)}
+                        >
+                            キャンセル
+                        </button>
+                        <button
+                            className="p-modal__button p-modal__button--success"
+                            onClick={submitForm}
+                            disabled={submitting}
+                        >
+                            {submitting ? "送信中..." : "はい、投稿します"}
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </AuthenticatedLayout>
     );
 }

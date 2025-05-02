@@ -100,7 +100,9 @@ function Top(_ref) {
               alt: "".concat(auth.user.name, "\u306E\u30A2\u30D0\u30BF\u30FC")
             }) : auth.user.name.charAt(0).toUpperCase()
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-            children: auth.user.name
+            className: "l-header__user-name",
+            title: auth.user.name.length > 10 ? auth.user.name : "",
+            children: auth.user.name.length > 10 ? "".concat(auth.user.name.substring(0, 10), "...") : auth.user.name
           })]
         }), (auth === null || auth === void 0 ? void 0 : auth.user) && !(auth !== null && auth !== void 0 && auth.user.email_verified_at) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "l-header__login-status",
@@ -193,7 +195,8 @@ function Top(_ref) {
             className: "l-header__mobile-user-info",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
               className: "l-header__mobile-user-name",
-              children: auth.user.name
+              title: auth.user.name,
+              children: auth.user.name.length > 10 ? "".concat(auth.user.name.substring(0, 10), "...") : auth.user.name
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
               className: "l-header__mobile-login-status",
               children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"

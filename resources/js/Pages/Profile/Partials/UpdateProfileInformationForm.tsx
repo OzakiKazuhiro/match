@@ -4,7 +4,8 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage, router } from "@inertiajs/react";
-import { FormEventHandler, useState, useRef } from "react";
+import { FormEventHandler, useState, useRef, useEffect } from "react";
+import { debounce } from "lodash";
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -23,12 +24,48 @@ export default function UpdateProfileInformation({
     const [recentlySuccessful, setRecentlySuccessful] = useState(false);
     const [removeAvatar, setRemoveAvatar] = useState(false);
 
+    // 名前のバリデーション状態
+    const [nameValidationMessage, setNameValidationMessage] = useState<
+        string | null
+    >(null);
+    const [nameIsValid, setNameIsValid] = useState<boolean | null>(null);
+
     const { data, setData, post, patch, errors, processing, reset } = useForm({
         name: user.name,
         email: user.email,
         avatar: null as File | null,
         remove_avatar: false as boolean,
     });
+
+    // 名前のバリデーションを行う関数
+    const validateName = (name: string) => {
+        if (!name) {
+            setNameIsValid(null);
+            setNameValidationMessage(null);
+            return;
+        }
+
+        if (name.length > 50) {
+            setNameIsValid(false);
+            setNameValidationMessage("お名前は50文字以内で入力してください。");
+            return;
+        }
+
+        setNameIsValid(true);
+        setNameValidationMessage(null);
+    };
+
+    // 名前入力のたびに検証実行
+    const debouncedValidateName = debounce(validateName, 300);
+
+    // 名前が変更されたときに検証を実行
+    useEffect(() => {
+        debouncedValidateName(data.name);
+
+        return () => {
+            debouncedValidateName.cancel();
+        };
+    }, [data.name]);
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
@@ -55,6 +92,11 @@ export default function UpdateProfileInformation({
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+
+        // 名前が50文字を超えている場合は送信しない
+        if (nameIsValid === false) {
+            return;
+        }
 
         // FormDataオブジェクトを手動で作成
         const formData = new FormData();
@@ -168,18 +210,39 @@ export default function UpdateProfileInformation({
 
                     <TextInput
                         id="name"
-                        className="p-profile__form-input"
+                        className={`p-profile__form-input ${
+                            nameIsValid === false ? "border-red-500" : ""
+                        }`}
                         value={data.name}
                         onChange={(e) => setData("name", e.target.value)}
                         required
                         isFocused
                         autoComplete="name"
+                        maxLength={50}
                     />
+
+                    {nameValidationMessage && (
+                        <div className="p-profile__form-error">
+                            {nameValidationMessage}
+                        </div>
+                    )}
 
                     <InputError
                         className="p-profile__form-error"
                         message={errors.name}
                     />
+
+                    <div className="p-profile__input-help">
+                        {data.name.length >= 40 && (
+                            <span
+                                className={
+                                    data.name.length > 50 ? "text-red-500" : ""
+                                }
+                            >
+                                {data.name.length}/50文字
+                            </span>
+                        )}
+                    </div>
                 </div>
 
                 <div className="p-profile__form-group">

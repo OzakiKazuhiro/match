@@ -375,15 +375,6 @@ export default function JobDetail({
                                             <>
                                                 {!jobListing.is_closed && (
                                                     <>
-                                                        <Link
-                                                            href={route(
-                                                                "job-listings.edit",
-                                                                jobListing.id
-                                                            )}
-                                                            className="p-job-detail__message-button"
-                                                        >
-                                                            編集する
-                                                        </Link>
                                                         <button
                                                             onClick={
                                                                 confirmJobClose
@@ -829,7 +820,12 @@ export default function JobDetail({
                                     </div>
                                     <div className="p-job-detail__author-info">
                                         <div className="p-job-detail__author-name">
-                                            {jobListing.user.name}
+                                            {jobListing.user.name.length > 10
+                                                ? `${jobListing.user.name.substring(
+                                                      0,
+                                                      10
+                                                  )}...`
+                                                : jobListing.user.name}
                                         </div>
                                     </div>
                                 </div>

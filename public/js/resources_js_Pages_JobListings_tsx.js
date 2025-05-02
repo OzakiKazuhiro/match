@@ -923,7 +923,7 @@ __webpack_require__.r(__webpack_exports__);
 // プロップス定義
 
 function JobCard(_ref) {
-  var _job$user;
+  var _job$user, _job$user2;
   var job = _ref.job,
     auth = _ref.auth,
     _ref$userApplications = _ref.userApplications,
@@ -1016,7 +1016,7 @@ function JobCard(_ref) {
       className: "p-job-listings__card-content",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
         className: "p-job-listings__card-title",
-        children: job.title
+        children: job.title.length > 30 ? "".concat(job.title.substring(0, 30), "...") : job.title
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
         className: "p-job-listings__card-desc",
         children: job.description.length > 100 ? "".concat(job.description.substring(0, 100), "...") : job.description
@@ -1030,33 +1030,36 @@ function JobCard(_ref) {
           }), job.view_count !== null && job.view_count !== undefined && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
             className: "p-job-listings__card-views",
             children: ["\u95B2\u89A7\u6570", job.view_count]
-          }), (auth === null || auth === void 0 ? void 0 : auth.user) && (auth === null || auth === void 0 ? void 0 : auth.user.email_verified_at) && isFavorited && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "p-job-listings__card-favorite-icon",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
-              xmlns: "http://www.w3.org/2000/svg",
-              width: "16",
-              height: "16",
-              viewBox: "0 0 24 24",
-              fill: "currentColor",
-              stroke: "currentColor",
-              strokeWidth: "2",
-              strokeLinecap: "round",
-              strokeLinejoin: "round",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("path", {
-                d: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-              })
-            })
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
           className: "p-job-listings__card-author",
-          children: ["\u6295\u7A3F\u8005: ", ((_job$user = job.user) === null || _job$user === void 0 ? void 0 : _job$user.name) || "不明なユーザー"]
+          children: ["\u6295\u7A3F\u8005:", " ", (_job$user = job.user) !== null && _job$user !== void 0 && _job$user.name && job.user.name.length > 7 ? "".concat(job.user.name.substring(0, 7), "...") : ((_job$user2 = job.user) === null || _job$user2 === void 0 ? void 0 : _job$user2.name) || "不明なユーザー"]
         })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
       className: "p-job-listings__card-footer",
-      children: [job.category && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        className: "p-job-listings__card-category",
-        children: job.category
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "p-job-listings__card-footer-left",
+        children: [job.category && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "p-job-listings__card-category",
+          children: job.category
+        }), (auth === null || auth === void 0 ? void 0 : auth.user) && (auth === null || auth === void 0 ? void 0 : auth.user.email_verified_at) && isFavorited && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "p-job-listings__card-favorite-icon",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            width: "16",
+            height: "16",
+            viewBox: "0 0 24 24",
+            fill: "currentColor",
+            stroke: "currentColor",
+            strokeWidth: "2",
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("path", {
+              d: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            })
+          })
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
         href: auth !== null && auth !== void 0 && auth.user && auth !== null && auth !== void 0 && auth.user.email_verified_at ? (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("job-listings.show", job.id) : (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("login", {
           redirect: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)("job-listings.show", job.id)
@@ -1311,7 +1314,7 @@ function Authenticated(_ref) {
                   children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
                   className: "l-header__user-name",
-                  children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
+                  children: [user !== null && user !== void 0 && user.name && user.name.length > 10 ? "".concat(user.name.substring(0, 10), "...") : (user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
@@ -1403,7 +1406,7 @@ function Authenticated(_ref) {
             className: "l-header__mobile-user-info",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
               className: "l-header__mobile-user-name",
-              children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
+              children: [user !== null && user !== void 0 && user.name && user.name.length > 10 ? "".concat(user.name.substring(0, 10), "...") : (user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
               className: "l-header__mobile-login-status",
               children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
@@ -1647,11 +1650,11 @@ function JobListings(_ref) {
     setShowFavoritesOnly = _useState20[1];
 
   /**
-   * モバイルメニューのアニメーション制御（未ログイン時のみ）
+   * モバイルメニューのアニメーション制御（未ログイン時または認証されていないユーザー向け）
    * メニューの開閉状態が変わった時に適切なアニメーションを適用
    */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!(auth !== null && auth !== void 0 && auth.user)) {
+    if (!(auth !== null && auth !== void 0 && auth.user) || !(auth !== null && auth !== void 0 && auth.user.email_verified_at)) {
       if (mobileMenuOpen) {
         setMenuVisible(true);
         setAnimating(true);
@@ -1685,11 +1688,11 @@ function JobListings(_ref) {
   }, [showSortDropdown]);
 
   /**
-   * モバイルメニュー外クリック検知（未ログイン時のみ）
+   * モバイルメニュー外クリック検知（未ログイン時または認証されていないユーザー向け）
    * メニュー外をクリックした時に自動的に閉じる
    */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!(auth !== null && auth !== void 0 && auth.user)) {
+    if (!(auth !== null && auth !== void 0 && auth.user) || !(auth !== null && auth !== void 0 && auth.user.email_verified_at)) {
       var handleClickOutside = function handleClickOutside(event) {
         if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && mobileButtonRef.current && !mobileButtonRef.current.contains(event.target) && menuVisible && !animating) {
           setMobileMenuOpen(false);
@@ -1712,7 +1715,7 @@ function JobListings(_ref) {
   /**
    * 案件カテゴリーの選択肢一覧
    */
-  var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "IT業界に詳しくないので分からない", "エンジニアに気軽に相談", "その他"];
+  var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "エンジニアに相談", "その他"];
 
   /**
    * カテゴリードロップダウンメニュー外クリック検知
@@ -1953,7 +1956,7 @@ function JobListings(_ref) {
                 href: "/verify-email",
                 className: "p-job-listings__login-link",
                 children: "\u30E1\u30FC\u30EB\u8A8D\u8A3C"
-              }), "\u304C\u5FC5\u8981"]
+              }), "\u304C\u5FC5\u8981\u3067\u3059"]
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: "p-job-listings__search-box",
@@ -2249,14 +2252,20 @@ function JobListings(_ref) {
               href: "/post-job",
               className: "l-header__nav-link",
               children: "\u6848\u4EF6\u3092\u6295\u7A3F"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-              href: "/login",
+            }), !(auth !== null && auth !== void 0 && auth.user) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+                href: "/login",
+                className: "l-header__nav-link",
+                children: "\u30ED\u30B0\u30A4\u30F3"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+                href: "/register",
+                className: "l-header__nav-link l-header__nav-link--button",
+                children: "\u4F1A\u54E1\u767B\u9332"
+              })]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: "/dashboard",
               className: "l-header__nav-link",
-              children: "\u30ED\u30B0\u30A4\u30F3"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-              href: "/register",
-              className: "l-header__nav-link l-header__nav-link--button",
-              children: "\u4F1A\u54E1\u767B\u9332"
+              children: "\u30DE\u30A4\u30DA\u30FC\u30B8"
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
             className: "l-header__mobile-button",
@@ -2302,14 +2311,26 @@ function JobListings(_ref) {
             href: "/post-job",
             className: "l-header__mobile-link",
             children: "\u6848\u4EF6\u3092\u6295\u7A3F"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-            href: "/login",
-            className: "l-header__mobile-link",
-            children: "\u30ED\u30B0\u30A4\u30F3"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-            href: "/register",
-            className: "l-header__mobile-link",
-            children: "\u4F1A\u54E1\u767B\u9332"
+          }), !(auth !== null && auth !== void 0 && auth.user) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: "/login",
+              className: "l-header__mobile-link",
+              children: "\u30ED\u30B0\u30A4\u30F3"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: "/register",
+              className: "l-header__mobile-link",
+              children: "\u4F1A\u54E1\u767B\u9332"
+            })]
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: "/dashboard",
+              className: "l-header__mobile-link",
+              children: "\u30DE\u30A4\u30DA\u30FC\u30B8"
+            }), !(auth !== null && auth !== void 0 && auth.user.email_verified_at) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: "/verify-email",
+              className: "l-header__mobile-link",
+              children: "\u30E1\u30FC\u30EB\u8A8D\u8A3C"
+            })]
           })]
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("main", {
@@ -2330,27 +2351,7 @@ function JobListings(_ref) {
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
                 className: "l-footer__description",
-                children: "\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u306E\u6848\u4EF6\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3002 \u5358\u767A\u6848\u4EF6\u304B\u3089\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u307E\u3067\u3001 \u30B7\u30F3\u30D7\u30EB\u306B\u63A2\u305B\u3066\u3001\u3059\u3050\u306B\u5FDC\u52DF\u3067\u304D\u307E\u3059\u3002"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                className: "l-footer__social",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
-                  href: "#",
-                  className: "l-footer__social-icon",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("svg", {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "18",
-                    height: "18",
-                    viewBox: "0 0 24 24",
-                    fill: "none",
-                    stroke: "currentColor",
-                    strokeWidth: "2",
-                    strokeLinecap: "round",
-                    strokeLinejoin: "round",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("path", {
-                      d: "M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                    })
-                  })
-                })
+                children: "\u30A8\u30F3\u30B8\u30CB\u30A2\u5411\u3051\u306E\u6848\u4EF6\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9\u3002 \u5358\u767A\u6848\u4EF6\u304B\u3089\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u307E\u3067\u3001 \u30B7\u30F3\u30D7\u30EB\u306B\u63A2\u305B\u3066\u3001\u3059\u3050\u306B\u5FDC\u52DF\u3067\u304D\u307E\u3059"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {

@@ -280,7 +280,14 @@ export default function Show({
                         )}
                         <span className="p-messages__header-text">
                             <span className="p-messages__header-name">
-                                {otherParticipant?.name || "不明なユーザー"}
+                                {otherParticipant?.name &&
+                                otherParticipant.name.length > 10
+                                    ? `${otherParticipant.name.substring(
+                                          0,
+                                          10
+                                      )}...`
+                                    : otherParticipant?.name ||
+                                      "不明なユーザー"}
                             </span>
                             {conversationGroup.job_listing && (
                                 <span className="p-messages__header-job">
@@ -410,7 +417,14 @@ export default function Show({
                             )}
                             <div className="p-messages__user-details">
                                 <h3 className="p-messages__user-name">
-                                    {otherParticipant?.name || "不明なユーザー"}
+                                    {otherParticipant?.name &&
+                                    otherParticipant.name.length > 10
+                                        ? `${otherParticipant.name.substring(
+                                              0,
+                                              10
+                                          )}...`
+                                        : otherParticipant?.name ||
+                                          "不明なユーザー"}
                                 </h3>
                                 {conversationGroup.job_listing && (
                                     <div className="p-messages__job-title">

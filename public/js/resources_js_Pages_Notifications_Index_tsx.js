@@ -253,7 +253,7 @@ function Authenticated(_ref) {
                   children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
                   className: "l-header__user-name",
-                  children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
+                  children: [user !== null && user !== void 0 && user.name && user.name.length > 10 ? "".concat(user.name.substring(0, 10), "...") : (user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
@@ -345,7 +345,7 @@ function Authenticated(_ref) {
             className: "l-header__mobile-user-info",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
               className: "l-header__mobile-user-name",
-              children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
+              children: [user !== null && user !== void 0 && user.name && user.name.length > 10 ? "".concat(user.name.substring(0, 10), "...") : (user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
               className: "l-header__mobile-login-status",
               children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
@@ -518,18 +518,24 @@ function NotificationsIndex(_ref) {
   };
   var getNotificationDetails = function getNotificationDetails(notification) {
     var data = notification.data;
+    var truncateName = function truncateName(name) {
+      if (!name) return "不明なユーザー";
+      return name.length > 10 ? "".concat(name.substring(0, 10), "...") : name;
+    };
     if (notification.type === "App\\Notifications\\ApplicationReceived") {
+      var applicantName = truncateName(data.applicant_name);
       return {
         title: "新しい応募がありました",
-        description: "\u300C".concat(data.job_listing_title, "\u300D\u306B").concat(data.applicant_name, "\u3055\u3093\u304B\u3089\u5FDC\u52DF\u304C\u3042\u308A\u307E\u3057\u305F\u3002"),
+        description: "\u300C".concat(data.job_listing_title, "\u300D\u306B").concat(applicantName, "\u3055\u3093\u304B\u3089\u5FDC\u52DF\u304C\u3042\u308A\u307E\u3057\u305F\u3002"),
         url: route("applications.to-my-jobs"),
         actionText: "応募を確認する"
       };
     }
     if (notification.type === "App\\Notifications\\ApplicationAccepted") {
+      var jobOwnerName = truncateName(data.job_owner_name);
       return {
         title: "応募が承認されました",
-        description: "\u300C".concat(data.job_listing_title, "\u300D\u3078\u306E\u5FDC\u52DF\u304C").concat(data.job_owner_name, "\u3055\u3093\u306B\u627F\u8A8D\u3055\u308C\u307E\u3057\u305F\u3002"),
+        description: "\u300C".concat(data.job_listing_title, "\u300D\u3078\u306E\u5FDC\u52DF\u304C").concat(jobOwnerName, "\u3055\u3093\u306B\u627F\u8A8D\u3055\u308C\u307E\u3057\u305F\u3002"),
         url: route("messages.show", {
           conversationGroup: data.conversation_group_id
         }),

@@ -17448,38 +17448,75 @@ function Register() {
     processing = _useForm.processing,
     errors = _useForm.errors,
     reset = _useForm.reset;
+
+  // 名前のバリデーション状態
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
-    emailValidationMessage = _useState2[0],
-    setEmailValidationMessage = _useState2[1];
+    nameValidationMessage = _useState2[0],
+    setNameValidationMessage = _useState2[1];
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
-    emailIsValid = _useState4[0],
-    setEmailIsValid = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+    nameIsValid = _useState4[0],
+    setNameIsValid = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
     _useState6 = _slicedToArray(_useState5, 2),
-    isValidatingEmail = _useState6[0],
-    setIsValidatingEmail = _useState6[1];
-
-  // パスワードのバリデーション状態
+    emailValidationMessage = _useState6[0],
+    setEmailValidationMessage = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
     _useState8 = _slicedToArray(_useState7, 2),
-    passwordValidationMessage = _useState8[0],
-    setPasswordValidationMessage = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    emailIsValid = _useState8[0],
+    setEmailIsValid = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
     _useState10 = _slicedToArray(_useState9, 2),
-    passwordIsValid = _useState10[0],
-    setPasswordIsValid = _useState10[1];
+    isValidatingEmail = _useState10[0],
+    setIsValidatingEmail = _useState10[1];
+
+  // パスワードのバリデーション状態
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState12 = _slicedToArray(_useState11, 2),
+    passwordValidationMessage = _useState12[0],
+    setPasswordValidationMessage = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState14 = _slicedToArray(_useState13, 2),
+    passwordIsValid = _useState14[0],
+    setPasswordIsValid = _useState14[1];
 
   // パスワードの表示/非表示を管理する状態
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
-    _useState12 = _slicedToArray(_useState11, 2),
-    showPassword = _useState12[0],
-    setShowPassword = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
-    _useState14 = _slicedToArray(_useState13, 2),
-    showPasswordConfirmation = _useState14[0],
-    setShowPasswordConfirmation = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+    _useState16 = _slicedToArray(_useState15, 2),
+    showPassword = _useState16[0],
+    setShowPassword = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    showPasswordConfirmation = _useState18[0],
+    setShowPasswordConfirmation = _useState18[1];
+
+  // 名前のバリデーションを行う関数
+  var validateName = function validateName(name) {
+    if (!name) {
+      setNameIsValid(null);
+      setNameValidationMessage(null);
+      return;
+    }
+    if (name.length > 50) {
+      setNameIsValid(false);
+      setNameValidationMessage("お名前は50文字以内で入力してください。");
+      return;
+    }
+    setNameIsValid(true);
+    setNameValidationMessage(null);
+  };
+
+  // 名前入力のたびに検証実行
+  var debouncedValidateName = (0,lodash__WEBPACK_IMPORTED_MODULE_6__.debounce)(validateName, 300);
+
+  // 名前が変更されたときに検証を実行
+  (0,react__WEBPACK_IMPORTED_MODULE_5__.useEffect)(function () {
+    debouncedValidateName(data.name);
+    return function () {
+      debouncedValidateName.cancel();
+    };
+  }, [data.name]);
 
   // メールアドレスの重複チェックを行う関数
   var validateEmail = /*#__PURE__*/function () {
@@ -17572,6 +17609,13 @@ function Register() {
       return;
     }
 
+    // 50文字以上の長さをチェック
+    if (password.length > 50) {
+      setPasswordIsValid(false);
+      setPasswordValidationMessage("パスワードは50文字以内で入力してください。");
+      return;
+    }
+
     // 全角文字を含むかチェック
     var hasFullWidthChars = /[^\x01-\x7E]/.test(password);
     if (hasFullWidthChars) {
@@ -17615,6 +17659,11 @@ function Register() {
   var submit = function submit(e) {
     e.preventDefault();
 
+    // 名前が50文字を超えている場合は送信しない
+    if (nameIsValid === false) {
+      return;
+    }
+
     // メールアドレスが重複している場合は送信しない
     if (emailIsValid === false) {
       return;
@@ -17647,15 +17696,25 @@ function Register() {
           id: "name",
           name: "name",
           value: data.name,
-          className: "p-auth__input",
+          className: "p-auth__input ".concat(nameIsValid === false ? "border-red-500" : ""),
           autoComplete: "name",
           isFocused: true,
           onChange: function onChange(e) {
             return setData("name", e.target.value);
-          }
+          },
+          maxLength: 50
+        }), nameValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "p-auth__error",
+          children: nameValidationMessage
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.name,
           className: "p-auth__error"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "p-auth__input-help",
+          children: data.name.length >= 40 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+            className: data.name.length > 50 ? "text-red-500" : "",
+            children: [data.name.length, "/50\u6587\u5B57"]
+          })
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "p-auth__form-group",
@@ -17698,7 +17757,8 @@ function Register() {
             autoComplete: "new-password",
             onChange: function onChange(e) {
               return setData("password", e.target.value);
-            }
+            },
+            maxLength: 50
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
             type: "button",
             className: "p-auth__password-toggle",
@@ -17715,7 +17775,7 @@ function Register() {
           className: "p-auth__error"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
           className: "p-auth__input-help",
-          children: "\u203B\u30D1\u30B9\u30EF\u30FC\u30C9\u306F8\u6587\u5B57\u4EE5\u4E0A\u3067\u3001\u534A\u89D2\u82F1\u6587\u5B57\u3068\u6570\u5B57\u3092\u542B\u3081\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002"
+          children: "\u203B\u30D1\u30B9\u30EF\u30FC\u30C9\u306F8\u6587\u5B57\u4EE5\u4E0A50\u6587\u5B57\u4EE5\u4E0B\u3067\u3001\u534A\u89D2\u82F1\u6587\u5B57\u3068\u6570\u5B57\u3092\u542B\u3081\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "p-auth__form-group",
@@ -17733,7 +17793,8 @@ function Register() {
             autoComplete: "new-password",
             onChange: function onChange(e) {
               return setData("password_confirmation", e.target.value);
-            }
+            },
+            maxLength: 50
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
             type: "button",
             className: "p-auth__password-toggle",

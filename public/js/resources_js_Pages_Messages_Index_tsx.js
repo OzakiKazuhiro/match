@@ -1140,7 +1140,7 @@ function Authenticated(_ref) {
                   children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
                   className: "l-header__user-name",
-                  children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
+                  children: [user !== null && user !== void 0 && user.name && user.name.length > 10 ? "".concat(user.name.substring(0, 10), "...") : (user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
@@ -1232,7 +1232,7 @@ function Authenticated(_ref) {
             className: "l-header__mobile-user-info",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
               className: "l-header__mobile-user-name",
-              children: [(user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
+              children: [user !== null && user !== void 0 && user.name && user.name.length > 10 ? "".concat(user.name.substring(0, 10), "...") : (user === null || user === void 0 ? void 0 : user.name) || "ユーザー", "\u3055\u3093"]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
               className: "l-header__mobile-login-status",
               children: "\u30ED\u30B0\u30A4\u30F3\u4E2D"
@@ -1499,7 +1499,7 @@ function Index(_ref) {
                     className: "p-messages__person-details",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                       className: "p-messages__person-name",
-                      children: otherParticipant.name
+                      children: otherParticipant.name.length > 10 ? "".concat(otherParticipant.name.substring(0, 10), "...") : otherParticipant.name
                     }), group.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                       className: "p-messages__person-job",
                       children: ["\u6848\u4EF6\uFF1A\u3010", group.job_listing.title, "\u3011"]
@@ -1514,7 +1514,7 @@ function Index(_ref) {
                     className: "p-messages__message-content",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
                       className: "p-messages__sender",
-                      children: ((_group$latest_message = group.latest_message) === null || _group$latest_message === void 0 ? void 0 : _group$latest_message.sender_id) === currentUserId ? "あなた：" : "".concat(((_group$latest_message2 = group.latest_message) === null || _group$latest_message2 === void 0 ? void 0 : _group$latest_message2.sender.name) || "不明なユーザー", "\uFF1A")
+                      children: ((_group$latest_message = group.latest_message) === null || _group$latest_message === void 0 ? void 0 : _group$latest_message.sender_id) === currentUserId ? "あなた：" : "".concat((_group$latest_message2 = group.latest_message) !== null && _group$latest_message2 !== void 0 && (_group$latest_message2 = _group$latest_message2.sender) !== null && _group$latest_message2 !== void 0 && _group$latest_message2.name ? group.latest_message.sender.name.length > 10 ? "".concat(group.latest_message.sender.name.substring(0, 10), "...") : group.latest_message.sender.name : "不明なユーザー", "\uFF1A")
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
                       className: "p-messages__preview ".concat(group.unread_count > 0 ? "p-messages__preview--unread" : ""),
                       children: group.latest_message ? group.latest_message.message : "メッセージはありません"

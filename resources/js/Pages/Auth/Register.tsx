@@ -16,6 +16,12 @@ export default function Register() {
         password_confirmation: "",
     });
 
+    // 名前のバリデーション状態
+    const [nameValidationMessage, setNameValidationMessage] = useState<
+        string | null
+    >(null);
+    const [nameIsValid, setNameIsValid] = useState<boolean | null>(null);
+
     const [emailValidationMessage, setEmailValidationMessage] = useState<
         string | null
     >(null);
@@ -34,6 +40,36 @@ export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirmation, setShowPasswordConfirmation] =
         useState(false);
+
+    // 名前のバリデーションを行う関数
+    const validateName = (name: string) => {
+        if (!name) {
+            setNameIsValid(null);
+            setNameValidationMessage(null);
+            return;
+        }
+
+        if (name.length > 50) {
+            setNameIsValid(false);
+            setNameValidationMessage("お名前は50文字以内で入力してください。");
+            return;
+        }
+
+        setNameIsValid(true);
+        setNameValidationMessage(null);
+    };
+
+    // 名前入力のたびに検証実行
+    const debouncedValidateName = debounce(validateName, 300);
+
+    // 名前が変更されたときに検証を実行
+    useEffect(() => {
+        debouncedValidateName(data.name);
+
+        return () => {
+            debouncedValidateName.cancel();
+        };
+    }, [data.name]);
 
     // メールアドレスの重複チェックを行う関数
     const validateEmail = async (email: string) => {
@@ -116,6 +152,15 @@ export default function Register() {
             return;
         }
 
+        // 50文字以上の長さをチェック
+        if (password.length > 50) {
+            setPasswordIsValid(false);
+            setPasswordValidationMessage(
+                "パスワードは50文字以内で入力してください。"
+            );
+            return;
+        }
+
         // 全角文字を含むかチェック
         const hasFullWidthChars = /[^\x01-\x7E]/.test(password);
         if (hasFullWidthChars) {
@@ -168,6 +213,11 @@ export default function Register() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
+        // 名前が50文字を超えている場合は送信しない
+        if (nameIsValid === false) {
+            return;
+        }
+
         // メールアドレスが重複している場合は送信しない
         if (emailIsValid === false) {
             return;
@@ -196,16 +246,37 @@ export default function Register() {
                         id="name"
                         name="name"
                         value={data.name}
-                        className="p-auth__input"
+                        className={`p-auth__input ${
+                            nameIsValid === false ? "border-red-500" : ""
+                        }`}
                         autoComplete="name"
                         isFocused={true}
                         onChange={(e) => setData("name", e.target.value)}
+                        maxLength={50}
                     />
+
+                    {nameValidationMessage && (
+                        <div className="p-auth__error">
+                            {nameValidationMessage}
+                        </div>
+                    )}
 
                     <InputError
                         message={errors.name}
                         className="p-auth__error"
                     />
+
+                    <div className="p-auth__input-help">
+                        {data.name.length >= 40 && (
+                            <span
+                                className={
+                                    data.name.length > 50 ? "text-red-500" : ""
+                                }
+                            >
+                                {data.name.length}/50文字
+                            </span>
+                        )}
+                    </div>
                 </div>
 
                 <div className="p-auth__form-group">
@@ -259,6 +330,7 @@ export default function Register() {
                             onChange={(e) =>
                                 setData("password", e.target.value)
                             }
+                            maxLength={50}
                         />
                         <button
                             type="button"
@@ -281,7 +353,7 @@ export default function Register() {
                     />
 
                     <div className="p-auth__input-help">
-                        ※パスワードは8文字以上で、半角英文字と数字を含める必要があります。
+                        ※パスワードは8文字以上50文字以下で、半角英文字と数字を含める必要があります。
                     </div>
                 </div>
 
@@ -309,6 +381,7 @@ export default function Register() {
                             onChange={(e) =>
                                 setData("password_confirmation", e.target.value)
                             }
+                            maxLength={50}
                         />
                         <button
                             type="button"

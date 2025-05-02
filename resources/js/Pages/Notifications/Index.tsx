@@ -44,20 +44,26 @@ export default function NotificationsIndex({
 
     const getNotificationDetails = (notification: Notification) => {
         const data = notification.data;
+        const truncateName = (name: string | undefined) => {
+            if (!name) return "不明なユーザー";
+            return name.length > 10 ? `${name.substring(0, 10)}...` : name;
+        };
 
         if (notification.type === "App\\Notifications\\ApplicationReceived") {
+            const applicantName = truncateName(data.applicant_name);
             return {
                 title: "新しい応募がありました",
-                description: `「${data.job_listing_title}」に${data.applicant_name}さんから応募がありました。`,
+                description: `「${data.job_listing_title}」に${applicantName}さんから応募がありました。`,
                 url: route("applications.to-my-jobs"),
                 actionText: "応募を確認する",
             };
         }
 
         if (notification.type === "App\\Notifications\\ApplicationAccepted") {
+            const jobOwnerName = truncateName(data.job_owner_name);
             return {
                 title: "応募が承認されました",
-                description: `「${data.job_listing_title}」への応募が${data.job_owner_name}さんに承認されました。`,
+                description: `「${data.job_listing_title}」への応募が${jobOwnerName}さんに承認されました。`,
                 url: route("messages.show", {
                     conversationGroup: data.conversation_group_id,
                 }),

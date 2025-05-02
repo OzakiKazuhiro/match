@@ -75,7 +75,18 @@ export default function Top({ auth }: PageProps) {
                                     auth.user.name.charAt(0).toUpperCase()
                                 )}
                             </div>
-                            <span>{auth.user.name}</span>
+                            <span
+                                className="l-header__user-name"
+                                title={
+                                    auth.user.name.length > 10
+                                        ? auth.user.name
+                                        : ""
+                                }
+                            >
+                                {auth.user.name.length > 10
+                                    ? `${auth.user.name.substring(0, 10)}...`
+                                    : auth.user.name}
+                            </span>
                         </div>
                     )}
 
@@ -182,8 +193,16 @@ export default function Top({ auth }: PageProps) {
                                     )}
                                 </div>
                                 <div className="l-header__mobile-user-info">
-                                    <div className="l-header__mobile-user-name">
-                                        {auth.user.name}
+                                    <div
+                                        className="l-header__mobile-user-name"
+                                        title={auth.user.name}
+                                    >
+                                        {auth.user.name.length > 10
+                                            ? `${auth.user.name.substring(
+                                                  0,
+                                                  10
+                                              )}...`
+                                            : auth.user.name}
                                     </div>
                                     <div className="l-header__mobile-login-status">
                                         ログイン中

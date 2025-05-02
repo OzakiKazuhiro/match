@@ -71,11 +71,11 @@ export default function JobListings({
     const [showFavoritesOnly, setShowFavoritesOnly] = useState<boolean>(false);
 
     /**
-     * モバイルメニューのアニメーション制御（未ログイン時のみ）
+     * モバイルメニューのアニメーション制御（未ログイン時または認証されていないユーザー向け）
      * メニューの開閉状態が変わった時に適切なアニメーションを適用
      */
     useEffect(() => {
-        if (!auth?.user) {
+        if (!auth?.user || !auth?.user.email_verified_at) {
             if (mobileMenuOpen) {
                 setMenuVisible(true);
                 setAnimating(true);
@@ -114,11 +114,11 @@ export default function JobListings({
     }, [showSortDropdown]);
 
     /**
-     * モバイルメニュー外クリック検知（未ログイン時のみ）
+     * モバイルメニュー外クリック検知（未ログイン時または認証されていないユーザー向け）
      * メニュー外をクリックした時に自動的に閉じる
      */
     useEffect(() => {
-        if (!auth?.user) {
+        if (!auth?.user || !auth?.user.email_verified_at) {
             const handleClickOutside = (event: MouseEvent) => {
                 if (
                     mobileMenuRef.current &&
@@ -159,8 +159,7 @@ export default function JobListings({
         "ECサイト",
         "API開発",
         "WordPress開発",
-        "IT業界に詳しくないので分からない",
-        "エンジニアに気軽に相談",
+        "エンジニアに相談",
         "その他",
     ];
 
@@ -457,7 +456,7 @@ export default function JobListings({
                                             メール認証
                                         </Link>
                                     )}
-                                    が必要
+                                    が必要です
                                 </span>
                             </div>
                         )}
@@ -868,15 +867,29 @@ export default function JobListings({
                             >
                                 案件を投稿
                             </Link>
-                            <Link href="/login" className="l-header__nav-link">
-                                ログイン
-                            </Link>
-                            <Link
-                                href="/register"
-                                className="l-header__nav-link l-header__nav-link--button"
-                            >
-                                会員登録
-                            </Link>
+                            {!auth?.user ? (
+                                <>
+                                    <Link
+                                        href="/login"
+                                        className="l-header__nav-link"
+                                    >
+                                        ログイン
+                                    </Link>
+                                    <Link
+                                        href="/register"
+                                        className="l-header__nav-link l-header__nav-link--button"
+                                    >
+                                        会員登録
+                                    </Link>
+                                </>
+                            ) : (
+                                <Link
+                                    href="/dashboard"
+                                    className="l-header__nav-link"
+                                >
+                                    マイページ
+                                </Link>
+                            )}
                         </nav>
 
                         <button
@@ -925,18 +938,39 @@ export default function JobListings({
                             >
                                 案件を投稿
                             </Link>
-                            <Link
-                                href="/login"
-                                className="l-header__mobile-link"
-                            >
-                                ログイン
-                            </Link>
-                            <Link
-                                href="/register"
-                                className="l-header__mobile-link"
-                            >
-                                会員登録
-                            </Link>
+                            {!auth?.user ? (
+                                <>
+                                    <Link
+                                        href="/login"
+                                        className="l-header__mobile-link"
+                                    >
+                                        ログイン
+                                    </Link>
+                                    <Link
+                                        href="/register"
+                                        className="l-header__mobile-link"
+                                    >
+                                        会員登録
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        href="/dashboard"
+                                        className="l-header__mobile-link"
+                                    >
+                                        マイページ
+                                    </Link>
+                                    {!auth?.user.email_verified_at && (
+                                        <Link
+                                            href="/verify-email"
+                                            className="l-header__mobile-link"
+                                        >
+                                            メール認証
+                                        </Link>
+                                    )}
+                                </>
+                            )}
                         </div>
                     )}
                 </header>
@@ -957,28 +991,8 @@ export default function JobListings({
                                 <p className="l-footer__description">
                                     エンジニア向けの案件マッチングサービス。
                                     単発案件からレベニューシェア案件まで、
-                                    シンプルに探せて、すぐに応募できます。
+                                    シンプルに探せて、すぐに応募できます
                                 </p>
-                                <div className="l-footer__social">
-                                    <a
-                                        href="#"
-                                        className="l-footer__social-icon"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="18"
-                                            height="18"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                                        </svg>
-                                    </a>
-                                </div>
                             </div>
 
                             <div>

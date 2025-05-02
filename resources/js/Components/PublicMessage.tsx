@@ -107,7 +107,9 @@ const PublicMessage = ({ message }: PublicMessageProps) => {
                     </div>
                     <div className="p-public-message__user-info">
                         <div className="p-public-message__name">
-                            {message.user.name}
+                            {message.user.name.length > 10
+                                ? `${message.user.name.substring(0, 10)}...`
+                                : message.user.name}
                         </div>
                         <div className="p-public-message__date">
                             {formatDate(message.created_at)}

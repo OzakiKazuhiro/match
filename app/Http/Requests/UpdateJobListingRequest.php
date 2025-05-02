@@ -33,11 +33,11 @@ class UpdateJobListingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:100'],
+            'title' => ['required', 'string', 'max:50'],
             'type' => ['required', 'string', 'in:one_time,revenue_share'],
             'description' => ['required', 'string', 'min:1', 'max:3000'],
-            'budget_min' => ['nullable', 'integer', 'min:0', 'max:50000', 'required_if:type,one_time'],
-            'budget_max' => ['nullable', 'integer', 'min:0', 'max:50000', 'gte:budget_min', 'required_if:type,one_time'],
+            'budget_min' => ['nullable', 'integer', 'min:0', 'max:50000000', 'required_if:type,one_time'],
+            'budget_max' => ['nullable', 'integer', 'min:0', 'max:50000000', 'gte:budget_min', 'required_if:type,one_time'],
             'category' => ['nullable', 'string', 'max:100'],
             'location' => ['nullable', 'string', 'in:リモート（在宅勤務）,現場勤務（オンサイト）,併用型（在宅＋現場）'],
             'skills' => ['nullable', 'array'],
@@ -55,7 +55,7 @@ class UpdateJobListingRequest extends FormRequest
     {
         return [
             'title.required' => 'タイトルは必須です',
-            'title.max' => 'タイトルは100文字以内で入力してください',
+            'title.max' => 'タイトルは50文字以内で入力してください',
             'type.required' => '案件種別は必須です',
             'type.in' => '案件種別は単発案件かレベニューシェアから選択してください',
             'description.required' => '案件内容は必須です',

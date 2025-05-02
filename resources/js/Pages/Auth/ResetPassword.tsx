@@ -3,8 +3,9 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
+import { debounce } from "lodash";
 
 export default function ResetPassword({
     token,
@@ -20,8 +21,92 @@ export default function ResetPassword({
         password_confirmation: "",
     });
 
+    // パスワードのバリデーション状態
+    const [passwordValidationMessage, setPasswordValidationMessage] = useState<
+        string | null
+    >(null);
+    const [passwordIsValid, setPasswordIsValid] = useState<boolean | null>(
+        null
+    );
+
+    // パスワードの表示/非表示を管理する状態
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConfirmation, setShowPasswordConfirmation] =
+        useState(false);
+
+    // パスワードのバリデーションを行う関数
+    const validatePassword = (password: string) => {
+        if (!password) {
+            setPasswordIsValid(null);
+            setPasswordValidationMessage(null);
+            return;
+        }
+
+        // 50文字以上の長さをチェック
+        if (password.length > 50) {
+            setPasswordIsValid(false);
+            setPasswordValidationMessage(
+                "パスワードは50文字以内で入力してください。"
+            );
+            return;
+        }
+
+        // 全角文字を含むかチェック
+        const hasFullWidthChars = /[^\x01-\x7E]/.test(password);
+        if (hasFullWidthChars) {
+            setPasswordIsValid(false);
+            setPasswordValidationMessage(
+                "パスワードに全角文字は使用できません。半角英数字のみを使用してください。"
+            );
+            return;
+        }
+
+        // 8文字以上の長さをチェック
+        if (password.length < 8) {
+            setPasswordIsValid(false);
+            setPasswordValidationMessage(
+                "パスワードは8文字以上で入力してください。"
+            );
+            return;
+        }
+
+        // 半角英文字を含むかチェック
+        const hasLetter = /[a-zA-Z]/.test(password);
+        // 数字を含むかチェック
+        const hasNumber = /[0-9]/.test(password);
+
+        if (!hasLetter || !hasNumber) {
+            setPasswordIsValid(false);
+            setPasswordValidationMessage(
+                "パスワードは半角英文字と数字を含める必要があります。"
+            );
+            return;
+        }
+
+        // すべての条件を満たしている場合
+        setPasswordIsValid(true);
+        setPasswordValidationMessage(null);
+    };
+
+    // パスワード入力のたびに検証実行
+    const debouncedValidatePassword = debounce(validatePassword, 300);
+
+    // パスワードが変更されたときに検証を実行
+    useEffect(() => {
+        debouncedValidatePassword(data.password);
+
+        return () => {
+            debouncedValidatePassword.cancel();
+        };
+    }, [data.password]);
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+
+        // パスワードが条件を満たしていない場合は送信しない
+        if (passwordIsValid === false) {
+            return;
+        }
 
         post(route("password.store"), {
             onFinish: () => reset("password", "password_confirmation"),
@@ -33,7 +118,7 @@ export default function ResetPassword({
             <Head title="パスワードの再設定 - match" />
 
             <div className="p-auth__message">
-                新しいパスワードを設定してください。安全のため、以前とは異なるパスワードをご使用ください。
+                新しいパスワードを設定してください。セキュリティ向上のため、以前とは異なるパスワードの使用を推奨します（同じパスワードも設定可能です）。
             </div>
 
             <form onSubmit={submit} className="p-auth__form">
@@ -59,23 +144,45 @@ export default function ResetPassword({
                 <div className="p-auth__form-group">
                     <InputLabel htmlFor="password" value="新しいパスワード" />
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="p-auth__input"
-                        autoComplete="new-password"
-                        isFocused={true}
-                        onChange={(e) => setData("password", e.target.value)}
-                    />
+                    <div className="p-auth__input-wrapper">
+                        <TextInput
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            value={data.password}
+                            className={`p-auth__input ${
+                                passwordIsValid === false
+                                    ? "border-red-500"
+                                    : ""
+                            }`}
+                            autoComplete="new-password"
+                            isFocused={true}
+                            onChange={(e) =>
+                                setData("password", e.target.value)
+                            }
+                            maxLength={50}
+                        />
+                        <button
+                            type="button"
+                            className="p-auth__password-toggle"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? "非表示" : "表示"}
+                        </button>
+                    </div>
+
+                    {passwordValidationMessage && (
+                        <div className="p-auth__error">
+                            {passwordValidationMessage}
+                        </div>
+                    )}
 
                     <InputError
                         message={errors.password}
                         className="p-auth__error"
                     />
                     <div className="p-auth__input-help">
-                        ※パスワードは8文字以上で、半角英文字と数字を含める必要があります
+                        ※パスワードは8文字以上50文字以下で、半角英文字と数字を含める必要があります
                     </div>
                 </div>
 
@@ -85,17 +192,38 @@ export default function ResetPassword({
                         value="パスワード（確認用）"
                     />
 
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="p-auth__input"
-                        autoComplete="new-password"
-                        onChange={(e) =>
-                            setData("password_confirmation", e.target.value)
-                        }
-                    />
+                    <div className="p-auth__input-wrapper">
+                        <TextInput
+                            id="password_confirmation"
+                            type={
+                                showPasswordConfirmation ? "text" : "password"
+                            }
+                            name="password_confirmation"
+                            value={data.password_confirmation}
+                            className={`p-auth__input ${
+                                passwordIsValid === false &&
+                                data.password_confirmation
+                                    ? "border-red-500"
+                                    : ""
+                            }`}
+                            autoComplete="new-password"
+                            onChange={(e) =>
+                                setData("password_confirmation", e.target.value)
+                            }
+                            maxLength={50}
+                        />
+                        <button
+                            type="button"
+                            className="p-auth__password-toggle"
+                            onClick={() =>
+                                setShowPasswordConfirmation(
+                                    !showPasswordConfirmation
+                                )
+                            }
+                        >
+                            {showPasswordConfirmation ? "非表示" : "表示"}
+                        </button>
+                    </div>
 
                     <InputError
                         message={errors.password_confirmation}
@@ -110,7 +238,7 @@ export default function ResetPassword({
 
                     <button
                         className="p-auth__button p-auth__button--primary"
-                        disabled={processing}
+                        disabled={processing || passwordIsValid === false}
                     >
                         パスワードを再設定する
                     </button>

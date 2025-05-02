@@ -332,11 +332,15 @@
     }
 
     &__card-favorite-icon {
+        color: #ff6b6b;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #ff5a5f;
-        margin-right: 8px;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
     }
 
     &__card-tags {
@@ -449,6 +453,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+
+    &__card-footer-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
     &__card-tag {
@@ -645,7 +655,7 @@
         margin-top: 24px;
         margin-bottom: 12px;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 10px;
         font-size: 0.95rem;
         max-width: 800px;
@@ -655,6 +665,24 @@
         svg {
             flex-shrink: 0;
             color: #856404;
+            margin-top: 3px;
+        }
+
+        span {
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 576px) {
+            padding: 15px;
+
+            span {
+                flex-direction: row;
+                gap: 4px;
+            }
         }
     }
 
@@ -662,8 +690,9 @@
         color: #0056b3;
         font-weight: 600;
         text-decoration: underline;
-        margin: 0 4px;
+        margin: 0 2px;
         transition: color 0.2s;
+        white-space: nowrap;
 
         &:hover {
             color: #003d7a;

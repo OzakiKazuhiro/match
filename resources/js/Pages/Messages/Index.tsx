@@ -187,7 +187,13 @@ export default function Index({
                                                 </div>
                                                 <div className="p-messages__person-details">
                                                     <div className="p-messages__person-name">
-                                                        {otherParticipant.name}
+                                                        {otherParticipant.name
+                                                            .length > 10
+                                                            ? `${otherParticipant.name.substring(
+                                                                  0,
+                                                                  10
+                                                              )}...`
+                                                            : otherParticipant.name}
                                                     </div>
                                                     {group.job_listing && (
                                                         <div className="p-messages__person-job">
@@ -216,8 +222,22 @@ export default function Index({
                                                                   group
                                                                       .latest_message
                                                                       ?.sender
-                                                                      .name ||
-                                                                  "不明なユーザー"
+                                                                      ?.name
+                                                                      ? group
+                                                                            .latest_message
+                                                                            .sender
+                                                                            .name
+                                                                            .length >
+                                                                        10
+                                                                          ? `${group.latest_message.sender.name.substring(
+                                                                                0,
+                                                                                10
+                                                                            )}...`
+                                                                          : group
+                                                                                .latest_message
+                                                                                .sender
+                                                                                .name
+                                                                      : "不明なユーザー"
                                                               }：`}
                                                     </span>
                                                     <span

@@ -5,7 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useState } from "react";
 
 export default function Login({
     status,
@@ -20,8 +20,46 @@ export default function Login({
         remember: false as boolean,
     });
 
+    // パスワードの表示/非表示
+    const [showPassword, setShowPassword] = useState(false);
+
+    // 簡易バリデーション状態
+    const [emailError, setEmailError] = useState<string | null>(null);
+    const [passwordError, setPasswordError] = useState<string | null>(null);
+
+    // フォーム送信前の簡易バリデーション
+    const validateForm = (): boolean => {
+        let isValid = true;
+
+        // メールアドレスの簡易チェック
+        if (!data.email) {
+            setEmailError("メールアドレスを入力してください");
+            isValid = false;
+        } else if (!data.email.includes("@")) {
+            setEmailError("有効なメールアドレスを入力してください");
+            isValid = false;
+        } else {
+            setEmailError(null);
+        }
+
+        // パスワードの簡易チェック
+        if (!data.password) {
+            setPasswordError("パスワードを入力してください");
+            isValid = false;
+        } else {
+            setPasswordError(null);
+        }
+
+        return isValid;
+    };
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+
+        // 送信前にフロント側で簡易バリデーション
+        if (!validateForm()) {
+            return;
+        }
 
         post(route("login"), {
             onFinish: () => reset("password"),
@@ -32,11 +70,7 @@ export default function Login({
         <GuestLayout title="ログイン">
             <Head title="ログイン" />
 
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
+            {status && <div className="p-auth__status-message">{status}</div>}
 
             <form onSubmit={submit} className="p-auth__form">
                 <div className="p-auth__form-group">
@@ -47,11 +81,20 @@ export default function Login({
                         type="email"
                         name="email"
                         value={data.email}
-                        className="p-auth__input"
+                        className={`p-auth__input ${
+                            emailError ? "p-auth__input--error" : ""
+                        }`}
                         autoComplete="username"
                         isFocused={true}
-                        onChange={(e) => setData("email", e.target.value)}
+                        onChange={(e) => {
+                            setData("email", e.target.value);
+                            setEmailError(null); // 入力時にエラーをクリア
+                        }}
                     />
+
+                    {emailError && (
+                        <div className="p-auth__error">{emailError}</div>
+                    )}
 
                     <InputError
                         message={errors.email}
@@ -62,15 +105,34 @@ export default function Login({
                 <div className="p-auth__form-group">
                     <InputLabel htmlFor="password" value="パスワード" />
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="p-auth__input"
-                        autoComplete="current-password"
-                        onChange={(e) => setData("password", e.target.value)}
-                    />
+                    <div className="p-auth__input-wrapper">
+                        <TextInput
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            value={data.password}
+                            className={`p-auth__input ${
+                                passwordError ? "p-auth__input--error" : ""
+                            }`}
+                            autoComplete="current-password"
+                            onChange={(e) => {
+                                setData("password", e.target.value);
+                                setPasswordError(null); // 入力時にエラーをクリア
+                            }}
+                            maxLength={50}
+                        />
+                        <button
+                            type="button"
+                            className="p-auth__password-toggle"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? "非表示" : "表示"}
+                        </button>
+                    </div>
+
+                    {passwordError && (
+                        <div className="p-auth__error">{passwordError}</div>
+                    )}
 
                     <InputError
                         message={errors.password}

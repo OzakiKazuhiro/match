@@ -125,7 +125,13 @@ export default function AppHeader() {
                                             ログイン中
                                         </span>
                                         <span className="l-header__user-name">
-                                            {user.name}さん
+                                            {user.name.length > 10
+                                                ? `${user.name.substring(
+                                                      0,
+                                                      10
+                                                  )}...`
+                                                : user.name}
+                                            さん
                                         </span>
                                     </div>
                                     <svg

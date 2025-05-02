@@ -129,7 +129,10 @@ export default function Authenticated({
                                         ログイン中
                                     </span>
                                     <span className="l-header__user-name">
-                                        {user?.name || "ユーザー"}さん
+                                        {user?.name && user.name.length > 10
+                                            ? `${user.name.substring(0, 10)}...`
+                                            : user?.name || "ユーザー"}
+                                        さん
                                     </span>
                                 </div>
                                 <svg
@@ -227,7 +230,10 @@ export default function Authenticated({
                             </div>
                             <div className="l-header__mobile-user-info">
                                 <span className="l-header__mobile-user-name">
-                                    {user?.name || "ユーザー"}さん
+                                    {user?.name && user.name.length > 10
+                                        ? `${user.name.substring(0, 10)}...`
+                                        : user?.name || "ユーザー"}
+                                    さん
                                 </span>
                                 <span className="l-header__mobile-login-status">
                                     ログイン中

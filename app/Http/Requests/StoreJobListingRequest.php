@@ -22,7 +22,7 @@ class StoreJobListingRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'title' => ['required', 'string', 'max:100'],
+            'title' => ['required', 'string', 'max:50'],
             'type' => ['required', 'string', 'in:one_time,revenue_share'],
             'description' => ['required', 'string', 'min:1', 'max:3000'],
             'budget_min' => ['nullable', 'integer', 'min:0', 'max:50000000', 'required_if:type,one_time'],
@@ -30,9 +30,9 @@ class StoreJobListingRequest extends FormRequest
             'category' => ['nullable', 'string', 'max:100'],
             'location' => ['nullable', 'string', 'in:リモート（在宅勤務）,現場勤務（オンサイト）,併用型（在宅＋現場）'],
             'skills' => ['nullable', 'array'],
-            'skills.*' => ['string', 'max:100'],
+            'skills.*' => ['string', 'max:15'],
             'preferred_skills' => ['nullable', 'array'],
-            'preferred_skills.*' => ['string', 'max:100'],
+            'preferred_skills.*' => ['string', 'max:15'],
         ];
         return $rules;
     }
@@ -44,7 +44,7 @@ class StoreJobListingRequest extends FormRequest
     {
         return [
             'title.required' => 'タイトルは必須です',
-            'title.max' => 'タイトルは100文字以内で入力してください',
+            'title.max' => 'タイトルは50文字以内で入力してください',
             'type.required' => '案件種別は必須です',
             'type.in' => '案件種別は単発案件かレベニューシェアから選択してください',
             'description.required' => '案件内容は必須です',
@@ -55,7 +55,7 @@ class StoreJobListingRequest extends FormRequest
             'budget_min.integer' => '最小予算は整数で入力してください',
             'budget_max.integer' => '最大予算は整数で入力してください',
             'budget_min.min' => '最小予算は0以上で入力してください',
-            'budget_max.min' => '最大予算は0以上で入力してください',
+            'budget_max.min' => '最大予算は最小予算以上で入力してください',
             'budget_min.max' => '最小予算は50,000千円（5,000万円）以下で入力してください',
             'budget_max.max' => '最大予算は50,000千円（5,000万円）以下で入力してください',
             'budget_max.gte' => '最大予算は最小予算以上で入力してください',

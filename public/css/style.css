@@ -2027,6 +2027,9 @@ textarea {
   box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.25);
   outline: none;
 }
+.p-auth__input--error {
+  border-color: #f56565;
+}
 .p-auth__password-toggle {
   position: absolute;
   right: 5px;
@@ -2054,6 +2057,12 @@ textarea {
   font-weight: 400;
   color: #f56565;
   margin-top: 4px;
+}
+.p-auth__status-message {
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #10b981;
 }
 .p-auth__input-help {
   font-size: 12px;
@@ -2867,11 +2876,14 @@ textarea {
   margin-right: 4px;
 }
 .p-job-listings__card-favorite-icon {
+  color: #ff6b6b;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ff5a5f;
-  margin-right: 8px;
+}
+.p-job-listings__card-favorite-icon svg {
+  width: 16px;
+  height: 16px;
 }
 .p-job-listings__card-tags {
   display: flex;
@@ -2968,6 +2980,11 @@ textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.p-job-listings__card-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .p-job-listings__card-tag {
   font-size: 0.75rem;
@@ -3140,7 +3157,7 @@ textarea {
   margin-top: 24px;
   margin-bottom: 12px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   font-size: 0.95rem;
   max-width: 800px;
@@ -3150,13 +3167,31 @@ textarea {
 .p-job-listings__login-notice svg {
   flex-shrink: 0;
   color: #856404;
+  margin-top: 3px;
+}
+.p-job-listings__login-notice span {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  line-height: 1.5;
+}
+@media (max-width: 576px) {
+  .p-job-listings__login-notice {
+    padding: 15px;
+  }
+  .p-job-listings__login-notice span {
+    flex-direction: row;
+    gap: 4px;
+  }
 }
 .p-job-listings__login-link {
   color: #0056b3;
   font-weight: 600;
   text-decoration: underline;
-  margin: 0 4px;
+  margin: 0 2px;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 .p-job-listings__login-link:hover {
   color: #003d7a;
@@ -4205,6 +4240,14 @@ textarea {
   font-weight: 600;
 }
 .p-post-job__description-help {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.p-post-job__title-help {
   margin-top: 8px;
   font-size: 0.85rem;
   color: #666;

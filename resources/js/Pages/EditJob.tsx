@@ -90,8 +90,7 @@ export default function EditJob({
         "ECサイト",
         "API開発",
         "WordPress開発",
-        "IT業界に詳しくないので分からない",
-        "エンジニアに気軽に相談",
+        "エンジニアに相談",
         "その他",
     ];
 
@@ -156,7 +155,12 @@ export default function EditJob({
     };
 
     const addSkill = () => {
-        if (customSkill && !data.skills.includes(customSkill)) {
+        // 15文字以上の場合は追加しない
+        if (
+            customSkill &&
+            customSkill.length <= 15 &&
+            !data.skills.includes(customSkill)
+        ) {
             setData("skills", [...data.skills, customSkill]);
             setCustomSkill("");
         }
@@ -170,8 +174,10 @@ export default function EditJob({
     };
 
     const addPreferredSkill = () => {
+        // 15文字以上の場合は追加しない
         if (
             customPreferredSkill &&
+            customPreferredSkill.length <= 15 &&
             !data.preferred_skills.includes(customPreferredSkill)
         ) {
             setData("preferred_skills", [
@@ -189,15 +195,31 @@ export default function EditJob({
         );
     };
 
+    // タイトル入力のリアルタイムバリデーション
+    const validateTitleInput = (value: string) => {
+        // 新しいエラーオブジェクトを作成
+        const newErrors = { ...validationErrors };
+
+        if (!value.trim()) {
+            newErrors.title = "タイトルは必須です";
+        } else if (value.length > 50) {
+            newErrors.title = "タイトルは50文字以内で入力してください";
+        } else {
+            delete newErrors.title;
+        }
+
+        setValidationErrors(newErrors);
+    };
+
     // フォームバリデーション関数
     const validateForm = (): boolean => {
-        const newErrors: ValidationErrors = {};
+        const newErrors: typeof validationErrors = {};
 
         // タイトルのバリデーション
         if (!data.title.trim()) {
             newErrors.title = "タイトルは必須です";
-        } else if (data.title.length > 100) {
-            newErrors.title = "タイトルは100文字以内で入力してください";
+        } else if (data.title.length > 50) {
+            newErrors.title = "タイトルは50文字以内で入力してください";
         }
 
         // 予算のバリデーション（単発案件の場合）
@@ -206,7 +228,7 @@ export default function EditJob({
             const maxBudget = data.budget_max ? parseInt(data.budget_max) : 0;
 
             if (!data.budget_min && !data.budget_max) {
-                newErrors.budget_min = "最小または最大予算を設定してください";
+                newErrors.budget_min = "最小・最大予算を設定してください";
             } else if (
                 minBudget > 0 &&
                 maxBudget > 0 &&
@@ -305,7 +327,7 @@ export default function EditJob({
 
             // 最初のエラーフィールドを探して、そこにフォーカスする
             for (const field of errorFields) {
-                if (validationErrors[field]) {
+                if (validationErrors[field as keyof typeof validationErrors]) {
                     const element = document.getElementById(field);
                     if (element) {
                         element.scrollIntoView({
@@ -350,7 +372,7 @@ export default function EditJob({
                 .querySelector('meta[name="csrf-token"]')
                 ?.getAttribute("content");
 
-            // POSTを使用してLaravelの_methodでPUTをエミュレート
+            // 直接axiosを使って送信
             const response = await axios.post(
                 route("job-listings.update", jobListing.id),
                 submissionData,
@@ -362,10 +384,37 @@ export default function EditJob({
                 }
             );
 
-            // 成功したらリストページに遷移
-            window.location.href = route("job-listings.index");
-        } catch (error) {
+            // 成功したら適切なページに遷移
+            if (response.data.url) {
+                window.location.href = response.data.url;
+            } else {
+                window.location.href = route("job-listings.index");
+            }
+        } catch (error: any) {
             console.error("送信エラー:", error);
+
+            // サーバーからのバリデーションエラーがある場合は表示
+            if (
+                error.response &&
+                error.response.data &&
+                error.response.data.errors
+            ) {
+                setValidationErrors(error.response.data.errors);
+
+                // エラーのある最初のフィールドにスクロール
+                const firstErrorField = Object.keys(
+                    error.response.data.errors
+                )[0];
+                const element = document.getElementById(firstErrorField);
+                if (element) {
+                    element.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+                    element.focus();
+                }
+            }
+
             setSubmitting(false);
         }
     };
@@ -412,16 +461,20 @@ export default function EditJob({
                                     placeholder="例：Reactを使用したウェブアプリ開発"
                                     value={data.title}
                                     onChange={(e) => {
-                                        setData("title", e.target.value);
-                                        // 入力時にエラーをクリア
-                                        if (validationErrors.title) {
-                                            setValidationErrors({
-                                                ...validationErrors,
-                                                title: undefined,
-                                            });
-                                        }
+                                        const value = e.target.value;
+                                        setData("title", value);
+                                        // リアルタイムバリデーション
+                                        validateTitleInput(value);
                                     }}
                                     required
+                                    maxLength={50}
+                                />
+                                <div className="p-post-job__title-help">
+                                    ※ 50文字以内で入力してください
+                                </div>
+                                <DescriptionCount
+                                    current={data.title.length}
+                                    max={50}
                                 />
                                 {(errors.title || validationErrors.title) && (
                                     <InputError
@@ -497,6 +550,7 @@ export default function EditJob({
                                                 ¥
                                             </span>
                                             <input
+                                                id="budget_min"
                                                 type="number"
                                                 placeholder="最小金額（千円単位）"
                                                 value={data.budget_min}
@@ -523,6 +577,7 @@ export default function EditJob({
                                                         : ""
                                                 }`}
                                                 min="0"
+                                                max="50000"
                                                 style={{ paddingRight: "45px" }}
                                             />
                                             <span className="p-post-job__unit">
@@ -537,6 +592,7 @@ export default function EditJob({
                                                 ¥
                                             </span>
                                             <input
+                                                id="budget_max"
                                                 type="number"
                                                 placeholder="最大金額（千円単位）"
                                                 value={data.budget_max}
@@ -563,6 +619,7 @@ export default function EditJob({
                                                         : ""
                                                 }`}
                                                 min="0"
+                                                max="50000"
                                                 style={{ paddingRight: "45px" }}
                                             />
                                             <span className="p-post-job__unit">
@@ -798,10 +855,18 @@ export default function EditJob({
                                                     ? customSkill
                                                     : ""
                                             }
-                                            onChange={(e) =>
-                                                setCustomSkill(e.target.value)
-                                            }
+                                            onChange={(e) => {
+                                                // 15文字までの入力に制限
+                                                if (
+                                                    e.target.value.length <= 15
+                                                ) {
+                                                    setCustomSkill(
+                                                        e.target.value
+                                                    );
+                                                }
+                                            }}
                                             className="p-post-job__input p-post-job__input--skill"
+                                            maxLength={15}
                                         />
 
                                         <button
@@ -886,12 +951,18 @@ export default function EditJob({
                                                     ? customPreferredSkill
                                                     : ""
                                             }
-                                            onChange={(e) =>
-                                                setCustomPreferredSkill(
-                                                    e.target.value
-                                                )
-                                            }
+                                            onChange={(e) => {
+                                                // 15文字までの入力に制限
+                                                if (
+                                                    e.target.value.length <= 15
+                                                ) {
+                                                    setCustomPreferredSkill(
+                                                        e.target.value
+                                                    );
+                                                }
+                                            }}
                                             className="p-post-job__input p-post-job__input--skill"
+                                            maxLength={15}
                                         />
 
                                         <button
@@ -928,44 +999,6 @@ export default function EditJob({
                                             )}
                                         </div>
                                     )}
-                                </div>
-                            </div>
-
-                            <div className="p-post-job__form-group">
-                                <label className="p-post-job__label">
-                                    募集ステータス
-                                </label>
-                                <div className="p-post-job__radio-group">
-                                    <label className="p-post-job__radio">
-                                        <input
-                                            type="radio"
-                                            name="status"
-                                            value="open"
-                                            checked={!data.is_closed}
-                                            onChange={() =>
-                                                setData("is_closed", false)
-                                            }
-                                            className="p-post-job__radio-input"
-                                        />
-                                        <span className="p-post-job__radio-text">
-                                            募集中
-                                        </span>
-                                    </label>
-                                    <label className="p-post-job__radio">
-                                        <input
-                                            type="radio"
-                                            name="status"
-                                            value="closed"
-                                            checked={data.is_closed}
-                                            onChange={() =>
-                                                setData("is_closed", true)
-                                            }
-                                            className="p-post-job__radio-input"
-                                        />
-                                        <span className="p-post-job__radio-text">
-                                            募集終了
-                                        </span>
-                                    </label>
                                 </div>
                             </div>
                         </div>
