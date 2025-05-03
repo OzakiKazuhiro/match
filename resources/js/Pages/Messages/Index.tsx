@@ -42,6 +42,21 @@ interface ConversationGroup {
     job_listing: JobListing | null;
 }
 
+// ページネーション用のインターフェース
+interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
+interface Pagination {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    links: PaginationLink[];
+}
+
 // 簡単な時間フォーマット関数
 function formatTimeAgo(dateString: string): string {
     const date = new Date(dateString);
@@ -106,7 +121,15 @@ export default function Index({
     conversationGroups,
     filters = {},
 }: PageProps<{
-    conversationGroups: ConversationGroup[];
+    conversationGroups: {
+        data: ConversationGroup[];
+        current_page: number;
+        last_page: number;
+        links: PaginationLink[];
+        from: number;
+        to: number;
+        total: number;
+    };
     filters: Filters;
 }>) {
     const currentUserId = auth.user.id;
@@ -124,6 +147,11 @@ export default function Index({
             url.searchParams.set("search", searchQuery);
         } else {
             url.searchParams.delete("search");
+        }
+
+        // 他のページにいる場合はページを1に戻す
+        if (url.searchParams.has("page")) {
+            url.searchParams.delete("page");
         }
 
         // ページ遷移（サーバーリクエスト）
@@ -191,7 +219,7 @@ export default function Index({
                         </Link>
                     </div>
 
-                    {conversationGroups.length === 0 ? (
+                    {conversationGroups.data.length === 0 ? (
                         <p className="p-messages__empty">
                             {filters.search
                                 ? "検索条件に一致するメッセージはありません"
@@ -199,7 +227,7 @@ export default function Index({
                         </p>
                     ) : (
                         <div className="p-messages__list">
-                            {conversationGroups.map((group) => {
+                            {conversationGroups.data.map((group) => {
                                 // 自分以外の参加者を特定
                                 const otherParticipant =
                                     group.job_owner_id === currentUserId
@@ -329,6 +357,30 @@ export default function Index({
                                     </div>
                                 );
                             })}
+                        </div>
+                    )}
+
+                    {/* ページネーション */}
+                    {conversationGroups.last_page > 1 && (
+                        <div className="p-messages__pagination">
+                            {conversationGroups.links.map((link, index) => (
+                                <Link
+                                    key={index}
+                                    href={link.url || "#"}
+                                    className={`p-messages__pagination-link ${
+                                        link.active
+                                            ? "p-messages__pagination-link--active"
+                                            : ""
+                                    } ${
+                                        !link.url
+                                            ? "p-messages__pagination-link--disabled"
+                                            : ""
+                                    }`}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
+                                />
+                            ))}
                         </div>
                     )}
                 </div>

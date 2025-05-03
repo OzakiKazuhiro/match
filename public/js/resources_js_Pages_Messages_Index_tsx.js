@@ -1397,6 +1397,8 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+// ページネーション用のインターフェース
+
 // 簡単な時間フォーマット関数
 function formatTimeAgo(dateString) {
   var date = new Date(dateString);
@@ -1467,6 +1469,11 @@ function Index(_ref) {
       url.searchParams["delete"]("search");
     }
 
+    // 他のページにいる場合はページを1に戻す
+    if (url.searchParams.has("page")) {
+      url.searchParams["delete"]("page");
+    }
+
     // ページ遷移（サーバーリクエスト）
     window.location.href = url.toString();
   };
@@ -1522,12 +1529,12 @@ function Index(_ref) {
             className: "p-messages__tab p-messages__tab--active",
             children: "\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8"
           })]
-        }), conversationGroups.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+        }), conversationGroups.data.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
           className: "p-messages__empty",
           children: filters.search ? "検索条件に一致するメッセージはありません" : "ダイレクトメッセージはありません"
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "p-messages__list",
-          children: conversationGroups.map(function (group) {
+          children: conversationGroups.data.map(function (group) {
             var _group$latest_message, _group$latest_message2;
             // 自分以外の参加者を特定
             var otherParticipant = group.job_owner_id === currentUserId ? group.applicant : group.job_owner;
@@ -1588,6 +1595,17 @@ function Index(_ref) {
                 })
               })]
             }, group.id);
+          })
+        }), conversationGroups.last_page > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "p-messages__pagination",
+          children: conversationGroups.links.map(function (link, index) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: link.url || "#",
+              className: "p-messages__pagination-link ".concat(link.active ? "p-messages__pagination-link--active" : "", " ").concat(!link.url ? "p-messages__pagination-link--disabled" : ""),
+              dangerouslySetInnerHTML: {
+                __html: link.label
+              }
+            }, index);
           })
         })]
       })

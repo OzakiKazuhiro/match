@@ -1402,6 +1402,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function Index(_ref) {
   var _ref$jobListingsWithM = _ref.jobListingsWithMessages,
     jobListingsWithMessages = _ref$jobListingsWithM === void 0 ? [] : _ref$jobListingsWithM,
+    pagination = _ref.pagination,
     _ref$filters = _ref.filters,
     filters = _ref$filters === void 0 ? {} : _ref$filters;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(filters.search || ""),
@@ -1421,6 +1422,11 @@ function Index(_ref) {
       url.searchParams.set("search", searchQuery);
     } else {
       url.searchParams["delete"]("search");
+    }
+
+    // 他のページにいる場合はページを1に戻す
+    if (url.searchParams.has("page")) {
+      url.searchParams["delete"]("page");
     }
 
     // ページ遷移（サーバーリクエスト）
@@ -1522,6 +1528,17 @@ function Index(_ref) {
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
           className: "p-public-messages__empty",
           children: filters.search ? "検索条件に一致するメッセージはありません" : "パブリックメッセージはありません"
+        }), pagination.last_page > 1 && pagination.links && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "p-public-messages__pagination",
+          children: pagination.links.map(function (link, index) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: link.url || "#",
+              className: "p-public-messages__pagination-link ".concat(link.active ? "p-public-messages__pagination-link--active" : "", " ").concat(!link.url ? "p-public-messages__pagination-link--disabled" : ""),
+              dangerouslySetInnerHTML: {
+                __html: link.label
+              }
+            }, index);
+          })
         })]
       })
     })]

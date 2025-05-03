@@ -30,17 +30,33 @@ interface JobListingWithMessage {
     total_messages: number;
 }
 
+interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
+interface Pagination {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    links: PaginationLink[];
+}
+
 interface Filters {
     search?: string;
 }
 
 interface Props {
     jobListingsWithMessages: JobListingWithMessage[];
+    pagination: Pagination;
     filters?: Filters;
 }
 
 export default function Index({
     jobListingsWithMessages = [],
+    pagination,
     filters = {},
 }: Props) {
     const [searchQuery, setSearchQuery] = useState(filters.search || "");
@@ -57,6 +73,11 @@ export default function Index({
             url.searchParams.set("search", searchQuery);
         } else {
             url.searchParams.delete("search");
+        }
+
+        // 他のページにいる場合はページを1に戻す
+        if (url.searchParams.has("page")) {
+            url.searchParams.delete("page");
         }
 
         // ページ遷移（サーバーリクエスト）
@@ -196,6 +217,30 @@ export default function Index({
                                 ? "検索条件に一致するメッセージはありません"
                                 : "パブリックメッセージはありません"}
                         </p>
+                    )}
+
+                    {/* ページネーション */}
+                    {pagination.last_page > 1 && pagination.links && (
+                        <div className="p-public-messages__pagination">
+                            {pagination.links.map((link, index) => (
+                                <Link
+                                    key={index}
+                                    href={link.url || "#"}
+                                    className={`p-public-messages__pagination-link ${
+                                        link.active
+                                            ? "p-public-messages__pagination-link--active"
+                                            : ""
+                                    } ${
+                                        !link.url
+                                            ? "p-public-messages__pagination-link--disabled"
+                                            : ""
+                                    }`}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
+                                />
+                            ))}
+                        </div>
                     )}
                 </div>
             </div>

@@ -51,7 +51,8 @@ class DirectMessageController extends Controller
             });
         }
         
-        $conversationGroups = $query->orderBy('updated_at', 'desc')->get();
+        // ページネーションを適用（最新メッセージでソート）
+        $conversationGroups = $query->orderBy('updated_at', 'desc')->paginate(20);
             
         // 各会話グループの未読メッセージ数を計算
         $conversationGroups->each(function ($group) use ($user) {
