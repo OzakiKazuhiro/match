@@ -605,15 +605,19 @@
 
     &__share-button-content {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
         padding: 12px;
         width: 100%;
+        gap: 10px;
+    }
+
+    &__share-icon {
+        flex-shrink: 0;
     }
 
     &__share-label {
-        margin-top: 6px;
         font-size: 0.9rem;
     }
 
