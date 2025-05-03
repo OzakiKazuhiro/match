@@ -58,7 +58,7 @@ export default function DeleteUserForm({
                 <h2 className="p-profile__section-title">退会する</h2>
 
                 <p className="p-profile__section-description">
-                    退会すると、アカウント情報、プロフィール、パスワードなどの個人情報が削除されます。
+                    退会すると、アカウントは非アクティブ化され、個人情報は他のユーザーから閲覧できなくなります。
                 </p>
             </header>
 
@@ -90,25 +90,30 @@ export default function DeleteUserForm({
                     ) : (
                         <>
                             <p className="p-profile__modal-text">
-                                退会すると、以下のデータが削除されます：
+                                退会すると、以下のように処理されます：
                             </p>
                             <ul className="p-profile__modal-list">
                                 <li>
-                                    アカウント情報（メールアドレス、パスワードなど）
+                                    アカウント情報は非表示となり、あなたの名前は「退会したユーザー」と表示されます
                                 </li>
                                 <li>
-                                    プロフィール情報（ユーザー名、アバター画像など）
+                                    プロフィール画像（アバター）は完全に削除されます
                                 </li>
                                 <li>
-                                    投稿した案件情報（現在募集終了している案件のみ）
+                                    あなたが投稿した案件（募集終了のもの）は「退会したユーザー」の投稿として残ります
                                 </li>
-                                <li>送受信したメッセージ履歴</li>
+                                <li>
+                                    過去のメッセージ履歴は「退会したユーザー」からの投稿として保持されます
+                                </li>
+                                <li>
+                                    メールアドレスは再登録や不正利用防止のため一定期間（退会から6ヶ月間）保持された後、完全に削除されます
+                                </li>
                             </ul>
                             <p className="p-profile__modal-text p-profile__modal-text--note">
-                                ※ただし、システムログやバックアップには一部情報が残る場合があります。
+                                ※退会後も同じメールアドレスで再度登録することが可能ですが、頻繁な再登録は不正利用防止のため禁止されています。
                             </p>
                             <p className="p-profile__modal-text">
-                                本当に退会する場合は、確認のためパスワードを入力してください。
+                                退会を進める場合は、確認のためパスワードを入力してください。
                             </p>
 
                             <div className="p-profile__form-group">

@@ -117,19 +117,26 @@ class ApplicationController extends Controller
     public function showApplicationsToMyJobs(): Response
     {
         // 自分の案件一覧を取得
-        $myJobListings = JobListing::where('user_id', Auth::id())->pluck('id');
+        $myJobIds = JobListing::where('user_id', Auth::id())->pluck('id');
         
-        if ($myJobListings->isEmpty()) {
+        // 全ての自分の案件データを取得（応募がない案件も含む）
+        $allMyJobListings = JobListing::where('user_id', Auth::id())
+            ->withCount('applications')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        if ($myJobIds->isEmpty()) {
             return Inertia::render('ApplicationsToMyJobs', [
-                'applications' => []
+                'applications' => [],
+                'myJobListings' => [] // 空の配列を渡す
             ]);
         }
         
         // まず案件データを確実に取得
-        $jobListings = JobListing::whereIn('id', $myJobListings)->get();
+        $jobListings = JobListing::whereIn('id', $myJobIds)->get();
         
         // 応募データを取得（Eager Loadingで関連データも取得）
-        $applications = Application::whereIn('job_listing_id', $myJobListings)
+        $applications = Application::whereIn('job_listing_id', $myJobIds)
             ->with(['user'])
             ->latest()
             ->get();
@@ -160,7 +167,8 @@ class ApplicationController extends Controller
         }
         
         return Inertia::render('ApplicationsToMyJobs', [
-            'applications' => $applications
+            'applications' => $applications,
+            'myJobListings' => $allMyJobListings // 全ての自分の案件データを追加
         ]);
     }
     

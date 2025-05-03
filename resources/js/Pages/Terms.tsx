@@ -7,7 +7,6 @@ export default function Terms() {
             <Head title="利用規約" />
 
             <div className="p-terms__header">
-                {/* <h1 className="p-terms__title">利用規約</h1> */}
                 <div className="p-terms__updated">2025年4月1日 制定</div>
             </div>
 

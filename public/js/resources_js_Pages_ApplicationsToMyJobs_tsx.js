@@ -2514,34 +2514,55 @@ var getAvatarUrl = function getAvatarUrl(avatar) {
 };
 function ApplicationsToMyJobs(_ref) {
   var auth = _ref.auth,
-    rawApplications = _ref.applications;
-  // 各案件の展開状態を管理
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({}),
+    rawApplications = _ref.applications,
+    _ref$myJobListings = _ref.myJobListings,
+    myJobListings = _ref$myJobListings === void 0 ? [] : _ref$myJobListings;
+  // タブの状態管理（新規追加）
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("applications"),
     _useState2 = _slicedToArray(_useState, 2),
-    expandedJobs = _useState2[0],
-    setExpandedJobs = _useState2[1];
+    activeTab = _useState2[0],
+    setActiveTab = _useState2[1];
+
+  // 各案件の展開状態を管理
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({}),
+    _useState4 = _slicedToArray(_useState3, 2),
+    expandedJobs = _useState4[0],
+    setExpandedJobs = _useState4[1];
+
+  // 自分の案件一覧の展開状態を管理
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({}),
+    _useState6 = _slicedToArray(_useState5, 2),
+    expandedMyJobs = _useState6[0],
+    setExpandedMyJobs = _useState6[1];
 
   // 募集終了確認モーダル用の状態
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
-    _useState4 = _slicedToArray(_useState3, 2),
-    confirmingCloseId = _useState4[0],
-    setConfirmingCloseId = _useState4[1];
-
-  // 承認モーダル用の状態
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
-    _useState6 = _slicedToArray(_useState5, 2),
-    confirmingAccept = _useState6[0],
-    setConfirmingAccept = _useState6[1];
-
-  // 拒否モーダル用の状態
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
     _useState8 = _slicedToArray(_useState7, 2),
-    confirmingDecline = _useState8[0],
-    setConfirmingDecline = _useState8[1];
+    confirmingCloseId = _useState8[0],
+    setConfirmingCloseId = _useState8[1];
+
+  // 承認モーダル用の状態
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
+    _useState10 = _slicedToArray(_useState9, 2),
+    confirmingAccept = _useState10[0],
+    setConfirmingAccept = _useState10[1];
+
+  // 拒否モーダル用の状態
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
+    _useState12 = _slicedToArray(_useState11, 2),
+    confirmingDecline = _useState12[0],
+    setConfirmingDecline = _useState12[1];
 
   // 案件カードの開閉切り替え
   var toggleJobExpand = function toggleJobExpand(jobId) {
     setExpandedJobs(function (prev) {
+      return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, jobId, !prev[jobId]));
+    });
+  };
+
+  // 自分の案件カードの開閉切り替え
+  var toggleMyJobExpand = function toggleMyJobExpand(jobId) {
+    setExpandedMyJobs(function (prev) {
       return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, jobId, !prev[jobId]));
     });
   };
@@ -2669,10 +2690,10 @@ function ApplicationsToMyJobs(_ref) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: "p-applications__title",
-      children: "\u81EA\u5206\u306E\u6848\u4EF6\u3078\u306E\u5FDC\u52DF\u4E00\u89A7"
+      children: "\u30DE\u30A4\u30DA\u30FC\u30B8"
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Head, {
-      title: "\u81EA\u5206\u306E\u6848\u4EF6\u3078\u306E\u5FDC\u52DF\u4E00\u89A7"
+      title: "\u30DE\u30A4\u30DA\u30FC\u30B8"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: "p-applications",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -2696,14 +2717,26 @@ function ApplicationsToMyJobs(_ref) {
             className: "p-applications__tab",
             children: "\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "p-applications__content",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "p-applications__card",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
-              className: "p-applications__card-title",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "p-applications__section-tabs",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              className: "p-applications__section-tab ".concat(activeTab === "applications" ? "p-applications__section-tab--active" : ""),
+              onClick: function onClick() {
+                return setActiveTab("applications");
+              },
               children: "\u81EA\u5206\u306E\u6848\u4EF6\u3078\u306E\u5FDC\u52DF\u4E00\u89A7"
-            }), applications.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              className: "p-applications__section-tab ".concat(activeTab === "myJobs" ? "p-applications__section-tab--active" : ""),
+              onClick: function onClick() {
+                return setActiveTab("myJobs");
+              },
+              children: "\u81EA\u5206\u306E\u6295\u7A3F\u6848\u4EF6\u4E00\u89A7"
+            })]
+          }), activeTab === "applications" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "p-applications__card",
+            children: applications.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "p-applications__empty",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
                 className: "p-applications__empty-message",
@@ -2897,8 +2930,110 @@ function ApplicationsToMyJobs(_ref) {
                   })]
                 }, jobId);
               })
-            })]
-          })
+            })
+          }), activeTab === "myJobs" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "p-applications__card",
+            children: myJobListings.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "p-applications__empty",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                className: "p-applications__empty-message",
+                children: "\u307E\u3060\u6295\u7A3F\u3057\u305F\u6848\u4EF6\u306F\u3042\u308A\u307E\u305B\u3093\u3002"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.create"),
+                className: "p-applications__browse-button",
+                children: "\u6848\u4EF6\u3092\u6295\u7A3F\u3059\u308B"
+              })]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "p-applications__job-cards",
+              children: myJobListings.map(function (job) {
+                var isExpanded = expandedMyJobs[job.id] || false;
+                var applicationsCount = job.applications_count || 0;
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                  className: "p-applications__job-card",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                    className: "p-applications__job-card-header",
+                    onClick: function onClick() {
+                      return toggleMyJobExpand(job.id);
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                      className: "p-applications__job-card-title-container",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
+                        className: "p-applications__job-card-title",
+                        children: job.title
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                        className: "p-applications__job-applications-count",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__count-badge",
+                          children: applicationsCount
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__count-text",
+                          children: "\u4EF6\u306E\u5FDC\u52DF"
+                        })]
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                      className: "p-applications__job-card-status-container",
+                      children: [job.is_closed ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "p-applications__job-closed",
+                        children: "\u52DF\u96C6\u7D42\u4E86"
+                      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "p-applications__job-open",
+                        children: "\u52DF\u96C6\u4E2D"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "p-applications__expand-icon ".concat(isExpanded ? "expanded" : ""),
+                        children: isExpanded ? "▼" : "▶"
+                      })]
+                    })]
+                  }), isExpanded && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                    className: "p-applications__job-card-content",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                      className: "p-applications__job-details",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                        className: "p-applications__job-meta",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                          className: "p-applications__job-type",
+                          children: ["\u7A2E\u5225:", " ", job.type === "one_time" ? "単発案件" : "レベニューシェア"]
+                        }), job.budget_min !== null && job.budget_max !== null && job.type === "one_time" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                          className: "p-applications__job-budget",
+                          children: ["\u4E88\u7B97:", " ", job.budget_min, "\u5186\u301C", job.budget_max, "\u5186"]
+                        }), job.created_at && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                          className: "p-applications__job-date",
+                          children: ["\u6295\u7A3F\u65E5:", " ", formatDate(job.created_at)]
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                          className: "p-applications__job-applications",
+                          children: ["\u5FDC\u52DF\u6570:", " ", applicationsCount, "\u4EF6"]
+                        })]
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                      className: "p-applications__job-card-footer",
+                      children: [!job.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
+                        onClick: function onClick() {
+                          return confirmJobClose(job.id);
+                        },
+                        className: "p-applications__close-job-button",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__button-text-pc",
+                          children: "\u52DF\u96C6\u3092\u7D42\u4E86\u3059\u308B"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__button-text-sp",
+                          children: "\u52DF\u96C6\u7D42\u4E86"
+                        })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                        href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.show", job.id),
+                        className: "p-applications__view-job-button",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__button-text-pc",
+                          children: "\u6848\u4EF6\u8A73\u7D30\u3092\u898B\u308B"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                          className: "p-applications__button-text-sp",
+                          children: "\u6848\u4EF6\u8A73\u7D30"
+                        })]
+                      })]
+                    })]
+                  })]
+                }, job.id);
+              })
+            })
+          })]
         })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_3__["default"], {

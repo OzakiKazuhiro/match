@@ -119,6 +119,7 @@ class ProfileController extends Controller
         $user->email = 'deleted_' . time() . '_' . substr(md5($user->email), 0, 8) . '@example.com';
         $user->name = '退会したユーザー';
         $user->is_deleted = true;
+        $user->deleted_at = now(); // 退会日時を記録
         $user->save();
 
         Auth::logout();
