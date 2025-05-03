@@ -12,27 +12,32 @@ use Illuminate\Http\Request;
 class PublicMessageController extends Controller
 {
     /**
-     * 自分が投稿したパブリックメッセージの一覧を表示
+     * 自分が投稿したメッセージが属する案件の一覧と各案件の最新メッセージを表示
      */
     public function index(): Response
     {
         $user = Auth::user();
         
-        // 自分が投稿したパブリックメッセージを案件ごとにグループ化して取得
-        $messages = PublicMessage::with(['jobListing', 'jobListing.user'])
-            ->where('user_id', $user->id)
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->groupBy('job_listing_id');
+        // 自分が投稿したパブリックメッセージがある案件IDを取得
+        $jobListingIds = PublicMessage::where('user_id', $user->id)
+            ->pluck('job_listing_id')
+            ->unique()
+            ->values()
+            ->toArray();
             
-        // 案件ごとに最新のメッセージだけを表示用に整形
+        // 案件ごとの最新メッセージ情報を取得
         $jobListingsWithMessages = [];
-        foreach ($messages as $jobListingId => $messageGroup) {
-            $latestMessage = $messageGroup->first();
-            $jobListing = $latestMessage->jobListing;
+        foreach ($jobListingIds as $jobListingId) {
+            $jobListing = JobListing::with('user')->findOrFail($jobListingId);
             
+            // その案件の最新のパブリックメッセージを取得（投稿者に関係なく最新のもの）
+            $latestMessage = PublicMessage::with('user')
+                ->where('job_listing_id', $jobListingId)
+                ->latest()
+                ->first();
+                
             // その案件に関連する全てのパブリックメッセージ数を取得
-            $totalMessages = PublicMessage::where('job_listing_id', $jobListing->id)->count();
+            $totalMessages = PublicMessage::where('job_listing_id', $jobListingId)->count();
             
             $jobListingsWithMessages[] = [
                 'job_listing' => $jobListing,
