@@ -11,6 +11,77 @@
         padding: 0 16px;
     }
 
+    /* ヘッダーラッパー（タイトルと検索を横並びにする） */
+    &__header-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    &__title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    /* ヘッダー内の検索フォーム */
+    &__header-search {
+        flex: 1;
+        max-width: 400px;
+        margin-left: auto;
+
+        @media (max-width: 768px) {
+            max-width: 100%;
+            margin-top: 0.5rem;
+        }
+    }
+
+    &__header-search-form {
+        display: flex;
+        width: 100%;
+    }
+
+    &__header-search-input {
+        flex-grow: 1;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-right: none;
+        border-radius: 0.375rem 0 0 0.375rem;
+        outline: none;
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        transition: all 0.2s;
+
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        &:focus {
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+    }
+
+    &__header-search-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #6cc3e0;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 0 0.375rem 0.375rem 0;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: #fff;
+        }
+    }
+
     /* タブスタイル */
     &__tabs {
         display: flex;
@@ -77,12 +148,6 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 12px;
-    }
-
-    &__title {
-        font-size: 1.75rem;
-        font-weight: 600;
-        color: #fff;
     }
 
     &__job-title {

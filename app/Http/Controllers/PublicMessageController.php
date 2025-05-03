@@ -14,13 +14,26 @@ class PublicMessageController extends Controller
     /**
      * 自分が投稿したメッセージが属する案件の一覧と各案件の最新メッセージを表示
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $user = Auth::user();
+        $search = $request->input('search');
         
         // 自分が投稿したパブリックメッセージがある案件IDを取得
-        $jobListingIds = PublicMessage::where('user_id', $user->id)
-            ->pluck('job_listing_id')
+        $publicMessageQuery = PublicMessage::where('user_id', $user->id);
+        
+        // 検索条件がある場合
+        if ($search) {
+            // 案件タイトルまたはメッセージ内容で検索
+            $publicMessageQuery->where(function($query) use ($search) {
+                $query->whereHas('jobListing', function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%");
+                })
+                ->orWhere('message', 'like', "%{$search}%");
+            });
+        }
+        
+        $jobListingIds = $publicMessageQuery->pluck('job_listing_id')
             ->unique()
             ->values()
             ->toArray();
@@ -53,6 +66,9 @@ class PublicMessageController extends Controller
         
         return Inertia::render('PublicMessages/Index', [
             'jobListingsWithMessages' => $jobListingsWithMessages,
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
     

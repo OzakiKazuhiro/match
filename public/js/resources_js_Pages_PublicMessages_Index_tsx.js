@@ -1387,6 +1387,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/utils/format */ "./resources/js/utils/format.ts");
 /* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
@@ -1395,11 +1401,57 @@ __webpack_require__.r(__webpack_exports__);
 
 function Index(_ref) {
   var _ref$jobListingsWithM = _ref.jobListingsWithMessages,
-    jobListingsWithMessages = _ref$jobListingsWithM === void 0 ? [] : _ref$jobListingsWithM;
+    jobListingsWithMessages = _ref$jobListingsWithM === void 0 ? [] : _ref$jobListingsWithM,
+    _ref$filters = _ref.filters,
+    filters = _ref$filters === void 0 ? {} : _ref$filters;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(filters.search || ""),
+    _useState2 = _slicedToArray(_useState, 2),
+    searchQuery = _useState2[0],
+    setSearchQuery = _useState2[1];
+
+  // 検索処理の実装
+  var handleSearch = function handleSearch(e) {
+    e.preventDefault();
+
+    // 現在のURLを取得
+    var url = new URL(window.location.href);
+
+    // 検索クエリをセット
+    if (searchQuery) {
+      url.searchParams.set("search", searchQuery);
+    } else {
+      url.searchParams["delete"]("search");
+    }
+
+    // ページ遷移（サーバーリクエスト）
+    window.location.href = url.toString();
+  };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-      className: "p-public-messages__title",
-      children: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u4E00\u89A7"
+    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+      className: "p-public-messages__header-wrapper",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "p-public-messages__title",
+        children: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u4E00\u89A7"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "p-public-messages__header-search",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+          className: "p-public-messages__header-search-form",
+          onSubmit: handleSearch,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+            type: "text",
+            className: "p-public-messages__header-search-input",
+            placeholder: "\u6848\u4EF6\u540D\u3001\u30E1\u30C3\u30BB\u30FC\u30B8\u3067\u691C\u7D22",
+            value: searchQuery,
+            onChange: function onChange(e) {
+              return setSearchQuery(e.target.value);
+            }
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            type: "submit",
+            className: "p-public-messages__header-search-button",
+            children: "\u691C\u7D22"
+          })]
+        })
+      })]
     }),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
       title: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u4E00\u89A7"
@@ -1469,7 +1521,7 @@ function Index(_ref) {
           })
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
           className: "p-public-messages__empty",
-          children: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8\u306F\u3042\u308A\u307E\u305B\u3093"
+          children: filters.search ? "検索条件に一致するメッセージはありません" : "パブリックメッセージはありません"
         })]
       })
     })]

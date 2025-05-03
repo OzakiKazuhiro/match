@@ -17,18 +17,41 @@ class DirectMessageController extends Controller
     /**
      * Display a listing of the conversation groups.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $user = Auth::user();
+        $search = $request->input('search');
         
         // 参加している会話グループをjob_listing_idも含めてグループ化して取得
-        $conversationGroups = ConversationGroup::with(['jobOwner', 'applicant', 'latestMessage.sender', 'jobListing'])
+        $query = ConversationGroup::with(['jobOwner', 'applicant', 'latestMessage.sender', 'jobListing'])
             ->where(function($query) use ($user) {
                 $query->where('job_owner_id', $user->id)
                     ->orWhere('applicant_id', $user->id);
-            })
-            ->orderBy('updated_at', 'desc')
-            ->get();
+            });
+            
+        // 検索条件が指定されている場合
+        if ($search) {
+            $query->where(function($query) use ($search, $user) {
+                // ユーザーが案件オーナーの場合は応募者の名前で検索
+                $query->whereHas('applicant', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                // ユーザーが応募者の場合は案件オーナーの名前で検索
+                ->orWhereHas('jobOwner', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                // 案件タイトルで検索
+                ->orWhereHas('jobListing', function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%");
+                })
+                // 最新メッセージの内容で検索
+                ->orWhereHas('latestMessage', function ($q) use ($search) {
+                    $q->where('message', 'like', "%{$search}%");
+                });
+            });
+        }
+        
+        $conversationGroups = $query->orderBy('updated_at', 'desc')->get();
             
         // 各会話グループの未読メッセージ数を計算
         $conversationGroups->each(function ($group) use ($user) {
@@ -40,6 +63,9 @@ class DirectMessageController extends Controller
 
         return Inertia::render('Messages/Index', [
             'conversationGroups' => $conversationGroups,
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
 

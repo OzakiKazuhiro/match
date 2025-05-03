@@ -530,8 +530,27 @@ function Apply(_ref) {
     post = _useForm.post,
     processing = _useForm.processing,
     errors = _useForm.errors;
+
+  // メッセージの最大文字数
+  var MAX_MESSAGE_LENGTH = 500;
+
+  // 残り文字数と制限オーバーのチェック
+  var remainingChars = MAX_MESSAGE_LENGTH - data.message.length;
+  var isOverLimit = remainingChars < 0;
+
+  // 文字数表示の色を設定
+  var getCountColor = function getCountColor() {
+    if (remainingChars < 0) return "#dc3545"; // 赤（エラー）
+    if (remainingChars < MAX_MESSAGE_LENGTH * 0.1) return "#ffc107"; // 黄色（警告）
+    return "#6c757d"; // デフォルト色
+  };
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
+
+    // 文字数制限チェック
+    if (isOverLimit) {
+      return; // 制限オーバーの場合は送信しない
+    }
     post(route("job-listings.apply.store", jobListing.id));
   };
 
@@ -657,17 +676,27 @@ function Apply(_ref) {
                   children: ["\u5FDC\u52DF\u30E1\u30C3\u30BB\u30FC\u30B8", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
                     className: "p-apply__required",
                     children: "*"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                    className: "p-apply__form-help",
+                    children: "(\u6700\u5927500\u6587\u5B57)"
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("textarea", {
                   id: "message",
-                  className: "p-apply__form-textarea",
+                  className: "p-apply__form-textarea ".concat(isOverLimit ? "p-apply__form-textarea--error" : ""),
                   placeholder: "\u6848\u4EF6\u306B\u5BFE\u3059\u308B\u3042\u306A\u305F\u306E\u5F37\u307F\u3084\u3001\u8CEA\u554F\u4E8B\u9805\u306A\u3069\u3092\u30E1\u30C3\u30BB\u30FC\u30B8\u3057\u3066\u304F\u3060\u3055\u3044",
                   value: data.message,
                   onChange: function onChange(e) {
                     return setData("message", e.target.value);
                   },
                   rows: 8,
-                  required: true
+                  required: true,
+                  maxLength: MAX_MESSAGE_LENGTH
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  className: "p-apply__character-counter",
+                  style: {
+                    color: getCountColor()
+                  },
+                  children: isOverLimit ? "文字数制限を超えています" : "\u6B8B\u308A ".concat(remainingChars, " \u6587\u5B57")
                 }), errors.message && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_2__["default"], {
                   message: errors.message,
                   className: "p-apply__error"
@@ -681,7 +710,7 @@ function Apply(_ref) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                   type: "submit",
                   className: "p-apply__submit-button",
-                  disabled: processing,
+                  disabled: processing || isOverLimit,
                   children: processing ? "送信中..." : "応募する"
                 })]
               })]

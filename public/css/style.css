@@ -4488,19 +4488,31 @@ textarea {
   color: #dc2626;
   margin-left: 0.25rem;
 }
+.p-apply__form-help {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-left: 6px;
+  font-weight: normal;
+}
 .p-apply__form-textarea {
   width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 0.375rem;
-  padding: 0.75rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
   resize: vertical;
 }
 .p-apply__form-textarea:focus {
-  border-color: #6cc3e0;
-  box-shadow: 0 0 0 3px rgba(108, 195, 224, 0.2);
   outline: none;
+  border-color: #6cc3e0;
+  box-shadow: 0 0 0 2px rgba(108, 195, 224, 0.2);
+}
+.p-apply__form-textarea--error {
+  border-color: #dc3545;
+}
+.p-apply__form-textarea--error:focus {
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
 }
 .p-apply__error {
   margin-top: 0.5rem;
@@ -4552,6 +4564,12 @@ textarea {
 .p-apply__submit-button:disabled {
   opacity: 0.65;
   cursor: not-allowed;
+}
+.p-apply__character-counter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
 }
 .p-applications {
   padding: 2rem 0;
@@ -5128,6 +5146,9 @@ textarea {
   background-color: #f5f7fa;
   min-height: calc(100vh - 64px);
   padding: 2rem 0;
+  /* ヘッダーラッパー（タイトルと検索を横並びにする） */
+  /* ヘッダー内の検索フォーム */
+  /* 検索ボックスのスタイル */
   /* ヘッダー部分のスタイル */
   /* LINE風レイアウト用コンテナ */
   /* チャット領域 (左側) */
@@ -5152,6 +5173,14 @@ textarea {
   /* LINE風メッセージアイテムのスタイル */
   /* モーダル関連のスタイル */
 }
+.p-messages__header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 .p-messages__title {
   font-size: 1.75rem;
   font-weight: 600;
@@ -5159,6 +5188,93 @@ textarea {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+}
+.p-messages__header-search {
+  flex: 1;
+  max-width: 400px;
+  margin-left: auto;
+}
+@media (max-width: 768px) {
+  .p-messages__header-search {
+    max-width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+.p-messages__header-search-form {
+  display: flex;
+  width: 100%;
+}
+.p-messages__header-search-input {
+  flex-grow: 1;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-right: none;
+  border-radius: 0.375rem 0 0 0.375rem;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transition: all 0.2s;
+}
+.p-messages__header-search-input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+.p-messages__header-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+.p-messages__header-search-input:focus {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.p-messages__header-search-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #6cc3e0;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0 0.375rem 0.375rem 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.p-messages__header-search-button:hover {
+  background-color: #fff;
+}
+.p-messages__search-box {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+.p-messages__search-form {
+  display: flex;
+  max-width: 100%;
+}
+.p-messages__search-input {
+  flex-grow: 1;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  border: 1px solid #e5e7eb;
+  border-right: none;
+  border-radius: 0.375rem 0 0 0.375rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.p-messages__search-input:focus {
+  border-color: #6cc3e0;
+  box-shadow: inset 0 0 0 1px #6cc3e0;
+}
+.p-messages__search-button {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: #6cc3e0;
+  border: 1px solid #6cc3e0;
+  border-radius: 0 0.375rem 0.375rem 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.p-messages__search-button:hover {
+  background-color: rgb(86.941011236, 186.404494382, 219.558988764);
 }
 .p-messages__header-avatar, .p-messages__header-avatar-placeholder {
   width: 40px;
@@ -6021,12 +6137,78 @@ textarea {
 .p-public-messages {
   padding: 2rem 0;
   min-height: calc(100vh - 64px);
+  /* ヘッダーラッパー（タイトルと検索を横並びにする） */
+  /* ヘッダー内の検索フォーム */
   /* タブスタイル */
 }
 .p-public-messages__container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 16px;
+}
+.p-public-messages__header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.p-public-messages__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+.p-public-messages__header-search {
+  flex: 1;
+  max-width: 400px;
+  margin-left: auto;
+}
+@media (max-width: 768px) {
+  .p-public-messages__header-search {
+    max-width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+.p-public-messages__header-search-form {
+  display: flex;
+  width: 100%;
+}
+.p-public-messages__header-search-input {
+  flex-grow: 1;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-right: none;
+  border-radius: 0.375rem 0 0 0.375rem;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transition: all 0.2s;
+}
+.p-public-messages__header-search-input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+.p-public-messages__header-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+.p-public-messages__header-search-input:focus {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.p-public-messages__header-search-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #6cc3e0;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0 0.375rem 0.375rem 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.p-public-messages__header-search-button:hover {
+  background-color: #fff;
 }
 .p-public-messages__tabs {
   display: flex;
@@ -6089,11 +6271,6 @@ textarea {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
-}
-.p-public-messages__title {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: #fff;
 }
 .p-public-messages__job-title {
   font-size: 1.25rem;

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Head, Link } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
@@ -96,17 +97,66 @@ function getInitials(name: string): string {
         .substring(0, 2);
 }
 
+interface Filters {
+    search?: string;
+}
+
 export default function Index({
     auth,
     conversationGroups,
-}: PageProps<{ conversationGroups: ConversationGroup[] }>) {
+    filters = {},
+}: PageProps<{
+    conversationGroups: ConversationGroup[];
+    filters: Filters;
+}>) {
     const currentUserId = auth.user.id;
+    const [searchQuery, setSearchQuery] = useState(filters.search || "");
+
+    // 検索処理の実装
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // 現在のURLを取得
+        const url = new URL(window.location.href);
+
+        // 検索クエリをセット
+        if (searchQuery) {
+            url.searchParams.set("search", searchQuery);
+        } else {
+            url.searchParams.delete("search");
+        }
+
+        // ページ遷移（サーバーリクエスト）
+        window.location.href = url.toString();
+    };
 
     return (
         <AuthenticatedLayout
             header={
-                <div className="p-messages__title">
-                    ダイレクトメッセージ一覧
+                <div className="p-messages__header-wrapper">
+                    <div className="p-messages__title">
+                        ダイレクトメッセージ一覧
+                    </div>
+                    <div className="p-messages__header-search">
+                        <form
+                            className="p-messages__header-search-form"
+                            onSubmit={handleSearch}
+                        >
+                            <input
+                                type="text"
+                                className="p-messages__header-search-input"
+                                placeholder="名前、案件名、メッセージで検索"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                            <button
+                                type="submit"
+                                className="p-messages__header-search-button"
+                            >
+                                検索
+                            </button>
+                        </form>
+                    </div>
                 </div>
             }
         >
@@ -143,7 +193,9 @@ export default function Index({
 
                     {conversationGroups.length === 0 ? (
                         <p className="p-messages__empty">
-                            ダイレクトメッセージはありません
+                            {filters.search
+                                ? "検索条件に一致するメッセージはありません"
+                                : "ダイレクトメッセージはありません"}
                         </p>
                     ) : (
                         <div className="p-messages__list">

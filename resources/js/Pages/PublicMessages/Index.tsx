@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Head, Link } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { formatDate } from "@/utils/format";
@@ -30,16 +30,66 @@ interface JobListingWithMessage {
     total_messages: number;
 }
 
-interface Props {
-    jobListingsWithMessages: JobListingWithMessage[];
+interface Filters {
+    search?: string;
 }
 
-export default function Index({ jobListingsWithMessages = [] }: Props) {
+interface Props {
+    jobListingsWithMessages: JobListingWithMessage[];
+    filters?: Filters;
+}
+
+export default function Index({
+    jobListingsWithMessages = [],
+    filters = {},
+}: Props) {
+    const [searchQuery, setSearchQuery] = useState(filters.search || "");
+
+    // 検索処理の実装
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // 現在のURLを取得
+        const url = new URL(window.location.href);
+
+        // 検索クエリをセット
+        if (searchQuery) {
+            url.searchParams.set("search", searchQuery);
+        } else {
+            url.searchParams.delete("search");
+        }
+
+        // ページ遷移（サーバーリクエスト）
+        window.location.href = url.toString();
+    };
+
     return (
         <AuthenticatedLayout
             header={
-                <div className="p-public-messages__title">
-                    パブリックメッセージ一覧
+                <div className="p-public-messages__header-wrapper">
+                    <div className="p-public-messages__title">
+                        パブリックメッセージ一覧
+                    </div>
+                    <div className="p-public-messages__header-search">
+                        <form
+                            className="p-public-messages__header-search-form"
+                            onSubmit={handleSearch}
+                        >
+                            <input
+                                type="text"
+                                className="p-public-messages__header-search-input"
+                                placeholder="案件名、メッセージで検索"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                            <button
+                                type="submit"
+                                className="p-public-messages__header-search-button"
+                            >
+                                検索
+                            </button>
+                        </form>
+                    </div>
                 </div>
             }
         >
@@ -142,7 +192,9 @@ export default function Index({ jobListingsWithMessages = [] }: Props) {
                         </div>
                     ) : (
                         <p className="p-public-messages__empty">
-                            パブリックメッセージはありません
+                            {filters.search
+                                ? "検索条件に一致するメッセージはありません"
+                                : "パブリックメッセージはありません"}
                         </p>
                     )}
                 </div>
