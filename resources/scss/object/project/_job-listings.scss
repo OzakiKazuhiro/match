@@ -15,6 +15,12 @@
         text-align: center;
     }
 
+    &__header-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #fff;
+    }
+
     &__header-inner {
         width: 100%;
         max-width: 1200px;
@@ -26,9 +32,9 @@
         font-size: 1.75rem;
         font-weight: 700;
         color: #fff;
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         svg {
             margin-left: 8px;

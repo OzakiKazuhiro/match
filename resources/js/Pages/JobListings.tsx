@@ -762,7 +762,9 @@ export default function JobListings({
         // ログイン済みかつメール認証済みの場合はAuthenticatedLayoutを使用
         return (
             <AuthenticatedLayout
-                header={<div className="p-job-listings__title">案件一覧</div>}
+                header={
+                    <div className="p-job-listings__header-title">案件一覧</div>
+                }
             >
                 {pageContent}
             </AuthenticatedLayout>
