@@ -566,9 +566,9 @@
     // シェアボタン
     &__share-buttons {
         display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 5px;
+        gap: 12px;
+        width: 100%;
+        margin-bottom: 10px;
         position: relative;
     }
 
@@ -576,41 +576,50 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: all 0.2s ease;
+        width: 100%;
+        padding: 0;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        overflow: hidden;
+        color: white;
 
-        &-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        &:hover {
+            opacity: 0.8;
+            color: white;
         }
 
         &--twitter {
-            background-color: #1da1f2;
+            background-color: #000;
             color: white;
-
-            &:hover {
-                background-color: darken(#1da1f2, 10%);
-            }
         }
 
         &--copy {
             background-color: #6cc3e0;
             color: white;
             border: none;
-
-            &:hover {
-                background-color: darken(#6cc3e0, 10%);
-            }
+            cursor: pointer;
         }
+    }
+
+    &__share-button-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+        width: 100%;
+    }
+
+    &__share-label {
+        margin-top: 6px;
+        font-size: 0.9rem;
     }
 
     &__copy-notification {
         position: absolute;
-        bottom: 100%;
+        bottom: -40px;
         left: 50%;
         transform: translateX(-50%);
         background-color: rgba(0, 0, 0, 0.7);
@@ -619,18 +628,17 @@
         border-radius: 4px;
         font-size: 0.8rem;
         white-space: nowrap;
-        margin-bottom: 10px;
         animation: fadeInOut 3s ease-in-out;
 
         &:after {
             content: "";
             position: absolute;
-            top: 100%;
+            top: -10px;
             left: 50%;
             transform: translateX(-50%);
             border-width: 5px;
             border-style: solid;
-            border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+            border-color: transparent transparent rgba(0, 0, 0, 0.7) transparent;
         }
     }
 

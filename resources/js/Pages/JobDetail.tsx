@@ -900,10 +900,15 @@ export default function JobDetail({
                                                 >
                                                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                                                 </svg>
+                                                <span className="p-job-detail__share-label">
+                                                    Xでシェア
+                                                </span>
                                             </div>
                                         </a>
+                                    </div>
 
-                                        {/* URLコピーボタン */}
+                                    {/* URLコピーボタン */}
+                                    <div className="p-job-detail__share-buttons">
                                         <button
                                             onClick={copyToClipboard}
                                             className="p-job-detail__share-button p-job-detail__share-button--copy"
@@ -931,6 +936,9 @@ export default function JobDetail({
                                                     ></rect>
                                                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                                                 </svg>
+                                                <span className="p-job-detail__share-label">
+                                                    URLをコピー
+                                                </span>
                                             </div>
                                         </button>
 
