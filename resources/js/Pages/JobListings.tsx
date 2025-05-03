@@ -21,6 +21,10 @@ interface JobListingsProps extends PageProps {
     };
     filters: {
         type?: string;
+        sort?: string;
+        category?: string;
+        search?: string;
+        favorites_only?: boolean;
     };
     userApplications: number[]; // ユーザーが応募した案件ID一覧
     applicationStatuses?: { [key: number]: string }; // 案件IDをキーとした応募ステータス情報
@@ -36,7 +40,7 @@ export default function JobListings({
     userFavorites = [], // デフォルト値を空配列に設定
 }: JobListingsProps) {
     // 検索関連の状態管理
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState(filters.search || "");
 
     // 案件タイプフィルター (単発/レベニューシェア/全て)
     const [activeFilter, setActiveFilter] = useState<
@@ -44,18 +48,17 @@ export default function JobListings({
     >(filters.type ? (filters.type as any) : "all");
 
     // カテゴリーフィルター関連の状態
-    const [activeCategory, setActiveCategory] = useState<string>(() => {
-        // URLからカテゴリーパラメータを取得して初期値に設定
-        const params = new URLSearchParams(window.location.search);
-        const category = params.get("category");
-        return category || "all";
-    });
+    const [activeCategory, setActiveCategory] = useState<string>(
+        filters.category || "all"
+    );
     const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
     const categoryDropdownRef = useRef<HTMLDivElement>(null);
     const categoryButtonRef = useRef<HTMLButtonElement>(null);
 
     // 並び替えオプション関連の状態
-    const [sortOption, setSortOption] = useState<string>("latest");
+    const [sortOption, setSortOption] = useState<string>(
+        filters.sort || "latest"
+    );
     const [showSortDropdown, setShowSortDropdown] = useState(false);
     const sortDropdownRef = useRef<HTMLDivElement>(null);
     const sortButtonRef = useRef<HTMLButtonElement>(null);
@@ -68,7 +71,9 @@ export default function JobListings({
     const mobileButtonRef = useRef<HTMLButtonElement>(null);
 
     // お気に入りフィルター関連の状態
-    const [showFavoritesOnly, setShowFavoritesOnly] = useState<boolean>(false);
+    const [showFavoritesOnly, setShowFavoritesOnly] = useState<boolean>(
+        !!filters.favorites_only
+    );
 
     /**
      * モバイルメニューのアニメーション制御（未ログイン時または認証されていないユーザー向け）
@@ -187,61 +192,23 @@ export default function JobListings({
     }, [showCategoryDropdown]);
 
     /**
-     * 各種条件に基づいて案件リストをフィルタリング
-     * - キーワード検索
-     * - 案件タイプ (単発/レベニューシェア)
-     * - カテゴリー
-     * - お気に入り
-     * - 募集ステータス（終了した案件は除外）
-     */
-    const filteredJobs = jobListings.data.filter((job) => {
-        // 検索クエリのフィルタリング（タイトル、説明文、カテゴリーで検索）
-        const matchesQuery =
-            searchQuery === "" ||
-            job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            job.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            (job.category &&
-                job.category.toLowerCase().includes(searchQuery.toLowerCase()));
-
-        // タイプフィルタリング（単発/レベニューシェア）
-        const matchesType = activeFilter === "all" || job.type === activeFilter;
-
-        // カテゴリーフィルタリング
-        const matchesCategory =
-            activeCategory === "all" ||
-            (job.category && job.category === activeCategory);
-
-        // お気に入りフィルタリング
-        const matchesFavorite =
-            !showFavoritesOnly || userFavorites.includes(job.id);
-
-        // 募集終了した案件を除外
-        const isActive = !job.is_closed;
-
-        // すべての条件に一致するものだけを表示
-        return (
-            matchesQuery &&
-            matchesType &&
-            matchesCategory &&
-            matchesFavorite &&
-            isActive
-        );
-    });
-
-    /**
      * 案件タイプフィルター（単発/レベニューシェア/全て）の変更処理
-     * URLを更新し、ブラウザの履歴にも反映する（SPA対応）
+     * サーバーサイドでのフィルタリングを行うためにページをリロード
      */
     const handleFilterChange = (type: "all" | "one_time" | "revenue_share") => {
         setActiveFilter(type);
 
-        // URL更新（SPA対応：history APIを使用）
-        const url =
-            type === "all"
-                ? route("job-listings.index")
-                : route("job-listings.index", { type });
+        // 現在のURLを取得
+        const url = new URL(window.location.href);
 
-        window.history.pushState({}, "", url);
+        if (type === "all") {
+            url.searchParams.delete("type");
+        } else {
+            url.searchParams.set("type", type);
+        }
+
+        // ページ遷移（サーバーリクエスト）
+        window.location.href = url.toString();
     };
 
     /**
@@ -266,34 +233,42 @@ export default function JobListings({
 
     /**
      * 並び替えオプション変更時の処理
-     * URLを更新するが、ページリロードはせずにクライアントサイドで並び替え
+     * サーバーサイドでの並び替えを行うためにページをリロード
      */
     const handleSortChange = (option: string) => {
         setSortOption(option);
         setShowSortDropdown(false);
 
-        // 並び替えオプションをURLに反映（ただしリロードはしない）
+        // 現在のURLからベースURLとクエリパラメータを取得
         const url = new URL(window.location.href);
+
+        // 並び替えオプションを設定
         url.searchParams.set("sort", option);
-        window.history.pushState({}, "", url.toString());
+
+        // Inertiaリンクを使ってページ遷移（サーバーリクエスト）
+        window.location.href = url.toString();
     };
 
     /**
      * カテゴリーフィルター変更時の処理
-     * URLを更新するが、ページリロードはせずにクライアントサイドでフィルタリング
+     * サーバーサイドでのフィルタリングを行うためにページをリロード
      */
     const handleCategoryChange = (category: string) => {
         setActiveCategory(category);
         setShowCategoryDropdown(false);
 
-        // カテゴリーをURLに反映（ただしリロードはしない）
+        // 現在のURLからベースURLとクエリパラメータを取得
         const url = new URL(window.location.href);
+
+        // カテゴリパラメータを設定
         if (category === "all") {
             url.searchParams.delete("category");
         } else {
             url.searchParams.set("category", category);
         }
-        window.history.pushState({}, "", url.toString());
+
+        // ページ遷移（サーバーリクエスト）
+        window.location.href = url.toString();
     };
 
     /**
@@ -309,81 +284,44 @@ export default function JobListings({
     };
 
     /**
-     * フィルタリングした案件リストを並び替え
-     * 選択された並び替え条件に応じてクライアントサイドで並び替え処理を行う
+     * 検索処理の実装
      */
-    const sortedJobs = [...filteredJobs].sort((a, b) => {
-        switch (sortOption) {
-            case "latest":
-                // 新着順（作成日時の降順）
-                return (
-                    new Date(b.created_at).getTime() -
-                    new Date(a.created_at).getTime()
-                );
-            case "oldest":
-                // 古い順（作成日時の昇順）
-                return (
-                    new Date(a.created_at).getTime() -
-                    new Date(b.created_at).getTime()
-                );
-            case "views":
-                // 閲覧数順
-                return (b.view_count || 0) - (a.view_count || 0);
-            case "budget_high":
-                // 予算の高い順（最大予算を比較）
-                const aMaxBudget = Math.max(
-                    a.budget_max || 0,
-                    a.budget_min || 0
-                );
-                const bMaxBudget = Math.max(
-                    b.budget_max || 0,
-                    b.budget_min || 0
-                );
-                return bMaxBudget - aMaxBudget;
-            case "budget_low":
-                // 予算の低い順（最小予算を比較、予算未設定は後ろに表示）
-                const aHasBudget =
-                    (a.budget_min !== null && a.budget_min !== undefined) ||
-                    (a.budget_max !== null && a.budget_max !== undefined);
-                const bHasBudget =
-                    (b.budget_min !== null && b.budget_min !== undefined) ||
-                    (b.budget_max !== null && b.budget_max !== undefined);
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
 
-                // 両方予算未設定なら同等
-                if (!aHasBudget && !bHasBudget) return 0;
-                // aが予算未設定ならbを先に
-                if (!aHasBudget) return 1;
-                // bが予算未設定ならaを先に
-                if (!bHasBudget) return -1;
+        // 現在のURLを取得
+        const url = new URL(window.location.href);
 
-                // 両方予算があれば低い方を比較
-                const aMinBudget = Math.min(
-                    a.budget_min !== null && a.budget_min !== undefined
-                        ? a.budget_min
-                        : Infinity,
-                    a.budget_max !== null && a.budget_max !== undefined
-                        ? a.budget_max
-                        : Infinity
-                );
-                const bMinBudget = Math.min(
-                    b.budget_min !== null && b.budget_min !== undefined
-                        ? b.budget_min
-                        : Infinity,
-                    b.budget_max !== null && b.budget_max !== undefined
-                        ? b.budget_max
-                        : Infinity
-                );
-                return aMinBudget - bMinBudget;
-            default:
-                return 0;
+        // 検索クエリをセット
+        if (searchQuery) {
+            url.searchParams.set("search", searchQuery);
+        } else {
+            url.searchParams.delete("search");
         }
-    });
+
+        // ページ遷移（サーバーリクエスト）
+        window.location.href = url.toString();
+    };
 
     /**
      * お気に入りのみ表示するフィルターのトグル処理
      */
     const toggleFavoritesFilter = () => {
-        setShowFavoritesOnly(!showFavoritesOnly);
+        const newShowFavoritesOnly = !showFavoritesOnly;
+        setShowFavoritesOnly(newShowFavoritesOnly);
+
+        // 現在のURLを取得
+        const url = new URL(window.location.href);
+
+        // お気に入りフィルターをセット
+        if (newShowFavoritesOnly) {
+            url.searchParams.set("favorites_only", "1");
+        } else {
+            url.searchParams.delete("favorites_only");
+        }
+
+        // ページ遷移（サーバーリクエスト）
+        window.location.href = url.toString();
     };
 
     // ページコンテンツ（共通部分）
@@ -464,7 +402,7 @@ export default function JobListings({
                         <div className="p-job-listings__search-box">
                             <form
                                 className="p-job-listings__search-form"
-                                onSubmit={(e) => e.preventDefault()}
+                                onSubmit={handleSearch}
                             >
                                 <input
                                     type="text"
@@ -738,7 +676,7 @@ export default function JobListings({
                     </div>
 
                     <div className="p-job-listings__grid">
-                        {sortedJobs.length === 0 ? (
+                        {jobListings.data.length === 0 ? (
                             <div className="p-job-listings__no-results">
                                 <div className="p-job-listings__no-results-icon">
                                     <svg
@@ -776,7 +714,7 @@ export default function JobListings({
                             </div>
                         ) : (
                             <>
-                                {sortedJobs.map((job) => (
+                                {jobListings.data.map((job) => (
                                     <JobCard
                                         key={job.id}
                                         job={job}

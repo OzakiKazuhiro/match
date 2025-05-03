@@ -22,8 +22,12 @@ class JobListingController extends Controller
      */
     public function index(Request $request): Response
     {
-        // クエリパラメータからフィルタータイプを取得
+        // クエリパラメータからフィルタータイプとソートオプションを取得
         $type = $request->input('type');
+        $sort = $request->input('sort', 'latest'); // デフォルトは最新順
+        $category = $request->input('category');
+        $search = $request->input('search');
+        $favoritesOnly = $request->has('favorites_only');
         
         // 認証されているユーザーの応募済み案件IDを取得
         $userApplications = [];
@@ -31,6 +35,7 @@ class JobListingController extends Controller
         
         // 認証されているユーザーのお気に入り案件IDを取得
         $userFavorites = [];
+        $user = null;
         
         if (auth()->check()) {
             $user = auth()->user();
@@ -49,8 +54,10 @@ class JobListingController extends Controller
         }
         
         // 案件一覧を取得
-        $query = JobListing::with('user')
-            ->orderBy('created_at', 'desc');
+        $query = JobListing::with('user');
+        
+        // 募集終了した案件を除外
+        $query->where('is_closed', false);
         
         // タイプフィルターの適用
         if ($type === 'one_time') {
@@ -59,13 +66,65 @@ class JobListingController extends Controller
             $query->where('type', 'revenue_share');
         }
         
+        // カテゴリフィルターの適用
+        if ($category && $category !== 'all') {
+            $query->where('category', $category);
+        }
+        
+        // 検索クエリの適用
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('category', 'like', "%{$search}%");
+            });
+        }
+        
+        // お気に入りフィルターの適用
+        if ($favoritesOnly && $user) {
+            $query->whereIn('id', $userFavorites);
+        }
+        
+        // ソートオプションに基づいてクエリを調整
+        switch ($sort) {
+            case 'latest':
+                // 新着順（デフォルト）
+                $query->orderBy('created_at', 'desc');
+                break;
+            case 'oldest':
+                // 古い順
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'views':
+                // 閲覧数順
+                $query->orderBy('view_count', 'desc');
+                break;
+            case 'budget_high':
+                // 予算の高い順（最大予算を基準）
+                $query->orderByRaw('COALESCE(budget_max, budget_min, 0) DESC');
+                break;
+            case 'budget_low':
+                // 予算の低い順（最小予算を基準、NULLは最後に）
+                $query->orderByRaw('CASE WHEN budget_min IS NULL AND budget_max IS NULL THEN 1 ELSE 0 END')
+                      ->orderByRaw('COALESCE(budget_min, budget_max, 999999999) ASC');
+                break;
+            default:
+                // デフォルトは最新順
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+        
         // ページネーション
-        $jobListings = $query->paginate(12);
+        $jobListings = $query->paginate(12)->withQueryString();
         
         return Inertia::render('JobListings', [
             'jobListings' => $jobListings,
             'filters' => [
                 'type' => $type,
+                'sort' => $sort,
+                'category' => $category,
+                'search' => $search,
+                'favorites_only' => $favoritesOnly,
             ],
             'userApplications' => $userApplications,
             'applicationStatuses' => $applicationStatuses,
