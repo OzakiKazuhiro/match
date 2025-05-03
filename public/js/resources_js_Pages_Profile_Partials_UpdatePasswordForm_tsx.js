@@ -17887,7 +17887,8 @@ function UpdatePasswordForm(_ref) {
             },
             type: showCurrentPassword ? "text" : "password",
             className: "p-profile__form-input",
-            autoComplete: "current-password"
+            autoComplete: "current-password",
+            maxLength: 50
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
             type: "button",
             className: "p-auth__password-toggle",

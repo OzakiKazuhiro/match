@@ -1327,6 +1327,9 @@ function DeleteUserForm(_ref) {
     confirmingUserDeletion = _useState2[0],
     setConfirmingUserDeletion = _useState2[1];
   var passwordInput = (0,react__WEBPACK_IMPORTED_MODULE_7__.useRef)(null);
+  var _ref2 = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_6__.usePage)().props,
+    auth = _ref2.auth,
+    activeJobListings = _ref2.activeJobListings;
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_6__.useForm)({
       password: ""
     }),
@@ -1337,6 +1340,7 @@ function DeleteUserForm(_ref) {
     reset = _useForm.reset,
     errors = _useForm.errors,
     clearErrors = _useForm.clearErrors;
+  var hasActiveJobListings = activeJobListings > 0;
   var confirmUserDeletion = function confirmUserDeletion() {
     setConfirmingUserDeletion(true);
   };
@@ -1369,7 +1373,7 @@ function DeleteUserForm(_ref) {
         children: "\u9000\u4F1A\u3059\u308B"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
         className: "p-profile__section-description",
-        children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30C7\u30FC\u30BF\u304C\u5B8C\u5168\u306B\u524A\u9664\u3055\u308C\u307E\u3059\u3002"
+        children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u30A2\u30AB\u30A6\u30F3\u30C8\u60C5\u5831\u3001\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u3001\u30D1\u30B9\u30EF\u30FC\u30C9\u306A\u3069\u306E\u500B\u4EBA\u60C5\u5831\u304C\u524A\u9664\u3055\u308C\u307E\u3059\u3002"
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_DangerButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
       onClick: confirmUserDeletion,
@@ -1384,41 +1388,71 @@ function DeleteUserForm(_ref) {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
           className: "p-profile__modal-title",
           children: "\u672C\u5F53\u306B\u9000\u4F1A\u3057\u307E\u3059\u304B\uFF1F"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
-          className: "p-profile__modal-text",
-          children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u3059\u3079\u3066\u306E\u30C7\u30FC\u30BF\u304C\u5B8C\u5168\u306B\u524A\u9664\u3055\u308C\u307E\u3059\u3002\u672C\u5F53\u306B\u9000\u4F1A\u3059\u308B\u5834\u5408\u306F\u3001\u78BA\u8A8D\u306E\u305F\u3081\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-          className: "p-profile__form-group",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
-            htmlFor: "password",
-            value: "\u30D1\u30B9\u30EF\u30FC\u30C9",
-            className: "sr-only"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_5__["default"], {
-            id: "password",
-            type: "password",
-            name: "password",
-            ref: passwordInput,
-            value: data.password,
-            onChange: function onChange(e) {
-              return setData("password", e.target.value);
-            },
-            className: "p-profile__form-input",
-            isFocused: true,
-            placeholder: "\u30D1\u30B9\u30EF\u30FC\u30C9"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            message: errors.password,
-            className: "p-profile__form-error"
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-          className: "p-profile__modal-actions",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_SecondaryButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        }), hasActiveJobListings ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+          className: "p-profile__modal-warning",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
+            className: "p-profile__modal-text p-profile__modal-text--warning",
+            children: "\u73FE\u5728\u3001\u52DF\u96C6\u4E2D\u306E\u6848\u4EF6\u304C\u3042\u308A\u307E\u3059\u3002\u9000\u4F1A\u3059\u308B\u524D\u306B\u3001\u3059\u3079\u3066\u306E\u6848\u4EF6\u3092\u300C\u52DF\u96C6\u7D42\u4E86\u300D\u306B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_SecondaryButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
             onClick: closeModal,
-            className: "p-profile__btn p-profile__btn--secondary",
-            children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_DangerButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
-            className: "p-profile__btn p-profile__btn--danger",
-            disabled: processing,
-            children: "\u9000\u4F1A\u3059\u308B"
+            className: "p-profile__btn p-profile__btn--secondary mt-4",
+            children: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u7DE8\u96C6\u306B\u623B\u308B"
+          })]
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
+            className: "p-profile__modal-text",
+            children: "\u9000\u4F1A\u3059\u308B\u3068\u3001\u4EE5\u4E0B\u306E\u30C7\u30FC\u30BF\u304C\u524A\u9664\u3055\u308C\u307E\u3059\uFF1A"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("ul", {
+            className: "p-profile__modal-list",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("li", {
+              children: "\u30A2\u30AB\u30A6\u30F3\u30C8\u60C5\u5831\uFF08\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3001\u30D1\u30B9\u30EF\u30FC\u30C9\u306A\u3069\uFF09"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("li", {
+              children: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u60C5\u5831\uFF08\u30E6\u30FC\u30B6\u30FC\u540D\u3001\u30A2\u30D0\u30BF\u30FC\u753B\u50CF\u306A\u3069\uFF09"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("li", {
+              children: "\u6295\u7A3F\u3057\u305F\u6848\u4EF6\u60C5\u5831\uFF08\u73FE\u5728\u52DF\u96C6\u7D42\u4E86\u3057\u3066\u3044\u308B\u6848\u4EF6\u306E\u307F\uFF09"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("li", {
+              children: "\u9001\u53D7\u4FE1\u3057\u305F\u30E1\u30C3\u30BB\u30FC\u30B8\u5C65\u6B74"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
+            className: "p-profile__modal-text p-profile__modal-text--note",
+            children: "\u203B\u305F\u3060\u3057\u3001\u30B7\u30B9\u30C6\u30E0\u30ED\u30B0\u3084\u30D0\u30C3\u30AF\u30A2\u30C3\u30D7\u306B\u306F\u4E00\u90E8\u60C5\u5831\u304C\u6B8B\u308B\u5834\u5408\u304C\u3042\u308A\u307E\u3059\u3002"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
+            className: "p-profile__modal-text",
+            children: "\u672C\u5F53\u306B\u9000\u4F1A\u3059\u308B\u5834\u5408\u306F\u3001\u78BA\u8A8D\u306E\u305F\u3081\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+            className: "p-profile__form-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
+              htmlFor: "password",
+              value: "\u30D1\u30B9\u30EF\u30FC\u30C9",
+              className: "sr-only"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              id: "password",
+              type: "password",
+              name: "password",
+              ref: passwordInput,
+              value: data.password,
+              onChange: function onChange(e) {
+                return setData("password", e.target.value);
+              },
+              className: "p-profile__form-input",
+              isFocused: true,
+              placeholder: "\u30D1\u30B9\u30EF\u30FC\u30C9",
+              maxLength: 50
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_1__["default"], {
+              message: errors.password,
+              className: "p-profile__form-error"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+            className: "p-profile__modal-actions",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_SecondaryButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+              onClick: closeModal,
+              className: "p-profile__btn p-profile__btn--secondary",
+              children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_DangerButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
+              className: "p-profile__btn p-profile__btn--danger",
+              disabled: processing,
+              children: "\u9000\u4F1A\u3059\u308B"
+            })]
           })]
         })]
       })

@@ -20,36 +20,38 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'avatar',
+        'is_deleted',
+        'original_email',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
         'remember_token',
+        'original_email',
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'is_deleted' => 'boolean',
+    ];
     
     /**
      * ユーザーのプロフィール情報を取得
@@ -155,5 +157,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new NewResetPassword($token));
+    }
+
+    /**
+     * 退会済みユーザーかどうかを判定
+     */
+    public function isDeleted(): bool
+    {
+        return $this->is_deleted;
+    }
+    
+    /**
+     * 表示用のユーザー名を取得
+     */
+    public function getDisplayName(): string
+    {
+        return $this->is_deleted ? '退会したユーザー' : $this->name;
     }
 }

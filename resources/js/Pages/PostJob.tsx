@@ -401,17 +401,20 @@ export default function PostJob({ auth }: PageProps) {
 
     return (
         <AuthenticatedLayout
-            header={
-                <h2 className="c-heading c-heading--lv2">
-                    新しい案件を登録する
-                </h2>
-            }
+            header={<div className="p-post-job__header-title">案件を投稿</div>}
         >
             <Head title="案件登録" />
 
             <div className="p-post-job">
                 <div className="p-post-job__container">
-                    <h1 className="p-post-job__title">案件登録</h1>
+                    <div className="p-post-job__header">
+                        <h1 className="p-post-job__title">案件を投稿する</h1>
+                        <p className="p-post-job__subtitle">
+                            あなたの案件情報を入力して、エンジニアを募集しましょう。
+                            <br className="hidden md:block" />
+                            単発案件やレベニューシェア案件を簡単に投稿できます。
+                        </p>
+                    </div>
 
                     <form onSubmit={handleSubmit} className="p-post-job__form">
                         <div className="p-post-job__section">

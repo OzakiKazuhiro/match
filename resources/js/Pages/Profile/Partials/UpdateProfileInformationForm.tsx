@@ -23,6 +23,7 @@ export default function UpdateProfileInformation({
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [recentlySuccessful, setRecentlySuccessful] = useState(false);
     const [removeAvatar, setRemoveAvatar] = useState(false);
+    const [avatarError, setAvatarError] = useState<string | null>(null);
 
     // 名前のバリデーション状態
     const [nameValidationMessage, setNameValidationMessage] = useState<
@@ -40,8 +41,8 @@ export default function UpdateProfileInformation({
     // 名前のバリデーションを行う関数
     const validateName = (name: string) => {
         if (!name) {
-            setNameIsValid(null);
-            setNameValidationMessage(null);
+            setNameIsValid(false);
+            setNameValidationMessage("お名前を入力してください。");
             return;
         }
 
@@ -70,9 +71,23 @@ export default function UpdateProfileInformation({
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
         if (file) {
+            // ファイルサイズのチェック (2MB = 2 * 1024 * 1024 bytes)
+            if (file.size > 2 * 1024 * 1024) {
+                // エラーメッセージを設定
+                setData("avatar", null);
+                // カスタムエラーメッセージを表示するためのstate追加
+                setAvatarError("ファイルサイズは2MB以下にしてください");
+                // ファイル入力をリセット
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = "";
+                }
+                return;
+            }
+
             setData("avatar", file);
             setData("remove_avatar", false);
             setRemoveAvatar(false);
+            setAvatarError(null); // エラーをクリア
 
             // プレビュー用のURLを作成
             const url = URL.createObjectURL(file);
@@ -85,6 +100,7 @@ export default function UpdateProfileInformation({
         setData("remove_avatar", true);
         setRemoveAvatar(true);
         setPreviewUrl(null);
+        setAvatarError(null); // エラーメッセージをクリア
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
@@ -93,7 +109,13 @@ export default function UpdateProfileInformation({
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        // 名前が50文字を超えている場合は送信しない
+        // 名前が空か50文字を超えている場合は送信しない
+        if (!data.name) {
+            setNameIsValid(false);
+            setNameValidationMessage("お名前を入力してください。");
+            return;
+        }
+
         if (nameIsValid === false) {
             return;
         }
@@ -167,7 +189,7 @@ export default function UpdateProfileInformation({
                                 ref={fileInputRef}
                                 onChange={handleAvatarChange}
                                 className="hidden"
-                                accept="image/*"
+                                accept="image/jpeg,image/png,image/gif,image/webp"
                             />
                             <div>
                                 <button
@@ -190,15 +212,28 @@ export default function UpdateProfileInformation({
                                 )}
                             </div>
                             <p className="p-profile__avatar-note">
-                                JPG、PNG、GIF、WEBP 形式。最大2MB。
+                                JPG、PNG、GIF、WEBP 形式。
+                                <br className="md:hidden" />
+                                最大2MB。
                             </p>
                         </div>
                     </div>
+
+                    <p className="p-profile__avatar-note mt-2">
+                        ※画像選択後、
+                        <br className="md:hidden" />
+                        保存ボタンを押すまで変更は反映されません。
+                    </p>
 
                     <InputError
                         className="p-profile__form-error"
                         message={errors.avatar}
                     />
+                    {avatarError && (
+                        <div className="p-profile__form-error">
+                            {avatarError}
+                        </div>
+                    )}
                 </div>
 
                 <div className="p-profile__form-group">
@@ -215,7 +250,7 @@ export default function UpdateProfileInformation({
                         }`}
                         value={data.name}
                         onChange={(e) => setData("name", e.target.value)}
-                        required
+                        required={true}
                         isFocused
                         autoComplete="name"
                         maxLength={50}

@@ -6,6 +6,7 @@ use App\Models\JobListing;
 use App\Notifications\NewResetPassword;
 use App\Policies\JobListingPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,15 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // 退会済みユーザーを認証から除外
+        $this->app['auth']->viaRequest('web', function ($request) {
+            if ($request->session()->has('auth')) {
+                $user = User::find($request->session()->get('auth.id'));
+                if ($user && !$user->is_deleted) {
+                    return $user;
+                }
+            }
+            return null;
+        });
     }
 } 

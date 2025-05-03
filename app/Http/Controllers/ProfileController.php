@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\JobListing;
 
 class ProfileController extends Controller
 {
@@ -19,9 +20,20 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $user = $request->user();
+        
+        // 募集中の案件数を取得
+        $activeJobListings = 0;
+        if ($user) {
+            $activeJobListings = JobListing::where('user_id', $user->id)
+                ->where('is_closed', false)
+                ->count();
+        }
+        
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'activeJobListings' => $activeJobListings,
         ]);
     }
 
@@ -81,10 +93,35 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+        
+        // 募集中の案件があるかチェック
+        $hasActiveJobListings = JobListing::where('user_id', $user->id)
+            ->where('is_closed', false)
+            ->exists();
+        
+        if ($hasActiveJobListings) {
+            return back()->withErrors([
+                'general' => '退会する前に、すべての募集中の案件を終了または削除してください。',
+            ]);
+        }
+
+        // アバター画像の削除
+        if ($user->avatar) {
+            $avatarPath = str_replace('storage/', '', $user->avatar);
+            if (Storage::disk('public')->exists($avatarPath)) {
+                Storage::disk('public')->delete($avatarPath);
+            }
+            $user->avatar = null;
+        }
+        
+        // ユーザー情報の匿名化
+        $user->original_email = $user->email; // 元のメールアドレスを保存
+        $user->email = 'deleted_' . time() . '_' . substr(md5($user->email), 0, 8) . '@example.com';
+        $user->name = '退会したユーザー';
+        $user->is_deleted = true;
+        $user->save();
 
         Auth::logout();
-
-        $user->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

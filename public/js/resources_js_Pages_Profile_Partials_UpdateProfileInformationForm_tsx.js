@@ -17753,16 +17753,20 @@ function UpdateProfileInformation(_ref) {
     _useState6 = _slicedToArray(_useState5, 2),
     removeAvatar = _useState6[0],
     setRemoveAvatar = _useState6[1];
-
-  // 名前のバリデーション状態
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
     _useState8 = _slicedToArray(_useState7, 2),
-    nameValidationMessage = _useState8[0],
-    setNameValidationMessage = _useState8[1];
+    avatarError = _useState8[0],
+    setAvatarError = _useState8[1];
+
+  // 名前のバリデーション状態
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
     _useState10 = _slicedToArray(_useState9, 2),
-    nameIsValid = _useState10[0],
-    setNameIsValid = _useState10[1];
+    nameValidationMessage = _useState10[0],
+    setNameValidationMessage = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState12 = _slicedToArray(_useState11, 2),
+    nameIsValid = _useState12[0],
+    setNameIsValid = _useState12[1];
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.useForm)({
       name: user.name,
       email: user.email,
@@ -17780,8 +17784,8 @@ function UpdateProfileInformation(_ref) {
   // 名前のバリデーションを行う関数
   var validateName = function validateName(name) {
     if (!name) {
-      setNameIsValid(null);
-      setNameValidationMessage(null);
+      setNameIsValid(false);
+      setNameValidationMessage("お名前を入力してください。");
       return;
     }
     if (name.length > 50) {
@@ -17807,9 +17811,22 @@ function UpdateProfileInformation(_ref) {
     var _e$target$files;
     var file = ((_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0]) || null;
     if (file) {
+      // ファイルサイズのチェック (2MB = 2 * 1024 * 1024 bytes)
+      if (file.size > 2 * 1024 * 1024) {
+        // エラーメッセージを設定
+        setData("avatar", null);
+        // カスタムエラーメッセージを表示するためのstate追加
+        setAvatarError("ファイルサイズは2MB以下にしてください");
+        // ファイル入力をリセット
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+        return;
+      }
       setData("avatar", file);
       setData("remove_avatar", false);
       setRemoveAvatar(false);
+      setAvatarError(null); // エラーをクリア
 
       // プレビュー用のURLを作成
       var url = URL.createObjectURL(file);
@@ -17821,6 +17838,7 @@ function UpdateProfileInformation(_ref) {
     setData("remove_avatar", true);
     setRemoveAvatar(true);
     setPreviewUrl(null);
+    setAvatarError(null); // エラーメッセージをクリア
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -17828,7 +17846,12 @@ function UpdateProfileInformation(_ref) {
   var submit = function submit(e) {
     e.preventDefault();
 
-    // 名前が50文字を超えている場合は送信しない
+    // 名前が空か50文字を超えている場合は送信しない
+    if (!data.name) {
+      setNameIsValid(false);
+      setNameValidationMessage("お名前を入力してください。");
+      return;
+    }
     if (nameIsValid === false) {
       return;
     }
@@ -17900,7 +17923,7 @@ function UpdateProfileInformation(_ref) {
               ref: fileInputRef,
               onChange: handleAvatarChange,
               className: "hidden",
-              accept: "image/*"
+              accept: "image/jpeg,image/png,image/gif,image/webp"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
                 type: "button",
@@ -17916,14 +17939,24 @@ function UpdateProfileInformation(_ref) {
                 className: "p-profile__avatar-button p-profile__avatar-button--remove",
                 children: "\u524A\u9664"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
               className: "p-profile__avatar-note",
-              children: "JPG\u3001PNG\u3001GIF\u3001WEBP \u5F62\u5F0F\u3002\u6700\u59272MB\u3002"
+              children: ["JPG\u3001PNG\u3001GIF\u3001WEBP \u5F62\u5F0F\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {
+                className: "md:hidden"
+              }), "\u6700\u59272MB\u3002"]
             })]
           })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+          className: "p-profile__avatar-note mt-2",
+          children: ["\u203B\u753B\u50CF\u9078\u629E\u5F8C\u3001", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {
+            className: "md:hidden"
+          }), "\u4FDD\u5B58\u30DC\u30BF\u30F3\u3092\u62BC\u3059\u307E\u3067\u5909\u66F4\u306F\u53CD\u6620\u3055\u308C\u307E\u305B\u3093\u3002"]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           className: "p-profile__form-error",
           message: errors.avatar
+        }), avatarError && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "p-profile__form-error",
+          children: avatarError
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "p-profile__form-group",

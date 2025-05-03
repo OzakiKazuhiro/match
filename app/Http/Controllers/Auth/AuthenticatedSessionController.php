@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,12 +31,21 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
+        
+        // 退会済みユーザーのチェック
+        $user = $request->user();
+        if ($user && $user->is_deleted) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            
+            return redirect()->route('login')
+                ->withErrors(['email' => 'このアカウントは退会済みです。']);
+        }
 
         $request->session()->regenerate();
-    return redirect()->intended(route('dashboard',
-    absolute: false));
-    // ログイン後のリダイレクト先をdashboardに指定
-        // return redirect()->route('dashboard');
+
+        return redirect()->intended(route('dashboard'));
     }
 
     /**

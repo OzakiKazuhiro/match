@@ -162,6 +162,7 @@ export default function UpdatePasswordForm({
                             type={showCurrentPassword ? "text" : "password"}
                             className="p-profile__form-input"
                             autoComplete="current-password"
+                            maxLength={50}
                         />
                         <button
                             type="button"
