@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { Head, Link } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import JobCard, { JobType } from "@/Components/JobCard";
-import { route } from "ziggy-js";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 interface JobListingsProps extends PageProps {
