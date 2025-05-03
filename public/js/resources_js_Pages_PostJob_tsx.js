@@ -2610,7 +2610,7 @@ function PostJob(_ref2) {
   var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "エンジニアに相談", "その他"];
 
   // スキルの選択肢
-  var skillOptions = ["HTML/CSS", "JavaScript", "TypeScript", "React", "Vue.js", "Angular", "Next.js", "PHP", "Laravel", "Ruby", "Ruby on Rails", "Python", "Django", "Java", "C#", "Swift", "Kotlin", "Flutter", "React Native", "AWS", "Docker", "Kubernetes", "UI/UXデザイン", "Figma", "Photoshop", "Illustrator", "WordPress", "データベース設計", "SQL", "NoSQL"];
+  var skillOptions = ["HTML/CSS", "JavaScript", "TypeScript", "React", "Vue.js", "Angular", "Next.js", "Nuxt.js", "Svelte", "PHP", "Laravel", "Ruby", "Ruby on Rails", "Python", "Django", "FastAPI", "Go", "Rust", "Java", "Spring Boot", "C#", ".NET Core", "Swift", "Kotlin", "Flutter", "React Native", "AWS", "Google Cloud", "Azure", "Firebase", "Docker", "Kubernetes", "Terraform", "CI/CD", "GraphQL", "UI/UXデザイン", "Figma", "Photoshop", "Illustrator", "WordPress", "データベース設計", "SQL", "NoSQL", "MongoDB", "Redis", "AI/機械学習", "TensorFlow", "PyTorch", "OpenAI API", "LangChain", "ブロックチェーン", "Web3", "セキュリティ", "テスト自動化", "マイクロサービス", "システム設計"];
   var addSkill = function addSkill() {
     // 15文字以上の場合は追加しない
     if (customSkill && customSkill.length <= 15 && !data.skills.includes(customSkill)) {

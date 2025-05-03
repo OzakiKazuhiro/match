@@ -2578,6 +2578,11 @@ textarea {
   margin-bottom: 40px;
   text-align: center;
 }
+.p-job-listings__header-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+}
 .p-job-listings__header-inner {
   width: 100%;
   max-width: 1200px;
@@ -3358,7 +3363,7 @@ textarea {
 }
 .p-job-detail__card--favorite {
   position: sticky;
-  top: 460px;
+  top: 525px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3759,6 +3764,8 @@ textarea {
   display: flex;
   gap: 12px;
   width: 100%;
+  margin-bottom: 10px;
+  position: relative;
 }
 .p-job-detail__share-button {
   display: flex;
@@ -3781,13 +3788,63 @@ textarea {
   background-color: #000;
   color: white;
 }
+.p-job-detail__share-button--copy {
+  background-color: #6cc3e0;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
 .p-job-detail__share-button-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 12px;
   width: 100%;
+  gap: 10px;
+}
+.p-job-detail__share-icon {
+  flex-shrink: 0;
+}
+.p-job-detail__share-label {
+  font-size: 0.9rem;
+}
+.p-job-detail__copy-notification {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  animation: fadeInOut 3s ease-in-out;
+}
+.p-job-detail__copy-notification:after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgba(0, 0, 0, 0.7) transparent;
+}
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 .p-job-detail__related-jobs {
   display: flex;

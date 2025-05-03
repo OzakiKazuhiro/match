@@ -2837,6 +2837,26 @@ function JobDetail(_ref) {
     errors = _useForm.errors,
     reset = _useForm.reset;
 
+  // URLコピー機能のための状態管理
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    copied = _useState2[0],
+    setCopied = _useState2[1];
+
+  // URLをクリップボードにコピーする関数
+  var copyToClipboard = function copyToClipboard() {
+    // URLをクリップボードにコピー
+    navigator.clipboard.writeText(window.location.href);
+
+    // コピー成功表示
+    setCopied(true);
+
+    // 3秒後に通知を非表示
+    setTimeout(function () {
+      setCopied(false);
+    }, 3000);
+  };
+
   // メッセージの最大文字数と入力チェック用の状態
   var MAX_MESSAGE_LENGTH = 500;
   var remainingChars = MAX_MESSAGE_LENGTH - data.message.length;
@@ -2905,14 +2925,14 @@ function JobDetail(_ref) {
       minute: "2-digit"
     });
   };
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    confirmingClose = _useState2[0],
-    setConfirmingClose = _useState2[1];
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
-    confirmingApply = _useState4[0],
-    setConfirmingApply = _useState4[1];
+    confirmingClose = _useState4[0],
+    setConfirmingClose = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    confirmingApply = _useState6[0],
+    setConfirmingApply = _useState6[1];
 
   // 募集終了確認モーダルを開く
   var confirmJobClose = function confirmJobClose() {
@@ -3329,20 +3349,62 @@ function JobDetail(_ref) {
                   onClick: function onClick() {
                     console.log("案件がシェアされました:", jobListing.id);
                   },
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                     className: "p-job-detail__share-button-content",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("svg", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("svg", {
                       xmlns: "http://www.w3.org/2000/svg",
                       width: "24",
                       height: "24",
                       viewBox: "0 0 24 24",
                       fill: "currentColor",
+                      className: "p-job-detail__share-icon",
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("path", {
                         d: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
                       })
-                    })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+                      className: "p-job-detail__share-label",
+                      children: "X\u3067\u30B7\u30A7\u30A2"
+                    })]
                   })
                 })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+                className: "p-job-detail__share-buttons",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
+                  onClick: copyToClipboard,
+                  className: "p-job-detail__share-button p-job-detail__share-button--copy",
+                  title: "URL\u3092\u30B3\u30D4\u30FC",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+                    className: "p-job-detail__share-button-content",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("svg", {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      width: "20",
+                      height: "20",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      strokeWidth: "2",
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      className: "p-job-detail__share-icon",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("rect", {
+                        x: "9",
+                        y: "9",
+                        width: "13",
+                        height: "13",
+                        rx: "2",
+                        ry: "2"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("path", {
+                        d: "M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+                      className: "p-job-detail__share-label",
+                      children: "URL\u3092\u30B3\u30D4\u30FC"
+                    })]
+                  })
+                }), copied && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+                  className: "p-job-detail__copy-notification",
+                  children: "URL\u3092\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F!"
+                })]
               })]
             }), auth.user && !jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-job-detail__card p-job-detail__card--favorite",
