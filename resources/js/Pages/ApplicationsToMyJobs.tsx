@@ -254,7 +254,7 @@ export default function ApplicationsToMyJobs({
         <AuthenticatedLayout
             header={<div className="p-applications__title">マイページ</div>}
         >
-            <Head title="マイページ" />
+            <Head title="自分の案件への応募一覧" />
 
             <div className="p-applications">
                 <div className="p-applications__container">
