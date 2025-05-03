@@ -103,6 +103,23 @@ export default function JobDetail({
         message: "",
     });
 
+    // URLコピー機能のための状態管理
+    const [copied, setCopied] = useState(false);
+
+    // URLをクリップボードにコピーする関数
+    const copyToClipboard = () => {
+        // URLをクリップボードにコピー
+        navigator.clipboard.writeText(window.location.href);
+
+        // コピー成功表示
+        setCopied(true);
+
+        // 3秒後に通知を非表示
+        setTimeout(() => {
+            setCopied(false);
+        }, 3000);
+    };
+
     // メッセージの最大文字数と入力チェック用の状態
     const MAX_MESSAGE_LENGTH = 500;
     const remainingChars = MAX_MESSAGE_LENGTH - data.message.length;
@@ -885,6 +902,44 @@ export default function JobDetail({
                                                 </svg>
                                             </div>
                                         </a>
+
+                                        {/* URLコピーボタン */}
+                                        <button
+                                            onClick={copyToClipboard}
+                                            className="p-job-detail__share-button p-job-detail__share-button--copy"
+                                            title="URLをコピー"
+                                        >
+                                            <div className="p-job-detail__share-button-content">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                >
+                                                    <rect
+                                                        x="9"
+                                                        y="9"
+                                                        width="13"
+                                                        height="13"
+                                                        rx="2"
+                                                        ry="2"
+                                                    ></rect>
+                                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                                </svg>
+                                            </div>
+                                        </button>
+
+                                        {/* コピー成功時の通知 */}
+                                        {copied && (
+                                            <div className="p-job-detail__copy-notification">
+                                                URLをコピーしました!
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}
