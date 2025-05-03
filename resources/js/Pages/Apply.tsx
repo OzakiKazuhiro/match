@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -40,8 +41,28 @@ export default function Apply({
         message: "",
     });
 
+    // メッセージの最大文字数
+    const MAX_MESSAGE_LENGTH = 500;
+
+    // 残り文字数と制限オーバーのチェック
+    const remainingChars = MAX_MESSAGE_LENGTH - data.message.length;
+    const isOverLimit = remainingChars < 0;
+
+    // 文字数表示の色を設定
+    const getCountColor = () => {
+        if (remainingChars < 0) return "#dc3545"; // 赤（エラー）
+        if (remainingChars < MAX_MESSAGE_LENGTH * 0.1) return "#ffc107"; // 黄色（警告）
+        return "#6c757d"; // デフォルト色
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        // 文字数制限チェック
+        if (isOverLimit) {
+            return; // 制限オーバーの場合は送信しない
+        }
+
         post(route("job-listings.apply.store", jobListing.id));
     };
 
@@ -178,10 +199,17 @@ export default function Apply({
                                             <span className="p-apply__required">
                                                 *
                                             </span>
+                                            <span className="p-apply__form-help">
+                                                (最大500文字)
+                                            </span>
                                         </label>
                                         <textarea
                                             id="message"
-                                            className="p-apply__form-textarea"
+                                            className={`p-apply__form-textarea ${
+                                                isOverLimit
+                                                    ? "p-apply__form-textarea--error"
+                                                    : ""
+                                            }`}
                                             placeholder="案件に対するあなたの強みや、質問事項などをメッセージしてください"
                                             value={data.message}
                                             onChange={(e) =>
@@ -192,7 +220,16 @@ export default function Apply({
                                             }
                                             rows={8}
                                             required
+                                            maxLength={MAX_MESSAGE_LENGTH}
                                         ></textarea>
+                                        <div
+                                            className="p-apply__character-counter"
+                                            style={{ color: getCountColor() }}
+                                        >
+                                            {isOverLimit
+                                                ? "文字数制限を超えています"
+                                                : `残り ${remainingChars} 文字`}
+                                        </div>
                                         {errors.message && (
                                             <InputError
                                                 message={errors.message}
@@ -214,7 +251,7 @@ export default function Apply({
                                         <button
                                             type="submit"
                                             className="p-apply__submit-button"
-                                            disabled={processing}
+                                            disabled={processing || isOverLimit}
                                         >
                                             {processing
                                                 ? "送信中..."
