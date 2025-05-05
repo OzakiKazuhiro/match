@@ -10,13 +10,11 @@
 // Object
 // Component
 @forward "object/component/button";
-@forward "object/component/form";
 @forward "object/component/input";
 @forward "object/component/favorite-button";
 @forward "object/component/modal";
 
 // Project
-@forward "object/project/project";
 @forward "object/project/top";
 @forward "object/project/auth";
 @forward "object/project/dashboard";

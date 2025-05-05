@@ -38,8 +38,8 @@
 
         &:focus {
             outline: none;
-            ring-width: 2px;
-            ring-offset: 2px;
+            outline-width: 2px;
+            outline-offset: 2px;
         }
 
         &--cancel {
@@ -52,7 +52,7 @@
             }
 
             &:focus {
-                ring-color: #6366f1;
+                outline-color: #6366f1;
             }
         }
 
@@ -66,7 +66,7 @@
             }
 
             &:focus {
-                ring-color: #ef4444;
+                outline-color: #ef4444;
             }
         }
 
@@ -80,7 +80,7 @@
             }
 
             &:focus {
-                ring-color: #10b981;
+                outline-color: #10b981;
             }
         }
     }

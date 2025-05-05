@@ -506,6 +506,7 @@
         line-height: 1.5;
         display: -webkit-box;
         -webkit-line-clamp: 3;
+        line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         flex: 1;
@@ -770,23 +771,6 @@
                     padding: 25px 20px;
                 }
             }
-
-            // &:hover {
-            //     transform: translateY(-10px);
-            //     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
-
-            //     .p-top__problem-text {
-            //         background: linear-gradient(
-            //             135deg,
-            //             rgba(108, 195, 224, 0.1) 0%,
-            //             rgba(139, 195, 74, 0.1) 100%
-            //         );
-            //     }
-
-            //     .p-top__problem-icon img {
-            //         transform: scale(1.05);
-            //     }
-            // }
         }
     }
 

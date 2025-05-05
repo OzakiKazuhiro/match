@@ -784,8 +784,8 @@ textarea {
 }
 .p-modal__button:focus {
   outline: none;
-  ring-width: 2px;
-  ring-offset: 2px;
+  outline-width: 2px;
+  outline-offset: 2px;
 }
 .p-modal__button--cancel {
   color: #374151;
@@ -796,7 +796,7 @@ textarea {
   background-color: #f9fafb;
 }
 .p-modal__button--cancel:focus {
-  ring-color: #6366f1;
+  outline-color: #6366f1;
 }
 .p-modal__button--danger {
   color: #ffffff;
@@ -807,7 +807,7 @@ textarea {
   background-color: #b91c1c;
 }
 .p-modal__button--danger:focus {
-  ring-color: #ef4444;
+  outline-color: #ef4444;
 }
 .p-modal__button--success {
   color: #ffffff;
@@ -818,7 +818,7 @@ textarea {
   background-color: #059669;
 }
 .p-modal__button--success:focus {
-  ring-color: #10b981;
+  outline-color: #10b981;
 }
 .p-top {
   /* 納品までの流れセクション */
@@ -1286,6 +1286,7 @@ textarea {
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: 1;
