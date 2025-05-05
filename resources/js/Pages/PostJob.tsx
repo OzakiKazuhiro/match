@@ -26,7 +26,7 @@ function DescriptionCount({ current, max }: { current: number; max: number }) {
     );
 }
 
-export default function PostJob({ auth }: PageProps) {
+export default function PostJob() {
     const [customSkill, setCustomSkill] = useState("");
     const [customPreferredSkill, setCustomPreferredSkill] = useState("");
     // 表示用の実際の金額を保持する状態

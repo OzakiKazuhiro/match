@@ -2552,8 +2552,7 @@ function DescriptionCount(_ref) {
     children: [current, " / ", max, "\u6587\u5B57"]
   });
 }
-function PostJob(_ref2) {
-  var auth = _ref2.auth;
+function PostJob() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
     customSkill = _useState2[0],
@@ -2636,7 +2635,7 @@ function PostJob(_ref2) {
     }));
   };
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
+    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
       var isValid, errorFields, _i, _errorFields, field, element;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
@@ -2694,13 +2693,13 @@ function PostJob(_ref2) {
       }, _callee);
     }));
     return function handleSubmit(_x) {
-      return _ref3.apply(this, arguments);
+      return _ref2.apply(this, arguments);
     };
   }();
 
   // 実際の送信処理
   var submitForm = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var _document$querySelect, submissionData, csrfToken, response, firstErrorField, element;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
@@ -2766,7 +2765,7 @@ function PostJob(_ref2) {
       }, _callee2, null, [[1, 11]]);
     }));
     return function submitForm() {
-      return _ref4.apply(this, arguments);
+      return _ref3.apply(this, arguments);
     };
   }();
 

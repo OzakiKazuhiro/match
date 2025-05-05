@@ -18,11 +18,12 @@ Route::get('/', function () {
     ]);
 });
 
-// 利用規約ページ
+// 利用規約ページへ遷移
 Route::get('/terms', function () {
     return Inertia::render('Terms');
 })->name('terms');
 
+// マイページへ遷移
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

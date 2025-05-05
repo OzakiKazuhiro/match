@@ -22,25 +22,20 @@ class JobListingController extends Controller
      */
     public function index(Request $request): Response
     {
-        // クエリパラメータからフィルタータイプとソートオプションを取得
         $type = $request->input('type');
-        $sort = $request->input('sort', 'latest'); // デフォルトは最新順
+        $sort = $request->input('sort', 'latest');
         $category = $request->input('category');
         $search = $request->input('search');
         $favoritesOnly = $request->has('favorites_only');
         
-        // 認証されているユーザーの応募済み案件IDを取得
+        
         $userApplications = [];
         $applicationStatuses = [];
-        
-        // 認証されているユーザーのお気に入り案件IDを取得
         $userFavorites = [];
         $user = null;
         
         if (auth()->check()) {
             $user = auth()->user();
-            
-            // ユーザーの応募済み案件IDを取得
             $applications = $user->applications()->get();
             $userApplications = $applications->pluck('job_listing_id')->toArray();
             

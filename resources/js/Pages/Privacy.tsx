@@ -7,7 +7,6 @@ export default function Privacy() {
             <Head title="プライバシーポリシー" />
 
             <div className="p-terms__header">
-                {/* <h1 className="p-terms__title">match プライバシーポリシー</h1> */}
                 <div className="p-terms__updated">2025年4月1日 制定・施行</div>
             </div>
 
