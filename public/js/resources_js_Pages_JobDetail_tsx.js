@@ -2263,13 +2263,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
+/* harmony import */ var _Components_Modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/Modal */ "./resources/js/Components/Modal.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
 
 
 // パブリックメッセージの型定義
@@ -2313,16 +2317,73 @@ var formatMessageDate = function formatMessageDate(dateString) {
  * 案件詳細ページなどで表示される公開メッセージ
  */
 var PublicMessage = function PublicMessage(_ref) {
-  var message = _ref.message;
+  var message = _ref.message,
+    currentUserId = _ref.currentUserId;
   // 表示状態を管理するstate
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     isExpanded = _useState2[0],
     setIsExpanded = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    showEditModal = _useState4[0],
+    setShowEditModal = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    showDeleteModal = _useState6[0],
+    setShowDeleteModal = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(message.message),
+    _useState8 = _slicedToArray(_useState7, 2),
+    editMessage = _useState8[0],
+    setEditMessage = _useState8[1];
+
+  // 自分のメッセージかどうか
+  var isMyMessage = currentUserId && currentUserId === message.user_id;
 
   // メッセージの長さ定数
   var MAX_MESSAGE_LENGTH = 300; // 省略表示する文字数の閾値
   var isLongMessage = message.message.length > MAX_MESSAGE_LENGTH;
+
+  // 編集モーダルを開く
+  var openEditModal = function openEditModal() {
+    setEditMessage(message.message);
+    setShowEditModal(true);
+  };
+
+  // 削除確認モーダルを開く
+  var openDeleteModal = function openDeleteModal() {
+    setShowDeleteModal(true);
+  };
+
+  // 編集をキャンセル
+  var cancelEdit = function cancelEdit() {
+    setShowEditModal(false);
+  };
+
+  // 削除をキャンセル
+  var cancelDelete = function cancelDelete() {
+    setShowDeleteModal(false);
+  };
+
+  // メッセージを更新
+  var updateMessage = function updateMessage() {
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.patch(route("public-messages.update", message.id), {
+      message: editMessage
+    }, {
+      onSuccess: function onSuccess() {
+        setShowEditModal(false);
+      }
+    });
+  };
+
+  // メッセージを削除
+  var deleteMessage = function deleteMessage() {
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router["delete"](route("public-messages.destroy", message.id), {
+      onSuccess: function onSuccess() {
+        setShowDeleteModal(false);
+      }
+    });
+  };
 
   // 日付のフォーマット
   var formatDate = function formatDate(dateString) {
@@ -2338,15 +2399,15 @@ var PublicMessage = function PublicMessage(_ref) {
 
   // 省略表示用のメッセージテキスト
   var displayMessage = isLongMessage && !isExpanded ? "".concat(message.message.substring(0, MAX_MESSAGE_LENGTH), "...") : message.message;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
     className: "p-public-message",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
       className: "p-public-message__header",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "p-public-message__user",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "p-public-message__avatar",
-          children: message.user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+          children: message.user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
             src: getAvatarUrl(message.user.avatar),
             alt: "".concat(message.user.name, "\u306E\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u753B\u50CF"),
             className: "p-public-message__avatar-image",
@@ -2355,38 +2416,113 @@ var PublicMessage = function PublicMessage(_ref) {
                 e.currentTarget.parentElement.innerHTML = message.user.name.charAt(0).toUpperCase();
               }
             }
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: "p-public-message__avatar-placeholder",
             children: message.user.name.charAt(0).toUpperCase()
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "p-public-message__user-info",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: "p-public-message__name",
             children: message.user.name.length > 10 ? "".concat(message.user.name.substring(0, 10), "...") : message.user.name
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "p-public-message__date",
-            children: formatDate(message.created_at)
+            children: [formatDate(message.created_at), message.created_at !== message.updated_at && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
+              className: "p-public-message__edited",
+              children: [" ", "(\u7DE8\u96C6\u6E08\u307F)"]
+            })]
           })]
         })]
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      }), isMyMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "p-public-message__actions",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+          onClick: openEditModal,
+          className: "p-public-message__action-button p-public-message__action-button--edit",
+          children: "\u7DE8\u96C6"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+          onClick: openDeleteModal,
+          className: "p-public-message__action-button p-public-message__action-button--delete",
+          children: "\u524A\u9664"
+        })]
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
       className: "p-public-message__body",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "p-public-message__content",
         children: displayMessage.split("\n").map(function (line, index) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
             className: "p-public-message__line",
             children: line
           }, index);
         })
-      }), isLongMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+      }), isLongMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
         className: "p-public-message__toggle-button",
         onClick: function onClick() {
           return setIsExpanded(!isExpanded);
         },
         children: isExpanded ? "閉じる" : "続きを読む"
       })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      show: showEditModal,
+      onClose: cancelEdit,
+      maxWidth: "md",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "p-6",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+          className: "text-lg font-medium text-gray-900",
+          children: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u7DE8\u96C6"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "mt-4",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("textarea", {
+            className: "w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50",
+            value: editMessage,
+            onChange: function onChange(e) {
+              return setEditMessage(e.target.value);
+            },
+            rows: 6
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "mt-4 flex justify-end space-x-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            type: "button",
+            className: "inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
+            onClick: cancelEdit,
+            children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            type: "button",
+            className: "inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+            onClick: updateMessage,
+            children: "\u66F4\u65B0\u3059\u308B"
+          })]
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      show: showDeleteModal,
+      onClose: cancelDelete,
+      maxWidth: "md",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "p-6",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+          className: "text-lg font-medium text-gray-900",
+          children: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u524A\u9664"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+          className: "mt-3 text-sm text-gray-600",
+          children: "\u3053\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "mt-6 flex justify-end space-x-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            type: "button",
+            className: "inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
+            onClick: cancelDelete,
+            children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+            type: "button",
+            className: "inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
+            onClick: deleteMessage,
+            children: "\u524A\u9664\u3059\u308B"
+          })]
+        })]
+      })
     })]
   });
 };
@@ -2842,19 +2978,58 @@ function JobDetail(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     copied = _useState2[0],
     setCopied = _useState2[1];
+  var copyUrlInputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
 
   // URLをクリップボードにコピーする関数
   var copyToClipboard = function copyToClipboard() {
-    // URLをクリップボードにコピー
-    navigator.clipboard.writeText(window.location.href);
+    var currentUrl = window.location.href;
 
-    // コピー成功表示
-    setCopied(true);
+    // モダンブラウザ向けの実装を試す
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(currentUrl).then(function () {
+        setCopied(true);
+        setTimeout(function () {
+          return setCopied(false);
+        }, 3000);
+      })["catch"](function () {
+        // モダンな方法が失敗した場合はフォールバック
+        fallbackCopyToClipboard(currentUrl);
+      });
+    } else {
+      // Clipboard APIがサポートされていない場合はフォールバック
+      fallbackCopyToClipboard(currentUrl);
+    }
+  };
 
-    // 3秒後に通知を非表示
-    setTimeout(function () {
-      setCopied(false);
-    }, 3000);
+  // フォールバックのコピー実装（テキストエリア経由）
+  var fallbackCopyToClipboard = function fallbackCopyToClipboard(text) {
+    try {
+      // 一時的な要素を作成
+      var textArea = document.createElement("textarea");
+      textArea.value = text;
+
+      // CSSで非表示にする
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+
+      // テキストを選択してコピー
+      textArea.focus();
+      textArea.select();
+      var successful = document.execCommand("copy");
+
+      // 要素を削除
+      document.body.removeChild(textArea);
+      if (successful) {
+        setCopied(true);
+        setTimeout(function () {
+          return setCopied(false);
+        }, 3000);
+      }
+    } catch (err) {
+      console.error("コピーに失敗しました:", err);
+    }
   };
 
   // メッセージの最大文字数と入力チェック用の状態
@@ -3139,7 +3314,8 @@ function JobDetail(_ref) {
                 children: publicMessages.data.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.Fragment, {
                   children: [publicMessages.data.map(function (message) {
                     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_PublicMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
-                      message: message
+                      message: message,
+                      currentUserId: auth.user.id
                     }, message.id);
                   }), publicMessages.last_page > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                     className: "p-job-detail__pagination",

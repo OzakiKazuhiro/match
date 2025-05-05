@@ -21,6 +21,45 @@
         margin-bottom: 12px;
     }
 
+    &__actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    &__action-button {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &--edit {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #bbdefb;
+
+            &:hover {
+                background-color: #bbdefb;
+            }
+        }
+
+        &--delete {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+
+            &:hover {
+                background-color: #ffcdd2;
+            }
+        }
+    }
+
+    &__edited {
+        font-size: 0.75rem;
+        color: #888;
+        font-style: italic;
+    }
+
     &__user {
         display: flex;
         align-items: center;

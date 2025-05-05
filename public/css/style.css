@@ -6562,6 +6562,38 @@ textarea {
   align-items: flex-start;
   margin-bottom: 12px;
 }
+.p-public-message__actions {
+  display: flex;
+  gap: 8px;
+}
+.p-public-message__action-button {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.p-public-message__action-button--edit {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #bbdefb;
+}
+.p-public-message__action-button--edit:hover {
+  background-color: #bbdefb;
+}
+.p-public-message__action-button--delete {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+.p-public-message__action-button--delete:hover {
+  background-color: #ffcdd2;
+}
+.p-public-message__edited {
+  font-size: 0.75rem;
+  color: #888;
+  font-style: italic;
+}
 .p-public-message__user {
   display: flex;
   align-items: center;

@@ -70,6 +70,12 @@ Route::middleware(['auth', 'verified'])->prefix('public-messages')->name('public
     
     // 特定の案件のパブリックメッセージ詳細
     Route::get('/{jobListing}', [PublicMessageController::class, 'show'])->name('show');
+    
+    // パブリックメッセージの編集
+    Route::patch('/{message}', [JobListingController::class, 'updateMessage'])->name('update');
+    
+    // パブリックメッセージの削除
+    Route::delete('/{message}', [JobListingController::class, 'destroyMessage'])->name('destroy');
 });
 
 // 案件投稿ページへのショートカットルート

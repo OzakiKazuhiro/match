@@ -193,8 +193,8 @@ class JobListingController extends Controller
         // 応募可能かどうかを確認（自分の案件ではなく、まだ応募していない場合）
         $canApply = $user->id !== $jobListing->user_id && !$hasApplied && !$jobListing->is_closed;
         
-        // 総案件数を取得（ナビゲーション用）
-        $totalJobListings = JobListing::count();
+        // 投稿者が投稿した案件数を取得
+        $totalJobListings = JobListing::where('user_id', $jobListing->user_id)->count();
         
         // お気に入り状態を確認
         $isFavorited = $jobListing->isFavoritedBy($user);
@@ -256,5 +256,46 @@ class JobListingController extends Controller
         session()->flash('message', '案件の募集を終了しました');
         
         return redirect()->route('job-listings.show', $jobListing);
+    }
+
+    /**
+     * パブリックメッセージを更新
+     */
+    public function updateMessage(Request $request, PublicMessage $message): RedirectResponse
+    {
+        // 権限チェック（投稿者本人のみ編集可能）
+        if (Auth::id() !== $message->user_id) {
+            abort(403);
+        }
+        
+        // バリデーション
+        $validated = $request->validate([
+            'message' => 'required|string|max:500',
+        ]);
+        
+        $message->update([
+            'message' => $validated['message'],
+        ]);
+        
+        session()->flash('message', 'メッセージを更新しました');
+        
+        return redirect()->back();
+    }
+    
+    /**
+     * パブリックメッセージを削除
+     */
+    public function destroyMessage(PublicMessage $message): RedirectResponse
+    {
+        // 権限チェック（投稿者本人のみ削除可能）
+        if (Auth::id() !== $message->user_id) {
+            abort(403);
+        }
+        
+        $message->delete();
+        
+        session()->flash('message', 'メッセージを削除しました');
+        
+        return redirect()->back();
     }
 } 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, createRef } from "react";
 import { Head, Link, useForm, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -106,19 +106,58 @@ export default function JobDetail({
 
     // URLコピー機能のための状態管理
     const [copied, setCopied] = useState(false);
+    const copyUrlInputRef = useRef<HTMLInputElement>(null);
 
     // URLをクリップボードにコピーする関数
     const copyToClipboard = () => {
-        // URLをクリップボードにコピー
-        navigator.clipboard.writeText(window.location.href);
+        const currentUrl = window.location.href;
 
-        // コピー成功表示
-        setCopied(true);
+        // モダンブラウザ向けの実装を試す
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard
+                .writeText(currentUrl)
+                .then(() => {
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 3000);
+                })
+                .catch(() => {
+                    // モダンな方法が失敗した場合はフォールバック
+                    fallbackCopyToClipboard(currentUrl);
+                });
+        } else {
+            // Clipboard APIがサポートされていない場合はフォールバック
+            fallbackCopyToClipboard(currentUrl);
+        }
+    };
 
-        // 3秒後に通知を非表示
-        setTimeout(() => {
-            setCopied(false);
-        }, 3000);
+    // フォールバックのコピー実装（テキストエリア経由）
+    const fallbackCopyToClipboard = (text: string) => {
+        try {
+            // 一時的な要素を作成
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+
+            // CSSで非表示にする
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+
+            // テキストを選択してコピー
+            textArea.focus();
+            textArea.select();
+            const successful = document.execCommand("copy");
+
+            // 要素を削除
+            document.body.removeChild(textArea);
+
+            if (successful) {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 3000);
+            }
+        } catch (err) {
+            console.error("コピーに失敗しました:", err);
+        }
     };
 
     // メッセージの最大文字数と入力チェック用の状態
@@ -466,6 +505,9 @@ export default function JobDetail({
                                                     <PublicMessage
                                                         key={message.id}
                                                         message={message}
+                                                        currentUserId={
+                                                            auth.user.id
+                                                        }
                                                     />
                                                 )
                                             )}
