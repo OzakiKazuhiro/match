@@ -922,6 +922,18 @@ export default function Top({ auth }: PageProps) {
                                         </p>
                                     </div>
                                 </div>
+                                <div className="p-top__faq-item">
+                                    <h3 className="p-top__faq-question">
+                                        <span className="p-top__faq-q">Q.</span>
+                                        プロフィールの設定は必要ですか？
+                                    </h3>
+                                    <div className="p-top__faq-answer">
+                                        <span className="p-top__faq-a">A.</span>
+                                        <p>
+                                            必須ではありませんが、案件の成約率を高めるために設定をおすすめします。プロフィール設定では、アイコン画像、メールアドレス、自己紹介文の3項目を登録できます。特に自己紹介文では、スキルやこれまでの実績を記載すると良いでしょう。
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>

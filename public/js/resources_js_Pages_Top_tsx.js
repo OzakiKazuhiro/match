@@ -938,6 +938,23 @@ function Top(_ref) {
                     children: "\u5358\u767A\u6848\u4EF6\u306E\u5834\u5408\u306F\u3001\u6848\u4EF6\u6295\u7A3F\u6642\u306B\u4E0A\u9650\u3068\u4E0B\u9650\u306E\u91D1\u984D\u3092\u8A2D\u5B9A\u3067\u304D\u307E\u3059\uFF08\u4F8B\uFF1A5\u4E07\u5186\u301C10\u4E07\u5186\uFF09\u3002\u6700\u7D42\u7684\u306A\u5831\u916C\u984D\u306F\u3001\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8\u3067\u306E\u76F8\u8AC7\u306B\u3088\u308A\u5F53\u4E8B\u8005\u9593\u3067\u6C7A\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6\u306E\u5834\u5408\u306F\u3001\u30B5\u30FC\u30D3\u30B9\u306E\u53CE\u76CA\u5206\u914D\u65B9\u6CD5\u306B\u3064\u3044\u3066\u5F53\u4E8B\u8005\u9593\u3067\u53D6\u308A\u6C7A\u3081\u3066\u3044\u305F\u3060\u304D\u307E\u3059\u3002"
                   })]
                 })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                className: "p-top__faq-item",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h3", {
+                  className: "p-top__faq-question",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                    className: "p-top__faq-q",
+                    children: "Q."
+                  }), "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u306E\u8A2D\u5B9A\u306F\u5FC5\u8981\u3067\u3059\u304B\uFF1F"]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: "p-top__faq-answer",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                    className: "p-top__faq-a",
+                    children: "A."
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+                    children: "\u5FC5\u9808\u3067\u306F\u3042\u308A\u307E\u305B\u3093\u304C\u3001\u6848\u4EF6\u306E\u6210\u7D04\u7387\u3092\u9AD8\u3081\u308B\u305F\u3081\u306B\u8A2D\u5B9A\u3092\u304A\u3059\u3059\u3081\u3057\u307E\u3059\u3002\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u8A2D\u5B9A\u3067\u306F\u3001\u30A2\u30A4\u30B3\u30F3\u753B\u50CF\u3001\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3001\u81EA\u5DF1\u7D39\u4ECB\u6587\u306E3\u9805\u76EE\u3092\u767B\u9332\u3067\u304D\u307E\u3059\u3002\u7279\u306B\u81EA\u5DF1\u7D39\u4ECB\u6587\u3067\u306F\u3001\u30B9\u30AD\u30EB\u3084\u3053\u308C\u307E\u3067\u306E\u5B9F\u7E3E\u3092\u8A18\u8F09\u3059\u308B\u3068\u826F\u3044\u3067\u3057\u3087\u3046\u3002"
+                  })]
+                })]
               })]
             })]
           })
