@@ -27,6 +27,7 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
             'remove_avatar' => ['nullable', 'boolean'],
+            'bio' => ['nullable', 'string', 'max:500'],
         ];
     }
 
@@ -37,6 +38,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'email.in' => 'セキュリティ上の理由からメールアドレスは変更できません。',
+            'bio.max' => '自己紹介文は500文字以内で入力してください。',
         ];
     }
 }

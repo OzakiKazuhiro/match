@@ -2933,6 +2933,10 @@ function JobDetail(_ref) {
     _useState6 = _slicedToArray(_useState5, 2),
     confirmingApply = _useState6[0],
     setConfirmingApply = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState8 = _slicedToArray(_useState7, 2),
+    showBioModal = _useState8[0],
+    setShowBioModal = _useState8[1];
 
   // 募集終了確認モーダルを開く
   var confirmJobClose = function confirmJobClose() {
@@ -2948,6 +2952,23 @@ function JobDetail(_ref) {
   var closeModal = function closeModal() {
     setConfirmingClose(false);
     setConfirmingApply(false);
+  };
+
+  // 自己紹介文を省略表示するための関数
+  var truncateBio = function truncateBio(bio) {
+    var maxLength = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 50;
+    if (bio.length <= maxLength) return bio;
+    return bio.substring(0, maxLength) + "...";
+  };
+
+  // 自己紹介文の全文を表示するモーダルを開く
+  var openBioModal = function openBioModal() {
+    setShowBioModal(true);
+  };
+
+  // 自己紹介文モーダルを閉じる
+  var closeBioModal = function closeBioModal() {
+    setShowBioModal(false);
   };
 
   // 募集終了の実行
@@ -3333,6 +3354,24 @@ function JobDetail(_ref) {
                     children: [totalJobListings, "\u4EF6"]
                   })]
                 })
+              }), jobListing.user.bio && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+                className: "p-job-detail__author-bio",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h3", {
+                  className: "p-job-detail__author-bio-title",
+                  children: "\u81EA\u5DF1\u7D39\u4ECB"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+                  className: "p-job-detail__author-bio-content",
+                  children: [truncateBio(jobListing.user.bio).split("\n").map(function (paragraph, index) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
+                      className: "p-job-detail__author-bio-paragraph",
+                      children: paragraph
+                    }, index);
+                  }), jobListing.user.bio.length > 50 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
+                    className: "p-job-detail__author-bio-more",
+                    onClick: openBioModal,
+                    children: "\u3082\u3063\u3068\u898B\u308B"
+                  })]
+                })]
               })]
             }), !jobListing.is_closed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-job-detail__card p-job-detail__card--share",
@@ -3342,7 +3381,7 @@ function JobDetail(_ref) {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "p-job-detail__share-buttons",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
-                  href: "https://x.com/intent/tweet?text=".concat(encodeURIComponent("\u3010\u6848\u4EF6\u60C5\u5831\u3011".concat(jobListing.title, " | ").concat(jobListing.type === "one_time" ? "単発案件" : "レベニューシェア", " | Match")), "&url=").concat(encodeURIComponent(window.location.href), "&hashtags=").concat(encodeURIComponent("エンジニア,案件募集,Match")),
+                  href: "https://x.com/intent/tweet?text=".concat(encodeURIComponent("\u3010\u6848\u4EF6\u60C5\u5831\u3011".concat(jobListing.title, " | ").concat(jobListing.type === "one_time" ? "単発案件" : "レベニューシェア", " | Match")), "&url=").concat(encodeURIComponent(window.location.href), "&hashtags=").concat(encodeURIComponent("エンジニア,案件募集,match")),
                   target: "_blank",
                   rel: "noopener noreferrer",
                   className: "p-job-detail__share-button p-job-detail__share-button--twitter",
@@ -3473,6 +3512,33 @@ function JobDetail(_ref) {
             onClick: handleApply,
             children: "\u5FDC\u52DF\u3059\u308B"
           })]
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      show: showBioModal,
+      onClose: closeBioModal,
+      maxWidth: "md",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+        className: "p-6",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("h2", {
+          className: "text-lg font-medium text-gray-900 mb-4",
+          children: [jobListing.user.name, "\u3055\u3093\u306E\u81EA\u5DF1\u7D39\u4ECB"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+          className: "p-job-detail__author-bio-modal-content",
+          children: jobListing.user.bio && jobListing.user.bio.split("\n").map(function (paragraph, index) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
+              className: "mt-2 text-sm text-gray-600",
+              children: paragraph
+            }, index);
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+          className: "mt-6 flex justify-end",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
+            type: "button",
+            className: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
+            onClick: closeBioModal,
+            children: "\u9589\u3058\u308B"
+          })
         })]
       })
     })]

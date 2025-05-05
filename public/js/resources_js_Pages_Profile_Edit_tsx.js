@@ -19676,11 +19676,23 @@ function UpdateProfileInformation(_ref) {
     _useState12 = _slicedToArray(_useState11, 2),
     nameIsValid = _useState12[0],
     setNameIsValid = _useState12[1];
+
+  // 自己紹介文のバリデーション状態
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState14 = _slicedToArray(_useState13, 2),
+    bioValidationMessage = _useState14[0],
+    setBioValidationMessage = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState16 = _slicedToArray(_useState15, 2),
+    bioIsValid = _useState16[0],
+    setBioIsValid = _useState16[1];
+  var MAX_BIO_LENGTH = 500;
   var _useForm = (0,_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.useForm)({
       name: user.name,
       email: user.email,
       avatar: null,
-      remove_avatar: false
+      remove_avatar: false,
+      bio: user.bio || ""
     }),
     data = _useForm.data,
     setData = _useForm.setData,
@@ -19716,6 +19728,28 @@ function UpdateProfileInformation(_ref) {
       debouncedValidateName.cancel();
     };
   }, [data.name]);
+
+  // 自己紹介文のバリデーションを行う関数
+  var validateBio = function validateBio(bio) {
+    if (bio.length > MAX_BIO_LENGTH) {
+      setBioIsValid(false);
+      setBioValidationMessage("\u81EA\u5DF1\u7D39\u4ECB\u6587\u306F".concat(MAX_BIO_LENGTH, "\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"));
+      return;
+    }
+    setBioIsValid(true);
+    setBioValidationMessage(null);
+  };
+
+  // 自己紹介文入力のたびに検証実行
+  var debouncedValidateBio = (0,lodash__WEBPACK_IMPORTED_MODULE_6__.debounce)(validateBio, 300);
+
+  // 自己紹介文が変更されたときに検証を実行
+  (0,react__WEBPACK_IMPORTED_MODULE_5__.useEffect)(function () {
+    debouncedValidateBio(data.bio);
+    return function () {
+      debouncedValidateBio.cancel();
+    };
+  }, [data.bio]);
   var handleAvatarChange = function handleAvatarChange(e) {
     var _e$target$files;
     var file = ((_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0]) || null;
@@ -19761,7 +19795,7 @@ function UpdateProfileInformation(_ref) {
       setNameValidationMessage("お名前を入力してください。");
       return;
     }
-    if (nameIsValid === false) {
+    if (nameIsValid === false || bioIsValid === false) {
       return;
     }
 
@@ -19770,6 +19804,7 @@ function UpdateProfileInformation(_ref) {
     formData.append("_method", "PATCH"); // Laravel method spoofing
     formData.append("name", data.name);
     formData.append("email", data.email);
+    formData.append("bio", data.bio);
     formData.append("remove_avatar", data.remove_avatar ? "1" : "0");
 
     // アバター画像があれば追加
@@ -19896,6 +19931,35 @@ function UpdateProfileInformation(_ref) {
             className: data.name.length > 50 ? "text-red-500" : "",
             children: [data.name.length, "/50\u6587\u5B57"]
           })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "p-profile__form-group",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          htmlFor: "bio",
+          value: "\u81EA\u5DF1\u7D39\u4ECB\u6587",
+          className: "p-profile__form-label"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("textarea", {
+          id: "bio",
+          className: "p-profile__form-textarea ".concat(bioIsValid === false ? "border-red-500" : ""),
+          value: data.bio,
+          onChange: function onChange(e) {
+            return setData("bio", e.target.value);
+          },
+          rows: 5,
+          maxLength: MAX_BIO_LENGTH,
+          placeholder: "\u3042\u306A\u305F\u306E\u30B9\u30AD\u30EB\u3084\u7D4C\u9A13\u3001\u5F97\u610F\u5206\u91CE\u306A\u3069\u3092500\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "p-profile__form-hint",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+            className: bioIsValid === false ? "text-red-500" : "",
+            children: [data.bio.length, "/", MAX_BIO_LENGTH, "\u6587\u5B57"]
+          })
+        }), bioValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "p-profile__form-error",
+          children: bioValidationMessage
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          className: "p-profile__form-error",
+          message: errors.bio
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "p-profile__form-group",

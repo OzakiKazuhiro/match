@@ -34,6 +34,7 @@ interface User {
     name: string;
     email: string;
     avatar?: string;
+    bio?: string;
     created_at?: string;
 }
 
@@ -197,6 +198,7 @@ export default function JobDetail({
 
     const [confirmingClose, setConfirmingClose] = useState(false);
     const [confirmingApply, setConfirmingApply] = useState(false);
+    const [showBioModal, setShowBioModal] = useState(false);
 
     // 募集終了確認モーダルを開く
     const confirmJobClose = () => {
@@ -212,6 +214,22 @@ export default function JobDetail({
     const closeModal = () => {
         setConfirmingClose(false);
         setConfirmingApply(false);
+    };
+
+    // 自己紹介文を省略表示するための関数
+    const truncateBio = (bio: string, maxLength: number = 50) => {
+        if (bio.length <= maxLength) return bio;
+        return bio.substring(0, maxLength) + "...";
+    };
+
+    // 自己紹介文の全文を表示するモーダルを開く
+    const openBioModal = () => {
+        setShowBioModal(true);
+    };
+
+    // 自己紹介文モーダルを閉じる
+    const closeBioModal = () => {
+        setShowBioModal(false);
     };
 
     // 募集終了の実行
@@ -856,6 +874,36 @@ export default function JobDetail({
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* 自己紹介文の表示 */}
+                                {jobListing.user.bio && (
+                                    <div className="p-job-detail__author-bio">
+                                        <h3 className="p-job-detail__author-bio-title">
+                                            自己紹介
+                                        </h3>
+                                        <div className="p-job-detail__author-bio-content">
+                                            {truncateBio(jobListing.user.bio)
+                                                .split("\n")
+                                                .map((paragraph, index) => (
+                                                    <p
+                                                        key={index}
+                                                        className="p-job-detail__author-bio-paragraph"
+                                                    >
+                                                        {paragraph}
+                                                    </p>
+                                                ))}
+                                            {jobListing.user.bio.length >
+                                                50 && (
+                                                <button
+                                                    className="p-job-detail__author-bio-more"
+                                                    onClick={openBioModal}
+                                                >
+                                                    もっと見る
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             {/* シェアボタン */}
@@ -878,7 +926,7 @@ export default function JobDetail({
                                             )}&url=${encodeURIComponent(
                                                 window.location.href
                                             )}&hashtags=${encodeURIComponent(
-                                                "エンジニア,案件募集,Match"
+                                                "エンジニア,案件募集,match"
                                             )}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -1029,6 +1077,39 @@ export default function JobDetail({
                             onClick={handleApply}
                         >
                             応募する
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+
+            {/* 自己紹介文モーダル */}
+            <Modal show={showBioModal} onClose={closeBioModal} maxWidth="md">
+                <div className="p-6">
+                    <h2 className="text-lg font-medium text-gray-900 mb-4">
+                        {jobListing.user.name}さんの自己紹介
+                    </h2>
+
+                    <div className="p-job-detail__author-bio-modal-content">
+                        {jobListing.user.bio &&
+                            jobListing.user.bio
+                                .split("\n")
+                                .map((paragraph, index) => (
+                                    <p
+                                        key={index}
+                                        className="mt-2 text-sm text-gray-600"
+                                    >
+                                        {paragraph}
+                                    </p>
+                                ))}
+                    </div>
+
+                    <div className="mt-6 flex justify-end">
+                        <button
+                            type="button"
+                            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            onClick={closeBioModal}
+                        >
+                            閉じる
                         </button>
                     </div>
                 </div>

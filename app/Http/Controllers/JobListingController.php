@@ -172,11 +172,11 @@ class JobListingController extends Controller
         $user = auth()->user();
         
         // 案件詳細を読み込み
-        $jobListing->load('user', 'user.profile');
+        $jobListing->load(['user']);
         
         // 公開メッセージを取得（ページネーション付き）
         $publicMessages = $jobListing->publicMessages()
-            ->with('user', 'user.profile')
+            ->with('user')
             ->orderBy('created_at', 'desc')
             ->paginate(5);
         

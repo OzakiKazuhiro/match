@@ -31,11 +31,19 @@ export default function UpdateProfileInformation({
     >(null);
     const [nameIsValid, setNameIsValid] = useState<boolean | null>(null);
 
+    // 自己紹介文のバリデーション状態
+    const [bioValidationMessage, setBioValidationMessage] = useState<
+        string | null
+    >(null);
+    const [bioIsValid, setBioIsValid] = useState<boolean | null>(null);
+    const MAX_BIO_LENGTH = 500;
+
     const { data, setData, post, patch, errors, processing, reset } = useForm({
         name: user.name,
         email: user.email,
         avatar: null as File | null,
         remove_avatar: false as boolean,
+        bio: user.bio || "",
     });
 
     // 名前のバリデーションを行う関数
@@ -67,6 +75,32 @@ export default function UpdateProfileInformation({
             debouncedValidateName.cancel();
         };
     }, [data.name]);
+
+    // 自己紹介文のバリデーションを行う関数
+    const validateBio = (bio: string) => {
+        if (bio.length > MAX_BIO_LENGTH) {
+            setBioIsValid(false);
+            setBioValidationMessage(
+                `自己紹介文は${MAX_BIO_LENGTH}文字以内で入力してください。`
+            );
+            return;
+        }
+
+        setBioIsValid(true);
+        setBioValidationMessage(null);
+    };
+
+    // 自己紹介文入力のたびに検証実行
+    const debouncedValidateBio = debounce(validateBio, 300);
+
+    // 自己紹介文が変更されたときに検証を実行
+    useEffect(() => {
+        debouncedValidateBio(data.bio);
+
+        return () => {
+            debouncedValidateBio.cancel();
+        };
+    }, [data.bio]);
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
@@ -116,7 +150,7 @@ export default function UpdateProfileInformation({
             return;
         }
 
-        if (nameIsValid === false) {
+        if (nameIsValid === false || bioIsValid === false) {
             return;
         }
 
@@ -125,6 +159,7 @@ export default function UpdateProfileInformation({
         formData.append("_method", "PATCH"); // Laravel method spoofing
         formData.append("name", data.name);
         formData.append("email", data.email);
+        formData.append("bio", data.bio);
         formData.append("remove_avatar", data.remove_avatar ? "1" : "0");
 
         // アバター画像があれば追加
@@ -278,6 +313,46 @@ export default function UpdateProfileInformation({
                             </span>
                         )}
                     </div>
+                </div>
+
+                <div className="p-profile__form-group">
+                    <InputLabel
+                        htmlFor="bio"
+                        value="自己紹介文"
+                        className="p-profile__form-label"
+                    />
+
+                    <textarea
+                        id="bio"
+                        className={`p-profile__form-textarea ${
+                            bioIsValid === false ? "border-red-500" : ""
+                        }`}
+                        value={data.bio}
+                        onChange={(e) => setData("bio", e.target.value)}
+                        rows={5}
+                        maxLength={MAX_BIO_LENGTH}
+                        placeholder="あなたのスキルや経験、得意分野などを500文字以内で入力してください"
+                    />
+
+                    <div className="p-profile__form-hint">
+                        <span
+                            className={
+                                bioIsValid === false ? "text-red-500" : ""
+                            }
+                        >
+                            {data.bio.length}/{MAX_BIO_LENGTH}文字
+                        </span>
+                    </div>
+
+                    {bioValidationMessage && (
+                        <div className="p-profile__form-error">
+                            {bioValidationMessage}
+                        </div>
+                    )}
+                    <InputError
+                        className="p-profile__form-error"
+                        message={errors.bio}
+                    />
                 </div>
 
                 <div className="p-profile__form-group">

@@ -47,6 +47,7 @@ class ProfileController extends Controller
         // 基本情報の更新（メールアドレスは除外）
         $user->fill([
             'name' => $request->name,
+            'bio' => $request->bio,
             // emailは更新しない
         ]);
 
