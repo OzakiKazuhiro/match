@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\ConversationGroup;
 use App\Notifications\ApplicationReceived;
 use App\Notifications\ApplicationAccepted;
+use App\Notifications\ApplicationRejected;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -173,7 +174,7 @@ class ApplicationController extends Controller
     }
     
     /**
-     * 応募ステータスを更新（承認/拒否）
+     * 応募のステータスを更新（承認/拒否）
      */
     public function updateStatus(Application $application, string $status): RedirectResponse
     {
@@ -221,6 +222,10 @@ class ApplicationController extends Controller
             // 応募者に承認通知を送信
             $applicant = $application->user;
             $applicant->notify(new ApplicationAccepted($application));
+        } else if ($status === 'declined') {
+            // 応募者に拒否通知を送信
+            $applicant = $application->user;
+            $applicant->notify(new ApplicationRejected($application));
         }
         
         $statusText = $status === 'accepted' ? '承認' : '拒否';

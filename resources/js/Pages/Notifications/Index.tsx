@@ -71,6 +71,16 @@ export default function NotificationsIndex({
             };
         }
 
+        if (notification.type === "App\\Notifications\\ApplicationRejected") {
+            const jobOwnerName = truncateName(data.job_owner_name);
+            return {
+                title: "応募が不採用となりました",
+                description: `「${data.job_listing_title}」への応募は${jobOwnerName}さんにより不採用となりました。`,
+                url: route("job-listings.index"),
+                actionText: "他の案件を探す",
+            };
+        }
+
         return {
             title: "通知",
             description: "新しい通知があります。",

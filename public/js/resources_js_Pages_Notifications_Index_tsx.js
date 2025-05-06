@@ -542,6 +542,15 @@ function NotificationsIndex(_ref) {
         actionText: "メッセージを確認する"
       };
     }
+    if (notification.type === "App\\Notifications\\ApplicationRejected") {
+      var _jobOwnerName = truncateName(data.job_owner_name);
+      return {
+        title: "応募が不採用となりました",
+        description: "\u300C".concat(data.job_listing_title, "\u300D\u3078\u306E\u5FDC\u52DF\u306F").concat(_jobOwnerName, "\u3055\u3093\u306B\u3088\u308A\u4E0D\u63A1\u7528\u3068\u306A\u308A\u307E\u3057\u305F\u3002"),
+        url: route("job-listings.index"),
+        actionText: "他の案件を探す"
+      };
+    }
     return {
       title: "通知",
       description: "新しい通知があります。",
