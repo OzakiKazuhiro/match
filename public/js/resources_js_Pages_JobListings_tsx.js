@@ -1737,6 +1737,9 @@ function JobListings(_ref) {
       url.searchParams.set("type", type);
     }
 
+    // ページパラメータを削除（必ず1ページ目から表示する）
+    url.searchParams["delete"]("page");
+
     // ページ遷移（サーバーリクエスト）
     window.location.href = url.toString();
   };
@@ -1775,6 +1778,9 @@ function JobListings(_ref) {
     // 並び替えオプションを設定
     url.searchParams.set("sort", option);
 
+    // ページパラメータを削除（必ず1ページ目から表示する）
+    url.searchParams["delete"]("page");
+
     // Inertiaリンクを使ってページ遷移（サーバーリクエスト）
     window.location.href = url.toString();
   };
@@ -1796,6 +1802,9 @@ function JobListings(_ref) {
     } else {
       url.searchParams.set("category", category);
     }
+
+    // ページパラメータを削除（必ず1ページ目から表示する）
+    url.searchParams["delete"]("page");
 
     // ページ遷移（サーバーリクエスト）
     window.location.href = url.toString();
@@ -1829,6 +1838,9 @@ function JobListings(_ref) {
       url.searchParams["delete"]("search");
     }
 
+    // ページパラメータを削除（必ず1ページ目から表示する）
+    url.searchParams["delete"]("page");
+
     // ページ遷移（サーバーリクエスト）
     window.location.href = url.toString();
   };
@@ -1849,6 +1861,9 @@ function JobListings(_ref) {
     } else {
       url.searchParams["delete"]("favorites_only");
     }
+
+    // ページパラメータを削除（必ず1ページ目から表示する）
+    url.searchParams["delete"]("page");
 
     // ページ遷移（サーバーリクエスト）
     window.location.href = url.toString();

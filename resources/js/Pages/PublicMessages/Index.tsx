@@ -99,7 +99,7 @@ export default function Index({
                             <input
                                 type="text"
                                 className="p-public-messages__header-search-input"
-                                placeholder="案件名、メッセージで検索"
+                                placeholder="案件名で検索"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />

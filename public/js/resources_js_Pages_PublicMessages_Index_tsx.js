@@ -1446,7 +1446,7 @@ function Index(_ref) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "text",
             className: "p-public-messages__header-search-input",
-            placeholder: "\u6848\u4EF6\u540D\u3001\u30E1\u30C3\u30BB\u30FC\u30B8\u3067\u691C\u7D22",
+            placeholder: "\u6848\u4EF6\u540D\u3067\u691C\u7D22",
             value: searchQuery,
             onChange: function onChange(e) {
               return setSearchQuery(e.target.value);
