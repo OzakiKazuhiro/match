@@ -60,6 +60,8 @@ export default function JobCard({
         switch (status) {
             case "accepted":
                 return "承認済み";
+            case "declined":
+                return "不採用";
             default:
                 return "応募中";
         }
@@ -67,9 +69,14 @@ export default function JobCard({
 
     // ステータスのクラスを取得
     const getStatusClass = (status: string) => {
-        return status === "accepted"
-            ? "p-job-listings__card-applied p-job-listings__card-applied--accepted"
-            : "p-job-listings__card-applied";
+        switch (status) {
+            case "accepted":
+                return "p-job-listings__card-applied p-job-listings__card-applied--accepted";
+            case "declined":
+                return "p-job-listings__card-applied p-job-listings__card-applied--declined";
+            default:
+                return "p-job-listings__card-applied";
+        }
     };
 
     // 予算表示のフォーマット

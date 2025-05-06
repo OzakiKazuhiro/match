@@ -697,6 +697,21 @@ function Show(_ref) {
     _useState14 = _slicedToArray(_useState13, 2),
     draftMemo = _useState14[0],
     setDraftMemo = _useState14[1];
+  // 自己紹介モーダル表示状態
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState16 = _slicedToArray(_useState15, 2),
+    showBioModal = _useState16[0],
+    setShowBioModal = _useState16[1];
+  // 自己紹介文を取得中かどうか
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState18 = _slicedToArray(_useState17, 2),
+    loadingBio = _useState18[0],
+    setLoadingBio = _useState18[1];
+  // 自己紹介文
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState20 = _slicedToArray(_useState19, 2),
+    userBio = _useState20[0],
+    setUserBio = _useState20[1];
 
   // 会話相手を特定（自分以外の参加者）
   var otherParticipant = participants.find(function (participant) {
@@ -939,6 +954,65 @@ function Show(_ref) {
       clearInterval(interval);
     };
   }, [conversationGroup.id]);
+
+  // 自己紹介文を取得する関数
+  var fetchUserBio = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+      var _document$querySelect4, csrfToken, response;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
+          case 0:
+            if (otherParticipant) {
+              _context5.next = 2;
+              break;
+            }
+            return _context5.abrupt("return");
+          case 2:
+            setLoadingBio(true);
+            _context5.prev = 3;
+            // CSRFトークンの取得
+            csrfToken = ((_document$querySelect4 = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect4 === void 0 ? void 0 : _document$querySelect4.getAttribute("content")) || ""; // ユーザー情報取得APIを呼び出し
+            _context5.next = 7;
+            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].get(route("user.profile", otherParticipant.id), {
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken
+              }
+            });
+          case 7:
+            response = _context5.sent;
+            if (response.data && response.data.user) {
+              setUserBio(response.data.user.bio || "自己紹介文はありません。");
+            } else {
+              setUserBio("自己紹介文はありません。");
+            }
+            _context5.next = 15;
+            break;
+          case 11:
+            _context5.prev = 11;
+            _context5.t0 = _context5["catch"](3);
+            console.error("プロフィール取得エラー:", _context5.t0);
+            setUserBio("自己紹介文の取得に失敗しました。");
+          case 15:
+            _context5.prev = 15;
+            setLoadingBio(false);
+            return _context5.finish(15);
+          case 18:
+          case "end":
+            return _context5.stop();
+        }
+      }, _callee5, null, [[3, 11, 15, 18]]);
+    }));
+    return function fetchUserBio() {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+
+  // 自己紹介モーダルを開く
+  var handleOpenBioModal = function handleOpenBioModal() {
+    setShowBioModal(true);
+    fetchUserBio();
+  };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "p-messages__header",
@@ -1053,6 +1127,13 @@ function Show(_ref) {
                 children: ["\u6848\u4EF6\uFF1A\u3010", conversationGroup.job_listing.title, "\u3011"]
               })]
             })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "p-messages__user-actions",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              onClick: handleOpenBioModal,
+              className: "p-messages__bio-button",
+              children: "\u81EA\u5DF1\u7D39\u4ECB\u6587\u3092\u898B\u308B"
+            })
           }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: "p-messages__job-actions",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
@@ -1077,7 +1158,7 @@ function Show(_ref) {
             children: memo ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
                 className: "p-messages__memo-text",
-                children: memo
+                children: memo.length > 100 ? "".concat(memo.substring(0, 100), "...") : memo
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                 className: "p-messages__memo-edit-button",
                 onClick: function onClick() {
@@ -1145,6 +1226,53 @@ function Show(_ref) {
             type: "button",
             children: savingMemo ? "保存中..." : "保存"
           })]
+        })]
+      })
+    }), showBioModal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "p-messages__modal-overlay",
+      onClick: function onClick() {
+        return setShowBioModal(false);
+      },
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "p-messages__modal",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "p-messages__modal-header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("h3", {
+            children: [(otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "ユーザー", "\u306E\u81EA\u5DF1\u7D39\u4ECB"]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: "p-messages__modal-close",
+            onClick: function onClick() {
+              return setShowBioModal(false);
+            },
+            type: "button",
+            children: "\xD7"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "p-messages__modal-body",
+          children: loadingBio ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "p-messages__loading",
+            children: "\u8AAD\u307F\u8FBC\u307F\u4E2D..."
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "p-messages__bio-content",
+            children: userBio.split("\n").map(function (paragraph, index) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: paragraph
+              }, index);
+            })
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "p-messages__modal-footer",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: "p-messages__modal-close-btn",
+            onClick: function onClick() {
+              return setShowBioModal(false);
+            },
+            type: "button",
+            children: "\u9589\u3058\u308B"
+          })
         })]
       })
     })]

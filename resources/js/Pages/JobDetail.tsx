@@ -170,6 +170,8 @@ export default function JobDetail({
         switch (status) {
             case "accepted":
                 return "承認済み";
+            case "declined":
+                return "不採用";
             default:
                 return "応募中";
         }
@@ -177,9 +179,14 @@ export default function JobDetail({
 
     // ステータスのクラスを取得
     const getStatusClass = (status: string) => {
-        return status === "accepted"
-            ? "p-job-detail__apply-button--applied p-job-detail__apply-button--accepted"
-            : "p-job-detail__apply-button--applied";
+        switch (status) {
+            case "accepted":
+                return "p-job-detail__apply-button--applied p-job-detail__apply-button--accepted";
+            case "declined":
+                return "p-job-detail__apply-button--applied p-job-detail__apply-button--declined";
+            default:
+                return "p-job-detail__apply-button--applied";
+        }
     };
 
     const handleSubmitMessage = (e: React.FormEvent) => {

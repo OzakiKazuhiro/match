@@ -3042,6 +3042,8 @@ function JobDetail(_ref) {
     switch (status) {
       case "accepted":
         return "承認済み";
+      case "declined":
+        return "不採用";
       default:
         return "応募中";
     }
@@ -3049,7 +3051,14 @@ function JobDetail(_ref) {
 
   // ステータスのクラスを取得
   var getStatusClass = function getStatusClass(status) {
-    return status === "accepted" ? "p-job-detail__apply-button--applied p-job-detail__apply-button--accepted" : "p-job-detail__apply-button--applied";
+    switch (status) {
+      case "accepted":
+        return "p-job-detail__apply-button--applied p-job-detail__apply-button--accepted";
+      case "declined":
+        return "p-job-detail__apply-button--applied p-job-detail__apply-button--declined";
+      default:
+        return "p-job-detail__apply-button--applied";
+    }
   };
   var handleSubmitMessage = function handleSubmitMessage(e) {
     e.preventDefault();

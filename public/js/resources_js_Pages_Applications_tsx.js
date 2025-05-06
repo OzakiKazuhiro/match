@@ -522,6 +522,20 @@ function Applications(_ref) {
     }
   };
 
+  // スマホ表示用の短いステータステキスト
+  var getShortStatusText = function getShortStatusText(status) {
+    switch (status) {
+      case "pending":
+        return "応募中";
+      case "accepted":
+        return "採用確定";
+      case "declined":
+        return "不採用";
+      default:
+        return "";
+    }
+  };
+
   // ステータスのクラス
   var getStatusClass = function getStatusClass(status) {
     switch (status) {
@@ -613,9 +627,15 @@ function Applications(_ref) {
                           children: ["\u6295\u7A3F\u8005:", " ", (((_application$job_list5 = application.job_listing) === null || _application$job_list5 === void 0 ? void 0 : _application$job_list5.user) || ((_application$jobListi5 = application.jobListing) === null || _application$jobListi5 === void 0 ? void 0 : _application$jobListi5.user)).name]
                         })]
                       })]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                       className: "p-applications__status ".concat(getStatusClass(application.status)),
-                      children: getStatusText(application.status)
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                        className: "p-applications__status-text-pc",
+                        children: getStatusText(application.status)
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                        className: "p-applications__status-text-sp",
+                        children: getShortStatusText(application.status)
+                      })]
                     })]
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                     className: "p-applications__item-body",

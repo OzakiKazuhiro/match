@@ -3245,6 +3245,11 @@ textarea {
     box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
   }
 }
+.p-job-listings__card-applied--declined {
+  background-color: #ef4444;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+  animation: none;
+}
 .p-job-listings__favorite-filter {
   margin-left: 10px;
 }
@@ -3528,6 +3533,16 @@ textarea {
 }
 .p-job-detail__apply-button--accepted:hover {
   background-color: #10b981;
+  transform: none;
+  color: #fff;
+}
+.p-job-detail__apply-button--declined {
+  background-color: #ef4444;
+  cursor: default;
+  pointer-events: none;
+}
+.p-job-detail__apply-button--declined:hover {
+  background-color: #ef4444;
   transform: none;
   color: #fff;
 }
@@ -4735,9 +4750,21 @@ textarea {
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 1rem;
+  margin-bottom: 1rem;
+}
+@media (max-width: 576px) {
+  .p-applications__item-header {
+    align-items: flex-start;
+  }
 }
 .p-applications__job-info {
   flex: 1;
+  margin-right: 1rem;
+}
+@media (max-width: 576px) {
+  .p-applications__job-info {
+    margin-right: 0.5rem;
+  }
 }
 .p-applications__job-title {
   font-weight: 600;
@@ -4789,6 +4816,14 @@ textarea {
   font-size: 0.875rem;
   font-weight: 500;
 }
+@media (max-width: 576px) {
+  .p-applications__status {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
 .p-applications__status--pending {
   background-color: #fef3c7;
   color: #92400e;
@@ -4800,6 +4835,22 @@ textarea {
 .p-applications__status--declined {
   background-color: #fee2e2;
   color: #b91c1c;
+}
+.p-applications__status-text-pc {
+  display: inline;
+}
+@media (max-width: 768px) {
+  .p-applications__status-text-pc {
+    display: none;
+  }
+}
+.p-applications__status-text-sp {
+  display: none;
+}
+@media (max-width: 768px) {
+  .p-applications__status-text-sp {
+    display: inline;
+  }
 }
 .p-applications__item-body {
   padding: 1rem;
@@ -5531,8 +5582,34 @@ textarea {
   font-size: 0.875rem;
   color: #6b7280;
 }
+.p-messages__user-actions {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+.p-messages__bio-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  color: #374151;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  width: 100%;
+}
+.p-messages__bio-button:hover {
+  background-color: #e5e7eb;
+}
 .p-messages__job-actions {
-  margin-top: 8px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
 }
 .p-messages__job-link {
   display: inline-block;
@@ -6165,6 +6242,45 @@ textarea {
   min-height: 80px;
   white-space: pre-wrap;
   word-break: break-word;
+}
+.p-messages__bio-content {
+  white-space: pre-wrap;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+.p-messages__bio-content p {
+  margin-bottom: 10px;
+}
+.p-messages__bio-content p:last-child {
+  margin-bottom: 0;
+}
+.p-messages__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+.p-messages__modal-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  color: #374151;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.p-messages__modal-close-btn:hover {
+  background-color: #e5e7eb;
 }
 /*
  * パブリックメッセージ一覧スタイル

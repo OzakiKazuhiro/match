@@ -137,6 +137,18 @@ Route::middleware(['auth', 'verified'])->prefix('notifications')->name('notifica
 // プライバシーポリシーページ
 Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy');
 
+// ユーザープロフィール情報を取得するAPI
+Route::middleware(['auth', 'verified'])->get('/user/{id}/profile', function ($id) {
+    $user = \App\Models\User::findOrFail($id);
+    return response()->json([
+        'user' => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'bio' => $user->bio,
+        ]
+    ]);
+})->name('user.profile');
+
 require __DIR__.'/auth.php';
 
 // メールアドレス検証ルート

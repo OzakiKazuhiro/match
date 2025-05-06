@@ -949,6 +949,8 @@ function JobCard(_ref) {
     switch (status) {
       case "accepted":
         return "承認済み";
+      case "declined":
+        return "不採用";
       default:
         return "応募中";
     }
@@ -956,7 +958,14 @@ function JobCard(_ref) {
 
   // ステータスのクラスを取得
   var getStatusClass = function getStatusClass(status) {
-    return status === "accepted" ? "p-job-listings__card-applied p-job-listings__card-applied--accepted" : "p-job-listings__card-applied";
+    switch (status) {
+      case "accepted":
+        return "p-job-listings__card-applied p-job-listings__card-applied--accepted";
+      case "declined":
+        return "p-job-listings__card-applied p-job-listings__card-applied--declined";
+      default:
+        return "p-job-listings__card-applied";
+    }
   };
 
   // 予算表示のフォーマット

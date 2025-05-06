@@ -62,6 +62,12 @@ export default function Show({
     const [showMemoModal, setShowMemoModal] = useState<boolean>(false);
     // 編集中のメモ（下書き）
     const [draftMemo, setDraftMemo] = useState<string>("");
+    // 自己紹介モーダル表示状態
+    const [showBioModal, setShowBioModal] = useState<boolean>(false);
+    // 自己紹介文を取得中かどうか
+    const [loadingBio, setLoadingBio] = useState<boolean>(false);
+    // 自己紹介文
+    const [userBio, setUserBio] = useState<string>("");
 
     // 会話相手を特定（自分以外の参加者）
     const otherParticipant = participants.find(
@@ -256,6 +262,50 @@ export default function Show({
         };
     }, [conversationGroup.id]);
 
+    // 自己紹介文を取得する関数
+    const fetchUserBio = async () => {
+        if (!otherParticipant) return;
+
+        setLoadingBio(true);
+        try {
+            // CSRFトークンの取得
+            const csrfToken =
+                document
+                    .querySelector('meta[name="csrf-token"]')
+                    ?.getAttribute("content") || "";
+
+            // ユーザー情報取得APIを呼び出し
+            const response = await axios.get(
+                route("user.profile", otherParticipant.id),
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                }
+            );
+
+            if (response.data && response.data.user) {
+                setUserBio(
+                    response.data.user.bio || "自己紹介文はありません。"
+                );
+            } else {
+                setUserBio("自己紹介文はありません。");
+            }
+        } catch (error) {
+            console.error("プロフィール取得エラー:", error);
+            setUserBio("自己紹介文の取得に失敗しました。");
+        } finally {
+            setLoadingBio(false);
+        }
+    };
+
+    // 自己紹介モーダルを開く
+    const handleOpenBioModal = () => {
+        setShowBioModal(true);
+        fetchUserBio();
+    };
+
     return (
         <AuthenticatedLayout
             header={
@@ -435,6 +485,15 @@ export default function Show({
                             </div>
                         </div>
 
+                        <div className="p-messages__user-actions">
+                            <button
+                                onClick={handleOpenBioModal}
+                                className="p-messages__bio-button"
+                            >
+                                自己紹介文を見る
+                            </button>
+                        </div>
+
                         {conversationGroup.job_listing && (
                             <div className="p-messages__job-actions">
                                 <Link
@@ -469,7 +528,9 @@ export default function Show({
                             {memo ? (
                                 <>
                                     <p className="p-messages__memo-text">
-                                        {memo}
+                                        {memo.length > 100
+                                            ? `${memo.substring(0, 100)}...`
+                                            : memo}
                                     </p>
                                     <button
                                         className="p-messages__memo-edit-button"
@@ -540,6 +601,58 @@ export default function Show({
                                 type="button"
                             >
                                 {savingMemo ? "保存中..." : "保存"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* 自己紹介モーダル */}
+            {showBioModal && (
+                <div
+                    className="p-messages__modal-overlay"
+                    onClick={() => setShowBioModal(false)}
+                >
+                    <div
+                        className="p-messages__modal"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="p-messages__modal-header">
+                            <h3>
+                                {otherParticipant?.name || "ユーザー"}の自己紹介
+                            </h3>
+                            <button
+                                className="p-messages__modal-close"
+                                onClick={() => setShowBioModal(false)}
+                                type="button"
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <div className="p-messages__modal-body">
+                            {loadingBio ? (
+                                <div className="p-messages__loading">
+                                    読み込み中...
+                                </div>
+                            ) : (
+                                <div className="p-messages__bio-content">
+                                    {userBio
+                                        .split("\n")
+                                        .map((paragraph, index) => (
+                                            <p key={index}>{paragraph}</p>
+                                        ))}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="p-messages__modal-footer">
+                            <button
+                                className="p-messages__modal-close-btn"
+                                onClick={() => setShowBioModal(false)}
+                                type="button"
+                            >
+                                閉じる
                             </button>
                         </div>
                     </div>

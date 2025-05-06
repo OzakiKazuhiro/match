@@ -287,6 +287,19 @@
                 color: #fff;
             }
         }
+
+        // 不採用ボタンのスタイル
+        &--declined {
+            background-color: #ef4444;
+            cursor: default;
+            pointer-events: none;
+
+            &:hover {
+                background-color: #ef4444;
+                transform: none;
+                color: #fff;
+            }
+        }
     }
 
     &__message-button {

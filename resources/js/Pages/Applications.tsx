@@ -71,6 +71,20 @@ export default function Applications({
         }
     };
 
+    // スマホ表示用の短いステータステキスト
+    const getShortStatusText = (status: string) => {
+        switch (status) {
+            case "pending":
+                return "応募中";
+            case "accepted":
+                return "採用確定";
+            case "declined":
+                return "不採用";
+            default:
+                return "";
+        }
+    };
+
     // ステータスのクラス
     const getStatusClass = (status: string) => {
         switch (status) {
@@ -234,9 +248,16 @@ export default function Applications({
                                                         application.status
                                                     )}`}
                                                 >
-                                                    {getStatusText(
-                                                        application.status
-                                                    )}
+                                                    <span className="p-applications__status-text-pc">
+                                                        {getStatusText(
+                                                            application.status
+                                                        )}
+                                                    </span>
+                                                    <span className="p-applications__status-text-sp">
+                                                        {getShortStatusText(
+                                                            application.status
+                                                        )}
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="p-applications__item-body">
