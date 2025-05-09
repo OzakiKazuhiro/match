@@ -6,6 +6,7 @@ import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { FormEventHandler, useState } from "react";
+import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 
 export default function Login({
     status,
@@ -33,10 +34,10 @@ export default function Login({
 
         // メールアドレスの簡易チェック
         if (!data.email) {
-            setEmailError("メールアドレスを入力してください");
+            setEmailError(VALIDATION_MESSAGES.required.email);
             isValid = false;
         } else if (!data.email.includes("@")) {
-            setEmailError("有効なメールアドレスを入力してください");
+            setEmailError(VALIDATION_MESSAGES.invalid.email);
             isValid = false;
         } else {
             setEmailError(null);
@@ -44,7 +45,7 @@ export default function Login({
 
         // パスワードの簡易チェック
         if (!data.password) {
-            setPasswordError("パスワードを入力してください");
+            setPasswordError(VALIDATION_MESSAGES.required.password);
             isValid = false;
         } else {
             setPasswordError(null);

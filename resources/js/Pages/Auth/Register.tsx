@@ -7,6 +7,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
 import { debounce } from "lodash";
 import axios from "axios";
+import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -51,7 +52,7 @@ export default function Register() {
 
         if (name.length > 50) {
             setNameIsValid(false);
-            setNameValidationMessage("お名前は50文字以内で入力してください。");
+            setNameValidationMessage(VALIDATION_MESSAGES.max.name);
             return;
         }
 
@@ -108,14 +109,12 @@ export default function Register() {
                 setEmailValidationMessage(
                     response.data.valid ? null : response.data.message
                 );
-
-                // console.log("検証結果:", response.data); // デバッグ用
             }
         } catch (error) {
             console.error("Email validation error:", error);
             setEmailIsValid(null);
             setEmailValidationMessage(
-                "メールアドレスの検証中にエラーが発生しました。"
+                VALIDATION_MESSAGES.error.email_validation
             );
         } finally {
             setIsValidatingEmail(false);
@@ -155,9 +154,7 @@ export default function Register() {
         // 50文字以上の長さをチェック
         if (password.length > 50) {
             setPasswordIsValid(false);
-            setPasswordValidationMessage(
-                "パスワードは50文字以内で入力してください。"
-            );
+            setPasswordValidationMessage(VALIDATION_MESSAGES.max.password);
             return;
         }
 
@@ -166,7 +163,7 @@ export default function Register() {
         if (hasFullWidthChars) {
             setPasswordIsValid(false);
             setPasswordValidationMessage(
-                "パスワードに全角文字は使用できません。半角英数字のみを使用してください。"
+                VALIDATION_MESSAGES.invalid.password_fullwidth
             );
             return;
         }
@@ -174,9 +171,7 @@ export default function Register() {
         // 8文字以上の長さをチェック
         if (password.length < 8) {
             setPasswordIsValid(false);
-            setPasswordValidationMessage(
-                "パスワードは8文字以上で入力してください。"
-            );
+            setPasswordValidationMessage(VALIDATION_MESSAGES.min.password);
             return;
         }
 
@@ -188,7 +183,7 @@ export default function Register() {
         if (!hasLetter || !hasNumber) {
             setPasswordIsValid(false);
             setPasswordValidationMessage(
-                "パスワードは半角英文字と数字を含める必要があります。"
+                VALIDATION_MESSAGES.invalid.password_letter_number
             );
             return;
         }

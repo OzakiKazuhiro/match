@@ -6,6 +6,7 @@ import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage, router } from "@inertiajs/react";
 import { FormEventHandler, useState, useRef, useEffect } from "react";
 import { debounce } from "lodash";
+import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -50,13 +51,13 @@ export default function UpdateProfileInformation({
     const validateName = (name: string) => {
         if (!name) {
             setNameIsValid(false);
-            setNameValidationMessage("お名前を入力してください。");
+            setNameValidationMessage(VALIDATION_MESSAGES.required.name);
             return;
         }
 
         if (name.length > 50) {
             setNameIsValid(false);
-            setNameValidationMessage("お名前は50文字以内で入力してください。");
+            setNameValidationMessage(VALIDATION_MESSAGES.max.name);
             return;
         }
 
@@ -81,7 +82,7 @@ export default function UpdateProfileInformation({
         if (bio.length > MAX_BIO_LENGTH) {
             setBioIsValid(false);
             setBioValidationMessage(
-                `自己紹介文は${MAX_BIO_LENGTH}文字以内で入力してください。`
+                VALIDATION_MESSAGES.max.bio(MAX_BIO_LENGTH)
             );
             return;
         }
@@ -146,7 +147,7 @@ export default function UpdateProfileInformation({
         // 名前が空か50文字を超えている場合は送信しない
         if (!data.name) {
             setNameIsValid(false);
-            setNameValidationMessage("お名前を入力してください。");
+            setNameValidationMessage(VALIDATION_MESSAGES.required.name);
             return;
         }
 

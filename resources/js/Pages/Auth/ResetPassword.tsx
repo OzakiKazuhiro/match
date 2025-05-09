@@ -6,6 +6,7 @@ import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import { debounce } from "lodash";
+import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 
 export default function ResetPassword({
     token,
@@ -45,9 +46,7 @@ export default function ResetPassword({
         // 50文字以上の長さをチェック
         if (password.length > 50) {
             setPasswordIsValid(false);
-            setPasswordValidationMessage(
-                "パスワードは50文字以内で入力してください。"
-            );
+            setPasswordValidationMessage(VALIDATION_MESSAGES.max.password);
             return;
         }
 
@@ -56,7 +55,7 @@ export default function ResetPassword({
         if (hasFullWidthChars) {
             setPasswordIsValid(false);
             setPasswordValidationMessage(
-                "パスワードに全角文字は使用できません。半角英数字のみを使用してください。"
+                VALIDATION_MESSAGES.invalid.password_fullwidth
             );
             return;
         }
@@ -64,9 +63,7 @@ export default function ResetPassword({
         // 8文字以上の長さをチェック
         if (password.length < 8) {
             setPasswordIsValid(false);
-            setPasswordValidationMessage(
-                "パスワードは8文字以上で入力してください。"
-            );
+            setPasswordValidationMessage(VALIDATION_MESSAGES.min.password);
             return;
         }
 
@@ -78,7 +75,7 @@ export default function ResetPassword({
         if (!hasLetter || !hasNumber) {
             setPasswordIsValid(false);
             setPasswordValidationMessage(
-                "パスワードは半角英文字と数字を含める必要があります。"
+                VALIDATION_MESSAGES.invalid.password_letter_number
             );
             return;
         }

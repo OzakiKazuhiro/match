@@ -6,6 +6,9 @@ import InputError from "@/Components/InputError";
 import axios from "axios";
 import { route } from "ziggy-js";
 import Modal from "@/Components/Modal";
+import { CATEGORY_OPTIONS } from "@/constants/categoryOptions";
+import { SKILL_OPTIONS } from "@/constants/skillOptions";
+import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 
 // 文字数表示コンポーネント
 function DescriptionCount({ current, max }: { current: number; max: number }) {
@@ -60,81 +63,6 @@ export default function PostJob() {
         updateDisplayBudget(data.budget_min, setDisplayBudgetMin);
         updateDisplayBudget(data.budget_max, setDisplayBudgetMax);
     }, [data.budget_min, data.budget_max]);
-
-    // カテゴリーの選択肢
-    const categoryOptions = [
-        "ウェブ開発",
-        "モバイルアプリ開発",
-        "デザイン",
-        "サーバー/インフラ",
-        "AI/機械学習",
-        "データ分析",
-        "ECサイト",
-        "API開発",
-        "WordPress開発",
-        "エンジニアに相談",
-        "その他",
-    ];
-
-    // スキルの選択肢
-    const skillOptions = [
-        "HTML/CSS",
-        "JavaScript",
-        "TypeScript",
-        "React",
-        "Vue.js",
-        "Angular",
-        "Next.js",
-        "Nuxt.js",
-        "Svelte",
-        "PHP",
-        "Laravel",
-        "Ruby",
-        "Ruby on Rails",
-        "Python",
-        "Django",
-        "FastAPI",
-        "Go",
-        "Rust",
-        "Java",
-        "Spring Boot",
-        "C#",
-        ".NET Core",
-        "Swift",
-        "Kotlin",
-        "Flutter",
-        "React Native",
-        "AWS",
-        "Google Cloud",
-        "Azure",
-        "Firebase",
-        "Docker",
-        "Kubernetes",
-        "Terraform",
-        "CI/CD",
-        "GraphQL",
-        "UI/UXデザイン",
-        "Figma",
-        "Photoshop",
-        "Illustrator",
-        "WordPress",
-        "データベース設計",
-        "SQL",
-        "NoSQL",
-        "MongoDB",
-        "Redis",
-        "AI/機械学習",
-        "TensorFlow",
-        "PyTorch",
-        "OpenAI API",
-        "LangChain",
-        "ブロックチェーン",
-        "Web3",
-        "セキュリティ",
-        "テスト自動化",
-        "マイクロサービス",
-        "システム設計",
-    ];
 
     const addSkill = () => {
         // 15文字以上の場合は追加しない
@@ -315,9 +243,9 @@ export default function PostJob() {
 
         // タイトルのバリデーション
         if (!data.title.trim()) {
-            newErrors.title = "タイトルは必須です";
+            newErrors.title = VALIDATION_MESSAGES.required.title;
         } else if (data.title.length > 50) {
-            newErrors.title = "タイトルは50文字以内で入力してください";
+            newErrors.title = VALIDATION_MESSAGES.max.title;
         }
 
         // 予算のバリデーション（単発案件の場合）
@@ -326,38 +254,34 @@ export default function PostJob() {
             const maxBudget = data.budget_max ? parseInt(data.budget_max) : 0;
 
             if (!data.budget_min && !data.budget_max) {
-                newErrors.budget_min = "最小・最大予算を設定してください";
+                newErrors.budget_min = VALIDATION_MESSAGES.required.budget;
             } else if (
                 minBudget > 0 &&
                 maxBudget > 0 &&
                 minBudget > maxBudget
             ) {
-                newErrors.budget_max =
-                    "最大予算は最小予算以上に設定してください";
+                newErrors.budget_max = VALIDATION_MESSAGES.invalid.budget_max;
             }
 
             // 予算の上限をチェック
             if (minBudget > 50000) {
-                newErrors.budget_min =
-                    "最小予算は5,000万円（50,000千円）以下に設定してください";
+                newErrors.budget_min = VALIDATION_MESSAGES.invalid.budget_limit;
             }
             if (maxBudget > 50000) {
-                newErrors.budget_max =
-                    "最大予算は5,000万円（50,000千円）以下に設定してください";
+                newErrors.budget_max = VALIDATION_MESSAGES.invalid.budget_limit;
             }
         }
 
         // カテゴリーのバリデーション
         if (!data.category) {
-            newErrors.category = "カテゴリーを選択してください";
+            newErrors.category = VALIDATION_MESSAGES.required.category;
         }
 
         // 説明のバリデーション
         if (!data.description.trim()) {
-            newErrors.description = "案件の説明は必須です";
+            newErrors.description = VALIDATION_MESSAGES.required.description;
         } else if (data.description.length > 3000) {
-            newErrors.description =
-                "案件の説明は3000文字以内で入力してください";
+            newErrors.description = VALIDATION_MESSAGES.max.description;
         }
 
         setValidationErrors(newErrors);
@@ -380,8 +304,7 @@ export default function PostJob() {
 
         // 上限チェック
         if (budget > 50000) {
-            newErrors[field] =
-                "予算は5,000万円（50,000千円）以下に設定してください";
+            newErrors[field] = VALIDATION_MESSAGES.invalid.budget_limit;
         } else {
             delete newErrors[field];
 
@@ -392,15 +315,14 @@ export default function PostJob() {
                 otherBudget > 0 &&
                 budget < otherBudget
             ) {
-                newErrors[field] = "最大予算は最小予算以上に設定してください";
+                newErrors[field] = VALIDATION_MESSAGES.invalid.budget_max;
             } else if (
                 field === "budget_min" &&
                 budget > 0 &&
                 otherBudget > 0 &&
                 budget > otherBudget
             ) {
-                newErrors[otherField] =
-                    "最大予算は最小予算以上に設定してください";
+                newErrors[otherField] = VALIDATION_MESSAGES.invalid.budget_max;
             } else {
                 delete newErrors[otherField];
             }
@@ -415,9 +337,9 @@ export default function PostJob() {
         const newErrors = { ...validationErrors };
 
         if (!value.trim()) {
-            newErrors.title = "タイトルは必須です";
+            newErrors.title = VALIDATION_MESSAGES.required.title;
         } else if (value.length > 50) {
-            newErrors.title = "タイトルは50文字以内で入力してください";
+            newErrors.title = VALIDATION_MESSAGES.max.title;
         } else {
             delete newErrors.title;
         }
@@ -713,7 +635,7 @@ export default function PostJob() {
                                     }}
                                 >
                                     <option value="">カテゴリーを選択</option>
-                                    {categoryOptions.map((category) => (
+                                    {CATEGORY_OPTIONS.map((category) => (
                                         <option key={category} value={category}>
                                             {category}
                                         </option>
@@ -834,7 +756,7 @@ export default function PostJob() {
                                                 <option value="">
                                                     スキルを選択して追加ボタンで追加
                                                 </option>
-                                                {skillOptions.map((skill) => (
+                                                {SKILL_OPTIONS.map((skill) => (
                                                     <option
                                                         key={skill}
                                                         value={skill}
@@ -856,7 +778,7 @@ export default function PostJob() {
                                                 type="text"
                                                 placeholder="スキルを入力して追加ボタンで追加"
                                                 value={
-                                                    !skillOptions.includes(
+                                                    !SKILL_OPTIONS.includes(
                                                         customSkill
                                                     )
                                                         ? customSkill
@@ -932,7 +854,7 @@ export default function PostJob() {
                                                 <option value="">
                                                     スキルを選択して追加ボタンで追加
                                                 </option>
-                                                {skillOptions.map((skill) => (
+                                                {SKILL_OPTIONS.map((skill) => (
                                                     <option
                                                         key={skill}
                                                         value={skill}
@@ -954,7 +876,7 @@ export default function PostJob() {
                                                 type="text"
                                                 placeholder="スキルを入力して追加ボタンで追加"
                                                 value={
-                                                    !skillOptions.includes(
+                                                    !SKILL_OPTIONS.includes(
                                                         customPreferredSkill
                                                     )
                                                         ? customPreferredSkill
