@@ -17414,12 +17414,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+/* harmony import */ var _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/constants/validationMessages */ "./resources/js/constants/validationMessages.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -17491,6 +17487,16 @@ function Register() {
     showPasswordConfirmation = _useState18[0],
     setShowPasswordConfirmation = _useState18[1];
 
+  // パスワード一致バリデーション状態
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState20 = _slicedToArray(_useState19, 2),
+    passwordMatchMessage = _useState20[0],
+    setPasswordMatchMessage = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState22 = _slicedToArray(_useState21, 2),
+    passwordsMatch = _useState22[0],
+    setPasswordsMatch = _useState22[1];
+
   // 名前のバリデーションを行う関数
   var validateName = function validateName(name) {
     if (!name) {
@@ -17500,7 +17506,7 @@ function Register() {
     }
     if (name.length > 50) {
       setNameIsValid(false);
-      setNameValidationMessage("お名前は50文字以内で入力してください。");
+      setNameValidationMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.max.name);
       return;
     }
     setNameIsValid(true);
@@ -17518,88 +17524,8 @@ function Register() {
     };
   }, [data.name]);
 
-  // メールアドレスの重複チェックを行う関数
-  var validateEmail = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(email) {
-      var _document$querySelect, csrfToken, response;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            if (!(!email || !email.includes("@") || email.length < 5)) {
-              _context.next = 4;
-              break;
-            }
-            setEmailIsValid(null);
-            setEmailValidationMessage(null);
-            return _context.abrupt("return");
-          case 4:
-            setIsValidatingEmail(true);
-            _context.prev = 5;
-            // CSRFトークンを取得
-            csrfToken = ((_document$querySelect = document.querySelector('meta[name="csrf-token"]')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.getAttribute("content")) || ""; // axiosを使ってリクエストを送信
-            _context.next = 9;
-            return axios__WEBPACK_IMPORTED_MODULE_8__["default"].post(route("validate.email"), {
-              email: email
-            }, {
-              headers: {
-                "X-CSRF-TOKEN": csrfToken,
-                "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-                Accept: "application/json"
-              }
-            });
-          case 9:
-            response = _context.sent;
-            // レスポンスから結果を取得
-            if (response.data) {
-              setEmailIsValid(response.data.valid);
-              setEmailValidationMessage(response.data.valid ? null : response.data.message);
-
-              // console.log("検証結果:", response.data); // デバッグ用
-            }
-            _context.next = 18;
-            break;
-          case 13:
-            _context.prev = 13;
-            _context.t0 = _context["catch"](5);
-            console.error("Email validation error:", _context.t0);
-            setEmailIsValid(null);
-            setEmailValidationMessage("メールアドレスの検証中にエラーが発生しました。");
-          case 18:
-            _context.prev = 18;
-            setIsValidatingEmail(false);
-            return _context.finish(18);
-          case 21:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee, null, [[5, 13, 18, 21]]);
-    }));
-    return function validateEmail(_x) {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  // debounceを使用して連続したAPIリクエストを防止
-  var debouncedValidateEmail = (0,lodash__WEBPACK_IMPORTED_MODULE_6__.debounce)(validateEmail, 500);
-
-  // メールアドレスが変更されたときに検証を実行
-  (0,react__WEBPACK_IMPORTED_MODULE_5__.useEffect)(function () {
-    // メールフィールドが空の場合はメッセージをクリア
-    if (!data.email) {
-      setEmailValidationMessage(null);
-      setEmailIsValid(null);
-      return;
-    }
-
-    // メールアドレスがある程度有効な形式の場合のみ検証を実行
-    if (data.email.includes("@") && data.email.length >= 5) {
-      debouncedValidateEmail(data.email);
-    }
-    return function () {
-      debouncedValidateEmail.cancel();
-    };
-  }, [data.email]);
+  // メールアドレスの重複チェックを行う関数・debounce・useEffectを削除
+  // メールアドレスの形式チェックや必須チェックのみ残す
 
   // パスワードのバリデーションを行う関数
   var validatePassword = function validatePassword(password) {
@@ -17612,7 +17538,7 @@ function Register() {
     // 50文字以上の長さをチェック
     if (password.length > 50) {
       setPasswordIsValid(false);
-      setPasswordValidationMessage("パスワードは50文字以内で入力してください。");
+      setPasswordValidationMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.max.password);
       return;
     }
 
@@ -17620,14 +17546,14 @@ function Register() {
     var hasFullWidthChars = /[^\x01-\x7E]/.test(password);
     if (hasFullWidthChars) {
       setPasswordIsValid(false);
-      setPasswordValidationMessage("パスワードに全角文字は使用できません。半角英数字のみを使用してください。");
+      setPasswordValidationMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.password_fullwidth);
       return;
     }
 
     // 8文字以上の長さをチェック
     if (password.length < 8) {
       setPasswordIsValid(false);
-      setPasswordValidationMessage("パスワードは8文字以上で入力してください。");
+      setPasswordValidationMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.min.password);
       return;
     }
 
@@ -17637,7 +17563,7 @@ function Register() {
     var hasNumber = /[0-9]/.test(password);
     if (!hasLetter || !hasNumber) {
       setPasswordIsValid(false);
-      setPasswordValidationMessage("パスワードは半角英文字と数字を含める必要があります。");
+      setPasswordValidationMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.password_letter_number);
       return;
     }
 
@@ -17656,6 +17582,22 @@ function Register() {
       debouncedValidatePassword.cancel();
     };
   }, [data.password]);
+
+  // パスワード一致チェック
+  (0,react__WEBPACK_IMPORTED_MODULE_5__.useEffect)(function () {
+    if (!data.password && !data.password_confirmation) {
+      setPasswordsMatch(null);
+      setPasswordMatchMessage(null);
+      return;
+    }
+    if (data.password !== data.password_confirmation) {
+      setPasswordsMatch(false);
+      setPasswordMatchMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.mismatch.password);
+    } else {
+      setPasswordsMatch(true);
+      setPasswordMatchMessage(null);
+    }
+  }, [data.password, data.password_confirmation]);
   var submit = function submit(e) {
     e.preventDefault();
 
@@ -17673,26 +17615,30 @@ function Register() {
     if (passwordIsValid === false) {
       return;
     }
+
+    // パスワード一致チェック
+    if (passwordsMatch === false) {
+      return;
+    }
     post(route("register"), {
       onFinish: function onFinish() {
         return reset("password", "password_confirmation");
       }
-      //↑セキュリティー向上のため
     });
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_3__["default"], {
     title: "\u4F1A\u54E1\u767B\u9332",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Head, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Head, {
       title: "\u4F1A\u54E1\u767B\u9332"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("form", {
       onSubmit: submit,
       className: "p-auth__form",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-auth__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "name",
           value: "\u304A\u540D\u524D"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
           id: "name",
           name: "name",
           value: data.name,
@@ -17703,52 +17649,46 @@ function Register() {
             return setData("name", e.target.value);
           },
           maxLength: 50
-        }), nameValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), nameValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-auth__error",
           children: nameValidationMessage
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.name,
           className: "p-auth__error"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-auth__input-help",
-          children: data.name.length >= 40 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+          children: data.name.length >= 40 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
             className: data.name.length > 50 ? "text-red-500" : "",
             children: [data.name.length, "/50\u6587\u5B57"]
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-auth__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "email",
           value: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
           id: "email",
           type: "email",
           name: "email",
           value: data.email,
-          className: "p-auth__input ".concat(emailIsValid === false ? "border-red-500" : ""),
+          className: "p-auth__input",
           autoComplete: "username",
           onChange: function onChange(e) {
             return setData("email", e.target.value);
           }
-        }), isValidatingEmail && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          className: "p-auth__input-help",
-          children: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u78BA\u8A8D\u4E2D..."
-        }), emailValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-          className: "p-auth__error",
-          children: emailValidationMessage
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.email,
           className: "p-auth__error"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-auth__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password",
           value: "\u30D1\u30B9\u30EF\u30FC\u30C9"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "p-auth__input-wrapper",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
             id: "password",
             type: showPassword ? "text" : "password",
             name: "password",
@@ -17759,7 +17699,7 @@ function Register() {
               return setData("password", e.target.value);
             },
             maxLength: 50
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
             type: "button",
             className: "p-auth__password-toggle",
             onClick: function onClick() {
@@ -17767,35 +17707,35 @@ function Register() {
             },
             children: showPassword ? "非表示" : "表示"
           })]
-        }), passwordValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), passwordValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-auth__error",
           children: passwordValidationMessage
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.password,
           className: "p-auth__error"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-auth__input-help",
           children: "\u203B\u30D1\u30B9\u30EF\u30FC\u30C9\u306F8\u6587\u5B57\u4EE5\u4E0A50\u6587\u5B57\u4EE5\u4E0B\u3067\u3001\u534A\u89D2\u82F1\u6587\u5B57\u3068\u6570\u5B57\u3092\u542B\u3081\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-auth__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "password_confirmation",
           value: "\u30D1\u30B9\u30EF\u30FC\u30C9\uFF08\u78BA\u8A8D\u7528\uFF09"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "p-auth__input-wrapper",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_2__["default"], {
             id: "password_confirmation",
             type: showPasswordConfirmation ? "text" : "password",
             name: "password_confirmation",
             value: data.password_confirmation,
-            className: "p-auth__input ".concat(passwordIsValid === false && data.password_confirmation ? "border-red-500" : ""),
+            className: "p-auth__input ".concat(passwordIsValid === false && data.password_confirmation || passwordsMatch === false ? "border-red-500" : ""),
             autoComplete: "new-password",
             onChange: function onChange(e) {
               return setData("password_confirmation", e.target.value);
             },
             maxLength: 50
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
             type: "button",
             className: "p-auth__password-toggle",
             onClick: function onClick() {
@@ -17803,17 +17743,20 @@ function Register() {
             },
             children: showPasswordConfirmation ? "非表示" : "表示"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), passwordMatchMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+          className: "p-auth__error",
+          children: passwordMatchMessage
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           message: errors.password_confirmation,
           className: "p-auth__error"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-auth__actions",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Link, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Link, {
           href: route("login"),
           className: "p-auth__forgot-link",
           children: "\u3059\u3067\u306B\u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u304A\u6301\u3061\u306E\u65B9"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
           className: "p-auth__button p-auth__button--primary",
           disabled: processing || emailIsValid === false || passwordIsValid === false,
           children: "\u4F1A\u54E1\u767B\u9332"
@@ -17822,6 +17765,57 @@ function Register() {
     })]
   });
 }
+
+/***/ }),
+
+/***/ "./resources/js/constants/validationMessages.ts":
+/*!******************************************************!*\
+  !*** ./resources/js/constants/validationMessages.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   VALIDATION_MESSAGES: () => (/* binding */ VALIDATION_MESSAGES)
+/* harmony export */ });
+var VALIDATION_MESSAGES = {
+  required: {
+    email: "メールアドレスを入力してください",
+    password: "パスワードを入力してください",
+    name: "お名前を入力してください",
+    title: "タイトルは必須です",
+    description: "案件の説明は必須です",
+    category: "カテゴリーを選択してください",
+    budget: "最小・最大予算を設定してください"
+  },
+  invalid: {
+    email: "有効なメールアドレスを入力してください",
+    password: "8文字以上のパスワードを入力してください",
+    password_fullwidth: "パスワードに全角文字は使用できません。半角英数字のみを使用してください。",
+    password_letter_number: "パスワードは半角英文字と数字を含める必要があります。",
+    budget_max: "最大予算は最小予算以上に設定してください",
+    budget_limit: "予算は5,000万円（50,000千円）以下に設定してください"
+  },
+  mismatch: {
+    password: "パスワードが一致しません"
+  },
+  max: {
+    name: "お名前は50文字以内で入力してください",
+    title: "タイトルは50文字以内で入力してください",
+    description: "案件の説明は3000文字以内で入力してください",
+    password: "パスワードは50文字以内で入力してください。",
+    bio: function bio(max) {
+      return "\u81EA\u5DF1\u7D39\u4ECB\u6587\u306F".concat(max, "\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002");
+    }
+  },
+  min: {
+    password: "パスワードは8文字以上で入力してください。"
+  },
+  error: {
+    email_validation: "メールアドレスの検証中にエラーが発生しました。"
+  }
+};
 
 /***/ })
 

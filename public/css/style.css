@@ -48,6 +48,8 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 *,
 *::before,
@@ -529,82 +531,6 @@ textarea {
   color: #bdc3c7;
   font-size: 0.9rem;
 }
-.c-button {
-  display: inline-block;
-  padding: 10px 24px;
-  font-weight: bold;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 16px;
-  line-height: 1.5;
-}
-.c-button:hover, .c-button:focus {
-  outline: none;
-  text-decoration: none;
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-.c-button--primary {
-  background-color: #ff6b6b;
-  color: #fff;
-}
-.c-button--primary:hover, .c-button--primary:focus {
-  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.4);
-  color: #fff;
-}
-.c-button--secondary {
-  background-color: #6cc3e0;
-  color: #fff;
-}
-.c-button--secondary:hover, .c-button--secondary:focus {
-  box-shadow: 0 4px 8px rgba(108, 195, 224, 0.4);
-  color: #fff;
-}
-.c-button--outline {
-  background-color: transparent;
-  border: 2px solid #6cc3e0;
-  color: #6cc3e0;
-}
-.c-button--outline:hover, .c-button--outline:focus {
-  background-color: rgba(108, 195, 224, 0.1);
-  color: #6cc3e0;
-}
-.c-button--outline-white {
-  background-color: transparent;
-  border: 2px solid #fff;
-  color: #fff;
-}
-.c-button--outline-white:hover, .c-button--outline-white:focus {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-.c-button--large {
-  padding: 14px 28px;
-  font-size: 18px;
-}
-.c-button--small {
-  padding: 6px 16px;
-  font-size: 14px;
-}
-.c-button--full {
-  display: block;
-  width: 100%;
-}
-.c-button--icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.c-button--icon svg {
-  width: 18px;
-  height: 18px;
-}
 .c-label {
   display: block;
   font-weight: 500;
@@ -686,6 +612,82 @@ textarea {
   border-radius: 50%;
   font-size: 11px;
   font-weight: bold;
+}
+.c-button {
+  display: inline-block;
+  padding: 10px 24px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.c-button:hover, .c-button:focus {
+  outline: none;
+  text-decoration: none;
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+.c-button--primary {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+.c-button--primary:hover, .c-button--primary:focus {
+  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.4);
+  color: #fff;
+}
+.c-button--secondary {
+  background-color: #6cc3e0;
+  color: #fff;
+}
+.c-button--secondary:hover, .c-button--secondary:focus {
+  box-shadow: 0 4px 8px rgba(108, 195, 224, 0.4);
+  color: #fff;
+}
+.c-button--outline {
+  background-color: transparent;
+  border: 2px solid #6cc3e0;
+  color: #6cc3e0;
+}
+.c-button--outline:hover, .c-button--outline:focus {
+  background-color: rgba(108, 195, 224, 0.1);
+  color: #6cc3e0;
+}
+.c-button--outline-white {
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+}
+.c-button--outline-white:hover, .c-button--outline-white:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.c-button--large {
+  padding: 14px 28px;
+  font-size: 18px;
+}
+.c-button--small {
+  padding: 6px 16px;
+  font-size: 14px;
+}
+.c-button--full {
+  display: block;
+  width: 100%;
+}
+.c-button--icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.c-button--icon svg {
+  width: 18px;
+  height: 18px;
 }
 .c-favorite-button {
   display: inline-flex;

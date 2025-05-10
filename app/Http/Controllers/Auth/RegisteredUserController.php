@@ -36,23 +36,35 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'string', 'max:50', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // 既に登録済みのメールアドレスかチェック
+        // メールアドレスが既に存在するか確認
         $userExists = User::where('email', $request->email)->exists();
-        if ($userExists) {
-            // 実際には何もせず、認証案内画面に遷移
+
+        if (!$userExists) {
+            // 新規登録の場合のみユーザー作成・ログイン
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+            event(new Registered($user));
+            Auth::login($user);
+            
+            // 認証済みユーザー用のルートにリダイレクト
             return redirect(route('verification.notice', absolute: false));
+        } else {
+            // 既存メールアドレスの場合は、そのユーザーに通知メールを送信
+            $user = User::where('email', $request->email)->first();
+            $user->notify(new \App\Notifications\AttemptedRegistration(
+                $request->name,
+                $request->ip()
+            ));
+            
+            // 新規登録と同様に認証画面に遷移させる（ログインはしない）
+            session()->flash('status', 'verification-link-sent');
+            
+            // ゲスト用のルートにリダイレクト
+            return redirect(route('verification.notice.guest', absolute: false));
         }
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('verification.notice', absolute: false));
     }
 }

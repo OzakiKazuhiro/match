@@ -1456,26 +1456,15 @@ function Index(_ref) {
     setSearchQuery = _useState2[1];
 
   // 検索処理の実装
-  var handleSearch = function handleSearch(e) {
-    e.preventDefault();
-
-    // 現在のURLを取得
+  var handleSearch = function handleSearch() {
     var url = new URL(window.location.href);
-
-    // 検索クエリをセット
-    if (searchQuery) {
-      url.searchParams.set("search", searchQuery);
-    } else {
-      url.searchParams["delete"]("search");
-    }
-
-    // 他のページにいる場合はページを1に戻す
-    if (url.searchParams.has("page")) {
-      url.searchParams["delete"]("page");
-    }
-
-    // ページ遷移（サーバーリクエスト）
-    window.location.href = url.toString();
+    url.searchParams.set("search", searchQuery);
+    url.searchParams["delete"]("page");
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get(url.pathname + url.search, {}, {
+      preserveScroll: true,
+      preserveState: true,
+      replace: false
+    });
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {

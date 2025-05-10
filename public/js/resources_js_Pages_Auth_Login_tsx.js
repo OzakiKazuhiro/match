@@ -230,13 +230,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/constants/validationMessages */ "./resources/js/constants/validationMessages.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -282,10 +284,10 @@ function Login(_ref) {
 
     // メールアドレスの簡易チェック
     if (!data.email) {
-      setEmailError("メールアドレスを入力してください");
+      setEmailError(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.email);
       isValid = false;
     } else if (!data.email.includes("@")) {
-      setEmailError("有効なメールアドレスを入力してください");
+      setEmailError(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.email);
       isValid = false;
     } else {
       setEmailError(null);
@@ -293,7 +295,7 @@ function Login(_ref) {
 
     // パスワードの簡易チェック
     if (!data.password) {
-      setPasswordError("パスワードを入力してください");
+      setPasswordError(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.password);
       isValid = false;
     } else {
       setPasswordError(null);
@@ -313,22 +315,22 @@ function Login(_ref) {
       }
     });
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_4__["default"], {
     title: "\u30ED\u30B0\u30A4\u30F3",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Head, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Head, {
       title: "\u30ED\u30B0\u30A4\u30F3"
-    }), status && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+    }), status && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
       className: "p-auth__status-message",
       children: status
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("form", {
       onSubmit: submit,
       className: "p-auth__form",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-auth__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
           htmlFor: "email",
           value: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "email",
           type: "email",
           name: "email",
@@ -340,21 +342,21 @@ function Login(_ref) {
             setData("email", e.target.value);
             setEmailError(null); // 入力時にエラーをクリア
           }
-        }), emailError && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), emailError && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-auth__error",
           children: emailError
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_1__["default"], {
           message: errors.email,
           className: "p-auth__error"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-auth__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
           htmlFor: "password",
           value: "\u30D1\u30B9\u30EF\u30FC\u30C9"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "p-auth__input-wrapper",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
             id: "password",
             type: showPassword ? "text" : "password",
             name: "password",
@@ -366,7 +368,7 @@ function Login(_ref) {
               setPasswordError(null); // 入力時にエラーをクリア
             },
             maxLength: 50
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
             type: "button",
             className: "p-auth__password-toggle",
             onClick: function onClick() {
@@ -374,43 +376,43 @@ function Login(_ref) {
             },
             children: showPassword ? "非表示" : "表示"
           })]
-        }), passwordError && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), passwordError && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-auth__error",
           children: passwordError
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_1__["default"], {
           message: errors.password,
           className: "p-auth__error"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "p-auth__remember",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("label", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
           className: "p-auth__remember-label",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Checkbox__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_Checkbox__WEBPACK_IMPORTED_MODULE_0__["default"], {
             name: "remember",
             checked: data.remember,
             onChange: function onChange(e) {
               return setData("remember", e.target.checked || false);
             }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
             className: "p-auth__remember-text",
             children: "\u30ED\u30B0\u30A4\u30F3\u72B6\u614B\u3092\u4FDD\u6301\u3059\u308B"
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-auth__actions",
-        children: [canResetPassword && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Link, {
+        children: [canResetPassword && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Link, {
           href: route("password.request"),
           className: "p-auth__forgot-link",
           children: "\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u304A\u5FD8\u308C\u3067\u3059\u304B\uFF1F"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
           className: "p-auth__button p-auth__button--primary",
           disabled: processing,
           children: "\u30ED\u30B0\u30A4\u30F3"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "p-auth__register-link",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
-          children: ["\u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u304A\u6301\u3061\u3067\u306A\u3044\u65B9\u306F", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Link, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("p", {
+          children: ["\u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u304A\u6301\u3061\u3067\u306A\u3044\u65B9\u306F", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Link, {
             href: route("register"),
             className: "p-auth__link",
             children: "\u3053\u3061\u3089"
@@ -420,6 +422,56 @@ function Login(_ref) {
     })]
   });
 }
+
+/***/ }),
+
+/***/ "./resources/js/constants/validationMessages.ts":
+/*!******************************************************!*\
+  !*** ./resources/js/constants/validationMessages.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   VALIDATION_MESSAGES: () => (/* binding */ VALIDATION_MESSAGES)
+/* harmony export */ });
+var VALIDATION_MESSAGES = {
+  required: {
+    email: "メールアドレスを入力してください",
+    password: "パスワードを入力してください",
+    name: "お名前を入力してください",
+    title: "タイトルは必須です",
+    description: "案件の説明は必須です",
+    category: "カテゴリーを選択してください",
+    budget: "最小・最大予算を設定してください"
+  },
+  invalid: {
+    email: "有効なメールアドレスを入力してください",
+    password: "8文字以上のパスワードを入力してください",
+    password_fullwidth: "パスワードに全角文字は使用できません。半角英数字のみを使用してください。",
+    password_letter_number: "パスワードは半角英文字と数字を含める必要があります。",
+    budget_max: "最大予算は最小予算以上に設定してください",
+    budget_limit: "予算は5,000万円（50,000千円）以下に設定してください"
+  },
+  mismatch: {
+    password: "パスワードが一致しません"
+  },
+  max: {
+    name: "お名前は50文字以内で入力してください",
+    title: "タイトルは50文字以内で入力してください",
+    description: "案件の説明は3000文字以内で入力してください",
+    password: "パスワードは50文字以内で入力してください。",
+    bio: function bio(max) {
+      return "\u81EA\u5DF1\u7D39\u4ECB\u6587\u306F".concat(max, "\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002");
+    }
+  },
+  min: {
+    password: "パスワードは8文字以上で入力してください。"
+  },
+  error: {
+    email_validation: "メールアドレスの検証中にエラーが発生しました。"
+  }
+};
 
 /***/ })
 

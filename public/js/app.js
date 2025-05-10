@@ -46268,6 +46268,10 @@ var map = {
 		"./resources/js/Pages/Dashboard.tsx",
 		"resources_js_Pages_Dashboard_tsx"
 	],
+	"./EditJob.tsx": [
+		"./resources/js/Pages/EditJob.tsx",
+		"resources_js_Pages_EditJob_tsx"
+	],
 	"./JobDetail.tsx": [
 		"./resources/js/Pages/JobDetail.tsx",
 		"resources_js_Pages_JobDetail_tsx"
@@ -46599,7 +46603,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Applications_tsx":"1f2575e9c4d583b5","resources_js_Pages_ApplicationsToMyJobs_tsx":"6bcfa2651dd65c3e","resources_js_Pages_Apply_tsx":"8645ca50bb56feb4","resources_js_Pages_Auth_ConfirmPassword_tsx":"1d3743a913e5cd55","resources_js_Pages_Auth_ForgotPassword_tsx":"3340a0e4970d3f27","resources_js_Pages_Auth_Login_tsx":"7b8228c5be9391d7","resources_js_Pages_Auth_Register_tsx":"33f13a575069fe76","resources_js_Pages_Auth_ResetPassword_tsx":"ddca8d1253216a1d","resources_js_Pages_Auth_VerifyEmail_tsx":"814a49e46445c367","resources_js_Pages_Dashboard_tsx":"5f1a55b2364bcec8","resources_js_Pages_JobDetail_tsx":"30c00ba6666ecc19","resources_js_Pages_JobListings_tsx":"9868e211d20a8b98","resources_js_Pages_Messages_Index_tsx":"bd7d444591dd20dc","resources_js_Pages_Messages_Show_tsx":"f0c515a9da066afe","resources_js_Pages_Notifications_Index_tsx":"f59d9e6d3f06004d","resources_js_Pages_PostJob_tsx":"2ca2553fef6c23cc","resources_js_Pages_Privacy_tsx":"fe92bed71ee9505c","resources_js_Pages_Profile_Edit_tsx":"dd6236b300ed28b1","resources_js_Pages_Profile_Partials_DeleteUserForm_tsx":"8dcb65b67e9e4241","resources_js_Pages_Profile_Partials_UpdatePasswordForm_tsx":"70d6c7cd3693b3ad","resources_js_Pages_Profile_Partials_UpdateProfileInformationForm_tsx":"2b057715554a9e71","resources_js_Pages_PublicMessages_Index_tsx":"7ea9f9e4140f53b5","resources_js_Pages_PublicMessages_Show_tsx":"a6a1825f67754ab6","resources_js_Pages_Terms_tsx":"7796306499724909","resources_js_Pages_Top_tsx":"bbc3c000565967ca"}[chunkId] + "";
+/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Applications_tsx":"1f2575e9c4d583b5","resources_js_Pages_ApplicationsToMyJobs_tsx":"6bcfa2651dd65c3e","resources_js_Pages_Apply_tsx":"8645ca50bb56feb4","resources_js_Pages_Auth_ConfirmPassword_tsx":"1d3743a913e5cd55","resources_js_Pages_Auth_ForgotPassword_tsx":"3340a0e4970d3f27","resources_js_Pages_Auth_Login_tsx":"8646a61eafc53758","resources_js_Pages_Auth_Register_tsx":"d8800ae805227cec","resources_js_Pages_Auth_ResetPassword_tsx":"74b9de1bed624271","resources_js_Pages_Auth_VerifyEmail_tsx":"814a49e46445c367","resources_js_Pages_Dashboard_tsx":"5f1a55b2364bcec8","resources_js_Pages_EditJob_tsx":"d395c91ee2397345","resources_js_Pages_JobDetail_tsx":"5edda5ebd45e7a85","resources_js_Pages_JobListings_tsx":"fe032000450aa450","resources_js_Pages_Messages_Index_tsx":"507a8af03740478c","resources_js_Pages_Messages_Show_tsx":"f0c515a9da066afe","resources_js_Pages_Notifications_Index_tsx":"f59d9e6d3f06004d","resources_js_Pages_PostJob_tsx":"9fb31dafcf94d917","resources_js_Pages_Privacy_tsx":"fe92bed71ee9505c","resources_js_Pages_Profile_Edit_tsx":"0a374c728e82161a","resources_js_Pages_Profile_Partials_DeleteUserForm_tsx":"8dcb65b67e9e4241","resources_js_Pages_Profile_Partials_UpdatePasswordForm_tsx":"ff853699bb872bc5","resources_js_Pages_Profile_Partials_UpdateProfileInformationForm_tsx":"5b59881c9784f7cf","resources_js_Pages_PublicMessages_Index_tsx":"c742c50b86600543","resources_js_Pages_PublicMessages_Show_tsx":"a6a1825f67754ab6","resources_js_Pages_Terms_tsx":"7796306499724909","resources_js_Pages_Top_tsx":"bbc3c000565967ca"}[chunkId] + "";
 /******/ 		};
 /******/ 	})();
 /******/ 	

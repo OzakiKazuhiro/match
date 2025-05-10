@@ -1737,20 +1737,16 @@ function JobListings(_ref) {
    */
   var handleFilterChange = function handleFilterChange(type) {
     setActiveFilter(type);
-
-    // 現在のURLを取得
     var url = new URL(window.location.href);
     if (type === "all") {
       url.searchParams["delete"]("type");
     } else {
       url.searchParams.set("type", type);
     }
-
-    // ページパラメータを削除（必ず1ページ目から表示する）
     url.searchParams["delete"]("page");
-
-    // ページ遷移（サーバーリクエスト）
-    window.location.href = url.toString();
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.visit(url.pathname + url.search, {
+      method: "get"
+    });
   };
 
   /**
@@ -1780,18 +1776,12 @@ function JobListings(_ref) {
   var handleSortChange = function handleSortChange(option) {
     setSortOption(option);
     setShowSortDropdown(false);
-
-    // 現在のURLからベースURLとクエリパラメータを取得
     var url = new URL(window.location.href);
-
-    // 並び替えオプションを設定
     url.searchParams.set("sort", option);
-
-    // ページパラメータを削除（必ず1ページ目から表示する）
     url.searchParams["delete"]("page");
-
-    // Inertiaリンクを使ってページ遷移（サーバーリクエスト）
-    window.location.href = url.toString();
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.visit(url.pathname + url.search, {
+      method: "get"
+    });
   };
 
   /**
@@ -1801,22 +1791,12 @@ function JobListings(_ref) {
   var handleCategoryChange = function handleCategoryChange(category) {
     setActiveCategory(category);
     setShowCategoryDropdown(false);
-
-    // 現在のURLからベースURLとクエリパラメータを取得
     var url = new URL(window.location.href);
-
-    // カテゴリパラメータを設定
-    if (category === "all") {
-      url.searchParams["delete"]("category");
-    } else {
-      url.searchParams.set("category", category);
-    }
-
-    // ページパラメータを削除（必ず1ページ目から表示する）
+    url.searchParams.set("category", category);
     url.searchParams["delete"]("page");
-
-    // ページ遷移（サーバーリクエスト）
-    window.location.href = url.toString();
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.visit(url.pathname + url.search, {
+      method: "get"
+    });
   };
 
   /**
@@ -1834,24 +1814,15 @@ function JobListings(_ref) {
   /**
    * 検索処理の実装
    */
-  var handleSearch = function handleSearch(e) {
-    e.preventDefault();
-
-    // 現在のURLを取得
+  var handleSearch = function handleSearch() {
     var url = new URL(window.location.href);
-
-    // 検索クエリをセット
-    if (searchQuery) {
-      url.searchParams.set("search", searchQuery);
-    } else {
-      url.searchParams["delete"]("search");
-    }
-
-    // ページパラメータを削除（必ず1ページ目から表示する）
+    url.searchParams.set("search", searchQuery);
     url.searchParams["delete"]("page");
-
-    // ページ遷移（サーバーリクエスト）
-    window.location.href = url.toString();
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get(url.pathname + url.search, {}, {
+      preserveScroll: true,
+      preserveState: true,
+      replace: false
+    });
   };
 
   /**
@@ -1860,22 +1831,18 @@ function JobListings(_ref) {
   var toggleFavoritesFilter = function toggleFavoritesFilter() {
     var newShowFavoritesOnly = !showFavoritesOnly;
     setShowFavoritesOnly(newShowFavoritesOnly);
-
-    // 現在のURLを取得
     var url = new URL(window.location.href);
-
-    // お気に入りフィルターをセット
     if (newShowFavoritesOnly) {
       url.searchParams.set("favorites_only", "1");
     } else {
       url.searchParams["delete"]("favorites_only");
     }
-
-    // ページパラメータを削除（必ず1ページ目から表示する）
     url.searchParams["delete"]("page");
-
-    // ページ遷移（サーバーリクエスト）
-    window.location.href = url.toString();
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get(url.pathname + url.search, {}, {
+      preserveScroll: true,
+      preserveState: true,
+      replace: false
+    });
   };
 
   // ページコンテンツ（共通部分）

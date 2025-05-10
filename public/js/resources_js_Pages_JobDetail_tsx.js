@@ -3166,7 +3166,32 @@ function JobDetail(_ref) {
 
   // 応募の実行
   var handleApply = function handleApply() {
-    window.location.href = (0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.apply.create", jobListing.id);
+    if (!(auth !== null && auth !== void 0 && auth.user)) {
+      _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("login"), {}, {
+        preserveScroll: true,
+        preserveState: true,
+        replace: false
+      });
+      return;
+    }
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.apply.create", jobListing.id), {}, {
+      preserveScroll: true,
+      preserveState: true,
+      replace: false
+    });
+  };
+  var handleShare = function handleShare(platform) {
+    var currentUrl = window.location.href;
+    var shareUrl = "";
+    switch (platform) {
+      case "twitter":
+        shareUrl = "https://twitter.com/intent/tweet?text=".concat(encodeURIComponent(jobListing.title), "&url=").concat(encodeURIComponent(currentUrl), "&hashtags=").concat(encodeURIComponent("エンジニア,案件募集,match"));
+        break;
+      case "facebook":
+        shareUrl = "https://www.facebook.com/sharer/sharer.php?u=".concat(encodeURIComponent(currentUrl));
+        break;
+    }
+    window.open(shareUrl, "_blank", "noopener,noreferrer");
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {

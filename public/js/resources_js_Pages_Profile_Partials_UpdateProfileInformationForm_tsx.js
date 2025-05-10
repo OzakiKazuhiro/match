@@ -17712,19 +17712,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/InputLabel */ "./resources/js/Components/InputLabel.tsx");
 /* harmony import */ var _Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/PrimaryButton */ "./resources/js/Components/PrimaryButton.tsx");
 /* harmony import */ var _Components_TextInput__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/TextInput */ "./resources/js/Components/TextInput.tsx");
-/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/transition/transition.js");
+/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @headlessui/react */ "./node_modules/@headlessui/react/dist/components/transition/transition.js");
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/constants/validationMessages */ "./resources/js/constants/validationMessages.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
 
 
 
@@ -17797,12 +17799,12 @@ function UpdateProfileInformation(_ref) {
   var validateName = function validateName(name) {
     if (!name) {
       setNameIsValid(false);
-      setNameValidationMessage("お名前を入力してください。");
+      setNameValidationMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.name);
       return;
     }
     if (name.length > 50) {
       setNameIsValid(false);
-      setNameValidationMessage("お名前は50文字以内で入力してください。");
+      setNameValidationMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.max.name);
       return;
     }
     setNameIsValid(true);
@@ -17824,7 +17826,7 @@ function UpdateProfileInformation(_ref) {
   var validateBio = function validateBio(bio) {
     if (bio.length > MAX_BIO_LENGTH) {
       setBioIsValid(false);
-      setBioValidationMessage("\u81EA\u5DF1\u7D39\u4ECB\u6587\u306F".concat(MAX_BIO_LENGTH, "\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"));
+      setBioValidationMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.max.bio(MAX_BIO_LENGTH));
       return;
     }
     setBioIsValid(true);
@@ -17883,7 +17885,7 @@ function UpdateProfileInformation(_ref) {
     // 名前が空か50文字を超えている場合は送信しない
     if (!data.name) {
       setNameIsValid(false);
-      setNameValidationMessage("お名前を入力してください。");
+      setNameValidationMessage(_constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.name);
       return;
     }
     if (nameIsValid === false || bioIsValid === false) {
@@ -17919,48 +17921,48 @@ function UpdateProfileInformation(_ref) {
       }
     });
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("section", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("section", {
     className: className,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("header", {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h2", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("header", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
         className: "p-profile__section-title",
         children: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u60C5\u5831"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
         className: "p-profile__section-description",
         children: "\u30A2\u30AB\u30A6\u30F3\u30C8\u306E\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u60C5\u5831\u3068\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u66F4\u65B0\u3057\u307E\u3059\u3002"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("form", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("form", {
       onSubmit: submit,
       className: "p-profile__form",
       encType: "multipart/form-data",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-profile__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "avatar",
           value: "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u753B\u50CF",
           className: "p-profile__form-label"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "p-profile__avatar-container",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             className: "p-profile__avatar",
-            children: previewUrl ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("img", {
+            children: previewUrl ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("img", {
               src: previewUrl,
               alt: "\u30A2\u30D0\u30BF\u30FC\u30D7\u30EC\u30D3\u30E5\u30FC"
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
               className: "p-profile__avatar-placeholder",
               children: user.name.charAt(0).toUpperCase()
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
             className: "p-profile__avatar-actions",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
               type: "file",
               id: "avatar",
               ref: fileInputRef,
               onChange: handleAvatarChange,
               className: "hidden",
               accept: "image/jpeg,image/png,image/gif,image/webp"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
                 type: "button",
                 onClick: function onClick() {
                   var _fileInputRef$current;
@@ -17968,38 +17970,38 @@ function UpdateProfileInformation(_ref) {
                 },
                 className: "p-profile__avatar-button p-profile__avatar-button--upload",
                 children: "\u753B\u50CF\u3092\u9078\u629E"
-              }), previewUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+              }), previewUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
                 type: "button",
                 onClick: handleRemoveAvatar,
                 className: "p-profile__avatar-button p-profile__avatar-button--remove",
                 children: "\u524A\u9664"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("p", {
               className: "p-profile__avatar-note",
-              children: ["JPG\u3001PNG\u3001GIF\u3001WEBP \u5F62\u5F0F\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {
+              children: ["JPG\u3001PNG\u3001GIF\u3001WEBP \u5F62\u5F0F\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("br", {
                 className: "md:hidden"
               }), "\u6700\u59272MB\u3002"]
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("p", {
           className: "p-profile__avatar-note mt-2",
-          children: ["\u203B\u753B\u50CF\u9078\u629E\u5F8C\u3001", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {
+          children: ["\u203B\u753B\u50CF\u9078\u629E\u5F8C\u3001", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("br", {
             className: "md:hidden"
           }), "\u4FDD\u5B58\u30DC\u30BF\u30F3\u3092\u62BC\u3059\u307E\u3067\u5909\u66F4\u306F\u53CD\u6620\u3055\u308C\u307E\u305B\u3093\u3002"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           className: "p-profile__form-error",
           message: errors.avatar
-        }), avatarError && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), avatarError && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-profile__form-error",
           children: avatarError
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-profile__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "name",
           value: "\u540D\u524D",
           className: "p-profile__form-label"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "name",
           className: "p-profile__form-input ".concat(nameIsValid === false ? "border-red-500" : ""),
           value: data.name,
@@ -18010,26 +18012,26 @@ function UpdateProfileInformation(_ref) {
           isFocused: true,
           autoComplete: "name",
           maxLength: 50
-        }), nameValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), nameValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-profile__form-error",
           children: nameValidationMessage
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           className: "p-profile__form-error",
           message: errors.name
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-profile__input-help",
-          children: data.name.length >= 40 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+          children: data.name.length >= 40 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
             className: data.name.length > 50 ? "text-red-500" : "",
             children: [data.name.length, "/50\u6587\u5B57"]
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-profile__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "bio",
           value: "\u81EA\u5DF1\u7D39\u4ECB\u6587",
           className: "p-profile__form-label"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("textarea", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("textarea", {
           id: "bio",
           className: "p-profile__form-textarea ".concat(bioIsValid === false ? "border-red-500" : ""),
           value: data.bio,
@@ -18039,26 +18041,26 @@ function UpdateProfileInformation(_ref) {
           rows: 5,
           maxLength: MAX_BIO_LENGTH,
           placeholder: "\u3042\u306A\u305F\u306E\u30B9\u30AD\u30EB\u3084\u7D4C\u9A13\u3001\u5F97\u610F\u5206\u91CE\u306A\u3069\u3092500\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-profile__form-hint",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
             className: bioIsValid === false ? "text-red-500" : "",
             children: [data.bio.length, "/", MAX_BIO_LENGTH, "\u6587\u5B57"]
           })
-        }), bioValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), bioValidationMessage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-profile__form-error",
           children: bioValidationMessage
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           className: "p-profile__form-error",
           message: errors.bio
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-profile__form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputLabel__WEBPACK_IMPORTED_MODULE_1__["default"], {
           htmlFor: "email",
           value: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9",
           className: "p-profile__form-label"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_TextInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: "email",
           type: "email",
           className: "p-profile__form-input",
@@ -18066,40 +18068,40 @@ function UpdateProfileInformation(_ref) {
           disabled: true,
           required: true,
           autoComplete: "username"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-profile__input-help",
           children: "\u203B\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306F\u5909\u66F4\u3067\u304D\u307E\u305B\u3093\u3002"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_0__["default"], {
           className: "p-profile__form-error",
           message: errors.email
-        }), mustVerifyEmail && user.email_verified_at === null && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("p", {
+        }), mustVerifyEmail && user.email_verified_at === null && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("p", {
             className: "p-profile__verification-text",
-            children: ["\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u304C\u672A\u8A8D\u8A3C\u3067\u3059\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Link, {
+            children: ["\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u304C\u672A\u8A8D\u8A3C\u3067\u3059\u3002", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_4__.Link, {
               href: route("verification.send"),
               method: "post",
               as: "button",
               className: "p-profile__resend-link",
               children: "\u8A8D\u8A3C\u30E1\u30FC\u30EB\u3092\u518D\u9001\u4FE1"
             }), "\u3057\u3066\u304F\u3060\u3055\u3044\u3002"]
-          }), status === "verification-link-sent" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          }), status === "verification-link-sent" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             className: "p-profile__alert-success",
             children: "\u65B0\u3057\u3044\u8A8D\u8A3C\u30EA\u30F3\u30AF\u3092\u3042\u306A\u305F\u306E\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306B\u9001\u4FE1\u3057\u307E\u3057\u305F\u3002"
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-profile__form-actions",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
           disabled: processing,
           className: "p-profile__btn p-profile__btn--primary",
           children: "\u4FDD\u5B58"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_headlessui_react__WEBPACK_IMPORTED_MODULE_8__.Transition, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_headlessui_react__WEBPACK_IMPORTED_MODULE_9__.Transition, {
           show: recentlySuccessful,
           enter: "transition ease-in-out",
           enterFrom: "opacity-0",
           leave: "transition ease-in-out",
           leaveTo: "opacity-0",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
             className: "p-profile__success-message",
             children: "\u4FDD\u5B58\u3057\u307E\u3057\u305F\u3002"
           })
@@ -18108,6 +18110,57 @@ function UpdateProfileInformation(_ref) {
     })]
   });
 }
+
+/***/ }),
+
+/***/ "./resources/js/constants/validationMessages.ts":
+/*!******************************************************!*\
+  !*** ./resources/js/constants/validationMessages.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   VALIDATION_MESSAGES: () => (/* binding */ VALIDATION_MESSAGES)
+/* harmony export */ });
+var VALIDATION_MESSAGES = {
+  required: {
+    email: "メールアドレスを入力してください",
+    password: "パスワードを入力してください",
+    name: "お名前を入力してください",
+    title: "タイトルは必須です",
+    description: "案件の説明は必須です",
+    category: "カテゴリーを選択してください",
+    budget: "最小・最大予算を設定してください"
+  },
+  invalid: {
+    email: "有効なメールアドレスを入力してください",
+    password: "8文字以上のパスワードを入力してください",
+    password_fullwidth: "パスワードに全角文字は使用できません。半角英数字のみを使用してください。",
+    password_letter_number: "パスワードは半角英文字と数字を含める必要があります。",
+    budget_max: "最大予算は最小予算以上に設定してください",
+    budget_limit: "予算は5,000万円（50,000千円）以下に設定してください"
+  },
+  mismatch: {
+    password: "パスワードが一致しません"
+  },
+  max: {
+    name: "お名前は50文字以内で入力してください",
+    title: "タイトルは50文字以内で入力してください",
+    description: "案件の説明は3000文字以内で入力してください",
+    password: "パスワードは50文字以内で入力してください。",
+    bio: function bio(max) {
+      return "\u81EA\u5DF1\u7D39\u4ECB\u6587\u306F".concat(max, "\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002");
+    }
+  },
+  min: {
+    password: "パスワードは8文字以上で入力してください。"
+  },
+  error: {
+    email_validation: "メールアドレスの検証中にエラーが発生しました。"
+  }
+};
 
 /***/ })
 
