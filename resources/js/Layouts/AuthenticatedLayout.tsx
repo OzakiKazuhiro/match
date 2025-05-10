@@ -7,6 +7,8 @@ import {
     useEffect,
 } from "react";
 import NotificationBadge from "@/Components/NotificationBadge";
+import { User } from "@/types";
+import LogoutLink from "@/Components/LogoutLink";
 
 export default function Authenticated({
     header,
@@ -164,14 +166,9 @@ export default function Authenticated({
                                     >
                                         プロフィール編集
                                     </Link>
-                                    <Link
-                                        href={route("logout")}
-                                        method="post"
-                                        as="button"
-                                        className="l-header__dropdown-item l-header__dropdown-item--danger"
-                                    >
+                                    <LogoutLink className="l-header__dropdown-item l-header__dropdown-item--danger">
                                         ログアウト
-                                    </Link>
+                                    </LogoutLink>
                                 </div>
                             )}
                         </div>
@@ -270,14 +267,9 @@ export default function Authenticated({
                         >
                             プロフィール編集
                         </Link>
-                        <Link
-                            href={route("logout")}
-                            method="post"
-                            as="button"
-                            className="l-header__mobile-link l-header__mobile-link--danger"
-                        >
+                        <LogoutLink className="l-header__mobile-link l-header__mobile-link--danger">
                             ログアウト
-                        </Link>
+                        </LogoutLink>
                     </div>
                 )}
             </header>

@@ -39,6 +39,6 @@ class PasswordResetLinkController extends Controller
         );
 
         // メールアドレスの存在有無に関わらず、同じメッセージを返す
-        return back()->with('status', 'ご入力いただいたメールアドレス宛にパスワード再設定用のメールを送信しました。メールが届かない場合はご確認ください。');
+        return back()->with('status', 'ご入力いただいたメールアドレス宛にパスワード再設定用のメールを送信しました。');
     }
 }

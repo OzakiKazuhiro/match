@@ -1,6 +1,7 @@
 import { PageProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import { useState, useEffect, useRef } from "react";
+import LogoutLink from "@/Components/LogoutLink";
 
 export default function Top({ auth }: PageProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -121,14 +122,9 @@ export default function Top({ auth }: PageProps) {
                                 >
                                     マイページ
                                 </Link>
-                                <Link
-                                    href="/logout"
-                                    method="post"
-                                    as="button"
-                                    className="l-header__nav-link"
-                                >
+                                <LogoutLink className="l-header__nav-link">
                                     ログアウト
-                                </Link>
+                                </LogoutLink>
                             </>
                         ) : (
                             <>
@@ -243,14 +239,9 @@ export default function Top({ auth }: PageProps) {
                                 >
                                     マイページ
                                 </Link>
-                                <Link
-                                    href="/logout"
-                                    method="post"
-                                    as="button"
-                                    className="l-header__mobile-link l-header__mobile-link--danger"
-                                >
+                                <LogoutLink className="l-header__mobile-link l-header__mobile-link--danger">
                                     ログアウト
-                                </Link>
+                                </LogoutLink>
                             </>
                         ) : (
                             <>

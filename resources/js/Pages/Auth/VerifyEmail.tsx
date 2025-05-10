@@ -2,6 +2,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
+import LogoutLink from "@/Components/LogoutLink";
 
 export default function VerifyEmail({ status }: { status?: string }) {
     const { post, processing } = useForm({});
@@ -34,14 +35,9 @@ export default function VerifyEmail({ status }: { status?: string }) {
                         確認メールを再送信
                     </PrimaryButton>
 
-                    <Link
-                        href={route("logout")}
-                        method="post"
-                        as="button"
-                        className="p-auth__logout-link"
-                    >
+                    <LogoutLink className="p-auth__logout-link">
                         ログアウト
-                    </Link>
+                    </LogoutLink>
                 </div>
             </form>
         </GuestLayout>

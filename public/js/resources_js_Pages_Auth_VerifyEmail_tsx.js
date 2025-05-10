@@ -1,6 +1,47 @@
 "use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_Auth_VerifyEmail_tsx"],{
 
+/***/ "./resources/js/Components/LogoutLink.tsx":
+/*!************************************************!*\
+  !*** ./resources/js/Components/LogoutLink.tsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LogoutLink)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+function LogoutLink(_ref) {
+  var className = _ref.className,
+    children = _ref.children;
+  var handleLogout = function handleLogout(e) {
+    e.preventDefault();
+
+    // POSTリクエストでログアウト処理を実行
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.post(route("logout"), {}, {
+      onSuccess: function onSuccess() {
+        // ログアウト成功後、location.replaceを使用して履歴からこのページを削除
+        // ログインページへリダイレクト
+        window.location.replace(route("login"));
+      }
+    });
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+    onClick: handleLogout,
+    className: className,
+    children: children
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/Components/PrimaryButton.tsx":
 /*!***************************************************!*\
   !*** ./resources/js/Components/PrimaryButton.tsx ***!
@@ -110,7 +151,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Components/PrimaryButton */ "./resources/js/Components/PrimaryButton.tsx");
 /* harmony import */ var _Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/GuestLayout */ "./resources/js/Layouts/GuestLayout.tsx");
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _Components_LogoutLink__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/LogoutLink */ "./resources/js/Components/LogoutLink.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
@@ -124,27 +167,24 @@ function VerifyEmail(_ref) {
     e.preventDefault();
     post(route("verification.send"));
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_Layouts_GuestLayout__WEBPACK_IMPORTED_MODULE_1__["default"], {
     title: "\u30E1\u30FC\u30EB\u8A8D\u8A3C",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
       title: "\u30E1\u30FC\u30EB\u8A8D\u8A3C"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "p-auth__verify-email",
       children: "\u3054\u767B\u9332\u3042\u308A\u304C\u3068\u3046\u3054\u3056\u3044\u307E\u3059\uFF01 \u59CB\u3081\u308B\u524D\u306B\u3001\u5148\u307B\u3069\u304A\u9001\u308A\u3057\u305F\u30E1\u30FC\u30EB\u306E\u30EA\u30F3\u30AF\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u3001\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u3044\u305F\u3060\u3051\u307E\u3059\u304B\uFF1F \u30E1\u30FC\u30EB\u304C\u5C4A\u3044\u3066\u3044\u306A\u3044\u5834\u5408\u306F\u3001\u559C\u3093\u3067\u5225\u306E\u30E1\u30FC\u30EB\u3092\u304A\u9001\u308A\u3057\u307E\u3059\u3002"
-    }), status === "verification-link-sent" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    }), status === "verification-link-sent" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "p-auth__success-message",
       children: "\u767B\u9332\u6642\u306B\u5165\u529B\u3055\u308C\u305F\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306B\u65B0\u3057\u3044\u78BA\u8A8D\u30EA\u30F3\u30AF\u3092\u9001\u4FE1\u3057\u307E\u3057\u305F\u3002"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("form", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("form", {
       onSubmit: submit,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         className: "p-auth__verify-actions",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_PrimaryButton__WEBPACK_IMPORTED_MODULE_0__["default"], {
           disabled: processing,
           children: "\u78BA\u8A8D\u30E1\u30FC\u30EB\u3092\u518D\u9001\u4FE1"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
-          href: route("logout"),
-          method: "post",
-          as: "button",
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_LogoutLink__WEBPACK_IMPORTED_MODULE_3__["default"], {
           className: "p-auth__logout-link",
           children: "\u30ED\u30B0\u30A2\u30A6\u30C8"
         })]
