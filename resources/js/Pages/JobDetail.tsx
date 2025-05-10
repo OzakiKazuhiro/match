@@ -291,10 +291,34 @@ export default function JobDetail({
 
     // 応募の実行
     const handleApply = () => {
-        window.location.href = route(
-            "job-listings.apply.create",
-            jobListing.id
-        );
+        if (!auth?.user) {
+            router.visit(route("login"));
+            return;
+        }
+
+        router.visit(route("job-listings.apply.create", jobListing.id));
+    };
+
+    const handleShare = (platform: string) => {
+        const currentUrl = window.location.href;
+        let shareUrl = "";
+
+        switch (platform) {
+            case "twitter":
+                shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                    jobListing.title
+                )}&url=${encodeURIComponent(
+                    currentUrl
+                )}&hashtags=${encodeURIComponent("エンジニア,案件募集,match")}`;
+                break;
+            case "facebook":
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                    currentUrl
+                )}`;
+                break;
+        }
+
+        window.open(shareUrl, "_blank", "noopener,noreferrer");
     };
 
     return (

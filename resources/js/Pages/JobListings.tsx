@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import JobCard, { JobType } from "@/Components/JobCard";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -197,7 +197,6 @@ export default function JobListings({
     const handleFilterChange = (type: "all" | "one_time" | "revenue_share") => {
         setActiveFilter(type);
 
-        // 現在のURLを取得
         const url = new URL(window.location.href);
 
         if (type === "all") {
@@ -206,11 +205,9 @@ export default function JobListings({
             url.searchParams.set("type", type);
         }
 
-        // ページパラメータを削除（必ず1ページ目から表示する）
         url.searchParams.delete("page");
 
-        // ページ遷移（サーバーリクエスト）
-        window.location.href = url.toString();
+        router.visit(url.pathname + url.search, { method: "get" });
     };
 
     /**
@@ -241,17 +238,11 @@ export default function JobListings({
         setSortOption(option);
         setShowSortDropdown(false);
 
-        // 現在のURLからベースURLとクエリパラメータを取得
         const url = new URL(window.location.href);
-
-        // 並び替えオプションを設定
         url.searchParams.set("sort", option);
-
-        // ページパラメータを削除（必ず1ページ目から表示する）
         url.searchParams.delete("page");
 
-        // Inertiaリンクを使ってページ遷移（サーバーリクエスト）
-        window.location.href = url.toString();
+        router.visit(url.pathname + url.search, { method: "get" });
     };
 
     /**
@@ -262,21 +253,11 @@ export default function JobListings({
         setActiveCategory(category);
         setShowCategoryDropdown(false);
 
-        // 現在のURLからベースURLとクエリパラメータを取得
         const url = new URL(window.location.href);
-
-        // カテゴリパラメータを設定
-        if (category === "all") {
-            url.searchParams.delete("category");
-        } else {
-            url.searchParams.set("category", category);
-        }
-
-        // ページパラメータを削除（必ず1ページ目から表示する）
+        url.searchParams.set("category", category);
         url.searchParams.delete("page");
 
-        // ページ遷移（サーバーリクエスト）
-        window.location.href = url.toString();
+        router.visit(url.pathname + url.search, { method: "get" });
     };
 
     /**
@@ -294,24 +275,12 @@ export default function JobListings({
     /**
      * 検索処理の実装
      */
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        // 現在のURLを取得
+    const handleSearch = () => {
         const url = new URL(window.location.href);
-
-        // 検索クエリをセット
-        if (searchQuery) {
-            url.searchParams.set("search", searchQuery);
-        } else {
-            url.searchParams.delete("search");
-        }
-
-        // ページパラメータを削除（必ず1ページ目から表示する）
+        url.searchParams.set("search", searchQuery);
         url.searchParams.delete("page");
 
-        // ページ遷移（サーバーリクエスト）
-        window.location.href = url.toString();
+        router.visit(url.pathname + url.search, { method: "get" });
     };
 
     /**
@@ -321,21 +290,17 @@ export default function JobListings({
         const newShowFavoritesOnly = !showFavoritesOnly;
         setShowFavoritesOnly(newShowFavoritesOnly);
 
-        // 現在のURLを取得
         const url = new URL(window.location.href);
 
-        // お気に入りフィルターをセット
         if (newShowFavoritesOnly) {
             url.searchParams.set("favorites_only", "1");
         } else {
             url.searchParams.delete("favorites_only");
         }
 
-        // ページパラメータを削除（必ず1ページ目から表示する）
         url.searchParams.delete("page");
 
-        // ページ遷移（サーバーリクエスト）
-        window.location.href = url.toString();
+        router.visit(url.pathname + url.search, { method: "get" });
     };
 
     // ページコンテンツ（共通部分）

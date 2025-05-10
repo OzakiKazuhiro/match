@@ -29,7 +29,23 @@ function DescriptionCount({ current, max }: { current: number; max: number }) {
     );
 }
 
-export default function PostJob() {
+interface JobListing {
+    id: number;
+    title: string;
+    type: "one_time" | "revenue_share";
+    description: string;
+    budget_min: number | null;
+    budget_max: number | null;
+    category: string;
+    skills: string[];
+    preferred_skills: string[];
+    location: string;
+}
+
+export default function EditJob({
+    auth,
+    jobListing,
+}: PageProps<{ jobListing: JobListing }>) {
     const [customSkill, setCustomSkill] = useState("");
     const [customPreferredSkill, setCustomPreferredSkill] = useState("");
     // 表示用の実際の金額を保持する状態
@@ -47,15 +63,15 @@ export default function PostJob() {
     }>({});
 
     const { data, setData, processing, errors } = useForm({
-        title: "",
-        type: "one_time" as "one_time" | "revenue_share",
-        description: "",
-        budget_min: "",
-        budget_max: "",
-        category: "",
-        skills: [] as string[],
-        preferred_skills: [] as string[],
-        location: "リモート（在宅勤務）",
+        title: jobListing.title,
+        type: jobListing.type,
+        description: jobListing.description,
+        budget_min: jobListing.budget_min?.toString() || "",
+        budget_max: jobListing.budget_max?.toString() || "",
+        category: jobListing.category,
+        skills: jobListing.skills,
+        preferred_skills: jobListing.preferred_skills,
+        location: jobListing.location,
     });
 
     // 予算入力時に実際の表示金額を更新
@@ -110,13 +126,13 @@ export default function PostJob() {
         setSubmitting(true);
 
         try {
-            const response = await axios.post(
-                route("job-listings.store"),
+            const response = await axios.put(
+                route("job-listings.update", jobListing.id),
                 data
             );
             router.visit(response.data.url);
         } catch (error) {
-            console.error("Error submitting job:", error);
+            console.error("Error updating job:", error);
             router.visit(route("job-listings.index"));
         } finally {
             setSubmitting(false);
@@ -255,18 +271,16 @@ export default function PostJob() {
 
     return (
         <AuthenticatedLayout
-            header={<div className="p-post-job__header-title">案件を投稿</div>}
+            header={<div className="p-post-job__header-title">案件を編集</div>}
         >
-            <Head title="案件登録" />
+            <Head title="案件編集" />
 
             <div className="p-post-job">
                 <div className="p-post-job__container">
                     <div className="p-post-job__header">
-                        <h1 className="p-post-job__title">案件を投稿する</h1>
+                        <h1 className="p-post-job__title">案件を編集する</h1>
                         <p className="p-post-job__subtitle">
-                            あなたの案件情報を入力して、エンジニアを募集しましょう。
-                            <br className="hidden md:block" />
-                            単発案件やレベニューシェア案件を簡単に投稿できます。
+                            案件情報を編集して、更新しましょう。
                         </p>
                     </div>
 
@@ -847,58 +861,10 @@ export default function PostJob() {
                                 className="p-post-job__submit"
                                 disabled={processing}
                             >
-                                {processing ? "投稿中..." : "案件を投稿する"}
+                                {processing ? "更新中..." : "案件を更新する"}
                             </button>
                         </div>
                     </form>
-
-                    <div className="p-post-job__tips">
-                        <h2 className="p-post-job__tips-title">
-                            案件が応募されやすくなるコツ
-                        </h2>
-                        <ul className="p-post-job__tips-list">
-                            <li className="p-post-job__tips-item">
-                                <span className="p-post-job__tips-icon">
-                                    💡
-                                </span>
-                                <div className="p-post-job__tips-content">
-                                    <strong>具体的な説明を心がける</strong>：
-                                    作業内容、期待する成果物、納期などを明確に記載しましょう
-                                </div>
-                            </li>
-                            <li className="p-post-job__tips-item">
-                                <span className="p-post-job__tips-icon">
-                                    💡
-                                </span>
-                                <div className="p-post-job__tips-content">
-                                    <strong>適切な予算を設定する</strong>：
-                                    作業量に見合った予算設定が重要です。適正な報酬が応募率を高めます
-                                </div>
-                            </li>
-                            <li className="p-post-job__tips-item">
-                                <span className="p-post-job__tips-icon">
-                                    💡
-                                </span>
-                                <div className="p-post-job__tips-content">
-                                    <strong>必要なスキルを明記する</strong>：
-                                    必須のスキルと歓迎するスキルを分けて記載することで、
-                                    応募者のスキルマッチ度がわかりやすくなります
-                                </div>
-                            </li>
-                            <li className="p-post-job__tips-item">
-                                <span className="p-post-job__tips-icon">
-                                    💡
-                                </span>
-                                <div className="p-post-job__tips-content">
-                                    <strong>
-                                        コミュニケーション方法を示す
-                                    </strong>
-                                    ：
-                                    進捗報告の頻度やミーティングの有無などを明確にしておくと安心感につながります
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
 
@@ -909,14 +875,9 @@ export default function PostJob() {
                 maxWidth="md"
             >
                 <div className="p-modal__container">
-                    <h2 className="p-modal__title">案件投稿の確認</h2>
+                    <h2 className="p-modal__title">案件更新の確認</h2>
                     <p className="p-modal__text">
-                        一度投稿した案件は編集することができません。
-                        <br />
-                        内容を変更する必要がある場合は、案件を削除して新規に作り直す必要があります。
-                        <br />
-                        <br />
-                        この案件を投稿してもよろしいですか？
+                        案件の内容を更新してもよろしいですか？
                     </p>
                     <div className="p-modal__buttons">
                         <button
@@ -930,7 +891,7 @@ export default function PostJob() {
                             onClick={handleSubmit}
                             disabled={submitting}
                         >
-                            {submitting ? "送信中..." : "はい、投稿します"}
+                            {submitting ? "更新中..." : "はい、更新します"}
                         </button>
                     </div>
                 </div>

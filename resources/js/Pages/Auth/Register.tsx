@@ -42,6 +42,12 @@ export default function Register() {
     const [showPasswordConfirmation, setShowPasswordConfirmation] =
         useState(false);
 
+    // パスワード一致バリデーション状態
+    const [passwordMatchMessage, setPasswordMatchMessage] = useState<
+        string | null
+    >(null);
+    const [passwordsMatch, setPasswordsMatch] = useState<boolean | null>(null);
+
     // 名前のバリデーションを行う関数
     const validateName = (name: string) => {
         if (!name) {
@@ -205,6 +211,22 @@ export default function Register() {
         };
     }, [data.password]);
 
+    // パスワード一致チェック
+    useEffect(() => {
+        if (!data.password && !data.password_confirmation) {
+            setPasswordsMatch(null);
+            setPasswordMatchMessage(null);
+            return;
+        }
+        if (data.password !== data.password_confirmation) {
+            setPasswordsMatch(false);
+            setPasswordMatchMessage(VALIDATION_MESSAGES.mismatch.password);
+        } else {
+            setPasswordsMatch(true);
+            setPasswordMatchMessage(null);
+        }
+    }, [data.password, data.password_confirmation]);
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
@@ -223,9 +245,13 @@ export default function Register() {
             return;
         }
 
+        // パスワード一致チェック
+        if (passwordsMatch === false) {
+            return;
+        }
+
         post(route("register"), {
             onFinish: () => reset("password", "password_confirmation"),
-            //↑セキュリティー向上のため
         });
     };
 
@@ -367,8 +393,9 @@ export default function Register() {
                             name="password_confirmation"
                             value={data.password_confirmation}
                             className={`p-auth__input ${
-                                passwordIsValid === false &&
-                                data.password_confirmation
+                                (passwordIsValid === false &&
+                                    data.password_confirmation) ||
+                                passwordsMatch === false
                                     ? "border-red-500"
                                     : ""
                             }`}
@@ -390,6 +417,12 @@ export default function Register() {
                             {showPasswordConfirmation ? "非表示" : "表示"}
                         </button>
                     </div>
+
+                    {passwordMatchMessage && (
+                        <div className="p-auth__error">
+                            {passwordMatchMessage}
+                        </div>
+                    )}
 
                     <InputError
                         message={errors.password_confirmation}

@@ -10,6 +10,8 @@ body {
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    word-break: break-word; //レビュー後追加
+    overflow-wrap: break-word; //レビュー後追加
 }
 
 *,

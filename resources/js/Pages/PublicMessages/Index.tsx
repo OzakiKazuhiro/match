@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { formatDate } from "@/utils/format";
 import { route } from "ziggy-js";
@@ -62,26 +62,12 @@ export default function Index({
     const [searchQuery, setSearchQuery] = useState(filters.search || "");
 
     // 検索処理の実装
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        // 現在のURLを取得
+    const handleSearch = () => {
         const url = new URL(window.location.href);
+        url.searchParams.set("search", searchQuery);
+        url.searchParams.delete("page");
 
-        // 検索クエリをセット
-        if (searchQuery) {
-            url.searchParams.set("search", searchQuery);
-        } else {
-            url.searchParams.delete("search");
-        }
-
-        // 他のページにいる場合はページを1に戻す
-        if (url.searchParams.has("page")) {
-            url.searchParams.delete("page");
-        }
-
-        // ページ遷移（サーバーリクエスト）
-        window.location.href = url.toString();
+        router.visit(url.pathname + url.search, { method: "get" });
     };
 
     return (
