@@ -33,19 +33,12 @@ class PasswordResetLinkController extends Controller
             'email' => 'required|email',
         ]);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
+        // パスワードリセットリンク送信処理
         $status = Password::sendResetLink(
             $request->only('email')
         );
 
-        if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
-        }
-
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
-        ]);
+        // メールアドレスの存在有無に関わらず、同じメッセージを返す
+        return back()->with('status', 'ご入力いただいたメールアドレス宛にパスワード再設定用のメールを送信しました。メールが届かない場合はご確認ください。');
     }
 }

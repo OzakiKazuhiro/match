@@ -32,9 +32,16 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:50',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255',
             'password' => ['required', 'string', 'max:50', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        // 既に登録済みのメールアドレスかチェック
+        $userExists = User::where('email', $request->email)->exists();
+        if ($userExists) {
+            // 実際には何もせず、認証案内画面に遷移
+            return redirect(route('verification.notice', absolute: false));
+        }
 
         $user = User::create([
             'name' => $request->name,
