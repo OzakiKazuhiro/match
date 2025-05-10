@@ -228,7 +228,8 @@ const PublicMessage = ({ message, currentUserId }: PublicMessageProps) => {
                             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             value={editMessage}
                             onChange={(e) => setEditMessage(e.target.value)}
-                            rows={6}
+                            rows={8}
+                            style={{ resize: "none" }}
                         ></textarea>
                     </div>
 

@@ -2520,7 +2520,10 @@ var PublicMessage = function PublicMessage(_ref) {
             onChange: function onChange(e) {
               return setEditMessage(e.target.value);
             },
-            rows: 6
+            rows: 8,
+            style: {
+              resize: "none"
+            }
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "mt-4 flex justify-end space-x-3",

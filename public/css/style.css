@@ -5896,6 +5896,11 @@ textarea {
   outline: none;
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
 }
+@media (max-width: 768px) {
+  .p-messages__back-button {
+    display: none;
+  }
+}
 .p-messages__job-info {
   display: flex;
   align-items: center;
@@ -6785,6 +6790,16 @@ textarea {
 .p-public-message__toggle-button:hover {
   background-color: #e8e8e8;
   color: #333;
+}
+/* モバイル表示時のモーダル調整 */
+@media (max-width: 768px) {
+  /* モーダルの横幅を画面いっぱいに */
+  #modal .rounded-lg {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
 }
 /*
  * Project: Terms

@@ -146,3 +146,14 @@
         }
     }
 }
+
+/* モバイル表示時のモーダル調整 */
+@media (max-width: 768px) {
+    /* モーダルの横幅を画面いっぱいに */
+    #modal .rounded-lg {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+}
