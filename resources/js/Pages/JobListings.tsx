@@ -280,7 +280,15 @@ export default function JobListings({
         url.searchParams.set("search", searchQuery);
         url.searchParams.delete("page");
 
-        router.visit(url.pathname + url.search, { method: "get" });
+        router.get(
+            url.pathname + url.search,
+            {},
+            {
+                preserveScroll: true,
+                preserveState: true,
+                replace: false,
+            }
+        );
     };
 
     /**
@@ -300,7 +308,15 @@ export default function JobListings({
 
         url.searchParams.delete("page");
 
-        router.visit(url.pathname + url.search, { method: "get" });
+        router.get(
+            url.pathname + url.search,
+            {},
+            {
+                preserveScroll: true,
+                preserveState: true,
+                replace: false,
+            }
+        );
     };
 
     // ページコンテンツ（共通部分）

@@ -141,7 +141,15 @@ export default function Index({
         url.searchParams.set("search", searchQuery);
         url.searchParams.delete("page");
 
-        router.visit(url.pathname + url.search, { method: "get" });
+        router.get(
+            url.pathname + url.search,
+            {},
+            {
+                preserveScroll: true,
+                preserveState: true,
+                replace: false,
+            }
+        );
     };
 
     return (

@@ -292,11 +292,27 @@ export default function JobDetail({
     // 応募の実行
     const handleApply = () => {
         if (!auth?.user) {
-            router.visit(route("login"));
+            router.get(
+                route("login"),
+                {},
+                {
+                    preserveScroll: true,
+                    preserveState: true,
+                    replace: false,
+                }
+            );
             return;
         }
 
-        router.visit(route("job-listings.apply.create", jobListing.id));
+        router.get(
+            route("job-listings.apply.create", jobListing.id),
+            {},
+            {
+                preserveScroll: true,
+                preserveState: true,
+                replace: false,
+            }
+        );
     };
 
     const handleShare = (platform: string) => {

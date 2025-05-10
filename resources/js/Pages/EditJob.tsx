@@ -130,10 +130,27 @@ export default function EditJob({
                 route("job-listings.update", jobListing.id),
                 data
             );
-            router.visit(response.data.url);
+            // router.get()を使用して、ブラウザの履歴スタックを正しく更新
+            router.get(
+                response.data.url,
+                {},
+                {
+                    preserveScroll: true,
+                    preserveState: true,
+                    replace: false,
+                }
+            );
         } catch (error) {
             console.error("Error updating job:", error);
-            router.visit(route("job-listings.index"));
+            router.get(
+                route("job-listings.index"),
+                {},
+                {
+                    preserveScroll: true,
+                    preserveState: true,
+                    replace: false,
+                }
+            );
         } finally {
             setSubmitting(false);
         }
