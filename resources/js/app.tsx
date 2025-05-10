@@ -31,7 +31,7 @@ createInertiaApp({
         color: "#4B5563",
     },
 });
-
+//
 // Chromeモバイルでの戻るボタン問題を修正
 document.addEventListener("DOMContentLoaded", () => {
     // ページ読み込み時に現在のURLと状態を記録
