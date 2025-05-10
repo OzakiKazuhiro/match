@@ -20,7 +20,7 @@ export default function Dashboard({ auth }: PageProps) {
             <div className="p-dashboard__container">
                 <div className="p-dashboard__card-grid">
                     <Link
-                        href={route("job-listings.index")}
+                        href={route("my-job-listings.index")}
                         className="p-dashboard__menu-card"
                     >
                         <div className="p-dashboard__menu-card-content">
@@ -29,10 +29,10 @@ export default function Dashboard({ auth }: PageProps) {
                             </div>
                             <div className="p-dashboard__menu-card-text">
                                 <h3 className="p-dashboard__menu-card-title">
-                                    案件の一覧を確認する
+                                    自分の投稿案件一覧
                                 </h3>
                                 <p className="p-dashboard__menu-card-description">
-                                    登録されている全ての案件を閲覧できます
+                                    あなたが投稿した案件一覧を確認できます
                                 </p>
                             </div>
                         </div>

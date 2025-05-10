@@ -1,6 +1,44 @@
 "use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_Messages_Index_tsx"],{
 
+/***/ "./node_modules/@heroicons/react/24/solid/esm/ChevronDownIcon.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@heroicons/react/24/solid/esm/ChevronDownIcon.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+function ChevronDownIcon({
+  title,
+  titleId,
+  ...props
+}, svgRef) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("svg", Object.assign({
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    fill: "currentColor",
+    "aria-hidden": "true",
+    "data-slot": "icon",
+    ref: svgRef,
+    "aria-labelledby": titleId
+  }, props), title ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("title", {
+    id: titleId
+  }, title) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+    fillRule: "evenodd",
+    d: "M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z",
+    clipRule: "evenodd"
+  }));
+}
+const ForwardRef = /*#__PURE__*/ react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(ChevronDownIcon);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ForwardRef);
+
+/***/ }),
+
 /***/ "./node_modules/ziggy-js/dist/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/ziggy-js/dist/index.js ***!
@@ -1055,6 +1093,129 @@ function NotificationBadge() {
 
 /***/ }),
 
+/***/ "./resources/js/Components/TabNavigation.tsx":
+/*!***************************************************!*\
+  !*** ./resources/js/Components/TabNavigation.tsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ TabNavigation)
+/* harmony export */ });
+/* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _heroicons_react_24_solid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @heroicons/react/24/solid */ "./node_modules/@heroicons/react/24/solid/esm/ChevronDownIcon.js");
+/* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+
+
+
+
+// タブの定義
+
+var tabs = [{
+  name: "自分の投稿案件",
+  route: "my-job-listings.index"
+}, {
+  name: "応募した案件",
+  route: "applications.index"
+}, {
+  name: "自分の案件への応募",
+  route: "applications.to-my-jobs"
+}, {
+  name: "パブリックメッセージ",
+  route: "public-messages.index"
+}, {
+  name: "ダイレクトメッセージ",
+  route: "messages.index"
+}];
+function TabNavigation(_ref) {
+  var _tabs$find;
+  var activeTab = _ref.activeTab;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    isDropdownOpen = _useState2[0],
+    setIsDropdownOpen = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    isMobile = _useState4[0],
+    setIsMobile = _useState4[1];
+
+  // 現在のアクティブタブを取得
+  var activeTabName = ((_tabs$find = tabs.find(function (tab) {
+    return tab.route === activeTab;
+  })) === null || _tabs$find === void 0 ? void 0 : _tabs$find.name) || tabs[0].name;
+
+  // 画面サイズに応じてモバイル判定を更新
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var handleResize = function handleResize() {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize(); // 初期化時に実行
+    window.addEventListener("resize", handleResize);
+    return function () {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // ドロップダウンの開閉を切り替え
+  var toggleDropdown = function toggleDropdown() {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // ドロップダウン選択時に閉じる
+  var closeDropdown = function closeDropdown() {
+    setIsDropdownOpen(false);
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      className: "p-tab-navigation__mobile",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
+        onClick: toggleDropdown,
+        className: "p-tab-navigation__dropdown-button",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+          children: activeTabName
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_heroicons_react_24_solid__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          className: "p-tab-navigation__dropdown-icon ".concat(isDropdownOpen ? "open" : "")
+        })]
+      }), isDropdownOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "p-tab-navigation__dropdown-menu",
+        children: tabs.map(function (tab) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)(tab.route),
+            className: "p-tab-navigation__dropdown-item ".concat(tab.route === activeTab ? "active" : ""),
+            onClick: closeDropdown,
+            children: tab.name
+          }, tab.route);
+        })
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      className: "p-tab-navigation__desktop",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "p-applications__tabs",
+        children: tabs.map(function (tab) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_2__.route)(tab.route),
+            className: "p-applications__tab ".concat(tab.route === activeTab ? "p-applications__tab--active" : ""),
+            children: tab.name
+          }, tab.route);
+        })
+      })
+    })]
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/Layouts/AuthenticatedLayout.tsx":
 /*!******************************************************!*\
   !*** ./resources/js/Layouts/AuthenticatedLayout.tsx ***!
@@ -1421,7 +1582,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
 /* harmony import */ var _Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Layouts/AuthenticatedLayout */ "./resources/js/Layouts/AuthenticatedLayout.tsx");
-/* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
+/* harmony import */ var _Components_TabNavigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/TabNavigation */ "./resources/js/Components/TabNavigation.tsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1536,25 +1697,8 @@ function Index(_ref) {
       className: "p-messages",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         className: "p-messages__container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "p-messages__tabs",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("applications.index"),
-            className: "p-messages__tab",
-            children: "\u5FDC\u52DF\u3057\u305F\u6848\u4EF6"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("applications.to-my-jobs"),
-            className: "p-messages__tab",
-            children: "\u81EA\u5206\u306E\u6848\u4EF6\u3078\u306E\u5FDC\u52DF"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("public-messages.index"),
-            className: "p-messages__tab",
-            children: "\u30D1\u30D6\u30EA\u30C3\u30AF\u30E1\u30C3\u30BB\u30FC\u30B8"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-            href: (0,ziggy_js__WEBPACK_IMPORTED_MODULE_3__.route)("messages.index"),
-            className: "p-messages__tab p-messages__tab--active",
-            children: "\u30C0\u30A4\u30EC\u30AF\u30C8\u30E1\u30C3\u30BB\u30FC\u30B8"
-          })]
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_TabNavigation__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          activeTab: "messages.index"
         }), conversationGroups.data.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
           className: "p-messages__empty",
           children: filters.search ? "検索条件に一致するメッセージはありません" : "ダイレクトメッセージはありません"

@@ -3,6 +3,7 @@ import { Head, Link, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { formatDate } from "@/utils/format";
 import { route } from "ziggy-js";
+import TabNavigation from "@/Components/TabNavigation";
 
 interface User {
     id: number;
@@ -104,32 +105,7 @@ export default function Index({
 
             <div className="p-public-messages">
                 <div className="p-public-messages__container">
-                    <div className="p-public-messages__tabs">
-                        <Link
-                            href={route("applications.index")}
-                            className="p-public-messages__tab"
-                        >
-                            応募した案件
-                        </Link>
-                        <Link
-                            href={route("applications.to-my-jobs")}
-                            className="p-public-messages__tab"
-                        >
-                            自分の案件への応募
-                        </Link>
-                        <Link
-                            href={route("public-messages.index")}
-                            className="p-public-messages__tab p-public-messages__tab--active"
-                        >
-                            パブリックメッセージ
-                        </Link>
-                        <Link
-                            href={route("messages.index")}
-                            className="p-public-messages__tab"
-                        >
-                            ダイレクトメッセージ
-                        </Link>
-                    </div>
+                    <TabNavigation activeTab="public-messages.index" />
 
                     {jobListingsWithMessages.length > 0 ? (
                         <div className="p-public-messages__list">

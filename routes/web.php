@@ -119,6 +119,11 @@ Route::middleware(['auth', 'verified'])->prefix('applications')->name('applicati
         ->where('status', 'accepted|declined');
 });
 
+// 自分の投稿案件一覧ルート
+Route::middleware(['auth', 'verified'])->prefix('my-job-listings')->name('my-job-listings.')->group(function () {
+    Route::get('/', [App\Http\Controllers\MyJobListingController::class, 'index'])->name('index');
+});
+
 // 通知関連ルート
 Route::middleware(['auth', 'verified'])->prefix('notifications')->name('notifications.')->group(function () {
     // 通知一覧

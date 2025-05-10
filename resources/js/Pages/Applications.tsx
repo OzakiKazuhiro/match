@@ -1,6 +1,7 @@
 import { Head, Link } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import TabNavigation from "@/Components/TabNavigation";
 
 interface User {
     id: number;
@@ -127,32 +128,7 @@ export default function Applications({
 
             <div className="p-applications">
                 <div className="p-applications__container">
-                    <div className="p-applications__tabs">
-                        <Link
-                            href={route("applications.index")}
-                            className="p-applications__tab p-applications__tab--active"
-                        >
-                            応募した案件
-                        </Link>
-                        <Link
-                            href={route("applications.to-my-jobs")}
-                            className="p-applications__tab"
-                        >
-                            自分の案件への応募
-                        </Link>
-                        <Link
-                            href={route("public-messages.index")}
-                            className="p-applications__tab"
-                        >
-                            パブリックメッセージ
-                        </Link>
-                        <Link
-                            href={route("messages.index")}
-                            className="p-applications__tab"
-                        >
-                            ダイレクトメッセージ
-                        </Link>
-                    </div>
+                    <TabNavigation activeTab="applications.index" />
 
                     <div className="p-applications__content">
                         <div className="p-applications__card">

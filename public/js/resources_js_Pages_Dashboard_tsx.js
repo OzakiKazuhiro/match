@@ -786,7 +786,7 @@ function Dashboard(_ref) {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "p-dashboard__card-grid",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
-          href: route("job-listings.index"),
+          href: route("my-job-listings.index"),
           className: "p-dashboard__menu-card",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: "p-dashboard__menu-card-content",
@@ -799,10 +799,10 @@ function Dashboard(_ref) {
               className: "p-dashboard__menu-card-text",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
                 className: "p-dashboard__menu-card-title",
-                children: "\u6848\u4EF6\u306E\u4E00\u89A7\u3092\u78BA\u8A8D\u3059\u308B"
+                children: "\u81EA\u5206\u306E\u6295\u7A3F\u6848\u4EF6\u4E00\u89A7"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
                 className: "p-dashboard__menu-card-description",
-                children: "\u767B\u9332\u3055\u308C\u3066\u3044\u308B\u5168\u3066\u306E\u6848\u4EF6\u3092\u95B2\u89A7\u3067\u304D\u307E\u3059"
+                children: "\u3042\u306A\u305F\u304C\u6295\u7A3F\u3057\u305F\u6848\u4EF6\u4E00\u89A7\u3092\u78BA\u8A8D\u3067\u304D\u307E\u3059"
               })]
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {

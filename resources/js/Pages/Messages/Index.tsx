@@ -3,6 +3,7 @@ import { Head, Link, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { route } from "ziggy-js";
+import TabNavigation from "@/Components/TabNavigation";
 
 interface User {
     id: number;
@@ -186,32 +187,7 @@ export default function Index({
 
             <div className="p-messages">
                 <div className="p-messages__container">
-                    <div className="p-messages__tabs">
-                        <Link
-                            href={route("applications.index")}
-                            className="p-messages__tab"
-                        >
-                            応募した案件
-                        </Link>
-                        <Link
-                            href={route("applications.to-my-jobs")}
-                            className="p-messages__tab"
-                        >
-                            自分の案件への応募
-                        </Link>
-                        <Link
-                            href={route("public-messages.index")}
-                            className="p-messages__tab"
-                        >
-                            パブリックメッセージ
-                        </Link>
-                        <Link
-                            href={route("messages.index")}
-                            className="p-messages__tab p-messages__tab--active"
-                        >
-                            ダイレクトメッセージ
-                        </Link>
-                    </div>
+                    <TabNavigation activeTab="messages.index" />
 
                     {conversationGroups.data.length === 0 ? (
                         <p className="p-messages__empty">
