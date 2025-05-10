@@ -78,76 +78,8 @@ export default function Register() {
         };
     }, [data.name]);
 
-    // メールアドレスの重複チェックを行う関数
-    const validateEmail = async (email: string) => {
-        if (!email || !email.includes("@") || email.length < 5) {
-            setEmailIsValid(null);
-            setEmailValidationMessage(null);
-            return;
-        }
-
-        setIsValidatingEmail(true);
-
-        try {
-            // CSRFトークンを取得
-            const csrfToken =
-                document
-                    .querySelector('meta[name="csrf-token"]')
-                    ?.getAttribute("content") || "";
-
-            // axiosを使ってリクエストを送信
-            const response = await axios.post(
-                route("validate.email"),
-                { email },
-                {
-                    headers: {
-                        "X-CSRF-TOKEN": csrfToken,
-                        "Content-Type": "application/json",
-                        "X-Requested-With": "XMLHttpRequest",
-                        Accept: "application/json",
-                    },
-                }
-            );
-
-            // レスポンスから結果を取得
-            if (response.data) {
-                setEmailIsValid(response.data.valid);
-                setEmailValidationMessage(
-                    response.data.valid ? null : response.data.message
-                );
-            }
-        } catch (error) {
-            console.error("Email validation error:", error);
-            setEmailIsValid(null);
-            setEmailValidationMessage(
-                VALIDATION_MESSAGES.error.email_validation
-            );
-        } finally {
-            setIsValidatingEmail(false);
-        }
-    };
-
-    // debounceを使用して連続したAPIリクエストを防止
-    const debouncedValidateEmail = debounce(validateEmail, 500);
-
-    // メールアドレスが変更されたときに検証を実行
-    useEffect(() => {
-        // メールフィールドが空の場合はメッセージをクリア
-        if (!data.email) {
-            setEmailValidationMessage(null);
-            setEmailIsValid(null);
-            return;
-        }
-
-        // メールアドレスがある程度有効な形式の場合のみ検証を実行
-        if (data.email.includes("@") && data.email.length >= 5) {
-            debouncedValidateEmail(data.email);
-        }
-
-        return () => {
-            debouncedValidateEmail.cancel();
-        };
-    }, [data.email]);
+    // メールアドレスの重複チェックを行う関数・debounce・useEffectを削除
+    // メールアドレスの形式チェックや必須チェックのみ残す
 
     // パスワードのバリデーションを行う関数
     const validatePassword = (password: string) => {
@@ -308,24 +240,13 @@ export default function Register() {
                         type="email"
                         name="email"
                         value={data.email}
-                        className={`p-auth__input ${
-                            emailIsValid === false ? "border-red-500" : ""
-                        }`}
+                        className={`p-auth__input`}
                         autoComplete="username"
                         onChange={(e) => setData("email", e.target.value)}
                     />
 
-                    {isValidatingEmail && (
-                        <div className="p-auth__input-help">
-                            メールアドレスを確認中...
-                        </div>
-                    )}
-
-                    {emailValidationMessage && (
-                        <div className="p-auth__error">
-                            {emailValidationMessage}
-                        </div>
-                    )}
+                    {/* メールアドレスバリデーションメッセージの表示を削除 */}
+                    {/* <div className="p-auth__error">{emailValidationMessage}</div> を削除 */}
 
                     <InputError
                         message={errors.email}
