@@ -74,6 +74,10 @@ export default function Top({ auth }: PageProps) {
         setMobileMenuOpen(!mobileMenuOpen);
     };
 
+    const handleLinkClick = () => {
+        setMobileMenuOpen(false);
+    };
+
     return (
         <>
             <Head title="match - エンジニア案件マッチングサービス" />
@@ -81,7 +85,11 @@ export default function Top({ auth }: PageProps) {
             {/* ヘッダー */}
             <header className="l-header">
                 <div className="l-header__inner">
-                    <a href="/" className="l-header__logo">
+                    <a
+                        href="/"
+                        className="l-header__logo"
+                        onClick={handleLinkClick}
+                    >
                         <span className="l-header__logo-accent">match</span>
                     </a>
 
@@ -118,6 +126,7 @@ export default function Top({ auth }: PageProps) {
                                 <a
                                     href="/verify-email"
                                     className="l-header__verification-link"
+                                    onClick={handleLinkClick}
                                 >
                                     メール認証が未完了です
                                 </a>
@@ -126,10 +135,18 @@ export default function Top({ auth }: PageProps) {
                     )}
 
                     <nav className="l-header__nav">
-                        <a href="/job-listings" className="l-header__nav-link">
+                        <a
+                            href="/job-listings"
+                            className="l-header__nav-link"
+                            onClick={handleLinkClick}
+                        >
                             案件一覧
                         </a>
-                        <a href="/post-job" className="l-header__nav-link">
+                        <a
+                            href="/post-job"
+                            className="l-header__nav-link"
+                            onClick={handleLinkClick}
+                        >
                             案件を投稿
                         </a>
                         {auth?.user ? (
@@ -137,21 +154,30 @@ export default function Top({ auth }: PageProps) {
                                 <a
                                     href="/dashboard"
                                     className="l-header__nav-link"
+                                    onClick={handleLinkClick}
                                 >
                                     マイページ
                                 </a>
-                                <LogoutLink className="l-header__nav-link">
+                                <LogoutLink
+                                    className="l-header__nav-link"
+                                    onClick={handleLinkClick}
+                                >
                                     ログアウト
                                 </LogoutLink>
                             </>
                         ) : (
                             <>
-                                <a href="/login" className="l-header__nav-link">
+                                <a
+                                    href="/login"
+                                    className="l-header__nav-link"
+                                    onClick={handleLinkClick}
+                                >
                                     ログイン
                                 </a>
                                 <a
                                     href="/register"
                                     className="l-header__nav-link l-header__nav-link--button"
+                                    onClick={handleLinkClick}
                                 >
                                     会員登録
                                 </a>
@@ -227,6 +253,7 @@ export default function Top({ auth }: PageProps) {
                                 <a
                                     href="/verify-email"
                                     className="l-header__mobile-verification-link"
+                                    onClick={handleLinkClick}
                                 >
                                     メール認証が未完了です
                                 </a>
@@ -236,10 +263,15 @@ export default function Top({ auth }: PageProps) {
                         <a
                             href="/job-listings"
                             className="l-header__mobile-link"
+                            onClick={handleLinkClick}
                         >
                             案件一覧
                         </a>
-                        <a href="/post-job" className="l-header__mobile-link">
+                        <a
+                            href="/post-job"
+                            className="l-header__mobile-link"
+                            onClick={handleLinkClick}
+                        >
                             案件を投稿
                         </a>
 
@@ -248,10 +280,14 @@ export default function Top({ auth }: PageProps) {
                                 <a
                                     href="/dashboard"
                                     className="l-header__mobile-link"
+                                    onClick={handleLinkClick}
                                 >
                                     マイページ
                                 </a>
-                                <LogoutLink className="l-header__mobile-link l-header__mobile-link--danger">
+                                <LogoutLink
+                                    className="l-header__mobile-link l-header__mobile-link--danger"
+                                    onClick={handleLinkClick}
+                                >
                                     ログアウト
                                 </LogoutLink>
                             </>
@@ -260,12 +296,14 @@ export default function Top({ auth }: PageProps) {
                                 <a
                                     href="/login"
                                     className="l-header__mobile-link"
+                                    onClick={handleLinkClick}
                                 >
                                     ログイン
                                 </a>
                                 <a
                                     href="/register"
                                     className="l-header__mobile-link"
+                                    onClick={handleLinkClick}
                                 >
                                     会員登録
                                 </a>
