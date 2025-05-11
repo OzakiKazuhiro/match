@@ -1,8 +1,5 @@
-import React from "react";
-import { Link } from "@inertiajs/react";
 import { User } from "@/types";
 import { route } from "ziggy-js";
-import FavoriteButton from "./FavoriteButton";
 
 // ジョブタイプの定義
 export interface JobType {

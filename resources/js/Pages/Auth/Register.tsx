@@ -1,12 +1,10 @@
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
 import { debounce } from "lodash";
-import axios from "axios";
 import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 
 export default function Register() {

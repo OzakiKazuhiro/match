@@ -1,5 +1,5 @@
 import { PageProps } from "@/types";
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { useState, useEffect, useRef } from "react";
 import LogoutLink from "@/Components/LogoutLink";
 

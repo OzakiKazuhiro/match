@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
-import { route } from "ziggy-js";
 import TabNavigation from "@/Components/TabNavigation";
 
 interface User {

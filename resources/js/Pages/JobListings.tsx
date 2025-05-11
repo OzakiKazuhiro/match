@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import JobCard, { JobType } from "@/Components/JobCard";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";

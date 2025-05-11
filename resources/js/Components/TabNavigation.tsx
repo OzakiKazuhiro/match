@@ -1,4 +1,3 @@
-import { Link } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { route } from "ziggy-js";
@@ -67,7 +66,7 @@ export default function TabNavigation({ activeTab }: TabNavigationProps) {
                 {isDropdownOpen && (
                     <div className="p-tab-navigation__dropdown-menu">
                         {tabs.map((tab) => (
-                            <Link
+                            <a
                                 key={tab.route}
                                 href={route(tab.route)}
                                 className={`p-tab-navigation__dropdown-item ${
@@ -76,7 +75,7 @@ export default function TabNavigation({ activeTab }: TabNavigationProps) {
                                 onClick={closeDropdown}
                             >
                                 {tab.name}
-                            </Link>
+                            </a>
                         ))}
                     </div>
                 )}
@@ -86,7 +85,7 @@ export default function TabNavigation({ activeTab }: TabNavigationProps) {
             <div className="p-tab-navigation__desktop">
                 <div className="p-applications__tabs">
                     {tabs.map((tab) => (
-                        <Link
+                        <a
                             key={tab.route}
                             href={route(tab.route)}
                             className={`p-applications__tab ${
@@ -96,7 +95,7 @@ export default function TabNavigation({ activeTab }: TabNavigationProps) {
                             }`}
                         >
                             {tab.name}
-                        </Link>
+                        </a>
                     ))}
                 </div>
             </div>

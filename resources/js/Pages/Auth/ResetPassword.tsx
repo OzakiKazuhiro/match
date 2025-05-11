@@ -4,7 +4,6 @@ import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useState, useEffect } from "react";
-import { Link } from "@inertiajs/react";
 import { debounce } from "lodash";
 import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 

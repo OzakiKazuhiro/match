@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "@inertiajs/react";
 import axios from "axios";
 
 export default function NotificationBadge() {
@@ -37,7 +36,7 @@ export default function NotificationBadge() {
     }
 
     return (
-        <Link
+        <a
             href={route("notifications.index")}
             className="l-header__notification-link"
         >
@@ -61,6 +60,6 @@ export default function NotificationBadge() {
                     {unreadCount}
                 </span>
             )}
-        </Link>
+        </a>
     );
 }

@@ -1,5 +1,3 @@
-import { HTMLAttributes } from "react";
-
 export default function InputError({
     message,
     className = "",

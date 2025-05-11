@@ -1,4 +1,3 @@
-import ApplicationLogo from "@/Components/ApplicationLogo";
 import { PropsWithChildren } from "react";
 
 interface GuestProps extends PropsWithChildren {
