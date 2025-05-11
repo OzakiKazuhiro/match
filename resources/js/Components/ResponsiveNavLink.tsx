@@ -1,15 +1,14 @@
-import { InertiaLinkProps, Link } from "@inertiajs/react";
+import { AnchorHTMLAttributes } from "react";
 
 export default function ResponsiveNavLink({
     active = false,
     className = "",
     children,
     ...props
-}: InertiaLinkProps & { active?: boolean }) {
+}: AnchorHTMLAttributes<HTMLAnchorElement> & { active?: boolean }) {
     return (
-        <Link
+        <a
             {...props}
-            as="a"
             className={`flex w-full items-start border-l-4 py-2 pe-4 ps-3 ${
                 active
                     ? "border-indigo-400 bg-indigo-50 text-indigo-700 focus:border-indigo-700 focus:bg-indigo-100 focus:text-indigo-800"
@@ -17,6 +16,6 @@ export default function ResponsiveNavLink({
             } text-base font-medium transition duration-150 ease-in-out focus:outline-none ${className}`}
         >
             {children}
-        </Link>
+        </a>
     );
 }

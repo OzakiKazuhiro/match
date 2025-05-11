@@ -1,15 +1,14 @@
-import { InertiaLinkProps, Link } from "@inertiajs/react";
+import { AnchorHTMLAttributes } from "react";
 
 export default function NavLink({
     active = false,
     className = "",
     children,
     ...props
-}: InertiaLinkProps & { active: boolean }) {
+}: AnchorHTMLAttributes<HTMLAnchorElement> & { active: boolean }) {
     return (
-        <Link
+        <a
             {...props}
-            as="a"
             className={
                 "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none " +
                 (active
@@ -19,6 +18,6 @@ export default function NavLink({
             }
         >
             {children}
-        </Link>
+        </a>
     );
 }
