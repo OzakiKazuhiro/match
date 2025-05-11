@@ -17,7 +17,7 @@ export default function Top({ auth }: PageProps) {
             setMenuVisible(true); // まずDOMに表示
             setAnimating(true); // アニメーション開始
             setTimeout(() => setAnimating(false), 300); // アニメーション終了
-        } else if (menuVisible) {
+        } else {
             // メニューを閉じる場合
             setAnimating(true); // アニメーション開始
             setTimeout(() => {
@@ -30,14 +30,13 @@ export default function Top({ auth }: PageProps) {
     // メニュー外のクリックを検出してメニューを閉じる
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            // ボタン自体のクリックは無視（トグル動作は別のハンドラで処理）
             if (
                 mobileMenuRef.current &&
                 !mobileMenuRef.current.contains(event.target as Node) &&
                 mobileButtonRef.current &&
                 !mobileButtonRef.current.contains(event.target as Node) &&
                 menuVisible &&
-                !animating // アニメーション中でない場合のみ処理
+                !animating
             ) {
                 setMobileMenuOpen(false);
             }
@@ -195,6 +194,7 @@ export default function Top({ auth }: PageProps) {
                             mobileMenuOpen ? "menu-fade-in" : "menu-fade-out"
                         }`}
                         ref={mobileMenuRef}
+                        style={{ display: mobileMenuOpen ? "block" : "none" }}
                     >
                         {auth?.user && auth?.user.email_verified_at && (
                             <div className="l-header__mobile-user">
