@@ -258,12 +258,12 @@ export default function ApplicationsToMyJobs({
                                     <p className="p-applications__empty-message">
                                         まだあなたの案件への応募はありません。
                                     </p>
-                                    <Link
+                                    <a
                                         href={route("job-listings.create")}
                                         className="p-applications__browse-button"
                                     >
                                         案件を投稿する
-                                    </Link>
+                                    </a>
                                 </div>
                             ) : Object.keys(groupedApplications).length ===
                               0 ? (
@@ -508,7 +508,7 @@ export default function ApplicationsToMyJobs({
                                                                                                         ?.email
                                                                                                 }
                                                                                             </p>
-                                                                                            <Link
+                                                                                            <a
                                                                                                 href={
                                                                                                     application.conversation_group_id
                                                                                                         ? route(
@@ -522,7 +522,7 @@ export default function ApplicationsToMyJobs({
                                                                                                 className="p-applications__message-button"
                                                                                             >
                                                                                                 ダイレクトメッセージを送る
-                                                                                            </Link>
+                                                                                            </a>
                                                                                         </div>
                                                                                     </div>
                                                                                 )}
@@ -549,7 +549,7 @@ export default function ApplicationsToMyJobs({
                                                                         </span>
                                                                     </button>
                                                                 )}
-                                                                <Link
+                                                                <a
                                                                     href={route(
                                                                         "job-listings.show",
                                                                         jobListing.id
@@ -562,7 +562,7 @@ export default function ApplicationsToMyJobs({
                                                                     <span className="p-applications__button-text-sp">
                                                                         案件詳細
                                                                     </span>
-                                                                </Link>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     )}

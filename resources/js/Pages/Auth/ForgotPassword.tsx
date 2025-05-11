@@ -49,9 +49,9 @@ export default function ForgotPassword({ status }: { status?: string }) {
                 </div>
 
                 <div className="p-auth__actions">
-                    <Link href={route("login")} className="p-auth__link">
+                    <a href={route("login")} className="p-auth__link">
                         ログイン画面に戻る
-                    </Link>
+                    </a>
 
                     <button
                         className="p-auth__button p-auth__button--primary"

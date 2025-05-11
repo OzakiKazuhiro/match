@@ -66,27 +66,24 @@ export default function Authenticated({
             {/* ヘッダー */}
             <header className="l-header">
                 <div className="l-header__inner">
-                    <Link href="/" className="l-header__logo">
+                    <a href="/" className="l-header__logo">
                         <span className="l-header__logo-accent">match</span>
-                    </Link>
+                    </a>
 
                     <nav className="l-header__nav">
                         <NotificationBadge />
-                        <Link
-                            href="/job-listings"
-                            className="l-header__nav-link"
-                        >
+                        <a href="/job-listings" className="l-header__nav-link">
                             案件一覧
-                        </Link>
-                        <Link href="/post-job" className="l-header__nav-link">
+                        </a>
+                        <a href="/post-job" className="l-header__nav-link">
                             案件を投稿
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                             href={route("dashboard")}
                             className="l-header__nav-link"
                         >
                             マイページ
-                        </Link>
+                        </a>
                         <div
                             className="l-header__user-menu"
                             ref={userDropdownRef}
@@ -154,18 +151,18 @@ export default function Authenticated({
 
                             {showingUserDropdown && (
                                 <div className="l-header__dropdown">
-                                    <Link
+                                    <a
                                         href={route("dashboard")}
                                         className="l-header__dropdown-item"
                                     >
                                         マイページ
-                                    </Link>
-                                    <Link
+                                    </a>
+                                    <a
                                         href={route("profile.edit")}
                                         className="l-header__dropdown-item"
                                     >
                                         プロフィール編集
-                                    </Link>
+                                    </a>
                                     <LogoutLink className="l-header__dropdown-item l-header__dropdown-item--danger">
                                         ログアウト
                                     </LogoutLink>
@@ -237,36 +234,33 @@ export default function Authenticated({
                                 </span>
                             </div>
                         </div>
-                        <Link
+                        <a
                             href="/notifications"
                             className="l-header__mobile-link"
                         >
                             通知
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                             href="/job-listings"
                             className="l-header__mobile-link"
                         >
                             案件一覧
-                        </Link>
-                        <Link
-                            href="/post-job"
-                            className="l-header__mobile-link"
-                        >
+                        </a>
+                        <a href="/post-job" className="l-header__mobile-link">
                             案件を投稿
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                             href={route("dashboard")}
                             className="l-header__mobile-link"
                         >
                             マイページ
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                             href={route("profile.edit")}
                             className="l-header__mobile-link"
                         >
                             プロフィール編集
-                        </Link>
+                        </a>
                         <LogoutLink className="l-header__mobile-link l-header__mobile-link--danger">
                             ログアウト
                         </LogoutLink>
@@ -290,11 +284,11 @@ export default function Authenticated({
                     <div className="l-footer__container">
                         <div className="l-footer__content">
                             <div>
-                                <Link href="/" className="l-footer__logo">
+                                <a href="/" className="l-footer__logo">
                                     <span className="l-footer__logo-accent">
                                         match
                                     </span>
-                                </Link>
+                                </a>
                                 <p className="l-footer__description">
                                     エンジニア向けの案件マッチングサービス。
                                     単発案件からレベニューシェア案件まで、
@@ -306,20 +300,20 @@ export default function Authenticated({
                                 <h3 className="l-footer__heading">案件関連</h3>
                                 <ul className="l-footer__links">
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href="/job-listings"
                                             className="l-footer__link"
                                         >
                                             案件一覧
-                                        </Link>
+                                        </a>
                                     </li>
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href="/post-job"
                                             className="l-footer__link"
                                         >
                                             案件を投稿
-                                        </Link>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -330,20 +324,20 @@ export default function Authenticated({
                                 </h3>
                                 <ul className="l-footer__links">
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href={route("dashboard")}
                                             className="l-footer__link"
                                         >
                                             マイページ
-                                        </Link>
+                                        </a>
                                     </li>
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href={route("profile.edit")}
                                             className="l-footer__link"
                                         >
                                             プロフィール編集
-                                        </Link>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -354,20 +348,20 @@ export default function Authenticated({
                                 </h3>
                                 <ul className="l-footer__links">
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href={route("terms")}
                                             className="l-footer__link"
                                         >
                                             利用規約
-                                        </Link>
+                                        </a>
                                     </li>
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href={route("privacy")}
                                             className="l-footer__link"
                                         >
                                             プライバシーポリシー
-                                        </Link>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

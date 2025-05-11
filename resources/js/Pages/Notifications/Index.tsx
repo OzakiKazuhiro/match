@@ -149,24 +149,22 @@ export default function NotificationsIndex({
                                                     {details.description}
                                                 </p>
                                                 <div className="p-notifications__item-actions">
-                                                    <Link
+                                                    <a
                                                         href={details.url}
                                                         className="p-notifications__item-action"
                                                     >
                                                         {details.actionText}
-                                                    </Link>
+                                                    </a>
                                                     {!notification.read_at && (
-                                                        <Link
+                                                        <a
                                                             href={route(
                                                                 "notifications.mark-as-read",
                                                                 notification.id
                                                             )}
-                                                            method="patch"
-                                                            as="button"
                                                             className="p-notifications__item-mark-read"
                                                         >
                                                             既読にする
-                                                        </Link>
+                                                        </a>
                                                     )}
                                                 </div>
                                             </div>
@@ -180,7 +178,7 @@ export default function NotificationsIndex({
                         {notifications.links.length > 3 && (
                             <div className="p-notifications__pagination">
                                 {notifications.links.map((link, i) => (
-                                    <Link
+                                    <a
                                         key={i}
                                         href={link.url || "#"}
                                         className={`p-notifications__pagination-link ${

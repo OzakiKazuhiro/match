@@ -352,9 +352,9 @@ export default function Register() {
                 </div>
 
                 <div className="p-auth__actions">
-                    <Link href={route("login")} className="p-auth__forgot-link">
+                    <a href={route("login")} className="p-auth__forgot-link">
                         すでにアカウントをお持ちの方
-                    </Link>
+                    </a>
 
                     <button
                         className="p-auth__button p-auth__button--primary"

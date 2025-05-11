@@ -346,12 +346,12 @@ export default function JobDetail({
             <div className="p-job-detail">
                 <div className="p-job-detail__container">
                     <div className="p-job-detail__breadcrumb">
-                        <Link
+                        <a
                             href={route("job-listings.index")}
                             className="p-job-detail__breadcrumb-link"
                         >
                             案件一覧
-                        </Link>
+                        </a>
                         <span className="p-job-detail__breadcrumb-separator">
                             &gt;
                         </span>
@@ -510,7 +510,7 @@ export default function JobDetail({
                                         )}
                                         {!jobListing.is_closed &&
                                             (canApply || hasApplied) && (
-                                                <Link
+                                                <a
                                                     href={
                                                         hasApplied ? "#" : "#"
                                                     }
@@ -533,7 +533,7 @@ export default function JobDetail({
                                                               applicationStatus
                                                           )
                                                         : "応募する"}
-                                                </Link>
+                                                </a>
                                             )}
                                     </div>
                                 </div>
@@ -897,12 +897,12 @@ export default function JobDetail({
                                         <p>
                                             メッセージを投稿するには、ログインしてください。
                                         </p>
-                                        <Link
+                                        <a
                                             href={route("login")}
                                             className="p-job-detail__apply-button"
                                         >
                                             ログイン
-                                        </Link>
+                                        </a>
                                     </div>
                                 )}
                             </div>

@@ -201,7 +201,7 @@ export default function JobCard({
                             </div>
                         )}
                 </div>
-                <Link
+                <a
                     href={
                         auth?.user && auth?.user.email_verified_at
                             ? route("job-listings.show", job.id)
@@ -212,7 +212,7 @@ export default function JobCard({
                     className="p-job-listings__card-link"
                 >
                     詳細を見る
-                </Link>
+                </a>
             </div>
         </div>
     );

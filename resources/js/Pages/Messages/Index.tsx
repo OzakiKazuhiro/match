@@ -317,12 +317,12 @@ export default function Index({
                                         </div>
 
                                         <div className="p-messages__footer">
-                                            <Link
+                                            <a
                                                 href={`/messages/${group.id}`}
                                                 className="p-messages__view-all"
                                             >
                                                 すべての会話を見る
-                                            </Link>
+                                            </a>
                                         </div>
                                     </div>
                                 );
@@ -334,7 +334,7 @@ export default function Index({
                     {conversationGroups.last_page > 1 && (
                         <div className="p-messages__pagination">
                             {conversationGroups.links.map((link, index) => (
-                                <Link
+                                <a
                                     key={index}
                                     href={link.url || "#"}
                                     className={`p-messages__pagination-link ${

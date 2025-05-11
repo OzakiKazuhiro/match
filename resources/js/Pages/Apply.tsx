@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
@@ -107,21 +107,21 @@ export default function Apply({
             <div className="p-apply">
                 <div className="p-apply__container">
                     <div className="p-apply__breadcrumb">
-                        <Link
+                        <a
                             href={route("job-listings.index")}
                             className="p-apply__breadcrumb-link"
                         >
                             案件一覧
-                        </Link>
+                        </a>
                         <span className="p-apply__breadcrumb-separator">
                             &gt;
                         </span>
-                        <Link
+                        <a
                             href={route("job-listings.show", jobListing.id)}
                             className="p-apply__breadcrumb-link"
                         >
                             {jobListing.title}
-                        </Link>
+                        </a>
                         <span className="p-apply__breadcrumb-separator">
                             &gt;
                         </span>
@@ -174,7 +174,7 @@ export default function Apply({
                                         </div>
                                     </div>
                                     <div className="p-apply__action">
-                                        <Link
+                                        <a
                                             href={route(
                                                 "job-listings.show",
                                                 jobListing.id
@@ -182,7 +182,7 @@ export default function Apply({
                                             className="p-apply__back-button"
                                         >
                                             案件詳細に戻る
-                                        </Link>
+                                        </a>
                                     </div>
                                 </div>
                             ) : (
@@ -239,7 +239,7 @@ export default function Apply({
                                     </div>
 
                                     <div className="p-apply__actions">
-                                        <Link
+                                        <a
                                             href={route(
                                                 "job-listings.show",
                                                 jobListing.id
@@ -247,7 +247,7 @@ export default function Apply({
                                             className="p-apply__cancel-button"
                                         >
                                             キャンセル
-                                        </Link>
+                                        </a>
                                         <button
                                             type="submit"
                                             className="p-apply__submit-button"

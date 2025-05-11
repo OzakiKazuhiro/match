@@ -161,12 +161,12 @@ export default function Login({
 
                 <div className="p-auth__actions">
                     {canResetPassword && (
-                        <Link
+                        <a
                             href={route("password.request")}
                             className="p-auth__forgot-link"
                         >
                             パスワードをお忘れですか？
-                        </Link>
+                        </a>
                     )}
 
                     <button
@@ -180,9 +180,9 @@ export default function Login({
                 <div className="p-auth__register-link">
                     <p>
                         アカウントをお持ちでない方は
-                        <Link href={route("register")} className="p-auth__link">
+                        <a href={route("register")} className="p-auth__link">
                             こちら
-                        </Link>
+                        </a>
                         から登録できます
                     </p>
                 </div>

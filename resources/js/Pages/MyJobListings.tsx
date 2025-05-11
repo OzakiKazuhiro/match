@@ -1,4 +1,4 @@
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useState } from "react";
@@ -98,12 +98,12 @@ export default function MyJobListings({
                                     <p className="p-applications__empty-message">
                                         まだ投稿した案件はありません。
                                     </p>
-                                    <Link
+                                    <a
                                         href={route("job-listings.create")}
                                         className="p-applications__browse-button"
                                     >
                                         案件を投稿する
-                                    </Link>
+                                    </a>
                                 </div>
                             ) : (
                                 <div className="p-applications__job-cards">
@@ -229,7 +229,7 @@ export default function MyJobListings({
                                                                     </span>
                                                                 </button>
                                                             )}
-                                                            <Link
+                                                            <a
                                                                 href={route(
                                                                     "job-listings.show",
                                                                     job.id
@@ -242,7 +242,7 @@ export default function MyJobListings({
                                                                 <span className="p-applications__button-text-sp">
                                                                     案件詳細
                                                                 </span>
-                                                            </Link>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 )}

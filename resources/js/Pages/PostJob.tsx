@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { Head, useForm, Link, router } from "@inertiajs/react";
-import { PageProps } from "@/types";
+import { Head, useForm, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import axios from "axios";

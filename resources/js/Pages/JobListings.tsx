@@ -375,19 +375,19 @@ export default function JobListings({
                                 <span>
                                     案件詳細の閲覧は
                                     {!auth?.user ? (
-                                        <Link
+                                        <a
                                             href="/login"
                                             className="p-job-listings__login-link"
                                         >
                                             ログイン
-                                        </Link>
+                                        </a>
                                     ) : (
-                                        <Link
+                                        <a
                                             href="/verify-email"
                                             className="p-job-listings__login-link"
                                         >
                                             メール認証
-                                        </Link>
+                                        </a>
                                     )}
                                     が必要です
                                 </span>
@@ -727,9 +727,8 @@ export default function JobListings({
 
                     {jobListings.last_page > 1 && (
                         <div className="p-job-listings__pagination">
-                            {/* ページネーションのマークアップ */}
                             {jobListings.links.map((link, index) => (
-                                <Link
+                                <a
                                     key={index}
                                     href={link.url || "#"}
                                     className={`p-job-listings__pagination-link ${
@@ -772,58 +771,55 @@ export default function JobListings({
                 {/* ヘッダー */}
                 <header className="l-header">
                     <div className="l-header__inner">
-                        <Link href="/" className="l-header__logo">
+                        <a href="/" className="l-header__logo">
                             <span className="l-header__logo-accent">match</span>
-                        </Link>
+                        </a>
 
                         {auth?.user && !auth?.user.email_verified_at && (
                             <div className="l-header__login-status">
                                 <div className="l-header__verification-alert">
-                                    <Link
+                                    <a
                                         href="/verify-email"
                                         className="l-header__verification-link"
                                     >
                                         メール認証が未完了です
-                                    </Link>
+                                    </a>
                                 </div>
                             </div>
                         )}
 
                         <nav className="l-header__nav">
-                            <Link
+                            <a
                                 href="/job-listings"
                                 className="l-header__nav-link l-header__nav-link--active"
                             >
                                 案件一覧
-                            </Link>
-                            <Link
-                                href="/post-job"
-                                className="l-header__nav-link"
-                            >
+                            </a>
+                            <a href="/post-job" className="l-header__nav-link">
                                 案件を投稿
-                            </Link>
+                            </a>
                             {!auth?.user ? (
                                 <>
-                                    <Link
+                                    <a
                                         href="/login"
                                         className="l-header__nav-link"
                                     >
                                         ログイン
-                                    </Link>
-                                    <Link
+                                    </a>
+                                    <a
                                         href="/register"
                                         className="l-header__nav-link l-header__nav-link--button"
                                     >
                                         会員登録
-                                    </Link>
+                                    </a>
                                 </>
                             ) : (
-                                <Link
+                                <a
                                     href="/dashboard"
                                     className="l-header__nav-link"
                                 >
                                     マイページ
-                                </Link>
+                                </a>
                             )}
                         </nav>
 
@@ -861,48 +857,48 @@ export default function JobListings({
                             }`}
                             ref={mobileMenuRef}
                         >
-                            <Link
+                            <a
                                 href="/job-listings"
                                 className="l-header__mobile-link l-header__mobile-link--active"
                             >
                                 案件一覧
-                            </Link>
-                            <Link
+                            </a>
+                            <a
                                 href="/post-job"
                                 className="l-header__mobile-link"
                             >
                                 案件を投稿
-                            </Link>
+                            </a>
                             {!auth?.user ? (
                                 <>
-                                    <Link
+                                    <a
                                         href="/login"
                                         className="l-header__mobile-link"
                                     >
                                         ログイン
-                                    </Link>
-                                    <Link
+                                    </a>
+                                    <a
                                         href="/register"
                                         className="l-header__mobile-link"
                                     >
                                         会員登録
-                                    </Link>
+                                    </a>
                                 </>
                             ) : (
                                 <>
-                                    <Link
+                                    <a
                                         href="/dashboard"
                                         className="l-header__mobile-link"
                                     >
                                         マイページ
-                                    </Link>
+                                    </a>
                                     {!auth?.user.email_verified_at && (
-                                        <Link
+                                        <a
                                             href="/verify-email"
                                             className="l-header__mobile-link"
                                         >
                                             メール認証
-                                        </Link>
+                                        </a>
                                     )}
                                 </>
                             )}
@@ -918,11 +914,11 @@ export default function JobListings({
                     <div className="l-footer__container">
                         <div className="l-footer__content">
                             <div>
-                                <Link href="/" className="l-footer__logo">
+                                <a href="/" className="l-footer__logo">
                                     <span className="l-footer__logo-accent">
                                         match
                                     </span>
-                                </Link>
+                                </a>
                                 <p className="l-footer__description">
                                     エンジニア向けの案件マッチングサービス。
                                     単発案件からレベニューシェア案件まで、
@@ -934,20 +930,20 @@ export default function JobListings({
                                 <h3 className="l-footer__heading">案件関連</h3>
                                 <ul className="l-footer__links">
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href="/job-listings"
                                             className="l-footer__link"
                                         >
                                             案件一覧
-                                        </Link>
+                                        </a>
                                     </li>
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href="/post-job"
                                             className="l-footer__link"
                                         >
                                             案件を投稿
-                                        </Link>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -958,20 +954,20 @@ export default function JobListings({
                                 </h3>
                                 <ul className="l-footer__links">
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href="/login"
                                             className="l-footer__link"
                                         >
                                             ログイン
-                                        </Link>
+                                        </a>
                                     </li>
                                     <li className="l-footer__link-item">
-                                        <Link
+                                        <a
                                             href="/register"
                                             className="l-footer__link"
                                         >
                                             会員登録
-                                        </Link>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

@@ -79,12 +79,12 @@ export default function Show({ jobListing, publicMessages }: Props) {
             <div className="p-public-messages-detail">
                 <div className="p-public-messages-detail__container">
                     <div className="p-public-messages-detail__breadcrumb">
-                        <Link
+                        <a
                             href={route("public-messages.index")}
                             className="p-public-messages-detail__breadcrumb-link"
                         >
                             パブリックメッセージ一覧
-                        </Link>
+                        </a>
                         <span className="p-public-messages-detail__breadcrumb-separator">
                             &gt;
                         </span>
@@ -114,12 +114,12 @@ export default function Show({ jobListing, publicMessages }: Props) {
                             </span>
                         </div>
                         <div className="p-public-messages-detail__actions">
-                            <Link
+                            <a
                                 href={route("job-listings.show", jobListing.id)}
                                 className="p-public-messages-detail__view-job-button"
                             >
                                 案件詳細を見る
-                            </Link>
+                            </a>
                         </div>
                     </div>
 

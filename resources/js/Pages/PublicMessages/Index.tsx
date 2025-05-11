@@ -115,7 +115,7 @@ export default function Index({
                                     className="p-public-messages__item"
                                 >
                                     <div className="p-public-messages__header">
-                                        <Link
+                                        <a
                                             href={route(
                                                 "public-messages.show",
                                                 item.job_listing.id
@@ -123,7 +123,7 @@ export default function Index({
                                             className="p-public-messages__job-title"
                                         >
                                             {item.job_listing.title}
-                                        </Link>
+                                        </a>
                                         <span
                                             className={`p-public-messages__type p-public-messages__type--${
                                                 item.job_listing.type ===
@@ -159,7 +159,7 @@ export default function Index({
                                         </div>
                                     </div>
                                     <div className="p-public-messages__footer">
-                                        <Link
+                                        <a
                                             href={route(
                                                 "public-messages.show",
                                                 item.job_listing.id
@@ -168,7 +168,7 @@ export default function Index({
                                         >
                                             すべてのメッセージを見る（
                                             {item.total_messages}件）
-                                        </Link>
+                                        </a>
                                     </div>
                                 </div>
                             ))}
@@ -185,7 +185,7 @@ export default function Index({
                     {pagination.last_page > 1 && pagination.links && (
                         <div className="p-public-messages__pagination">
                             {pagination.links.map((link, index) => (
-                                <Link
+                                <a
                                     key={index}
                                     href={link.url || "#"}
                                     className={`p-public-messages__pagination-link ${

@@ -347,12 +347,12 @@ export default function Show({
                             )}
                         </span>
                     </div>
-                    <Link
+                    <a
                         href={route("messages.index")}
                         className="p-messages__back-button"
                     >
                         戻る
-                    </Link>
+                    </a>
                 </div>
             }
             showFooter={false}
@@ -496,7 +496,7 @@ export default function Show({
 
                         {conversationGroup.job_listing && (
                             <div className="p-messages__job-actions">
-                                <Link
+                                <a
                                     href={route(
                                         "job-listings.show",
                                         conversationGroup.job_listing.id
@@ -504,7 +504,7 @@ export default function Show({
                                     className="p-messages__job-link"
                                 >
                                     案件詳細を見る
-                                </Link>
+                                </a>
                             </div>
                         )}
                     </div>

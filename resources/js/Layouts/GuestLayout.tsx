@@ -1,5 +1,4 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
-import { Link } from "@inertiajs/react";
 import { PropsWithChildren } from "react";
 
 interface GuestProps extends PropsWithChildren {
@@ -12,9 +11,9 @@ export default function Guest({ children, title = "ログイン" }: GuestProps) 
             {/* ヘッダー */}
             <header className="l-header">
                 <div className="l-header__inner">
-                    <Link href="/" className="l-header__logo">
+                    <a href="/" className="l-header__logo">
                         <span className="l-header__logo-accent">match</span>
-                    </Link>
+                    </a>
                 </div>
             </header>
 

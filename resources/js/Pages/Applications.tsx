@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import TabNavigation from "@/Components/TabNavigation";
@@ -145,7 +145,7 @@ export default function Applications({
                                         >
                                             <div className="p-applications__item-header">
                                                 <div className="p-applications__job-info">
-                                                    <Link
+                                                    <a
                                                         href={route(
                                                             "job-listings.show",
                                                             application.job_listing_id
@@ -158,7 +158,7 @@ export default function Applications({
                                                                 .jobListing
                                                                 ?.title ||
                                                             "案件名不明"}
-                                                    </Link>
+                                                    </a>
                                                     <div className="p-applications__job-meta">
                                                         <span
                                                             className={`p-applications__job-type p-applications__job-type--${
@@ -262,7 +262,7 @@ export default function Applications({
                                                     </div>
                                                 </div>
                                                 <div className="p-applications__actions">
-                                                    <Link
+                                                    <a
                                                         href={route(
                                                             "job-listings.show",
                                                             application.job_listing_id
@@ -270,7 +270,7 @@ export default function Applications({
                                                         className="p-applications__view-job"
                                                     >
                                                         案件を確認する
-                                                    </Link>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,12 +281,12 @@ export default function Applications({
                                     <p className="p-applications__empty-message">
                                         まだ応募した案件はありません。
                                     </p>
-                                    <Link
+                                    <a
                                         href={route("job-listings.index")}
                                         className="p-applications__browse-button"
                                     >
                                         案件を探す
-                                    </Link>
+                                    </a>
                                 </div>
                             )}
                         </div>

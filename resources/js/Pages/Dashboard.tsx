@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import {
     CalendarIcon,
@@ -19,7 +19,7 @@ export default function Dashboard({ auth }: PageProps) {
 
             <div className="p-dashboard__container">
                 <div className="p-dashboard__card-grid">
-                    <Link
+                    <a
                         href={route("my-job-listings.index")}
                         className="p-dashboard__menu-card"
                     >
@@ -39,9 +39,9 @@ export default function Dashboard({ auth }: PageProps) {
                         <div className="p-dashboard__menu-card-action">
                             一覧を見る
                         </div>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         href={route("job-listings.create")}
                         className="p-dashboard__menu-card"
                     >
@@ -61,9 +61,9 @@ export default function Dashboard({ auth }: PageProps) {
                         <div className="p-dashboard__menu-card-action">
                             今すぐ投稿
                         </div>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         href={route("applications.index")}
                         className="p-dashboard__menu-card"
                     >
@@ -83,9 +83,9 @@ export default function Dashboard({ auth }: PageProps) {
                         <div className="p-dashboard__menu-card-action">
                             一覧を見る
                         </div>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         href={route("applications.to-my-jobs")}
                         className="p-dashboard__menu-card"
                     >
@@ -105,9 +105,9 @@ export default function Dashboard({ auth }: PageProps) {
                         <div className="p-dashboard__menu-card-action">
                             一覧を見る
                         </div>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         href={route("public-messages.index")}
                         className="p-dashboard__menu-card"
                     >
@@ -127,9 +127,9 @@ export default function Dashboard({ auth }: PageProps) {
                         <div className="p-dashboard__menu-card-action">
                             メッセージを確認
                         </div>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         href={route("messages.index")}
                         className="p-dashboard__menu-card"
                     >
@@ -149,7 +149,7 @@ export default function Dashboard({ auth }: PageProps) {
                         <div className="p-dashboard__menu-card-action">
                             メッセージを確認
                         </div>
-                    </Link>
+                    </a>
                 </div>
             </div>
         </AuthenticatedLayout>
