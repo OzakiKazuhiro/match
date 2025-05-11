@@ -1,5 +1,5 @@
 import { PageProps } from "@/types";
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { useState, useEffect, useRef } from "react";
 import LogoutLink from "@/Components/LogoutLink";
 
@@ -60,9 +60,9 @@ export default function Top({ auth }: PageProps) {
             {/* ヘッダー */}
             <header className="l-header">
                 <div className="l-header__inner">
-                    <Link href="/" className="l-header__logo">
+                    <a href="/" className="l-header__logo">
                         <span className="l-header__logo-accent">match</span>
-                    </Link>
+                    </a>
 
                     {auth?.user && auth?.user.email_verified_at && (
                         <div className="l-header__login-status">
@@ -94,52 +94,46 @@ export default function Top({ auth }: PageProps) {
                     {auth?.user && !auth?.user.email_verified_at && (
                         <div className="l-header__login-status">
                             <div className="l-header__verification-alert">
-                                <Link
+                                <a
                                     href="/verify-email"
                                     className="l-header__verification-link"
                                 >
                                     メール認証が未完了です
-                                </Link>
+                                </a>
                             </div>
                         </div>
                     )}
 
                     <nav className="l-header__nav">
-                        <Link
-                            href="/job-listings"
-                            className="l-header__nav-link"
-                        >
+                        <a href="/job-listings" className="l-header__nav-link">
                             案件一覧
-                        </Link>
-                        <Link href="/post-job" className="l-header__nav-link">
+                        </a>
+                        <a href="/post-job" className="l-header__nav-link">
                             案件を投稿
-                        </Link>
+                        </a>
                         {auth?.user ? (
                             <>
-                                <Link
+                                <a
                                     href="/dashboard"
                                     className="l-header__nav-link"
                                 >
                                     マイページ
-                                </Link>
+                                </a>
                                 <LogoutLink className="l-header__nav-link">
                                     ログアウト
                                 </LogoutLink>
                             </>
                         ) : (
                             <>
-                                <Link
-                                    href="/login"
-                                    className="l-header__nav-link"
-                                >
+                                <a href="/login" className="l-header__nav-link">
                                     ログイン
-                                </Link>
-                                <Link
+                                </a>
+                                <a
                                     href="/register"
                                     className="l-header__nav-link l-header__nav-link--button"
                                 >
                                     会員登録
-                                </Link>
+                                </a>
                             </>
                         )}
                     </nav>
@@ -209,54 +203,51 @@ export default function Top({ auth }: PageProps) {
 
                         {auth?.user && !auth?.user.email_verified_at && (
                             <div className="l-header__mobile-verification-alert">
-                                <Link
+                                <a
                                     href="/verify-email"
                                     className="l-header__mobile-verification-link"
                                 >
                                     メール認証が未完了です
-                                </Link>
+                                </a>
                             </div>
                         )}
 
-                        <Link
+                        <a
                             href="/job-listings"
                             className="l-header__mobile-link"
                         >
                             案件一覧
-                        </Link>
-                        <Link
-                            href="/post-job"
-                            className="l-header__mobile-link"
-                        >
+                        </a>
+                        <a href="/post-job" className="l-header__mobile-link">
                             案件を投稿
-                        </Link>
+                        </a>
 
                         {auth?.user && auth?.user.email_verified_at ? (
                             <>
-                                <Link
+                                <a
                                     href="/dashboard"
                                     className="l-header__mobile-link"
                                 >
                                     マイページ
-                                </Link>
+                                </a>
                                 <LogoutLink className="l-header__mobile-link l-header__mobile-link--danger">
                                     ログアウト
                                 </LogoutLink>
                             </>
                         ) : (
                             <>
-                                <Link
+                                <a
                                     href="/login"
                                     className="l-header__mobile-link"
                                 >
                                     ログイン
-                                </Link>
-                                <Link
+                                </a>
+                                <a
                                     href="/register"
                                     className="l-header__mobile-link"
                                 >
                                     会員登録
-                                </Link>
+                                </a>
                             </>
                         )}
                     </div>
@@ -280,12 +271,12 @@ export default function Top({ auth }: PageProps) {
                             エンジニアとアイデア・誰でも簡単につながる
                         </p>
                         <div className="p-top__buttons">
-                            <Link
+                            <a
                                 href="/register"
                                 className="p-top__button p-top__button--primary"
                             >
                                 無料で会員登録
-                            </Link>
+                            </a>
                             <a href="/job-listings" className="p-top__button">
                                 案件を探す
                             </a>
@@ -466,12 +457,12 @@ export default function Top({ auth }: PageProps) {
                                 <p className="p-top__solution-text">
                                     アイデアをWebで形にしたい人であれば、主婦でも誰でも気軽に、会員登録して投稿可能！
                                 </p>
-                                <Link
+                                <a
                                     href="/post-job"
                                     className="p-top__solution-button"
                                 >
                                     案件を投稿する
-                                </Link>
+                                </a>
                             </div>
 
                             <div className="p-top__solution-item">
@@ -489,12 +480,12 @@ export default function Top({ auth }: PageProps) {
                                 <p className="p-top__solution-text">
                                     シンプルな作りのおかげで、案件をすぐに見つけることが可能！案件に関する質問もアプリ内で気軽に解決！
                                 </p>
-                                <Link
+                                <a
                                     href="/job-listings"
                                     className="p-top__solution-button"
                                 >
                                     案件を探す
-                                </Link>
+                                </a>
                             </div>
                         </div>
                     </section>
@@ -583,12 +574,12 @@ export default function Top({ auth }: PageProps) {
                             </div>
                         </div>
                         <div className="p-top__flow-register">
-                            <Link
+                            <a
                                 href="/register"
                                 className="p-top__flow-register-button"
                             >
                                 無料で登録してはじめる
-                            </Link>
+                            </a>
                         </div>
                     </section>
 
@@ -672,12 +663,12 @@ export default function Top({ auth }: PageProps) {
                             </div>
                         </div>
                         <div className="u-text-center u-mt-4">
-                            <Link
+                            <a
                                 href="/job-listings"
                                 className="c-button c-button--outline"
                             >
                                 すべての案件を見る
-                            </Link>
+                            </a>
                         </div>
                     </section>
 
@@ -935,18 +926,15 @@ export default function Top({ auth }: PageProps) {
                             会員登録は無料です。今すぐはじめて、エンジニアとアイデアをつなげましょう。
                         </p>
                         <div className="p-top__buttons">
-                            <Link
+                            <a
                                 href="/register"
                                 className="p-top__button p-top__button--primary"
                             >
                                 無料で会員登録する
-                            </Link>
-                            <Link
-                                href="/job-listings"
-                                className="p-top__button"
-                            >
+                            </a>
+                            <a href="/job-listings" className="p-top__button">
                                 案件を探す
-                            </Link>
+                            </a>
                         </div>
                     </section>
                 </div>
@@ -957,11 +945,11 @@ export default function Top({ auth }: PageProps) {
                 <div className="l-footer__container">
                     <div className="l-footer__content">
                         <div>
-                            <Link href="/" className="l-footer__logo">
+                            <a href="/" className="l-footer__logo">
                                 <span className="l-footer__logo-accent">
                                     match
                                 </span>
-                            </Link>
+                            </a>
                             <p className="l-footer__description">
                                 エンジニア向けの案件マッチングサービス。
                                 単発案件からレベニューシェア案件まで、
@@ -975,28 +963,22 @@ export default function Top({ auth }: PageProps) {
                             </h3>
                             <ul className="l-footer__links">
                                 <li className="l-footer__link-item">
-                                    <Link
-                                        href="#about"
-                                        className="l-footer__link"
-                                    >
+                                    <a href="#about" className="l-footer__link">
                                         matchとは
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li className="l-footer__link-item">
-                                    <Link
-                                        href="/terms"
-                                        className="l-footer__link"
-                                    >
+                                    <a href="/terms" className="l-footer__link">
                                         利用規約
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li className="l-footer__link-item">
-                                    <Link
+                                    <a
                                         href="/privacy"
                                         className="l-footer__link"
                                     >
                                         プライバシーポリシー
-                                    </Link>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -1005,20 +987,20 @@ export default function Top({ auth }: PageProps) {
                             <h3 className="l-footer__heading">案件関連</h3>
                             <ul className="l-footer__links">
                                 <li className="l-footer__link-item">
-                                    <Link
+                                    <a
                                         href="/job-listings"
                                         className="l-footer__link"
                                     >
                                         案件一覧
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li className="l-footer__link-item">
-                                    <Link
+                                    <a
                                         href="/post-job"
                                         className="l-footer__link"
                                     >
                                         案件を投稿
-                                    </Link>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -1027,12 +1009,9 @@ export default function Top({ auth }: PageProps) {
                             <h3 className="l-footer__heading">サポート</h3>
                             <ul className="l-footer__links">
                                 <li className="l-footer__link-item">
-                                    <Link
-                                        href="/#faq"
-                                        className="l-footer__link"
-                                    >
+                                    <a href="/#faq" className="l-footer__link">
                                         よくある質問
-                                    </Link>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
