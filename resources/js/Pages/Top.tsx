@@ -1,5 +1,5 @@
 import { PageProps } from "@/types";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { useState, useEffect, useRef } from "react";
 import LogoutLink from "@/Components/LogoutLink";
 
@@ -9,6 +9,21 @@ export default function Top({ auth }: PageProps) {
     const [animating, setAnimating] = useState(false);
     const mobileMenuRef = useRef<HTMLDivElement>(null);
     const mobileButtonRef = useRef<HTMLButtonElement>(null);
+
+    // スマホ表示のときのみ履歴管理を適用
+    useEffect(() => {
+        // スマホ表示かどうかを判定（768px以下をスマホ表示とする）
+        const isMobile = window.innerWidth <= 768;
+
+        // スマホ表示かつTOPページの場合のみ履歴を追加
+        if (isMobile && window.location.pathname === "/") {
+            router.visit("/", {
+                preserveState: true,
+                preserveScroll: true,
+                replace: false,
+            });
+        }
+    }, []);
 
     // メニューの表示状態が変更されたときの処理
     useEffect(() => {
