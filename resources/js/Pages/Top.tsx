@@ -10,6 +10,13 @@ export default function Top({ auth }: PageProps) {
     const mobileMenuRef = useRef<HTMLDivElement>(null);
     const mobileButtonRef = useRef<HTMLButtonElement>(null);
 
+    // ページマウント時にメニューを閉じる
+    useEffect(() => {
+        setMobileMenuOpen(false);
+        setMenuVisible(false);
+        setAnimating(false);
+    }, []);
+
     // メニューの表示状態が変更されたときの処理
     useEffect(() => {
         if (mobileMenuOpen) {
