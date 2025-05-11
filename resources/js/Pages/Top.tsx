@@ -15,6 +15,20 @@ export default function Top({ auth }: PageProps) {
         setMobileMenuOpen(false);
         setMenuVisible(false);
         setAnimating(false);
+
+        // ブラウザの戻るボタンが押された時の処理
+        const handlePopState = () => {
+            setMobileMenuOpen(false);
+            setMenuVisible(false);
+            setAnimating(false);
+        };
+
+        window.addEventListener("popstate", handlePopState);
+
+        // クリーンアップ関数
+        return () => {
+            window.removeEventListener("popstate", handlePopState);
+        };
     }, []);
 
     // メニューの表示状態が変更されたときの処理
