@@ -21,21 +21,7 @@ export default function LogoutLink({
         }
 
         // POSTリクエストでログアウト処理を実行
-        router.post(
-            route("logout"),
-            {},
-            {
-                onSuccess: () => {
-                    // 履歴を完全にクリア
-                    window.history.pushState(null, "", window.location.href);
-                    window.history.replaceState(null, "", window.location.href);
-                    window.history.go(-window.history.length);
-
-                    // ログインページへリダイレクト
-                    window.location.href = route("login");
-                },
-            }
-        );
+        router.post(route("logout"));
     };
 
     return (

@@ -53,12 +53,19 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        // 認証を解除
         Auth::guard('web')->logout();
 
+        // セッションを完全に破棄
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        // キャッシュヘッダーを設定
+        return redirect('/login')
+            ->withHeaders([
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                'Pragma' => 'no-cache',
+                'Expires' => '0'
+            ]);
     }
 }
