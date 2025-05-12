@@ -26,9 +26,13 @@ export default function LogoutLink({
             {},
             {
                 onSuccess: () => {
-                    // ログアウト成功後、location.replaceを使用して履歴からこのページを削除
+                    // 履歴を完全にクリア
+                    window.history.pushState(null, "", window.location.href);
+                    window.history.replaceState(null, "", window.location.href);
+                    window.history.go(-window.history.length);
+
                     // ログインページへリダイレクト
-                    window.location.replace(route("login"));
+                    window.location.href = route("login");
                 },
             }
         );
