@@ -60,12 +60,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // キャッシュヘッダーを設定
-        return redirect('/login')
-            ->withHeaders([
-                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
-                'Pragma' => 'no-cache',
-                'Expires' => '0'
-            ]);
+        // Inertia.jsのレスポンスを返す
+        return Inertia::location(route('login'));
     }
 }
