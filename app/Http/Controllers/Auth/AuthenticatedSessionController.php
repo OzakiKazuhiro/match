@@ -57,10 +57,16 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         // セッションを完全に破棄
+        $request->session()->flush();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // Inertia.jsのレスポンスを返す
-        return Inertia::location(route('login'));
+        // PHPのセッションも完全に破棄
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_destroy();
+        }
+
+        // ログインページにリダイレクトし、ログアウトフラグを渡す
+        return redirect()->route('login')->with('status', 'logged_out');
     }
 }

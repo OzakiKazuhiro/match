@@ -20,6 +20,9 @@ export default function LogoutLink({
             onClick();
         }
 
+        // ログアウト前に履歴を消去
+        sessionStorage.setItem("logout_requested", "true");
+
         // POSTリクエストでログアウト処理を実行
         router.post(route("logout"));
     };

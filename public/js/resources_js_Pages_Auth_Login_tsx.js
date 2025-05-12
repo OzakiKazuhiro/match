@@ -162,46 +162,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Guest)
 /* harmony export */ });
-/* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 function Guest(_ref) {
   var children = _ref.children,
     _ref$title = _ref.title,
     title = _ref$title === void 0 ? "ログイン" : _ref$title;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: "min-h-screen bg-f5f7fa",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("header", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("header", {
       className: "l-header",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "l-header__inner",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
           href: "/",
           className: "l-header__logo",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
             className: "l-header__logo-accent",
             children: "match"
           })
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("main", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("main", {
       className: "main-content",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "p-auth__container",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "p-auth__box",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
             className: "p-auth__title",
             children: title
           }), children]
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("footer", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("footer", {
       className: "l-footer",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "l-footer__container",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           className: "l-footer__copyright",
           children: ["\xA9 ", new Date().getFullYear(), " match. All rights reserved."]
         })
@@ -261,6 +259,66 @@ function Login(_ref) {
     processing = _useForm.processing,
     errors = _useForm.errors,
     reset = _useForm.reset;
+
+  // ログアウト後の履歴制御
+  (0,react__WEBPACK_IMPORTED_MODULE_6__.useEffect)(function () {
+    // ログアウト直後の場合
+    if (status === "logged_out") {
+      console.log("ログアウト検出: 履歴制御を開始");
+
+      // 最も強力な方法: 履歴を完全にクリア
+      var clearHistory = function clearHistory() {
+        var _window$location = window.location,
+          protocol = _window$location.protocol,
+          host = _window$location.host,
+          pathname = _window$location.pathname;
+        var url = "".concat(protocol, "//").concat(host).concat(pathname);
+        window.history.replaceState(null, "", url);
+
+        // 連続で複数回の履歴エントリを追加
+        for (var i = 0; i < 10; i++) {
+          window.history.pushState(null, "", url);
+        }
+      };
+
+      // 初期実行
+      clearHistory();
+
+      // 定期的に実行して確実に履歴を維持
+      var intervalId = setInterval(clearHistory, 100);
+      setTimeout(function () {
+        return clearInterval(intervalId);
+      }, 2000); // 2秒後に停止
+
+      // ブラウザの戻るボタンが押された時の処理
+      var handlePopState = function handlePopState() {
+        // 履歴を再構築
+        clearHistory();
+
+        // 最終手段: ページをリロード
+        window.location.reload();
+      };
+      window.addEventListener("popstate", handlePopState);
+
+      // セッションストレージにフラグを設定
+      sessionStorage.setItem("logged_out", "true");
+
+      // クリーンアップ関数
+      return function () {
+        window.removeEventListener("popstate", handlePopState);
+        clearInterval(intervalId);
+      };
+    } else if (sessionStorage.getItem("logged_out") === "true") {
+      // 別のタブやリロードからの復帰時にも履歴制御を継続
+      console.log("セッションストレージからログアウト状態を検出");
+      sessionStorage.removeItem("logged_out");
+
+      // 履歴制御を実行
+      var url = window.location.href;
+      window.history.replaceState(null, "", url);
+      window.history.pushState(null, "", url);
+    }
+  }, [status]);
 
   // パスワードの表示/非表示
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)(false),
@@ -400,7 +458,7 @@ function Login(_ref) {
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-auth__actions",
-        children: [canResetPassword && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Link, {
+        children: [canResetPassword && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
           href: route("password.request"),
           className: "p-auth__forgot-link",
           children: "\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u304A\u5FD8\u308C\u3067\u3059\u304B\uFF1F"
@@ -412,7 +470,7 @@ function Login(_ref) {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "p-auth__register-link",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("p", {
-          children: ["\u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u304A\u6301\u3061\u3067\u306A\u3044\u65B9\u306F", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_5__.Link, {
+          children: ["\u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u304A\u6301\u3061\u3067\u306A\u3044\u65B9\u306F", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
             href: route("register"),
             className: "p-auth__link",
             children: "\u3053\u3061\u3089"

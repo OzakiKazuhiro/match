@@ -3,8 +3,8 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head, useForm } from "@inertiajs/react";
-import { FormEventHandler, useState } from "react";
+import { Head, useForm, usePage } from "@inertiajs/react";
+import { FormEventHandler, useState, useEffect } from "react";
 import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 
 export default function Login({
@@ -19,6 +19,62 @@ export default function Login({
         password: "",
         remember: false as boolean,
     });
+
+    // ログアウト後の履歴制御
+    useEffect(() => {
+        // ログアウト直後の場合
+        if (status === "logged_out") {
+            console.log("ログアウト検出: 履歴制御を開始");
+
+            // 最も強力な方法: 履歴を完全にクリア
+            const clearHistory = () => {
+                const { protocol, host, pathname } = window.location;
+                const url = `${protocol}//${host}${pathname}`;
+                window.history.replaceState(null, "", url);
+
+                // 連続で複数回の履歴エントリを追加
+                for (let i = 0; i < 10; i++) {
+                    window.history.pushState(null, "", url);
+                }
+            };
+
+            // 初期実行
+            clearHistory();
+
+            // 定期的に実行して確実に履歴を維持
+            const intervalId = setInterval(clearHistory, 100);
+            setTimeout(() => clearInterval(intervalId), 2000); // 2秒後に停止
+
+            // ブラウザの戻るボタンが押された時の処理
+            const handlePopState = () => {
+                // 履歴を再構築
+                clearHistory();
+
+                // 最終手段: ページをリロード
+                window.location.reload();
+            };
+
+            window.addEventListener("popstate", handlePopState);
+
+            // セッションストレージにフラグを設定
+            sessionStorage.setItem("logged_out", "true");
+
+            // クリーンアップ関数
+            return () => {
+                window.removeEventListener("popstate", handlePopState);
+                clearInterval(intervalId);
+            };
+        } else if (sessionStorage.getItem("logged_out") === "true") {
+            // 別のタブやリロードからの復帰時にも履歴制御を継続
+            console.log("セッションストレージからログアウト状態を検出");
+            sessionStorage.removeItem("logged_out");
+
+            // 履歴制御を実行
+            const url = window.location.href;
+            window.history.replaceState(null, "", url);
+            window.history.pushState(null, "", url);
+        }
+    }, [status]);
 
     // パスワードの表示/非表示
     const [showPassword, setShowPassword] = useState(false);

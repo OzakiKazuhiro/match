@@ -20,18 +20,21 @@ __webpack_require__.r(__webpack_exports__);
 
 function LogoutLink(_ref) {
   var className = _ref.className,
+    onClick = _ref.onClick,
     children = _ref.children;
   var handleLogout = function handleLogout(e) {
     e.preventDefault();
 
+    // メニューを閉じる処理を実行
+    if (onClick) {
+      onClick();
+    }
+
+    // ログアウト前に履歴を消去
+    sessionStorage.setItem("logout_requested", "true");
+
     // POSTリクエストでログアウト処理を実行
-    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.post(route("logout"), {}, {
-      onSuccess: function onSuccess() {
-        // ログアウト成功後、location.replaceを使用して履歴からこのページを削除
-        // ログインページへリダイレクト
-        window.location.replace(route("login"));
-      }
-    });
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.post(route("logout"));
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
     onClick: handleLogout,
@@ -93,7 +96,7 @@ function Top(_ref) {
       setTimeout(function () {
         return setAnimating(false);
       }, 300); // アニメーション終了
-    } else if (menuVisible) {
+    } else {
       // メニューを閉じる場合
       setAnimating(true); // アニメーション開始
       setTimeout(function () {
@@ -106,9 +109,7 @@ function Top(_ref) {
   // メニュー外のクリックを検出してメニューを閉じる
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     var handleClickOutside = function handleClickOutside(event) {
-      // ボタン自体のクリックは無視（トグル動作は別のハンドラで処理）
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && mobileButtonRef.current && !mobileButtonRef.current.contains(event.target) && menuVisible && !animating // アニメーション中でない場合のみ処理
-      ) {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && mobileButtonRef.current && !mobileButtonRef.current.contains(event.target) && menuVisible && !animating) {
         setMobileMenuOpen(false);
       }
     };
@@ -120,6 +121,9 @@ function Top(_ref) {
   var toggleMobileMenu = function toggleMobileMenu() {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+  var handleLinkClick = function handleLinkClick() {
+    setMobileMenuOpen(false);
+  };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Head, {
       title: "match - \u30A8\u30F3\u30B8\u30CB\u30A2\u6848\u4EF6\u30DE\u30C3\u30C1\u30F3\u30B0\u30B5\u30FC\u30D3\u30B9"
@@ -127,9 +131,10 @@ function Top(_ref) {
       className: "l-header",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "l-header__inner",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
           href: "/",
           className: "l-header__logo",
+          onClick: handleLinkClick,
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
             className: "l-header__logo-accent",
             children: "match"
@@ -151,39 +156,46 @@ function Top(_ref) {
           className: "l-header__login-status",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: "l-header__verification-alert",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/verify-email",
               className: "l-header__verification-link",
+              onClick: handleLinkClick,
               children: "\u30E1\u30FC\u30EB\u8A8D\u8A3C\u304C\u672A\u5B8C\u4E86\u3067\u3059"
             })
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("nav", {
           className: "l-header__nav",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
             href: "/job-listings",
             className: "l-header__nav-link",
+            onClick: handleLinkClick,
             children: "\u6848\u4EF6\u4E00\u89A7"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
             href: "/post-job",
             className: "l-header__nav-link",
+            onClick: handleLinkClick,
             children: "\u6848\u4EF6\u3092\u6295\u7A3F"
           }), auth !== null && auth !== void 0 && auth.user ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/dashboard",
               className: "l-header__nav-link",
+              onClick: handleLinkClick,
               children: "\u30DE\u30A4\u30DA\u30FC\u30B8"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Components_LogoutLink__WEBPACK_IMPORTED_MODULE_2__["default"], {
               className: "l-header__nav-link",
+              onClick: handleLinkClick,
               children: "\u30ED\u30B0\u30A2\u30A6\u30C8"
             })]
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/login",
               className: "l-header__nav-link",
+              onClick: handleLinkClick,
               children: "\u30ED\u30B0\u30A4\u30F3"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/register",
               className: "l-header__nav-link l-header__nav-link--button",
+              onClick: handleLinkClick,
               children: "\u4F1A\u54E1\u767B\u9332"
             })]
           })]
@@ -223,6 +235,9 @@ function Top(_ref) {
       }), menuVisible && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "l-header__mobile-menu ".concat(mobileMenuOpen ? "menu-fade-in" : "menu-fade-out"),
         ref: mobileMenuRef,
+        style: {
+          display: mobileMenuOpen ? "block" : "none"
+        },
         children: [(auth === null || auth === void 0 ? void 0 : auth.user) && (auth === null || auth === void 0 ? void 0 : auth.user.email_verified_at) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "l-header__mobile-user",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -244,36 +259,43 @@ function Top(_ref) {
           })]
         }), (auth === null || auth === void 0 ? void 0 : auth.user) && !(auth !== null && auth !== void 0 && auth.user.email_verified_at) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "l-header__mobile-verification-alert",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
             href: "/verify-email",
             className: "l-header__mobile-verification-link",
+            onClick: handleLinkClick,
             children: "\u30E1\u30FC\u30EB\u8A8D\u8A3C\u304C\u672A\u5B8C\u4E86\u3067\u3059"
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
           href: "/job-listings",
           className: "l-header__mobile-link",
+          onClick: handleLinkClick,
           children: "\u6848\u4EF6\u4E00\u89A7"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
           href: "/post-job",
           className: "l-header__mobile-link",
+          onClick: handleLinkClick,
           children: "\u6848\u4EF6\u3092\u6295\u7A3F"
         }), auth !== null && auth !== void 0 && auth.user && auth !== null && auth !== void 0 && auth.user.email_verified_at ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
             href: "/dashboard",
             className: "l-header__mobile-link",
+            onClick: handleLinkClick,
             children: "\u30DE\u30A4\u30DA\u30FC\u30B8"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Components_LogoutLink__WEBPACK_IMPORTED_MODULE_2__["default"], {
             className: "l-header__mobile-link l-header__mobile-link--danger",
+            onClick: handleLinkClick,
             children: "\u30ED\u30B0\u30A2\u30A6\u30C8"
           })]
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
             href: "/login",
             className: "l-header__mobile-link",
+            onClick: handleLinkClick,
             children: "\u30ED\u30B0\u30A4\u30F3"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
             href: "/register",
             className: "l-header__mobile-link",
+            onClick: handleLinkClick,
             children: "\u4F1A\u54E1\u767B\u9332"
           })]
         })]
@@ -301,11 +323,11 @@ function Top(_ref) {
             children: "\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u30A2\u30A4\u30C7\u30A2\u30FB\u8AB0\u3067\u3082\u7C21\u5358\u306B\u3064\u306A\u304C\u308B"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "p-top__buttons",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/register",
               className: "p-top__button p-top__button--primary",
               children: "\u7121\u6599\u3067\u4F1A\u54E1\u767B\u9332"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/job-listings",
               className: "p-top__button",
               children: "\u6848\u4EF6\u3092\u63A2\u3059"
@@ -490,7 +512,7 @@ function Top(_ref) {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
                 className: "p-top__solution-text",
                 children: "\u30A2\u30A4\u30C7\u30A2\u3092Web\u3067\u5F62\u306B\u3057\u305F\u3044\u4EBA\u3067\u3042\u308C\u3070\u3001\u4E3B\u5A66\u3067\u3082\u8AB0\u3067\u3082\u6C17\u8EFD\u306B\u3001\u4F1A\u54E1\u767B\u9332\u3057\u3066\u6295\u7A3F\u53EF\u80FD\uFF01"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
                 href: "/post-job",
                 className: "p-top__solution-button",
                 children: "\u6848\u4EF6\u3092\u6295\u7A3F\u3059\u308B"
@@ -511,7 +533,7 @@ function Top(_ref) {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
                 className: "p-top__solution-text",
                 children: "\u30B7\u30F3\u30D7\u30EB\u306A\u4F5C\u308A\u306E\u304A\u304B\u3052\u3067\u3001\u6848\u4EF6\u3092\u3059\u3050\u306B\u898B\u3064\u3051\u308B\u3053\u3068\u304C\u53EF\u80FD\uFF01\u6848\u4EF6\u306B\u95A2\u3059\u308B\u8CEA\u554F\u3082\u30A2\u30D7\u30EA\u5185\u3067\u6C17\u8EFD\u306B\u89E3\u6C7A\uFF01"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
                 href: "/job-listings",
                 className: "p-top__solution-button",
                 children: "\u6848\u4EF6\u3092\u63A2\u3059"
@@ -621,7 +643,7 @@ function Top(_ref) {
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: "p-top__flow-register",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/register",
               className: "p-top__flow-register-button",
               children: "\u7121\u6599\u3067\u767B\u9332\u3057\u3066\u306F\u3058\u3081\u308B"
@@ -718,7 +740,7 @@ function Top(_ref) {
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: "u-text-center u-mt-4",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/job-listings",
               className: "c-button c-button--outline",
               children: "\u3059\u3079\u3066\u306E\u6848\u4EF6\u3092\u898B\u308B"
@@ -1005,11 +1027,11 @@ function Top(_ref) {
             children: "\u4F1A\u54E1\u767B\u9332\u306F\u7121\u6599\u3067\u3059\u3002\u4ECA\u3059\u3050\u306F\u3058\u3081\u3066\u3001\u30A8\u30F3\u30B8\u30CB\u30A2\u3068\u30A2\u30A4\u30C7\u30A2\u3092\u3064\u306A\u3052\u307E\u3057\u3087\u3046\u3002"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "p-top__buttons",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/register",
               className: "p-top__button p-top__button--primary",
               children: "\u7121\u6599\u3067\u4F1A\u54E1\u767B\u9332\u3059\u308B"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/job-listings",
               className: "p-top__button",
               children: "\u6848\u4EF6\u3092\u63A2\u3059"
@@ -1024,7 +1046,7 @@ function Top(_ref) {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "l-footer__content",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
               href: "/",
               className: "l-footer__logo",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
@@ -1043,21 +1065,21 @@ function Top(_ref) {
               className: "l-footer__links",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
                   href: "#about",
                   className: "l-footer__link",
                   children: "match\u3068\u306F"
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
                   href: "/terms",
                   className: "l-footer__link",
                   children: "\u5229\u7528\u898F\u7D04"
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
                   href: "/privacy",
                   className: "l-footer__link",
                   children: "\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC"
@@ -1072,14 +1094,14 @@ function Top(_ref) {
               className: "l-footer__links",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
                   href: "/job-listings",
                   className: "l-footer__link",
                   children: "\u6848\u4EF6\u4E00\u89A7"
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
                   href: "/post-job",
                   className: "l-footer__link",
                   children: "\u6848\u4EF6\u3092\u6295\u7A3F"
@@ -1094,7 +1116,7 @@ function Top(_ref) {
               className: "l-footer__links",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
                 className: "l-footer__link-item",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
                   href: "/#faq",
                   className: "l-footer__link",
                   children: "\u3088\u304F\u3042\u308B\u8CEA\u554F"
