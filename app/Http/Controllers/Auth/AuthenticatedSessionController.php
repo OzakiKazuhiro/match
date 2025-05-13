@@ -61,11 +61,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // PHPのセッションも完全に破棄
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            session_destroy();
-        }
-
         // ログインページにリダイレクトし、ログアウトフラグを渡す
         return redirect()->route('login')->with('status', 'logged_out');
     }
