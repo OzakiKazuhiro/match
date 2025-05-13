@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -27,10 +29,28 @@ class NotificationController extends Controller
      */
     public function markAsRead(string $id)
     {
-        $notification = Auth::user()->notifications()->findOrFail($id);
-        $notification->markAsRead();
-        
-        return redirect()->back();
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            $notification = Auth::user()->notifications()->findOrFail($id);
+            $notification->markAsRead();
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            return redirect()->back();
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('通知既読処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', '通知の既読処理に失敗しました。再度お試しください。');
+            return redirect()->back();
+        }
     }
     
     /**
@@ -38,9 +58,27 @@ class NotificationController extends Controller
      */
     public function markAllAsRead()
     {
-        Auth::user()->unreadNotifications->markAsRead();
-        
-        return redirect()->back();
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            Auth::user()->unreadNotifications->markAsRead();
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            return redirect()->back();
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('全通知既読処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', '全通知の既読処理に失敗しました。再度お試しください。');
+            return redirect()->back();
+        }
     }
     
     /**

@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -140,15 +142,33 @@ class JobListingController extends Controller
      */
     public function store(StoreJobListingRequest $request): RedirectResponse
     {
-        $user = Auth::user();
-        
-        // バリデーション済みデータから案件情報を作成
-        $jobListing = $user->jobListings()->create($request->validated());
-        
-        // 登録成功メッセージをフラッシュデータに追加
-        session()->flash('message', '案件を投稿しました');
-        
-        return redirect()->route('job-listings.index');
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            $user = Auth::user();
+            
+            // バリデーション済みデータから案件情報を作成
+            $jobListing = $user->jobListings()->create($request->validated());
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            // 登録成功メッセージをフラッシュデータに追加
+            session()->flash('message', '案件を投稿しました');
+            
+            return redirect()->route('job-listings.index');
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('案件投稿処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', '案件の投稿に失敗しました。再度お試しください。');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -175,16 +195,12 @@ class JobListingController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(5);
         
-        // 応募済みかどうかを確認
-        $hasApplied = $user->applications()
-            ->where('job_listing_id', $jobListing->id)
-            ->exists();
-        
-        // 応募のステータスを取得
+        // 一度の操作でユーザーのこの案件に対する応募情報を取得
         $application = $user->applications()
             ->where('job_listing_id', $jobListing->id)
             ->first();
         
+        $hasApplied = $application !== null;
         $applicationStatus = $application ? $application->status : null;
         
         // 編集可能かどうかを確認（投稿者自身かつ募集中の場合）
@@ -220,11 +236,29 @@ class JobListingController extends Controller
         // 権限チェック
         $this->authorize('delete', $jobListing);
         
-        $jobListing->delete();
-        
-        session()->flash('message', '案件を削除しました');
-        
-        return redirect()->route('dashboard');
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            $jobListing->delete();
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            session()->flash('message', '案件を削除しました');
+            
+            return redirect()->route('dashboard');
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('案件削除処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', '案件の削除に失敗しました。再度お試しください。');
+            return redirect()->back();
+        }
     }
     
     /**
@@ -232,15 +266,33 @@ class JobListingController extends Controller
      */
     public function storeMessage(StorePublicMessageRequest $request, JobListing $jobListing): RedirectResponse
     {
-        PublicMessage::create([
-            'job_listing_id' => $jobListing->id,
-            'user_id' => Auth::id(),
-            'message' => $request->validated()['message'],
-        ]);
-        
-        session()->flash('message', 'メッセージを投稿しました');
-        
-        return redirect()->back();
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            PublicMessage::create([
+                'job_listing_id' => $jobListing->id,
+                'user_id' => Auth::id(),
+                'message' => $request->validated()['message'],
+            ]);
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            session()->flash('message', 'メッセージを投稿しました');
+            
+            return redirect()->back();
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('パブリックメッセージ投稿処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', 'メッセージの投稿に失敗しました。再度お試しください。');
+            return redirect()->back()->withInput();
+        }
     }
     
     /**
@@ -251,11 +303,29 @@ class JobListingController extends Controller
         // 権限チェック
         $this->authorize('update', $jobListing);
         
-        $jobListing->update(['is_closed' => true]);
-        
-        session()->flash('message', '案件の募集を終了しました');
-        
-        return redirect()->route('job-listings.show', $jobListing);
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            $jobListing->update(['is_closed' => true]);
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            session()->flash('message', '案件の募集を終了しました');
+            
+            return redirect()->route('job-listings.show', $jobListing);
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('案件クローズ処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', '案件の募集終了処理に失敗しました。再度お試しください。');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -273,13 +343,31 @@ class JobListingController extends Controller
             'message' => 'required|string|max:500',
         ]);
         
-        $message->update([
-            'message' => $validated['message'],
-        ]);
-        
-        session()->flash('message', 'メッセージを更新しました');
-        
-        return redirect()->back();
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            $message->update([
+                'message' => $validated['message'],
+            ]);
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            session()->flash('message', 'メッセージを更新しました');
+            
+            return redirect()->back();
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('パブリックメッセージ更新処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', 'メッセージの更新に失敗しました。再度お試しください。');
+            return redirect()->back()->withInput();
+        }
     }
     
     /**
@@ -292,10 +380,28 @@ class JobListingController extends Controller
             abort(403);
         }
         
-        $message->delete();
-        
-        session()->flash('message', 'メッセージを削除しました');
-        
-        return redirect()->back();
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            $message->delete();
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            session()->flash('message', 'メッセージを削除しました');
+            
+            return redirect()->back();
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('パブリックメッセージ削除処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', 'メッセージの削除に失敗しました。再度お試しください。');
+            return redirect()->back();
+        }
     }
 } 

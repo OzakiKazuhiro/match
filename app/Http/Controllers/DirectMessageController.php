@@ -11,6 +11,8 @@ use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DirectMessageController extends Controller
 {
@@ -51,15 +53,25 @@ class DirectMessageController extends Controller
             });
         }
         
+        // ページネーションを適用する前に、会話グループIDを取得
+        $conversationGroupIds = $query->pluck('id')->toArray();
+        
+        // 未読メッセージ数を一括で取得するサブクエリを作成
+        $unreadCounts = DB::table('direct_messages')
+            ->select('conversation_group_id', DB::raw('COUNT(*) as unread_count'))
+            ->whereIn('conversation_group_id', $conversationGroupIds)
+            ->where('sender_id', '!=', $user->id)
+            ->where('is_read', false)
+            ->groupBy('conversation_group_id')
+            ->pluck('unread_count', 'conversation_group_id')
+            ->toArray();
+        
         // ページネーションを適用（最新メッセージでソート）
         $conversationGroups = $query->orderBy('updated_at', 'desc')->paginate(20);
             
-        // 各会話グループの未読メッセージ数を計算
-        $conversationGroups->each(function ($group) use ($user) {
-            $group->unread_count = $group->messages()
-                ->where('sender_id', '!=', $user->id)
-                ->where('is_read', false)
-                ->count();
+        // 各会話グループに未読メッセージ数を設定
+        $conversationGroups->each(function ($group) use ($unreadCounts) {
+            $group->unread_count = $unreadCounts[$group->id] ?? 0;
         });
 
         return Inertia::render('Messages/Index', [
@@ -113,26 +125,53 @@ class DirectMessageController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        // Create message
-        $message = new DirectMessage([
-            'sender_id' => Auth::id(),
-            'message' => $request->message,
-            'is_read' => false, // 初期状態は未読
-        ]);
-
-        $conversationGroup->messages()->save($message);
-        $conversationGroup->touch(); // Update the updated_at timestamp
-
-        // Ajax リクエストの場合は JSON レスポンスを返す
-        if ($request->expectsJson() || $request->ajax()) {
-            return response()->json([
-                'success' => true,
-                'message' => $message->load('sender'),
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            // Create message
+            $message = new DirectMessage([
+                'sender_id' => Auth::id(),
+                'message' => $request->message,
+                'is_read' => false, // 初期状態は未読
             ]);
-        }
 
-        // 通常のフォーム送信の場合はリダイレクト
-        return redirect()->back();
+            $conversationGroup->messages()->save($message);
+            $conversationGroup->touch(); // Update the updated_at timestamp
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            // Ajax リクエストの場合は JSON レスポンスを返す
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => $message->load('sender'),
+                ]);
+            }
+
+            // 通常のフォーム送信の場合はリダイレクト
+            return redirect()->back();
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('メッセージ送信処理でエラー発生: ' . $e->getMessage());
+            
+            // Ajax リクエストの場合はJSONでエラー返却
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'メッセージの送信に失敗しました。'
+                ], 500);
+            }
+            
+            // 通常のフォーム送信の場合はリダイレクト
+            session()->flash('error', 'メッセージの送信に失敗しました。再度お試しください。');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**

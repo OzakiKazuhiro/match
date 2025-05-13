@@ -11,11 +11,18 @@ use App\Notifications\ApplicationAccepted;
 use App\Notifications\ApplicationRejected;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ApplicationController extends Controller
 {
+    // アプリケーションステータスの定数定義
+    const STATUS_PENDING = 'pending';
+    const STATUS_ACCEPTED = 'accepted';
+    const STATUS_DECLINED = 'declined';
+
     /**
      * 案件への応募フォームを表示
      */
@@ -44,57 +51,103 @@ class ApplicationController extends Controller
     public function store(StoreApplicationRequest $request, JobListing $jobListing): RedirectResponse
     {
         // 自分の案件には応募できない & 募集終了した案件には応募できない
-        if (Auth::id() === $jobListing->user_id || $jobListing->is_closed) {
-            return abort(403);
-        }
+        $this->checkApplicationEligibility($jobListing);
         
         // 既に応募済みかチェック
-        $existingApplication = Application::where('job_listing_id', $jobListing->id)
-            ->where('user_id', Auth::id())
-            ->first();
+        $existingApplication = $this->findExistingApplication($jobListing->id, Auth::id());
             
         if ($existingApplication) {
             session()->flash('message', '既にこの案件に応募しています');
             return redirect()->route('job-listings.show', $jobListing);
         }
         
-        // 応募情報を保存
-        $application = Application::create([
-            'job_listing_id' => $jobListing->id,
-            'user_id' => Auth::id(),
-            'message' => $request->validated()['message'],
-            'status' => 'pending', // 初期状態は「保留中」
-        ]);
-        
-        // 会話グループがなければ作成（投稿者と応募者間）
-        $conversationGroup = ConversationGroup::where(function($query) use ($jobListing) {
-                $query->where('job_owner_id', $jobListing->user_id)
-                      ->where('applicant_id', Auth::id());
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            // 応募情報を保存
+            $application = Application::create([
+                'job_listing_id' => $jobListing->id,
+                'user_id' => Auth::id(),
+                'message' => $request->validated()['message'],
+                'status' => self::STATUS_PENDING, // 初期状態は「保留中」
+            ]);
+            
+            // 会話グループを取得または作成
+            $conversationGroup = $this->getOrCreateConversationGroup($jobListing->id, $jobListing->user_id, Auth::id());
+            
+            // 案件投稿者に通知を送信
+            $jobOwner = $jobListing->user;
+            $jobOwner->notify(new ApplicationReceived($application));
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            session()->flash('message', '案件に応募しました。案件投稿者からの返信をお待ちください');
+            
+            return redirect()->route('job-listings.show', $jobListing);
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('応募処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', '応募処理中にエラーが発生しました。再度お試しください。');
+            return redirect()->back()->withInput();
+        }
+    }
+    
+    /**
+     * 会話グループを取得または作成する
+     */
+    private function getOrCreateConversationGroup(int $jobListingId, int $jobOwnerId, int $applicantId): ConversationGroup
+    {
+        // 会話グループを検索
+        $conversationGroup = ConversationGroup::where(function($query) use ($jobOwnerId, $applicantId) {
+                $query->where('job_owner_id', $jobOwnerId)
+                      ->where('applicant_id', $applicantId);
             })
-            ->orWhere(function($query) use ($jobListing) {
-                $query->where('job_owner_id', Auth::id())
-                      ->where('applicant_id', $jobListing->user_id);
+            ->orWhere(function($query) use ($jobOwnerId, $applicantId) {
+                $query->where('job_owner_id', $applicantId)
+                      ->where('applicant_id', $jobOwnerId);
             })
             ->first();
             
+        // 会話グループがなければ作成
         if (!$conversationGroup) {
             $conversationGroup = ConversationGroup::create([
-                'job_owner_id' => $jobListing->user_id, // 案件投稿者
-                'applicant_id' => Auth::id(), // 応募者
-                'job_listing_id' => $jobListing->id, // 関連する案件
+                'job_owner_id' => $jobOwnerId, // 案件投稿者
+                'applicant_id' => $applicantId, // 応募者
+                'job_listing_id' => $jobListingId, // 関連する案件
             ]);
         } else if ($conversationGroup->job_listing_id === null) {
             // 既存の会話グループに案件IDが設定されていない場合は更新
-            $conversationGroup->update(['job_listing_id' => $jobListing->id]);
+            $conversationGroup->update(['job_listing_id' => $jobListingId]);
         }
         
-        // 案件投稿者に通知を送信
-        $jobOwner = $jobListing->user;
-        $jobOwner->notify(new ApplicationReceived($application));
-        
-        session()->flash('message', '案件に応募しました。案件投稿者からの返信をお待ちください');
-        
-        return redirect()->route('job-listings.show', $jobListing);
+        return $conversationGroup;
+    }
+    
+    /**
+     * 応募資格をチェックする
+     */
+    private function checkApplicationEligibility(JobListing $jobListing): void
+    {
+        if (Auth::id() === $jobListing->user_id || $jobListing->is_closed) {
+            abort(403);
+        }
+    }
+    
+    /**
+     * 既存の応募を検索する
+     */
+    private function findExistingApplication(int $jobListingId, int $userId)
+    {
+        return Application::where('job_listing_id', $jobListingId)
+            ->where('user_id', $userId)
+            ->first();
     }
     
     /**
@@ -141,27 +194,39 @@ class ApplicationController extends Controller
             ->with(['user'])
             ->latest()
             ->get();
+        
+        // 承認された応募のIDを取得
+        $acceptedApplicationIds = $applications->where('status', self::STATUS_ACCEPTED)->pluck('id')->toArray();
+        $userIds = $applications->pluck('user_id')->toArray();
+        
+        // 会話グループIDを一括取得
+        $conversationGroups = [];
+        if (!empty($acceptedApplicationIds)) {
+            // 会話グループを一括で取得
+            $conversationGroups = DB::table('conversation_groups')
+                ->select('id', 'job_owner_id', 'applicant_id', 'job_listing_id')
+                ->whereIn('job_listing_id', $myJobIds)
+                ->where(function($query) use ($userIds) {
+                    $query->whereIn('applicant_id', $userIds);
+                })
+                ->get()
+                ->groupBy(function($item) {
+                    // job_listing_id と applicant_id の組み合わせでグループ化するキーを作成
+                    return $item->job_listing_id . '_' . $item->applicant_id;
+                });
+        }
             
-        // 各応募データに明示的にjobListingをセット
+        // 各応募データに明示的にjobListingをセットし、会話グループIDも設定
         foreach ($applications as $application) {
             $jobListing = $jobListings->where('id', $application->job_listing_id)->first();
             if ($jobListing) {
                 $application->setRelation('jobListing', $jobListing);
                 
-                // 承認された応募の場合、会話グループIDを検索して設定
-                if ($application->status === 'accepted') {
-                    $conversationGroup = ConversationGroup::where(function($query) use ($jobListing, $application) {
-                        $query->where('job_owner_id', $jobListing->user_id)
-                              ->where('applicant_id', $application->user_id);
-                    })
-                    ->orWhere(function($query) use ($jobListing, $application) {
-                        $query->where('job_owner_id', $application->user_id)
-                              ->where('applicant_id', $jobListing->user_id);
-                    })
-                    ->first();
-                    
-                    if ($conversationGroup) {
-                        $application->conversation_group_id = $conversationGroup->id;
+                // 承認された応募の場合、会話グループIDを設定
+                if ($application->status === self::STATUS_ACCEPTED) {
+                    $key = $application->job_listing_id . '_' . $application->user_id;
+                    if (isset($conversationGroups[$key]) && !$conversationGroups[$key]->isEmpty()) {
+                        $application->conversation_group_id = $conversationGroups[$key]->first()->id;
                     }
                 }
             }
@@ -185,7 +250,7 @@ class ApplicationController extends Controller
         }
         
         // ステータスの妥当性チェック
-        if (!in_array($status, ['accepted', 'declined'])) {
+        if (!in_array($status, [self::STATUS_ACCEPTED, self::STATUS_DECLINED])) {
             return abort(400);
         }
         
@@ -195,23 +260,13 @@ class ApplicationController extends Controller
         
         // 承認の場合、会話グループの存在を確認し、必要に応じて作成または更新
         $conversationGroupId = null;
-        if ($status === 'accepted') {
-            // 会話グループを検索（案件投稿者と応募者間、かつ同じ案件）
-            $conversationGroup = ConversationGroup::where(function($query) use ($jobListing, $application) {
-                    $query->where('job_owner_id', $jobListing->user_id)
-                          ->where('applicant_id', $application->user_id)
-                          ->where('job_listing_id', $jobListing->id);
-                })
-                ->first();
-                
-            if (!$conversationGroup) {
-                // 会話グループがなければ作成
-                $conversationGroup = ConversationGroup::create([
-                    'job_owner_id' => $jobListing->user_id, // 案件投稿者
-                    'applicant_id' => $application->user_id, // 応募者
-                    'job_listing_id' => $jobListing->id, // 関連する案件
-                ]);
-            }
+        if ($status === self::STATUS_ACCEPTED) {
+            // 会話グループを取得または作成
+            $conversationGroup = $this->getOrCreateConversationGroup(
+                $jobListing->id,
+                $jobListing->user_id,
+                $application->user_id
+            );
             
             $conversationGroupId = $conversationGroup->id;
             
@@ -222,13 +277,13 @@ class ApplicationController extends Controller
             // 応募者に承認通知を送信
             $applicant = $application->user;
             $applicant->notify(new ApplicationAccepted($application));
-        } else if ($status === 'declined') {
+        } else if ($status === self::STATUS_DECLINED) {
             // 応募者に拒否通知を送信
             $applicant = $application->user;
             $applicant->notify(new ApplicationRejected($application));
         }
         
-        $statusText = $status === 'accepted' ? '承認' : '拒否';
+        $statusText = $status === self::STATUS_ACCEPTED ? '承認' : '拒否';
         session()->flash('message', "応募を{$statusText}しました");
         
         // 会話グループIDをセッションに追加
