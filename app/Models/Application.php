@@ -98,4 +98,30 @@ class Application extends Model
     {
         return $query->where('status', 'declined');
     }
+    
+    /**
+     * 新しい応募を作成し、関連する会話グループも設定する
+     */
+    public static function createWithConversationGroup(JobListing $jobListing, int $userId, array $data): self
+    {
+        // 応募情報を保存
+        $application = self::create([
+            'job_listing_id' => $jobListing->id,
+            'user_id' => $userId,
+            'message' => $data['message'],
+            'status' => 'pending', // 初期状態は「保留中」
+        ]);
+        
+        // 会話グループの取得または作成
+        $conversationGroup = ConversationGroup::getOrCreateForApplication(
+            $jobListing->id,
+            $jobListing->user_id,
+            $userId
+        );
+        
+        // 会話グループIDを応募オブジェクトに設定
+        $application->conversation_group_id = $conversationGroup->id;
+        
+        return $application;
+    }
 }

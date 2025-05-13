@@ -65,16 +65,12 @@ class ApplicationController extends Controller
             // トランザクション開始
             DB::beginTransaction();
             
-            // 応募情報を保存
-            $application = Application::create([
-                'job_listing_id' => $jobListing->id,
-                'user_id' => Auth::id(),
-                'message' => $request->validated()['message'],
-                'status' => self::STATUS_PENDING, // 初期状態は「保留中」
-            ]);
-            
-            // 会話グループを取得または作成
-            $conversationGroup = $this->getOrCreateConversationGroup($jobListing->id, $jobListing->user_id, Auth::id());
+            // 応募情報と会話グループを一括で作成（追加したメソッドを使用）
+            $application = Application::createWithConversationGroup(
+                $jobListing,
+                Auth::id(),
+                ['message' => $request->validated()['message']]
+            );
             
             // 案件投稿者に通知を送信
             $jobOwner = $jobListing->user;
@@ -97,37 +93,6 @@ class ApplicationController extends Controller
             session()->flash('error', '応募処理中にエラーが発生しました。再度お試しください。');
             return redirect()->back()->withInput();
         }
-    }
-    
-    /**
-     * 会話グループを取得または作成する
-     */
-    private function getOrCreateConversationGroup(int $jobListingId, int $jobOwnerId, int $applicantId): ConversationGroup
-    {
-        // 会話グループを検索
-        $conversationGroup = ConversationGroup::where(function($query) use ($jobOwnerId, $applicantId) {
-                $query->where('job_owner_id', $jobOwnerId)
-                      ->where('applicant_id', $applicantId);
-            })
-            ->orWhere(function($query) use ($jobOwnerId, $applicantId) {
-                $query->where('job_owner_id', $applicantId)
-                      ->where('applicant_id', $jobOwnerId);
-            })
-            ->first();
-            
-        // 会話グループがなければ作成
-        if (!$conversationGroup) {
-            $conversationGroup = ConversationGroup::create([
-                'job_owner_id' => $jobOwnerId, // 案件投稿者
-                'applicant_id' => $applicantId, // 応募者
-                'job_listing_id' => $jobListingId, // 関連する案件
-            ]);
-        } else if ($conversationGroup->job_listing_id === null) {
-            // 既存の会話グループに案件IDが設定されていない場合は更新
-            $conversationGroup->update(['job_listing_id' => $jobListingId]);
-        }
-        
-        return $conversationGroup;
     }
     
     /**
@@ -261,8 +226,8 @@ class ApplicationController extends Controller
         // 承認の場合、会話グループの存在を確認し、必要に応じて作成または更新
         $conversationGroupId = null;
         if ($status === self::STATUS_ACCEPTED) {
-            // 会話グループを取得または作成
-            $conversationGroup = $this->getOrCreateConversationGroup(
+            // 会話グループを取得または作成（モデルのメソッドを使用）
+            $conversationGroup = ConversationGroup::getOrCreateForApplication(
                 $jobListing->id,
                 $jobListing->user_id,
                 $application->user_id

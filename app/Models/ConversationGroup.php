@@ -133,4 +133,36 @@ class ConversationGroup extends Model
     {
         return User::whereIn('id', [$this->job_owner_id, $this->applicant_id])->get();
     }
+    
+    /**
+     * 応募に関連する会話グループを取得または作成する
+     */
+    public static function getOrCreateForApplication(int $jobListingId, int $jobOwnerId, int $applicantId): self
+    {
+        // 会話グループを検索
+        $conversationGroup = self::where(function($query) use ($jobOwnerId, $applicantId) {
+                $query->where('job_owner_id', $jobOwnerId)
+                      ->where('applicant_id', $applicantId);
+            })
+            ->orWhere(function($query) use ($jobOwnerId, $applicantId) {
+                $query->where('job_owner_id', $applicantId)
+                      ->where('applicant_id', $jobOwnerId);
+            })
+            ->first();
+            
+        // 会話グループがなければ作成
+        if (!$conversationGroup) {
+            $conversationGroup = self::create([
+                'job_owner_id' => $jobOwnerId,
+                'applicant_id' => $applicantId,
+                'job_listing_id' => $jobListingId,
+            ]);
+        } 
+        // 既存の会話グループに案件IDが設定されていない場合は更新
+        else if ($conversationGroup->job_listing_id === null) {
+            $conversationGroup->update(['job_listing_id' => $jobListingId]);
+        }
+        
+        return $conversationGroup;
+    }
 }
