@@ -9,11 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      * 退会日時を記録するdeleted_atカラムを追加
+     * Laravel SoftDeletesトレイトで使用するためのカラム
      */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->timestamp('deleted_at')->nullable()->after('original_email');
+            $table->softDeletes(); // SoftDeletesトレイトで使用するdeleted_atカラム
         });
     }
 
@@ -24,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('deleted_at');
+            $table->dropSoftDeletes();
         });
     }
 };

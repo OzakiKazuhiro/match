@@ -19,7 +19,7 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
                 // 退会済みユーザーが認証されていないか確認
                 $user = Auth::guard($guard)->user();
-                if ($user && $user->is_deleted) {
+                if ($user && $user->trashed()) {
                     Auth::guard($guard)->logout();
                     $request->session()->invalidate();
                     $request->session()->regenerateToken();

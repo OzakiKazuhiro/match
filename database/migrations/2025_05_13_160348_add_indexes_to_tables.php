@@ -14,7 +14,7 @@ return new class extends Migration
     {
         // job_listings テーブルに検索用インデックスを追加
         Schema::table('job_listings', function (Blueprint $table) {
-            $table->index(['type', 'category'], 'idx_job_type_category');
+            $table->index(['type', 'category_id'], 'idx_job_type_category');
             // JSONカラムskillsのインデックスは非対応または複雑なため、ここでは追加しない
             // 必要に応じて別途JSONパスを指定したインデックスを検討する
             $table->index('is_closed', 'idx_job_is_closed');

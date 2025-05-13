@@ -115,13 +115,15 @@ class ProfileController extends Controller
             $user->avatar = null;
         }
         
-        // ユーザー情報の匿名化
-        $user->original_email = $user->email; // 元のメールアドレスを保存
-        $user->email = 'deleted_' . time() . '_' . substr(md5($user->email), 0, 8) . '@example.com';
+        // ユーザー情報の匿名化（個人情報保護のため）
         $user->name = '退会したユーザー';
-        $user->is_deleted = true;
-        $user->deleted_at = now(); // 退会日時を記録
+        // SoftDeletesを使用するため、メールアドレス匿名化は不要
+        // $user->original_email = $user->email;
+        // $user->email = 'deleted_' . time() . '_' . substr(md5($user->email), 0, 8) . '@example.com';
         $user->save();
+        
+        // 論理削除を実行
+        $user->delete();
 
         Auth::logout();
 

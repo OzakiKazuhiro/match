@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -28,9 +29,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'avatar',
         'bio',
-        'is_deleted',
-        'original_email',
-        'deleted_at',
     ];
 
     /**
@@ -41,7 +39,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
-        'original_email',
     ];
 
     /**
@@ -52,8 +49,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'is_deleted' => 'boolean',
-        'deleted_at' => 'datetime',
     ];
     
     /**
@@ -167,7 +162,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isDeleted(): bool
     {
-        return $this->is_deleted;
+        return $this->trashed();
     }
     
     /**
@@ -175,6 +170,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getDisplayName(): string
     {
-        return $this->is_deleted ? '退会したユーザー' : $this->name;
+        return $this->trashed() ? '退会したユーザー' : $this->name;
     }
 }

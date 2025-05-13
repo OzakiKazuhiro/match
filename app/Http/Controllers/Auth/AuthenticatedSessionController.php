@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
         
         // 退会済みユーザーのチェック
         $user = $request->user();
-        if ($user && $user->is_deleted) {
+        if ($user && $user->trashed()) {
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

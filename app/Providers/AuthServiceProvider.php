@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->app['auth']->viaRequest('web', function ($request) {
             if ($request->session()->has('auth')) {
                 $user = User::find($request->session()->get('auth.id'));
-                if ($user && !$user->is_deleted) {
+                if ($user && !$user->trashed()) {
                     return $user;
                 }
             }

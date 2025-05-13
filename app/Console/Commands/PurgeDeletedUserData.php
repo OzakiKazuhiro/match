@@ -21,7 +21,7 @@ class PurgeDeletedUserData extends Command
      *
      * @var string
      */
-    protected $description = '退会後6ヶ月経過したユーザーのメールアドレス情報を完全に削除します（毎月1日実行）';
+    protected $description = '退会後6ヶ月経過したユーザーの個人情報を完全に削除します（毎月1日実行）';
 
     /**
      * Execute the console command.
@@ -32,24 +32,23 @@ class PurgeDeletedUserData extends Command
         $sixMonthsAgo = Carbon::now()->subMonths(6);
         
         // 6ヶ月以上前に退会したユーザーを検索
-        $users = User::where('is_deleted', true)
-            ->whereNotNull('deleted_at')
+        $users = User::onlyTrashed()
             ->where('deleted_at', '<=', $sixMonthsAgo)
-            ->whereNotNull('original_email')
             ->get();
             
         $count = 0;
         
         foreach ($users as $user) {
-            // original_emailを完全に削除
-            $user->original_email = null;
+            // 個人情報を匿名化（GDPR対応などのため）
+            $user->email = 'anonymous_' . $user->id . '@example.com'; 
+            $user->name = '退会ユーザー_' . $user->id;
             $user->save();
             
             $count++;
-            $this->info("ユーザーID: {$user->id} のメールアドレスを完全に削除しました");
+            $this->info("ユーザーID: {$user->id} の個人情報を匿名化しました");
         }
         
-        $message = "{$count}人のユーザーの元メールアドレスを完全に削除しました。";
+        $message = "{$count}人のユーザーの個人情報を匿名化しました。";
         $this->info($message);
         Log::info($message); // ログにも記録
         

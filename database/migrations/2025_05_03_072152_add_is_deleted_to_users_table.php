@@ -8,13 +8,14 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * SoftDeletesトレイトを使用するため、このマイグレーションは不要になりました
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_deleted')->default(false)->after('remember_token');
-            $table->string('original_email')->nullable()->after('is_deleted');
-        });
+        // SoftDeletesトレイトを使用するため、is_deletedとoriginal_emailカラムは不要
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->string('original_email')->nullable()->after('remember_token');
+        // });
     }
 
     /**
@@ -22,9 +23,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_deleted');
-            $table->dropColumn('original_email');
-        });
+        // SoftDeletesトレイトを使用するため、is_deletedとoriginal_emailカラムは不要
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->dropColumn('original_email');
+        // });
     }
 };

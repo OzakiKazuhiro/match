@@ -34,7 +34,7 @@ class Authenticate extends Middleware
         
         // ユーザーが認証されているが、退会済みの場合はログアウトさせる
         $user = $request->user();
-        if ($user && $user->is_deleted) {
+        if ($user && $user->trashed()) {
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
