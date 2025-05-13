@@ -6,7 +6,6 @@ import InputError from "@/Components/InputError";
 import axios from "axios";
 import { route } from "ziggy-js";
 import Modal from "@/Components/Modal";
-import { CATEGORY_OPTIONS } from "@/constants/categoryOptions";
 import { SKILL_OPTIONS } from "@/constants/skillOptions";
 import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 
@@ -36,16 +35,27 @@ interface JobListing {
     description: string;
     budget_min: number | null;
     budget_max: number | null;
-    category: string;
+    category_id: number | null;
     skills: string[];
     preferred_skills: string[];
     location: string;
 }
 
+interface Category {
+    id: number;
+    name: string;
+    slug: string;
+    icon: string | null;
+    description: string | null;
+    display_order: number;
+    is_active: boolean;
+}
+
 export default function EditJob({
     auth,
     jobListing,
-}: PageProps<{ jobListing: JobListing }>) {
+    categories = [],
+}: PageProps<{ jobListing: JobListing; categories: Category[] }>) {
     const [customSkill, setCustomSkill] = useState("");
     const [customPreferredSkill, setCustomPreferredSkill] = useState("");
     // 表示用の実際の金額を保持する状態
@@ -58,7 +68,7 @@ export default function EditJob({
         title?: string;
         budget_min?: string;
         budget_max?: string;
-        category?: string;
+        category_id?: string;
         description?: string;
     }>({});
 
@@ -68,7 +78,7 @@ export default function EditJob({
         description: jobListing.description,
         budget_min: jobListing.budget_min?.toString() || "",
         budget_max: jobListing.budget_max?.toString() || "",
-        category: jobListing.category,
+        category_id: jobListing.category_id,
         skills: jobListing.skills,
         preferred_skills: jobListing.preferred_skills,
         location: jobListing.location,
@@ -212,8 +222,8 @@ export default function EditJob({
         }
 
         // カテゴリーのバリデーション
-        if (!data.category) {
-            newErrors.category = VALIDATION_MESSAGES.required.category;
+        if (!data.category_id) {
+            newErrors.category_id = VALIDATION_MESSAGES.required.category;
         }
 
         // 説明のバリデーション
@@ -543,7 +553,7 @@ export default function EditJob({
 
                             <div className="p-post-job__form-group">
                                 <label
-                                    htmlFor="category"
+                                    htmlFor="category_id"
                                     className="p-post-job__label"
                                 >
                                     カテゴリー{" "}
@@ -552,37 +562,43 @@ export default function EditJob({
                                     </span>
                                 </label>
                                 <select
-                                    id="category"
+                                    id="category_id"
                                     className={`p-post-job__select ${
-                                        errors.category ||
-                                        validationErrors.category
+                                        errors.category_id ||
+                                        validationErrors.category_id
                                             ? "p-post-job__select--error"
                                             : ""
                                     }`}
-                                    value={data.category}
+                                    value={data.category_id ?? ""}
                                     onChange={(e) => {
-                                        setData("category", e.target.value);
+                                        setData(
+                                            "category_id",
+                                            parseInt(e.target.value)
+                                        );
                                         // 入力時にエラーをクリア
-                                        if (validationErrors.category) {
+                                        if (validationErrors.category_id) {
                                             setValidationErrors({
                                                 ...validationErrors,
-                                                category: undefined,
+                                                category_id: undefined,
                                             });
                                         }
                                     }}
                                 >
                                     <option value="">カテゴリーを選択</option>
-                                    {CATEGORY_OPTIONS.map((category) => (
-                                        <option key={category} value={category}>
-                                            {category}
+                                    {categories.map((category) => (
+                                        <option
+                                            key={category.id}
+                                            value={category.id}
+                                        >
+                                            {category.name}
                                         </option>
                                     ))}
                                 </select>
-                                {(errors.category ||
-                                    validationErrors.category) && (
+                                {(errors.category_id ||
+                                    validationErrors.category_id) && (
                                     <div className="p-post-job__error">
-                                        {errors.category ||
-                                            validationErrors.category}
+                                        {errors.category_id ||
+                                            validationErrors.category_id}
                                     </div>
                                 )}
                             </div>

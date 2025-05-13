@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreJobListingRequest;
 use App\Http\Requests\StorePublicMessageRequest;
 use App\Models\JobListing;
+use App\Models\Category;
 use App\Models\PublicMessage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +27,7 @@ class JobListingController extends Controller
     {
         $type = $request->input('type');
         $sort = $request->input('sort', 'latest');
-        $category = $request->input('category');
+        $categoryId = $request->input('category');
         $search = $request->input('search');
         $favoritesOnly = $request->has('favorites_only');
         
@@ -51,7 +52,7 @@ class JobListingController extends Controller
         }
         
         // 案件一覧を取得
-        $query = JobListing::with('user');
+        $query = JobListing::with(['user', 'category']);
         
         // 募集終了した案件を除外
         $query->where('is_closed', false);
@@ -64,8 +65,8 @@ class JobListingController extends Controller
         }
         
         // カテゴリフィルターの適用
-        if ($category && $category !== 'all') {
-            $query->where('category', $category);
+        if ($categoryId && $categoryId !== 'all') {
+            $query->where('category_id', $categoryId);
         }
         
         // 検索クエリの適用
@@ -73,7 +74,9 @@ class JobListingController extends Controller
             $query->where(function($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
                   ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('category', 'like', "%{$search}%");
+                  ->orWhereHas('category', function($query) use ($search) {
+                      $query->where('name', 'like', "%{$search}%");
+                  });
             });
         }
         
@@ -114,15 +117,19 @@ class JobListingController extends Controller
         // ページネーション
         $jobListings = $query->paginate(12)->withQueryString();
         
+        // アクティブなカテゴリーのリストを取得
+        $categories = Category::active()->ordered()->get();
+        
         return Inertia::render('JobListings', [
             'jobListings' => $jobListings,
             'filters' => [
                 'type' => $type,
                 'sort' => $sort,
-                'category' => $category,
+                'category' => $categoryId,
                 'search' => $search,
                 'favorites_only' => $favoritesOnly,
             ],
+            'categories' => $categories,
             'userApplications' => $userApplications,
             'applicationStatuses' => $applicationStatuses,
             'userFavorites' => $userFavorites,
@@ -134,7 +141,12 @@ class JobListingController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('PostJob');
+        // アクティブなカテゴリーのリストを取得
+        $categories = Category::active()->ordered()->get();
+        
+        return Inertia::render('PostJob', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -187,7 +199,7 @@ class JobListingController extends Controller
         $user = auth()->user();
         
         // 案件詳細を読み込み
-        $jobListing->load(['user']);
+        $jobListing->load(['user', 'category']);
         
         // 公開メッセージを取得（ページネーション付き）
         $publicMessages = $jobListing->publicMessages()
@@ -227,6 +239,59 @@ class JobListingController extends Controller
         ]);
     }
 
+    /**
+     * 案件編集フォームを表示
+     */
+    public function edit(JobListing $jobListing): Response
+    {
+        // 権限チェック
+        $this->authorize('update', $jobListing);
+        
+        // 案件にカテゴリー情報を読み込み
+        $jobListing->load('category');
+        
+        // アクティブなカテゴリーのリストを取得
+        $categories = Category::active()->ordered()->get();
+        
+        return Inertia::render('EditJob', [
+            'jobListing' => $jobListing,
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
+     * 案件を更新
+     */
+    public function update(StoreJobListingRequest $request, JobListing $jobListing): RedirectResponse
+    {
+        // 権限チェック
+        $this->authorize('update', $jobListing);
+        
+        try {
+            // トランザクション開始
+            DB::beginTransaction();
+            
+            // バリデーション済みデータで案件を更新
+            $jobListing->update($request->validated());
+            
+            // トランザクションコミット
+            DB::commit();
+            
+            session()->flash('message', '案件を更新しました');
+            
+            return redirect()->route('job-listings.show', $jobListing);
+            
+        } catch (\Exception $e) {
+            // エラー時はロールバック
+            DB::rollBack();
+            
+            // エラーログに記録
+            Log::error('案件更新処理でエラー発生: ' . $e->getMessage());
+            
+            session()->flash('error', '案件の更新に失敗しました。再度お試しください。');
+            return redirect()->back()->withInput();
+        }
+    }
 
     /**
      * 案件を削除
@@ -248,7 +313,6 @@ class JobListingController extends Controller
             session()->flash('message', '案件を削除しました');
             
             return redirect()->route('dashboard');
-            
         } catch (\Exception $e) {
             // エラー時はロールバック
             DB::rollBack();

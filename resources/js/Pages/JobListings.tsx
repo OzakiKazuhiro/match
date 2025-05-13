@@ -4,6 +4,16 @@ import { PageProps } from "@/types";
 import JobCard, { JobType } from "@/Components/JobCard";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
+interface Category {
+    id: number;
+    name: string;
+    slug: string;
+    icon: string | null;
+    description: string | null;
+    display_order: number;
+    is_active: boolean;
+}
+
 interface JobListingsProps extends PageProps {
     jobListings: {
         data: JobType[];
@@ -25,6 +35,7 @@ interface JobListingsProps extends PageProps {
         search?: string;
         favorites_only?: boolean;
     };
+    categories: Category[]; // サーバーから取得したカテゴリーリスト
     userApplications: number[]; // ユーザーが応募した案件ID一覧
     applicationStatuses?: { [key: number]: string }; // 案件IDをキーとした応募ステータス情報
     userFavorites: number[]; // ユーザーがお気に入り登録した案件ID一覧
@@ -34,6 +45,7 @@ export default function JobListings({
     auth,
     jobListings,
     filters,
+    categories = [], // サーバーから提供されるカテゴリーリスト
     userApplications,
     applicationStatuses = {}, // デフォルト値を空オブジェクトに設定
     userFavorites = [], // デフォルト値を空配列に設定
@@ -151,23 +163,6 @@ export default function JobListings({
     };
 
     /**
-     * 案件カテゴリーの選択肢一覧
-     */
-    const categoryOptions = [
-        "ウェブ開発",
-        "モバイルアプリ開発",
-        "デザイン",
-        "サーバー/インフラ",
-        "AI/機械学習",
-        "データ分析",
-        "ECサイト",
-        "API開発",
-        "WordPress開発",
-        "エンジニアに相談",
-        "その他",
-    ];
-
-    /**
      * カテゴリードロップダウンメニュー外クリック検知
      * メニュー外をクリックした時に自動的に閉じる
      */
@@ -249,12 +244,12 @@ export default function JobListings({
      * カテゴリーフィルター変更時の処理
      * サーバーサイドでのフィルタリングを行うためにページをリロード
      */
-    const handleCategoryChange = (category: string) => {
-        setActiveCategory(category);
+    const handleCategoryChange = (categoryId: string) => {
+        setActiveCategory(categoryId);
         setShowCategoryDropdown(false);
 
         const url = new URL(window.location.href);
-        url.searchParams.set("category", category);
+        url.searchParams.set("category", categoryId);
         url.searchParams.delete("page");
 
         router.visit(url.pathname + url.search, { method: "get" });
@@ -268,8 +263,12 @@ export default function JobListings({
         if (activeCategory === "all") {
             return "カテゴリー";
         }
-        // カテゴリー名はそのまま表示（CSSで省略表示される）
-        return activeCategory;
+
+        // 選択されたカテゴリーIDからカテゴリー名を探す
+        const selectedCategory = categories.find(
+            (cat) => cat.id.toString() === activeCategory
+        );
+        return selectedCategory ? selectedCategory.name : "カテゴリー";
     };
 
     /**
@@ -605,22 +604,22 @@ export default function JobListings({
                                             >
                                                 すべてのカテゴリー
                                             </div>
-                                            {categoryOptions.map((category) => (
+                                            {categories.map((category) => (
                                                 <div
-                                                    key={category}
+                                                    key={category.id}
                                                     className={`p-job-listings__sort-option ${
                                                         activeCategory ===
-                                                        category
+                                                        category.id.toString()
                                                             ? "p-job-listings__sort-option--active"
                                                             : ""
                                                     }`}
                                                     onClick={() =>
                                                         handleCategoryChange(
-                                                            category
+                                                            category.id.toString()
                                                         )
                                                     }
                                                 >
-                                                    {category}
+                                                    {category.name}
                                                 </div>
                                             ))}
                                         </div>

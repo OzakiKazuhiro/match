@@ -27,7 +27,7 @@ class StoreJobListingRequest extends FormRequest
             'description' => ['required', 'string', 'min:1', 'max:3000'],
             'budget_min' => ['nullable', 'integer', 'min:0', 'max:50000000', 'required_if:type,one_time'],
             'budget_max' => ['nullable', 'integer', 'min:0', 'max:50000000', 'required_if:type,one_time'],
-            'category' => ['nullable', 'string', 'max:100'],
+            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
             'location' => ['nullable', 'string', 'in:リモート（在宅勤務）,現場勤務（オンサイト）,併用型（在宅＋現場）'],
             'skills' => ['nullable', 'array'],
             'skills.*' => ['string', 'max:15'],
@@ -59,6 +59,7 @@ class StoreJobListingRequest extends FormRequest
             'budget_min.max' => '最小予算は50,000千円（5,000万円）以下で入力してください',
             'budget_max.max' => '最大予算は50,000千円（5,000万円）以下で入力してください',
             'budget_max.gte' => '最大予算は最小予算以上で入力してください',
+            'category_id.exists' => '選択されたカテゴリーは存在しません',
         ];
     }
 } 

@@ -24,7 +24,7 @@ class JobListing extends Model
         'budget_min',
         'budget_max',
         'description',
-        'category',
+        'category_id',
         'location',
         'skills',
         'preferred_skills',
@@ -52,6 +52,14 @@ class JobListing extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    
+    /**
+     * この案件のカテゴリーを取得
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
     
     /**
@@ -121,6 +129,14 @@ class JobListing extends Model
     public function scopeOpen($query)
     {
         return $query->where('is_closed', false);
+    }
+    
+    /**
+     * 特定のカテゴリーの案件のみを取得するスコープ
+     */
+    public function scopeInCategory($query, $categoryId)
+    {
+        return $query->where('category_id', $categoryId);
     }
     
     /**
