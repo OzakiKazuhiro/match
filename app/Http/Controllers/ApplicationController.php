@@ -44,7 +44,27 @@ class ApplicationController extends Controller
             'application' => $existingApplication,
         ]);
     }
-    
+
+      /**
+     * 応募資格をチェックする（storeメソッドで使用）
+     */
+    private function checkApplicationEligibility(JobListing $jobListing): void
+    {
+        if (Auth::id() === $jobListing->user_id || $jobListing->is_closed) {
+            abort(403);
+        }
+    }
+
+    /**
+     * 既存の応募を検索する（storeメソッドで使用）
+     */
+    private function findExistingApplication(int $jobListingId, int $userId)
+    {
+        return Application::where('job_listing_id', $jobListingId)
+            ->where('user_id', $userId)
+            ->first();
+    }
+
     /**
      * 案件への応募を保存
      */
@@ -95,25 +115,8 @@ class ApplicationController extends Controller
         }
     }
     
-    /**
-     * 応募資格をチェックする
-     */
-    private function checkApplicationEligibility(JobListing $jobListing): void
-    {
-        if (Auth::id() === $jobListing->user_id || $jobListing->is_closed) {
-            abort(403);
-        }
-    }
+  
     
-    /**
-     * 既存の応募を検索する
-     */
-    private function findExistingApplication(int $jobListingId, int $userId)
-    {
-        return Application::where('job_listing_id', $jobListingId)
-            ->where('user_id', $userId)
-            ->first();
-    }
     
     /**
      * マイページでの応募一覧を表示
