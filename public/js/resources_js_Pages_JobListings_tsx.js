@@ -1617,6 +1617,8 @@ function JobListings(_ref) {
   var auth = _ref.auth,
     jobListings = _ref.jobListings,
     filters = _ref.filters,
+    _ref$categories = _ref.categories,
+    categories = _ref$categories === void 0 ? [] : _ref$categories,
     userApplications = _ref.userApplications,
     _ref$applicationStatu = _ref.applicationStatuses,
     applicationStatuses = _ref$applicationStatu === void 0 ? {} : _ref$applicationStatu,
@@ -1744,11 +1746,6 @@ function JobListings(_ref) {
   };
 
   /**
-   * 案件カテゴリーの選択肢一覧
-   */
-  var categoryOptions = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "エンジニアに相談", "その他"];
-
-  /**
    * カテゴリードロップダウンメニュー外クリック検知
    * メニュー外をクリックした時に自動的に閉じる
    */
@@ -1821,11 +1818,11 @@ function JobListings(_ref) {
    * カテゴリーフィルター変更時の処理
    * サーバーサイドでのフィルタリングを行うためにページをリロード
    */
-  var handleCategoryChange = function handleCategoryChange(category) {
-    setActiveCategory(category);
+  var handleCategoryChange = function handleCategoryChange(categoryId) {
+    setActiveCategory(categoryId);
     setShowCategoryDropdown(false);
     var url = new URL(window.location.href);
-    url.searchParams.set("category", category);
+    url.searchParams.set("category", categoryId);
     url.searchParams["delete"]("page");
     _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.visit(url.pathname + url.search, {
       method: "get"
@@ -1840,8 +1837,12 @@ function JobListings(_ref) {
     if (activeCategory === "all") {
       return "カテゴリー";
     }
-    // カテゴリー名はそのまま表示（CSSで省略表示される）
-    return activeCategory;
+
+    // 選択されたカテゴリーIDからカテゴリー名を探す
+    var selectedCategory = categories.find(function (cat) {
+      return cat.id.toString() === activeCategory;
+    });
+    return selectedCategory ? selectedCategory.name : "カテゴリー";
   };
 
   /**
@@ -2094,14 +2095,14 @@ function JobListings(_ref) {
                       return handleCategoryChange("all");
                     },
                     children: "\u3059\u3079\u3066\u306E\u30AB\u30C6\u30B4\u30EA\u30FC"
-                  }), categoryOptions.map(function (category) {
+                  }), categories.map(function (category) {
                     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-                      className: "p-job-listings__sort-option ".concat(activeCategory === category ? "p-job-listings__sort-option--active" : ""),
+                      className: "p-job-listings__sort-option ".concat(activeCategory === category.id.toString() ? "p-job-listings__sort-option--active" : ""),
                       onClick: function onClick() {
-                        return handleCategoryChange(category);
+                        return handleCategoryChange(category.id.toString());
                       },
-                      children: category
-                    }, category);
+                      children: category.name
+                    }, category.id);
                   })]
                 })]
               })

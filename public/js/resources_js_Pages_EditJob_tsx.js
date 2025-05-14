@@ -2540,13 +2540,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/react */ "./node_modules/@inertiajs/react/dist/index.esm.js");
 /* harmony import */ var _Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Layouts/AuthenticatedLayout */ "./resources/js/Layouts/AuthenticatedLayout.tsx");
 /* harmony import */ var _Components_InputError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/InputError */ "./resources/js/Components/InputError.tsx");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var ziggy_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ziggy-js */ "./node_modules/ziggy-js/dist/index.js");
 /* harmony import */ var _Components_Modal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Modal */ "./resources/js/Components/Modal.tsx");
-/* harmony import */ var _constants_categoryOptions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/constants/categoryOptions */ "./resources/js/constants/categoryOptions.ts");
-/* harmony import */ var _constants_skillOptions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/constants/skillOptions */ "./resources/js/constants/skillOptions.ts");
-/* harmony import */ var _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/constants/validationMessages */ "./resources/js/constants/validationMessages.ts");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _constants_skillOptions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/constants/skillOptions */ "./resources/js/constants/skillOptions.ts");
+/* harmony import */ var _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/constants/validationMessages */ "./resources/js/constants/validationMessages.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -2576,7 +2575,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-
 // 文字数表示コンポーネント
 
 function DescriptionCount(_ref) {
@@ -2588,7 +2586,7 @@ function DescriptionCount(_ref) {
     if (current > max * 0.9) return "#ffc107"; // 黄色（警告）
     return "#444"; // デフォルト色
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
     className: "p-post-job__character-count",
     style: {
       color: getCountColor()
@@ -2597,9 +2595,11 @@ function DescriptionCount(_ref) {
   });
 }
 function EditJob(_ref2) {
-  var _jobListing$budget_mi, _jobListing$budget_ma;
+  var _jobListing$budget_mi, _jobListing$budget_ma, _data$category_id;
   var auth = _ref2.auth,
-    jobListing = _ref2.jobListing;
+    jobListing = _ref2.jobListing,
+    _ref2$categories = _ref2.categories,
+    categories = _ref2$categories === void 0 ? [] : _ref2$categories;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
     customSkill = _useState2[0],
@@ -2636,7 +2636,7 @@ function EditJob(_ref2) {
       description: jobListing.description,
       budget_min: ((_jobListing$budget_mi = jobListing.budget_min) === null || _jobListing$budget_mi === void 0 ? void 0 : _jobListing$budget_mi.toString()) || "",
       budget_max: ((_jobListing$budget_ma = jobListing.budget_max) === null || _jobListing$budget_ma === void 0 ? void 0 : _jobListing$budget_ma.toString()) || "",
-      category: jobListing.category,
+      category_id: jobListing.category_id,
       skills: jobListing.skills,
       preferred_skills: jobListing.preferred_skills,
       location: jobListing.location
@@ -2685,7 +2685,7 @@ function EditJob(_ref2) {
             setSubmitting(true);
             _context.prev = 2;
             _context.next = 5;
-            return axios__WEBPACK_IMPORTED_MODULE_10__["default"].put((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.update", jobListing.id), data);
+            return axios__WEBPACK_IMPORTED_MODULE_9__["default"].put((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.update", jobListing.id), data);
           case 5:
             response = _context.sent;
             // router.get()を使用して、ブラウザの履歴スタックを正しく更新
@@ -2742,9 +2742,9 @@ function EditJob(_ref2) {
 
     // タイトルのバリデーション
     if (!data.title.trim()) {
-      newErrors.title = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.required.title;
+      newErrors.title = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.title;
     } else if (data.title.length > 50) {
-      newErrors.title = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.max.title;
+      newErrors.title = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.max.title;
     }
 
     // 予算のバリデーション（単発案件の場合）
@@ -2752,30 +2752,30 @@ function EditJob(_ref2) {
       var minBudget = data.budget_min ? parseInt(data.budget_min) : 0;
       var maxBudget = data.budget_max ? parseInt(data.budget_max) : 0;
       if (!data.budget_min && !data.budget_max) {
-        newErrors.budget_min = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.required.budget;
+        newErrors.budget_min = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.budget;
       } else if (minBudget > 0 && maxBudget > 0 && minBudget > maxBudget) {
-        newErrors.budget_max = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.invalid.budget_max;
+        newErrors.budget_max = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.budget_max;
       }
 
       // 予算の上限をチェック
       if (minBudget > 50000) {
-        newErrors.budget_min = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.invalid.budget_limit;
+        newErrors.budget_min = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.budget_limit;
       }
       if (maxBudget > 50000) {
-        newErrors.budget_max = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.invalid.budget_limit;
+        newErrors.budget_max = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.budget_limit;
       }
     }
 
     // カテゴリーのバリデーション
-    if (!data.category) {
-      newErrors.category = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.required.category;
+    if (!data.category_id) {
+      newErrors.category_id = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.category;
     }
 
     // 説明のバリデーション
     if (!data.description.trim()) {
-      newErrors.description = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.required.description;
+      newErrors.description = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.description;
     } else if (data.description.length > 3000) {
-      newErrors.description = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.max.description;
+      newErrors.description = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.max.description;
     }
     setValidationErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -2793,15 +2793,15 @@ function EditJob(_ref2) {
 
     // 上限チェック
     if (budget > 50000) {
-      newErrors[field] = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.invalid.budget_limit;
+      newErrors[field] = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.budget_limit;
     } else {
       delete newErrors[field];
 
       // 最小値と最大値の関係性チェック（両方の値が入力されている場合のみ）
       if (field === "budget_max" && budget > 0 && otherBudget > 0 && budget < otherBudget) {
-        newErrors[field] = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.invalid.budget_max;
+        newErrors[field] = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.budget_max;
       } else if (field === "budget_min" && budget > 0 && otherBudget > 0 && budget > otherBudget) {
-        newErrors[otherField] = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.invalid.budget_max;
+        newErrors[otherField] = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.budget_max;
       } else {
         delete newErrors[otherField];
       }
@@ -2814,52 +2814,52 @@ function EditJob(_ref2) {
     // 新しいエラーオブジェクトを作成
     var newErrors = _objectSpread({}, validationErrors);
     if (!value.trim()) {
-      newErrors.title = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.required.title;
+      newErrors.title = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.title;
     } else if (value.length > 50) {
-      newErrors.title = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_8__.VALIDATION_MESSAGES.max.title;
+      newErrors.title = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.max.title;
     } else {
       delete newErrors.title;
     }
     setValidationErrors(newErrors);
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
       className: "p-post-job__header-title",
       children: "\u6848\u4EF6\u3092\u7DE8\u96C6"
     }),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
       title: "\u6848\u4EF6\u7DE8\u96C6"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
       className: "p-post-job",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-post-job__container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "p-post-job__header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h1", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h1", {
             className: "p-post-job__title",
             children: "\u6848\u4EF6\u3092\u7DE8\u96C6\u3059\u308B"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
             className: "p-post-job__subtitle",
             children: "\u6848\u4EF6\u60C5\u5831\u3092\u7DE8\u96C6\u3057\u3066\u3001\u66F4\u65B0\u3057\u307E\u3057\u3087\u3046\u3002"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("form", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("form", {
           onSubmit: handleSubmit,
           className: "p-post-job__form",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
             className: "p-post-job__section",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h2", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
               className: "p-post-job__section-title",
               children: "\u57FA\u672C\u60C5\u5831"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-post-job__form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
                 htmlFor: "title",
                 className: "p-post-job__label",
-                children: ["\u6848\u4EF6\u30BF\u30A4\u30C8\u30EB", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                children: ["\u6848\u4EF6\u30BF\u30A4\u30C8\u30EB", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__required",
                   children: "\u5FC5\u9808"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
                 id: "title",
                 type: "text",
                 className: "p-post-job__input ".concat(errors.title || validationErrors.title ? "p-post-job__input--error" : ""),
@@ -2872,29 +2872,29 @@ function EditJob(_ref2) {
                   validateTitleInput(value);
                 },
                 maxLength: 50
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "p-post-job__title-help",
                 children: "\u203B 50\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(DescriptionCount, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(DescriptionCount, {
                 current: data.title.length,
                 max: 50
-              }), (errors.title || validationErrors.title) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
+              }), (errors.title || validationErrors.title) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
                 message: errors.title || validationErrors.title,
                 className: "mt-1"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-post-job__form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
                 className: "p-post-job__label",
-                children: ["\u6848\u4EF6\u7A2E\u5225", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                children: ["\u6848\u4EF6\u7A2E\u5225", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__required",
                   children: "\u5FC5\u9808"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "p-post-job__radio-group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
                   className: "p-post-job__radio",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
                     type: "radio",
                     name: "type",
                     value: "one_time",
@@ -2903,13 +2903,13 @@ function EditJob(_ref2) {
                       return setData("type", "one_time");
                     },
                     className: "p-post-job__radio-input"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                     className: "p-post-job__radio-text",
                     children: "\u5358\u767A\u6848\u4EF6"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
                   className: "p-post-job__radio",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
                     type: "radio",
                     name: "type",
                     value: "revenue_share",
@@ -2918,31 +2918,31 @@ function EditJob(_ref2) {
                       return setData("type", "revenue_share");
                     },
                     className: "p-post-job__radio-input"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                     className: "p-post-job__radio-text",
                     children: "\u30EC\u30D9\u30CB\u30E5\u30FC\u30B7\u30A7\u30A2\u6848\u4EF6"
                   })]
                 })]
-              }), errors.type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
+              }), errors.type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_InputError__WEBPACK_IMPORTED_MODULE_3__["default"], {
                 message: errors.type,
                 className: "mt-1"
               })]
-            }), data.type === "one_time" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), data.type === "one_time" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-post-job__form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
                 className: "p-post-job__label",
-                children: ["\u4E88\u7B97", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                children: ["\u4E88\u7B97", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__required",
                   children: "\u5FC5\u9808"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "p-post-job__budget-inputs",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                   className: "p-post-job__budget-input-wrapper",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                     className: "p-post-job__currency",
                     children: "\xA5"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
                     type: "number",
                     placeholder: "\u6700\u5C0F\u91D1\u984D\uFF08\u5343\u5186\u5358\u4F4D\uFF09",
                     value: data.budget_min,
@@ -2960,19 +2960,19 @@ function EditJob(_ref2) {
                     style: {
                       paddingRight: "45px"
                     }
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                     className: "p-post-job__unit",
                     children: "\u5343\u5186"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__budget-separator",
                   children: "\u301C"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                   className: "p-post-job__budget-input-wrapper",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                     className: "p-post-job__currency",
                     children: "\xA5"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
                     type: "number",
                     placeholder: "\u6700\u5927\u91D1\u984D\uFF08\u5343\u5186\u5358\u4F4D\uFF09",
                     value: data.budget_max,
@@ -2990,111 +2990,111 @@ function EditJob(_ref2) {
                     style: {
                       paddingRight: "45px"
                     }
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                     className: "p-post-job__unit",
                     children: "\u5343\u5186"
                   })]
                 })]
-              }), (displayBudgetMin || displayBudgetMax) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), (displayBudgetMin || displayBudgetMax) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "p-post-job__budget-preview",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__budget-preview-label",
                   children: "\u8868\u793A\u3055\u308C\u308B\u91D1\u984D\uFF1A"
-                }), displayBudgetMin && displayBudgetMax ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
+                }), displayBudgetMin && displayBudgetMax ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
                   className: "p-post-job__budget-preview-value",
                   children: [displayBudgetMin, " \u301C", " ", displayBudgetMax]
-                }) : displayBudgetMin ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
+                }) : displayBudgetMin ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
                   className: "p-post-job__budget-preview-value",
                   children: [displayBudgetMin, " \u301C"]
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
                   className: "p-post-job__budget-preview-value",
                   children: ["\u301C ", displayBudgetMax]
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "p-post-job__budget-help",
-                children: ["\u203B \u91D1\u984D\u306F\u5343\u5186\u5358\u4F4D\u3067\u534A\u89D2\u6570\u5B57\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A50 = 5\u4E07\u5186\u3001100 = 10\u4E07\u5186\uFF09", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("br", {}), "\u203B \u4E88\u7B97\u306E\u4E0A\u9650\u306F5,000\u4E07\u5186\uFF0850,000\u5343\u5186\uFF09\u307E\u3067\u3068\u306A\u308A\u307E\u3059"]
-              }), (errors.budget_min || validationErrors.budget_min || errors.budget_max || validationErrors.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                children: ["\u203B \u91D1\u984D\u306F\u5343\u5186\u5358\u4F4D\u3067\u534A\u89D2\u6570\u5B57\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A50 = 5\u4E07\u5186\u3001100 = 10\u4E07\u5186\uFF09", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("br", {}), "\u203B \u4E88\u7B97\u306E\u4E0A\u9650\u306F5,000\u4E07\u5186\uFF0850,000\u5343\u5186\uFF09\u307E\u3067\u3068\u306A\u308A\u307E\u3059"]
+              }), (errors.budget_min || validationErrors.budget_min || errors.budget_max || validationErrors.budget_max) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "p-post-job__error",
                 children: errors.budget_min || validationErrors.budget_min || errors.budget_max || validationErrors.budget_max
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-post-job__form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
-                htmlFor: "category",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
+                htmlFor: "category_id",
                 className: "p-post-job__label",
-                children: ["\u30AB\u30C6\u30B4\u30EA\u30FC", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                children: ["\u30AB\u30C6\u30B4\u30EA\u30FC", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__required",
                   children: "\u5FC5\u9808"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("select", {
-                id: "category",
-                className: "p-post-job__select ".concat(errors.category || validationErrors.category ? "p-post-job__select--error" : ""),
-                value: data.category,
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("select", {
+                id: "category_id",
+                className: "p-post-job__select ".concat(errors.category_id || validationErrors.category_id ? "p-post-job__select--error" : ""),
+                value: (_data$category_id = data.category_id) !== null && _data$category_id !== void 0 ? _data$category_id : "",
                 onChange: function onChange(e) {
-                  setData("category", e.target.value);
+                  setData("category_id", parseInt(e.target.value));
                   // 入力時にエラーをクリア
-                  if (validationErrors.category) {
+                  if (validationErrors.category_id) {
                     setValidationErrors(_objectSpread(_objectSpread({}, validationErrors), {}, {
-                      category: undefined
+                      category_id: undefined
                     }));
                   }
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("option", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("option", {
                   value: "",
                   children: "\u30AB\u30C6\u30B4\u30EA\u30FC\u3092\u9078\u629E"
-                }), _constants_categoryOptions__WEBPACK_IMPORTED_MODULE_6__.CATEGORY_OPTIONS.map(function (category) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("option", {
-                    value: category,
-                    children: category
-                  }, category);
+                }), categories.map(function (category) {
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("option", {
+                    value: category.id,
+                    children: category.name
+                  }, category.id);
                 })]
-              }), (errors.category || validationErrors.category) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+              }), (errors.category_id || validationErrors.category_id) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "p-post-job__error",
-                children: errors.category || validationErrors.category
+                children: errors.category_id || validationErrors.category_id
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-post-job__form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
                 htmlFor: "location",
                 className: "p-post-job__label",
-                children: ["\u4F5C\u696D\u5834\u6240", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                children: ["\u4F5C\u696D\u5834\u6240", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__required",
                   children: "\u5FC5\u9808"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("select", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("select", {
                 id: "location",
                 className: "p-post-job__select",
                 value: data.location,
                 onChange: function onChange(e) {
                   return setData("location", e.target.value);
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("option", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("option", {
                   value: "\u30EA\u30E2\u30FC\u30C8\uFF08\u5728\u5B85\u52E4\u52D9\uFF09",
                   children: "\u30EA\u30E2\u30FC\u30C8\uFF08\u5728\u5B85\u52E4\u52D9\uFF09"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("option", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("option", {
                   value: "\u73FE\u5834\u52E4\u52D9\uFF08\u30AA\u30F3\u30B5\u30A4\u30C8\uFF09",
                   children: "\u73FE\u5834\u52E4\u52D9\uFF08\u30AA\u30F3\u30B5\u30A4\u30C8\uFF09"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("option", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("option", {
                   value: "\u4F75\u7528\u578B\uFF08\u5728\u5B85\uFF0B\u73FE\u5834\uFF09",
                   children: "\u4F75\u7528\u578B\uFF08\u5728\u5B85\uFF0B\u73FE\u5834\uFF09"
                 })]
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
             className: "p-post-job__section",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h2", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
               className: "p-post-job__section-title",
               children: "\u6848\u4EF6\u8A73\u7D30"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-post-job__form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
                 htmlFor: "description",
                 className: "p-post-job__label",
-                children: ["\u6848\u4EF6\u306E\u8AAC\u660E", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                children: ["\u6848\u4EF6\u306E\u8AAC\u660E", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__required",
                   children: "\u5FC5\u9808"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("textarea", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("textarea", {
                 id: "description",
                 className: "p-post-job__textarea ".concat(errors.description || validationErrors.description ? "p-post-job__textarea--error" : ""),
                 placeholder: "\u6848\u4EF6\u306E\u8A73\u7D30\u306A\u8AAC\u660E\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002\u4F5C\u696D\u5185\u5BB9\u3001\u6C42\u3081\u308B\u30B9\u30AD\u30EB\u3001\u6210\u679C\u7269\u3001\u7D0D\u671F\u306A\u3069\u3092\u5177\u4F53\u7684\u306B\u8A18\u8F09\u3059\u308B\u3068\u3001\u5FDC\u52DF\u304C\u96C6\u307E\u308A\u3084\u3059\u304F\u306A\u308A\u307E\u3059",
@@ -3109,54 +3109,54 @@ function EditJob(_ref2) {
                   }
                 },
                 rows: 8
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "p-post-job__description-help",
                 children: "\u203B 3000\u6587\u5B57\u4EE5\u5185\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(DescriptionCount, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(DescriptionCount, {
                 current: data.description.length,
                 max: 3000
-              }), (errors.description || validationErrors.description) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+              }), (errors.description || validationErrors.description) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "p-post-job__error",
                 children: errors.description || validationErrors.description
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-post-job__form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
                 className: "p-post-job__label",
-                children: ["\u5FC5\u8981\u306A\u30B9\u30AD\u30EB", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                children: ["\u5FC5\u8981\u306A\u30B9\u30AD\u30EB", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__optional",
                   children: "\u81EA\u7531\u8FFD\u52A0"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "p-post-job__skills-container",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                   className: "p-post-job__skills-input",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                     className: "p-post-job__skills-input-row",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("select", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("select", {
                       className: "p-post-job__select",
                       value: customSkill,
                       onChange: function onChange(e) {
                         return setCustomSkill(e.target.value);
                       },
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("option", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("option", {
                         value: "",
                         children: "\u30B9\u30AD\u30EB\u3092\u9078\u629E\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0"
-                      }), _constants_skillOptions__WEBPACK_IMPORTED_MODULE_7__.SKILL_OPTIONS.map(function (skill) {
-                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("option", {
+                      }), _constants_skillOptions__WEBPACK_IMPORTED_MODULE_6__.SKILL_OPTIONS.map(function (skill) {
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("option", {
                           value: skill,
                           children: skill
                         }, skill);
                       })]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
                       type: "button",
                       className: "p-post-job__add-button p-post-job__add-button--middle",
                       onClick: addSkill,
                       children: "\u8FFD\u52A0"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
                       type: "text",
                       placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
-                      value: !_constants_skillOptions__WEBPACK_IMPORTED_MODULE_7__.SKILL_OPTIONS.includes(customSkill) ? customSkill : "",
+                      value: !_constants_skillOptions__WEBPACK_IMPORTED_MODULE_6__.SKILL_OPTIONS.includes(customSkill) ? customSkill : "",
                       onChange: function onChange(e) {
                         // 15文字までの入力に制限
                         if (e.target.value.length <= 15) {
@@ -3165,19 +3165,19 @@ function EditJob(_ref2) {
                       },
                       className: "p-post-job__input p-post-job__input--skill",
                       maxLength: 15
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
                       type: "button",
                       className: "p-post-job__add-button p-post-job__add-button--end",
                       onClick: addSkill,
                       children: "\u8FFD\u52A0"
                     })]
                   })
-                }), data.skills.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                }), data.skills.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                   className: "p-post-job__skills-tags",
                   children: data.skills.map(function (skill) {
-                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                       className: "p-post-job__skill-tag",
-                      children: [skill, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+                      children: [skill, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
                         type: "button",
                         className: "p-post-job__skill-remove",
                         onClick: function onClick() {
@@ -3189,44 +3189,44 @@ function EditJob(_ref2) {
                   })
                 })]
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "p-post-job__form-group",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("label", {
                 className: "p-post-job__label",
-                children: ["\u3042\u308C\u3070\u6B53\u8FCE\u3059\u308B\u30B9\u30AD\u30EB", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                children: ["\u3042\u308C\u3070\u6B53\u8FCE\u3059\u308B\u30B9\u30AD\u30EB", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                   className: "p-post-job__optional",
                   children: "\u81EA\u7531\u8FFD\u52A0"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "p-post-job__skills-container",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                   className: "p-post-job__skills-input",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                     className: "p-post-job__skills-input-row",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("select", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("select", {
                       className: "p-post-job__select",
                       value: customPreferredSkill,
                       onChange: function onChange(e) {
                         return setCustomPreferredSkill(e.target.value);
                       },
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("option", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("option", {
                         value: "",
                         children: "\u30B9\u30AD\u30EB\u3092\u9078\u629E\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0"
-                      }), _constants_skillOptions__WEBPACK_IMPORTED_MODULE_7__.SKILL_OPTIONS.map(function (skill) {
-                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("option", {
+                      }), _constants_skillOptions__WEBPACK_IMPORTED_MODULE_6__.SKILL_OPTIONS.map(function (skill) {
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("option", {
                           value: skill,
                           children: skill
                         }, skill);
                       })]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
                       type: "button",
                       className: "p-post-job__add-button p-post-job__add-button--middle",
                       onClick: addPreferredSkill,
                       children: "\u8FFD\u52A0"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
                       type: "text",
                       placeholder: "\u30B9\u30AD\u30EB\u3092\u5165\u529B\u3057\u3066\u8FFD\u52A0\u30DC\u30BF\u30F3\u3067\u8FFD\u52A0",
-                      value: !_constants_skillOptions__WEBPACK_IMPORTED_MODULE_7__.SKILL_OPTIONS.includes(customPreferredSkill) ? customPreferredSkill : "",
+                      value: !_constants_skillOptions__WEBPACK_IMPORTED_MODULE_6__.SKILL_OPTIONS.includes(customPreferredSkill) ? customPreferredSkill : "",
                       onChange: function onChange(e) {
                         // 15文字までの入力に制限
                         if (e.target.value.length <= 15) {
@@ -3235,19 +3235,19 @@ function EditJob(_ref2) {
                       },
                       className: "p-post-job__input p-post-job__input--skill",
                       maxLength: 15
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
                       type: "button",
                       className: "p-post-job__add-button p-post-job__add-button--end",
                       onClick: addPreferredSkill,
                       children: "\u8FFD\u52A0"
                     })]
                   })
-                }), data.preferred_skills.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                }), data.preferred_skills.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                   className: "p-post-job__skills-tags",
                   children: data.preferred_skills.map(function (skill) {
-                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                       className: "p-post-job__skill-tag p-post-job__skill-tag--preferred",
-                      children: [skill, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+                      children: [skill, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
                         type: "button",
                         className: "p-post-job__skill-remove",
                         onClick: function onClick() {
@@ -3260,9 +3260,9 @@ function EditJob(_ref2) {
                 })]
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             className: "p-post-job__action",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
               type: "submit",
               className: "p-post-job__submit",
               disabled: processing,
@@ -3271,29 +3271,29 @@ function EditJob(_ref2) {
           })]
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
       show: showConfirmModal,
       onClose: function onClose() {
         return setShowConfirmModal(false);
       },
       maxWidth: "md",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "p-modal__container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h2", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h2", {
           className: "p-modal__title",
           children: "\u6848\u4EF6\u66F4\u65B0\u306E\u78BA\u8A8D"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
           className: "p-modal__text",
           children: "\u6848\u4EF6\u306E\u5185\u5BB9\u3092\u66F4\u65B0\u3057\u3066\u3082\u3088\u308D\u3057\u3044\u3067\u3059\u304B\uFF1F"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "p-modal__buttons",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
             className: "p-modal__button p-modal__button--cancel",
             onClick: function onClick() {
               return setShowConfirmModal(false);
             },
             children: "\u30AD\u30E3\u30F3\u30BB\u30EB"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
             className: "p-modal__button p-modal__button--success",
             onClick: handleSubmit,
             disabled: submitting,
@@ -3304,20 +3304,6 @@ function EditJob(_ref2) {
     })]
   });
 }
-
-/***/ }),
-
-/***/ "./resources/js/constants/categoryOptions.ts":
-/*!***************************************************!*\
-  !*** ./resources/js/constants/categoryOptions.ts ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   CATEGORY_OPTIONS: () => (/* binding */ CATEGORY_OPTIONS)
-/* harmony export */ });
-var CATEGORY_OPTIONS = ["ウェブ開発", "モバイルアプリ開発", "デザイン", "サーバー/インフラ", "AI/機械学習", "データ分析", "ECサイト", "API開発", "WordPress開発", "エンジニアに相談", "その他"];
 
 /***/ }),
 

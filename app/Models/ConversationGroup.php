@@ -140,13 +140,15 @@ class ConversationGroup extends Model
     public static function getOrCreateForApplication(int $jobListingId, int $jobOwnerId, int $applicantId): self
     {
         // 会話グループを検索
-        $conversationGroup = self::where(function($query) use ($jobOwnerId, $applicantId) {
+        $conversationGroup = self::where(function($query) use ($jobOwnerId, $applicantId, $jobListingId) {
                 $query->where('job_owner_id', $jobOwnerId)
-                      ->where('applicant_id', $applicantId);
+                      ->where('applicant_id', $applicantId)
+                      ->where('job_listing_id', $jobListingId);
             })
-            ->orWhere(function($query) use ($jobOwnerId, $applicantId) {
+            ->orWhere(function($query) use ($jobOwnerId, $applicantId, $jobListingId) {
                 $query->where('job_owner_id', $applicantId)
-                      ->where('applicant_id', $jobOwnerId);
+                      ->where('applicant_id', $jobOwnerId)
+                      ->where('job_listing_id', $jobListingId);
             })
             ->first();
             
@@ -157,10 +159,6 @@ class ConversationGroup extends Model
                 'applicant_id' => $applicantId,
                 'job_listing_id' => $jobListingId,
             ]);
-        } 
-        // 既存の会話グループに案件IDが設定されていない場合は更新
-        else if ($conversationGroup->job_listing_id === null) {
-            $conversationGroup->update(['job_listing_id' => $jobListingId]);
         }
         
         return $conversationGroup;

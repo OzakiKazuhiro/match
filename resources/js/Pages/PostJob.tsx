@@ -109,9 +109,26 @@ export default function PostJob() {
         setSubmitting(true);
 
         try {
+            // 予算値を1000倍して実際の金額に変換
+            const submissionData = { ...data };
+
+            // 単発案件で予算が入力されている場合のみ処理
+            if (data.type === "one_time") {
+                if (data.budget_min) {
+                    submissionData.budget_min = (
+                        parseInt(data.budget_min) * 1000
+                    ).toString();
+                }
+                if (data.budget_max) {
+                    submissionData.budget_max = (
+                        parseInt(data.budget_max) * 1000
+                    ).toString();
+                }
+            }
+
             const response = await axios.post(
                 route("job-listings.store"),
-                data
+                submissionData
             );
             router.visit(response.data.url);
         } catch (error) {

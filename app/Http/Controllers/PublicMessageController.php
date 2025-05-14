@@ -26,12 +26,12 @@ class PublicMessageController extends Controller
             $search = $request->input('search');
             
             // 自分が投稿したパブリックメッセージがある案件IDを取得
-            $jobListingIds = PublicMessage::where('user_id', $user->id);
+            $jobListingIdsQuery = PublicMessage::where('user_id', $user->id);
             
             // 検索条件がある場合
             if ($search) {
                 // 案件タイトルまたはメッセージ内容で検索
-                $jobListingIds->where(function($query) use ($search) {
+                $jobListingIdsQuery->where(function($query) use ($search) {
                     $query->whereHas('jobListing', function($q) use ($search) {
                         $q->where('title', 'like', "%{$search}%");
                     })
@@ -39,11 +39,11 @@ class PublicMessageController extends Controller
                 });
             }
             
-            $jobListingIds = $jobListingIds->pluck('job_listing_id')
+            $jobListingIds = $jobListingIdsQuery->pluck('job_listing_id')
                 ->unique()
                 ->values()
                 ->toArray();
-            
+                
             // 該当する案件を取得して、最新メッセージと一緒にページネーションで返す
             if (count($jobListingIds) > 0) {
                 $query = JobListing::with('user')
@@ -57,6 +57,9 @@ class PublicMessageController extends Controller
                 }
                 
                 $jobListingsPaginated = $query->paginate(20);
+                
+                // デバッグ: ページネーションされた案件を確認
+                // dd('jobListingsPaginated', $jobListingsPaginated);
                 
                 // JOINを使用して最新メッセージと件数を一括取得
                 $jobListingIds = $jobListingsPaginated->pluck('id')->toArray();
@@ -88,7 +91,7 @@ class PublicMessageController extends Controller
                         'users.id as user_id',
                         'users.name as user_name', 
                         'users.email as user_email',
-                        'users.profile_photo_path as user_profile_photo_path'
+                        'users.avatar as user_avatar'
                     )
                     ->mergeBindings($latestMessageDates);
                 
@@ -117,7 +120,7 @@ class PublicMessageController extends Controller
                             'id' => $messageInfo->user_id,
                             'name' => $messageInfo->user_name,
                             'email' => $messageInfo->user_email,
-                            'profile_photo_path' => $messageInfo->user_profile_photo_path
+                            'profile_photo_path' => $messageInfo->user_avatar
                         ];
                     }
                     
