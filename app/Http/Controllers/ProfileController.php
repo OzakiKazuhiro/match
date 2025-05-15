@@ -117,9 +117,9 @@ class ProfileController extends Controller
         
         // ユーザー情報の匿名化（個人情報保護のため）
         $user->name = '退会したユーザー';
-        // SoftDeletesを使用するため、メールアドレス匿名化は不要
-        // $user->original_email = $user->email;
-        // $user->email = 'deleted_' . time() . '_' . substr(md5($user->email), 0, 8) . '@example.com';
+        // メールアドレスを保存してから匿名化したメールアドレスに変更
+        $user->original_email = $user->email;
+        $user->email = 'deleted_' . time() . '_' . substr(md5($user->email), 0, 8) . '@example.com';
         $user->save();
         
         // 論理削除を実行
