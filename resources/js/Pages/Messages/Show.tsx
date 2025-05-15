@@ -66,6 +66,8 @@ export default function Show({
     const [loadingBio, setLoadingBio] = useState<boolean>(false);
     // 自己紹介文
     const [userBio, setUserBio] = useState<string>("");
+    // 画面幅を保持するstate
+    const [windowWidth, setWindowWidth] = useState<number>(0);
 
     // 会話相手を特定（自分以外の参加者）
     const otherParticipant = participants.find(
@@ -75,6 +77,21 @@ export default function Show({
     const { data, setData, errors, reset } = useForm({
         message: "",
     });
+
+    // 画面幅を監視
+    useEffect(() => {
+        // クライアントサイドでのみ実行
+        if (typeof window !== "undefined") {
+            setWindowWidth(window.innerWidth);
+
+            const handleResize = () => {
+                setWindowWidth(window.innerWidth);
+            };
+
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
+        }
+    }, []);
 
     // メッセージを既読にするAPI呼び出し
     const markMessagesAsRead = async () => {
@@ -340,7 +357,15 @@ export default function Show({
                             {conversationGroup.job_listing && (
                                 <span className="p-messages__header-job">
                                     案件：【
-                                    {conversationGroup.job_listing.title}】
+                                    {windowWidth <= 768 &&
+                                    conversationGroup.job_listing.title.length >
+                                        15
+                                        ? `${conversationGroup.job_listing.title.substring(
+                                              0,
+                                              15
+                                          )}...`
+                                        : conversationGroup.job_listing.title}
+                                    】
                                 </span>
                             )}
                         </span>
@@ -477,7 +502,16 @@ export default function Show({
                                 {conversationGroup.job_listing && (
                                     <div className="p-messages__job-title">
                                         案件：【
-                                        {conversationGroup.job_listing.title}】
+                                        {windowWidth <= 768 &&
+                                        conversationGroup.job_listing.title
+                                            .length > 15
+                                            ? `${conversationGroup.job_listing.title.substring(
+                                                  0,
+                                                  15
+                                              )}...`
+                                            : conversationGroup.job_listing
+                                                  .title}
+                                        】
                                     </div>
                                 )}
                             </div>

@@ -747,6 +747,11 @@ function Show(_ref) {
     _useState20 = _slicedToArray(_useState19, 2),
     userBio = _useState20[0],
     setUserBio = _useState20[1];
+  // 画面幅を保持するstate
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState22 = _slicedToArray(_useState21, 2),
+    windowWidth = _useState22[0],
+    setWindowWidth = _useState22[1];
 
   // 会話相手を特定（自分以外の参加者）
   var otherParticipant = participants.find(function (participant) {
@@ -759,6 +764,21 @@ function Show(_ref) {
     setData = _useForm.setData,
     errors = _useForm.errors,
     reset = _useForm.reset;
+
+  // 画面幅を監視
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // クライアントサイドでのみ実行
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+      var handleResize = function handleResize() {
+        setWindowWidth(window.innerWidth);
+      };
+      window.addEventListener("resize", handleResize);
+      return function () {
+        return window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
 
   // メッセージを既読にするAPI呼び出し
   var markMessagesAsRead = /*#__PURE__*/function () {
@@ -1067,7 +1087,7 @@ function Show(_ref) {
             children: otherParticipant !== null && otherParticipant !== void 0 && otherParticipant.name && otherParticipant.name.length > 10 ? "".concat(otherParticipant.name.substring(0, 10), "...") : (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー"
           }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
             className: "p-messages__header-job",
-            children: ["\u6848\u4EF6\uFF1A\u3010", conversationGroup.job_listing.title, "\u3011"]
+            children: ["\u6848\u4EF6\uFF1A\u3010", windowWidth <= 768 && conversationGroup.job_listing.title.length > 15 ? "".concat(conversationGroup.job_listing.title.substring(0, 15), "...") : conversationGroup.job_listing.title, "\u3011"]
           })]
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
@@ -1159,7 +1179,7 @@ function Show(_ref) {
                 children: otherParticipant !== null && otherParticipant !== void 0 && otherParticipant.name && otherParticipant.name.length > 10 ? "".concat(otherParticipant.name.substring(0, 10), "...") : (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー"
               }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                 className: "p-messages__job-title",
-                children: ["\u6848\u4EF6\uFF1A\u3010", conversationGroup.job_listing.title, "\u3011"]
+                children: ["\u6848\u4EF6\uFF1A\u3010", windowWidth <= 768 && conversationGroup.job_listing.title.length > 15 ? "".concat(conversationGroup.job_listing.title.substring(0, 15), "...") : conversationGroup.job_listing.title, "\u3011"]
               })]
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
