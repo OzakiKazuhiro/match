@@ -75,6 +75,10 @@ export default function DirectMessage({
     // 日時のフォーマット
     const dateTime = formatDateTime(message.created_at);
 
+    // 送信者が削除されている場合のフォールバック
+    const senderName = message.sender?.name || "削除されたユーザー";
+    const senderAvatar = message.sender?.avatar;
+
     return (
         <div
             className={`p-messages__message-item ${
@@ -85,22 +89,22 @@ export default function DirectMessage({
         >
             {!isSentByCurrentUser && (
                 <div className="p-messages__message-avatar">
-                    {message.sender.avatar ? (
+                    {senderAvatar ? (
                         <img
-                            src={getAvatarUrl(message.sender.avatar)}
-                            alt={message.sender.name}
+                            src={getAvatarUrl(senderAvatar)}
+                            alt={senderName}
                             onError={(e) => {
                                 // 画像読み込みエラー時に頭文字を表示
                                 const target = e.target as HTMLImageElement;
                                 target.style.display = "none";
                                 if (target.parentElement) {
                                     target.parentElement.innerText =
-                                        getInitials(message.sender.name);
+                                        getInitials(senderName);
                                 }
                             }}
                         />
                     ) : (
-                        <span>{getInitials(message.sender.name)}</span>
+                        <span>{getInitials(senderName)}</span>
                     )}
                 </div>
             )}
@@ -108,7 +112,7 @@ export default function DirectMessage({
             <div className="p-messages__message-content">
                 {!isSentByCurrentUser && (
                     <div className="p-messages__message-sender">
-                        {message.sender.name}
+                        {senderName}
                     </div>
                 )}
 

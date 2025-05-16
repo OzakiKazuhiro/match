@@ -62,35 +62,40 @@ var formatDateTime = function formatDateTime(dateString) {
  * メッセージ一覧画面などで表示されるダイレクトメッセージ
  */
 function DirectMessage(_ref) {
+  var _message$sender, _message$sender2;
   var message = _ref.message,
     currentUserId = _ref.currentUserId;
   var isSentByCurrentUser = message.sender_id === currentUserId;
 
   // 日時のフォーマット
   var dateTime = formatDateTime(message.created_at);
+
+  // 送信者が削除されている場合のフォールバック
+  var senderName = ((_message$sender = message.sender) === null || _message$sender === void 0 ? void 0 : _message$sender.name) || "削除されたユーザー";
+  var senderAvatar = (_message$sender2 = message.sender) === null || _message$sender2 === void 0 ? void 0 : _message$sender2.avatar;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: "p-messages__message-item ".concat(isSentByCurrentUser ? "p-messages__message-item--sent" : "p-messages__message-item--received"),
     children: [!isSentByCurrentUser && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       className: "p-messages__message-avatar",
-      children: message.sender.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
-        src: getAvatarUrl(message.sender.avatar),
-        alt: message.sender.name,
+      children: senderAvatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", {
+        src: getAvatarUrl(senderAvatar),
+        alt: senderName,
         onError: function onError(e) {
           // 画像読み込みエラー時に頭文字を表示
           var target = e.target;
           target.style.display = "none";
           if (target.parentElement) {
-            target.parentElement.innerText = getInitials(message.sender.name);
+            target.parentElement.innerText = getInitials(senderName);
           }
         }
       }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-        children: getInitials(message.sender.name)
+        children: getInitials(senderName)
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
       className: "p-messages__message-content",
       children: [!isSentByCurrentUser && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
         className: "p-messages__message-sender",
-        children: message.sender.name
+        children: senderName
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: "p-messages__message-bubble-container",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
