@@ -17452,48 +17452,42 @@ function Register() {
     _useState4 = _slicedToArray(_useState3, 2),
     nameIsValid = _useState4[0],
     setNameIsValid = _useState4[1];
+
+  // メールアドレスのバリデーション状態
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
     _useState6 = _slicedToArray(_useState5, 2),
-    emailValidationMessage = _useState6[0],
-    setEmailValidationMessage = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
-    _useState8 = _slicedToArray(_useState7, 2),
-    emailIsValid = _useState8[0],
-    setEmailIsValid = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
-    _useState10 = _slicedToArray(_useState9, 2),
-    isValidatingEmail = _useState10[0],
-    setIsValidatingEmail = _useState10[1];
+    emailIsValid = _useState6[0],
+    setEmailIsValid = _useState6[1];
 
   // パスワードのバリデーション状態
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
-    _useState12 = _slicedToArray(_useState11, 2),
-    passwordValidationMessage = _useState12[0],
-    setPasswordValidationMessage = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
-    _useState14 = _slicedToArray(_useState13, 2),
-    passwordIsValid = _useState14[0],
-    setPasswordIsValid = _useState14[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    passwordValidationMessage = _useState8[0],
+    setPasswordValidationMessage = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState10 = _slicedToArray(_useState9, 2),
+    passwordIsValid = _useState10[0],
+    setPasswordIsValid = _useState10[1];
 
   // パスワードの表示/非表示を管理する状態
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
-    _useState16 = _slicedToArray(_useState15, 2),
-    showPassword = _useState16[0],
-    setShowPassword = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
-    _useState18 = _slicedToArray(_useState17, 2),
-    showPasswordConfirmation = _useState18[0],
-    setShowPasswordConfirmation = _useState18[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    showPassword = _useState12[0],
+    setShowPassword = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    showPasswordConfirmation = _useState14[0],
+    setShowPasswordConfirmation = _useState14[1];
 
   // パスワード一致バリデーション状態
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
-    _useState20 = _slicedToArray(_useState19, 2),
-    passwordMatchMessage = _useState20[0],
-    setPasswordMatchMessage = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
-    _useState22 = _slicedToArray(_useState21, 2),
-    passwordsMatch = _useState22[0],
-    setPasswordsMatch = _useState22[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState16 = _slicedToArray(_useState15, 2),
+    passwordMatchMessage = _useState16[0],
+    setPasswordMatchMessage = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+    _useState18 = _slicedToArray(_useState17, 2),
+    passwordsMatch = _useState18[0],
+    setPasswordsMatch = _useState18[1];
 
   // 名前のバリデーションを行う関数
   var validateName = function validateName(name) {
@@ -17521,9 +17515,6 @@ function Register() {
       debouncedValidateName.cancel();
     };
   }, [data.name]);
-
-  // メールアドレスの重複チェックを行う関数・debounce・useEffectを削除
-  // メールアドレスの形式チェックや必須チェックのみ残す
 
   // パスワードのバリデーションを行う関数
   var validatePassword = function validatePassword(password) {

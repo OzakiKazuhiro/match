@@ -1046,7 +1046,7 @@ function JobCard(_ref) {
         className: "p-job-listings__card-footer-left",
         children: [job.category && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
           className: "p-job-listings__card-category",
-          children: job.category
+          children: job.category.name
         }), (auth === null || auth === void 0 ? void 0 : auth.user) && (auth === null || auth === void 0 ? void 0 : auth.user.email_verified_at) && isFavorited && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
           className: "p-job-listings__card-favorite-icon",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("svg", {

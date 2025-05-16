@@ -9,7 +9,13 @@ export interface JobType {
     type: string;
     budget_min?: number | null;
     budget_max?: number | null;
-    category?: string | null;
+    category?: {
+        id: number;
+        name: string;
+        slug: string;
+        description: string;
+        icon: string;
+    } | null;
     created_at: string;
     updated_at: string;
     view_count?: number | null;
@@ -175,7 +181,7 @@ export default function JobCard({
                 <div className="p-job-listings__card-footer-left">
                     {job.category && (
                         <div className="p-job-listings__card-category">
-                            {job.category}
+                            {job.category.name}
                         </div>
                     )}
                     {auth?.user &&

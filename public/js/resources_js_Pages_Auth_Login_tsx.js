@@ -398,7 +398,7 @@ function Login(_ref) {
           isFocused: true,
           onChange: function onChange(e) {
             setData("email", e.target.value);
-            setEmailError(null); // 入力時にエラーをクリア
+            setEmailError(null);
           }
         }), emailError && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "p-auth__error",
@@ -423,7 +423,7 @@ function Login(_ref) {
             autoComplete: "current-password",
             onChange: function onChange(e) {
               setData("password", e.target.value);
-              setPasswordError(null); // 入力時にエラーをクリア
+              setPasswordError(null);
             },
             maxLength: 50
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
