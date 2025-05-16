@@ -5,9 +5,17 @@ import InputError from "@/Components/InputError";
 import axios from "axios";
 import { route } from "ziggy-js";
 import Modal from "@/Components/Modal";
-import { CATEGORY_OPTIONS } from "@/constants/categoryOptions";
 import { SKILL_OPTIONS } from "@/constants/skillOptions";
 import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
+
+// カテゴリーの型定義
+interface Category {
+    id: number;
+    name: string;
+    slug: string;
+    description: string;
+    icon: string;
+}
 
 // 文字数表示コンポーネント
 function DescriptionCount({ current, max }: { current: number; max: number }) {
@@ -36,6 +44,7 @@ export default function PostJob() {
     const [displayBudgetMax, setDisplayBudgetMax] = useState<string>("");
     const [submitting, setSubmitting] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [categories, setCategories] = useState<Category[]>([]);
     // バリデーションエラーの状態
     const [validationErrors, setValidationErrors] = useState<{
         title?: string;
@@ -45,13 +54,27 @@ export default function PostJob() {
         description?: string;
     }>({});
 
+    // カテゴリー一覧を取得
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get(route("categories.index"));
+                setCategories(response.data);
+            } catch (error) {
+                console.error("カテゴリーの取得に失敗しました:", error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
     const { data, setData, processing, errors } = useForm({
         title: "",
         type: "one_time" as "one_time" | "revenue_share",
         description: "",
         budget_min: "",
         budget_max: "",
-        category: "",
+        category_id: "",
         skills: [] as string[],
         preferred_skills: [] as string[],
         location: "リモート（在宅勤務）",
@@ -195,7 +218,7 @@ export default function PostJob() {
         }
 
         // カテゴリーのバリデーション
-        if (!data.category) {
+        if (!data.category_id) {
             newErrors.category = VALIDATION_MESSAGES.required.category;
         }
 
@@ -539,14 +562,14 @@ export default function PostJob() {
                                 <select
                                     id="category"
                                     className={`p-post-job__select ${
-                                        errors.category ||
+                                        errors.category_id ||
                                         validationErrors.category
                                             ? "p-post-job__select--error"
                                             : ""
                                     }`}
-                                    value={data.category}
+                                    value={data.category_id}
                                     onChange={(e) => {
-                                        setData("category", e.target.value);
+                                        setData("category_id", e.target.value);
                                         // 入力時にエラーをクリア
                                         if (validationErrors.category) {
                                             setValidationErrors({
@@ -557,16 +580,19 @@ export default function PostJob() {
                                     }}
                                 >
                                     <option value="">カテゴリーを選択</option>
-                                    {CATEGORY_OPTIONS.map((category) => (
-                                        <option key={category} value={category}>
-                                            {category}
+                                    {categories.map((category) => (
+                                        <option
+                                            key={category.id}
+                                            value={category.id}
+                                        >
+                                            {category.name}
                                         </option>
                                     ))}
                                 </select>
-                                {(errors.category ||
+                                {(errors.category_id ||
                                     validationErrors.category) && (
                                     <div className="p-post-job__error">
-                                        {errors.category ||
+                                        {errors.category_id ||
                                             validationErrors.category}
                                     </div>
                                 )}

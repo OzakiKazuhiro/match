@@ -8,6 +8,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PublicMessageController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -176,3 +177,6 @@ Route::middleware(['auth', 'verified'])->prefix('favorites')->name('favorites.')
     // お気に入り切り替え（追加/削除）
     Route::post('/{jobListing}', [FavoriteController::class, 'toggle'])->name('toggle');
 });
+
+// カテゴリー一覧を取得するルート
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
