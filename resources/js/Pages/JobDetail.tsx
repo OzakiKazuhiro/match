@@ -46,7 +46,17 @@ interface JobListingData {
     description: string;
     budget_min: number | null;
     budget_max: number | null;
-    category: string | null;
+    category: {
+        id: number;
+        name: string;
+        slug: string;
+        description: string;
+        icon: string;
+        display_order: number;
+        is_active: boolean;
+        created_at: string;
+        updated_at: string;
+    } | null;
     location: string;
     skills: string[] | null;
     preferred_skills: string[] | null;
@@ -379,7 +389,7 @@ export default function JobDetail({
                                         </span>
                                         {jobListing.category && (
                                             <span className="p-job-detail__category">
-                                                {jobListing.category}
+                                                {jobListing.category.name}
                                             </span>
                                         )}
                                         <span className="p-job-detail__date">

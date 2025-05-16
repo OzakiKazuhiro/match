@@ -3273,7 +3273,7 @@ function JobDetail(_ref) {
                     children: jobListing.type === "one_time" ? "単発案件" : "レベニューシェア"
                   }), jobListing.category && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                     className: "p-job-detail__category",
-                    children: jobListing.category
+                    children: jobListing.category.name
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
                     className: "p-job-detail__date",
                     children: ["\u6295\u7A3F\u65E5\uFF1A", " ", formatDate(jobListing.created_at)]
