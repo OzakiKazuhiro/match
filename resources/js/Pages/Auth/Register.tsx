@@ -21,11 +21,8 @@ export default function Register() {
     >(null);
     const [nameIsValid, setNameIsValid] = useState<boolean | null>(null);
 
-    const [emailValidationMessage, setEmailValidationMessage] = useState<
-        string | null
-    >(null);
+    // メールアドレスのバリデーション状態
     const [emailIsValid, setEmailIsValid] = useState<boolean | null>(null);
-    const [isValidatingEmail, setIsValidatingEmail] = useState(false);
 
     // パスワードのバリデーション状態
     const [passwordValidationMessage, setPasswordValidationMessage] = useState<
@@ -75,9 +72,6 @@ export default function Register() {
             debouncedValidateName.cancel();
         };
     }, [data.name]);
-
-    // メールアドレスの重複チェックを行う関数・debounce・useEffectを削除
-    // メールアドレスの形式チェックや必須チェックのみ残す
 
     // パスワードのバリデーションを行う関数
     const validatePassword = (password: string) => {
@@ -242,10 +236,6 @@ export default function Register() {
                         autoComplete="username"
                         onChange={(e) => setData("email", e.target.value)}
                     />
-
-                    {/* メールアドレスバリデーションメッセージの表示を削除 */}
-                    {/* <div className="p-auth__error">{emailValidationMessage}</div> を削除 */}
-
                     <InputError
                         message={errors.email}
                         className="p-auth__error"

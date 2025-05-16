@@ -49,12 +49,8 @@ interface PaginationLink {
     active: boolean;
 }
 
-interface Pagination {
-    current_page: number;
-    last_page: number;
-    per_page: number;
-    total: number;
-    links: PaginationLink[];
+interface Filters {
+    search?: string;
 }
 
 // 簡単な時間フォーマット関数
@@ -110,10 +106,6 @@ function getInitials(name: string): string {
         .join("")
         .toUpperCase()
         .substring(0, 2);
-}
-
-interface Filters {
-    search?: string;
 }
 
 export default function Index({

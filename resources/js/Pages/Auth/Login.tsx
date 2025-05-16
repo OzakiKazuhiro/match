@@ -3,7 +3,7 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useState, useEffect } from "react";
 import { VALIDATION_MESSAGES } from "@/constants/validationMessages";
 
@@ -144,7 +144,7 @@ export default function Login({
                         isFocused={true}
                         onChange={(e) => {
                             setData("email", e.target.value);
-                            setEmailError(null); // 入力時にエラーをクリア
+                            setEmailError(null);
                         }}
                     />
 
@@ -173,7 +173,7 @@ export default function Login({
                             autoComplete="current-password"
                             onChange={(e) => {
                                 setData("password", e.target.value);
-                                setPasswordError(null); // 入力時にエラーをクリア
+                                setPasswordError(null);
                             }}
                             maxLength={50}
                         />
