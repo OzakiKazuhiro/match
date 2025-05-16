@@ -2212,6 +2212,7 @@ var formatMessageDate = function formatMessageDate(dateString) {
  * 案件詳細ページなどで表示される公開メッセージ
  */
 var PublicMessage = function PublicMessage(_ref) {
+  var _message$user, _message$user2, _message$user4;
   var message = _ref.message,
     currentUserId = _ref.currentUserId;
   // 表示状態を管理するstate
@@ -2302,24 +2303,25 @@ var PublicMessage = function PublicMessage(_ref) {
         className: "p-public-message__user",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "p-public-message__avatar",
-          children: message.user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+          children: (_message$user = message.user) !== null && _message$user !== void 0 && _message$user.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
             src: getAvatarUrl(message.user.avatar),
-            alt: "".concat(message.user.name, "\u306E\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u753B\u50CF"),
+            alt: "".concat(((_message$user2 = message.user) === null || _message$user2 === void 0 ? void 0 : _message$user2.name) || "削除されたユーザー", "\u306E\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u753B\u50CF"),
             className: "p-public-message__avatar-image",
             onError: function onError(e) {
               if (e.currentTarget.parentElement) {
-                e.currentTarget.parentElement.innerHTML = message.user.name.charAt(0).toUpperCase();
+                var _message$user3;
+                e.currentTarget.parentElement.innerHTML = (((_message$user3 = message.user) === null || _message$user3 === void 0 ? void 0 : _message$user3.name) || "削").charAt(0).toUpperCase();
               }
             }
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: "p-public-message__avatar-placeholder",
-            children: message.user.name.charAt(0).toUpperCase()
+            children: (((_message$user4 = message.user) === null || _message$user4 === void 0 ? void 0 : _message$user4.name) || "削").charAt(0).toUpperCase()
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "p-public-message__user-info",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: "p-public-message__name",
-            children: message.user.name.length > 10 ? "".concat(message.user.name.substring(0, 10), "...") : message.user.name
+            children: message.user ? message.user.name.length > 10 ? "".concat(message.user.name.substring(0, 10), "...") : message.user.name : "削除されたユーザー"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "p-public-message__date",
             children: [formatDate(message.created_at), message.created_at !== message.updated_at && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {

@@ -1087,7 +1087,7 @@ function Show(_ref) {
             children: otherParticipant !== null && otherParticipant !== void 0 && otherParticipant.name && otherParticipant.name.length > 10 ? "".concat(otherParticipant.name.substring(0, 10), "...") : (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー"
           }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
             className: "p-messages__header-job",
-            children: ["\u6848\u4EF6\uFF1A\u3010", windowWidth <= 768 && conversationGroup.job_listing.title.length > 15 ? "".concat(conversationGroup.job_listing.title.substring(0, 15), "...") : conversationGroup.job_listing.title, "\u3011"]
+            children: ["\u6848\u4EF6\u3010", windowWidth <= 768 && conversationGroup.job_listing.title.length > 15 ? "".concat(conversationGroup.job_listing.title.substring(0, 15), "...") : conversationGroup.job_listing.title, "\u3011"]
           })]
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
@@ -1179,7 +1179,7 @@ function Show(_ref) {
                 children: otherParticipant !== null && otherParticipant !== void 0 && otherParticipant.name && otherParticipant.name.length > 10 ? "".concat(otherParticipant.name.substring(0, 10), "...") : (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "不明なユーザー"
               }), conversationGroup.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                 className: "p-messages__job-title",
-                children: ["\u6848\u4EF6\uFF1A\u3010", windowWidth <= 768 && conversationGroup.job_listing.title.length > 15 ? "".concat(conversationGroup.job_listing.title.substring(0, 15), "...") : conversationGroup.job_listing.title, "\u3011"]
+                children: ["\u6848\u4EF6\u3010", windowWidth <= 768 && conversationGroup.job_listing.title.length > 15 ? "".concat(conversationGroup.job_listing.title.substring(0, 15), "...") : conversationGroup.job_listing.title, "\u3011"]
               })]
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {

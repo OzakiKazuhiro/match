@@ -139,15 +139,17 @@ const PublicMessage = ({ message, currentUserId }: PublicMessageProps) => {
             <div className="p-public-message__header">
                 <div className="p-public-message__user">
                     <div className="p-public-message__avatar">
-                        {message.user.avatar ? (
+                        {message.user?.avatar ? (
                             <img
                                 src={getAvatarUrl(message.user.avatar)}
-                                alt={`${message.user.name}のプロフィール画像`}
+                                alt={`${
+                                    message.user?.name || "削除されたユーザー"
+                                }のプロフィール画像`}
                                 className="p-public-message__avatar-image"
                                 onError={(e) => {
                                     if (e.currentTarget.parentElement) {
                                         e.currentTarget.parentElement.innerHTML =
-                                            message.user.name
+                                            (message.user?.name || "削")
                                                 .charAt(0)
                                                 .toUpperCase();
                                     }
@@ -155,15 +157,19 @@ const PublicMessage = ({ message, currentUserId }: PublicMessageProps) => {
                             />
                         ) : (
                             <div className="p-public-message__avatar-placeholder">
-                                {message.user.name.charAt(0).toUpperCase()}
+                                {(message.user?.name || "削")
+                                    .charAt(0)
+                                    .toUpperCase()}
                             </div>
                         )}
                     </div>
                     <div className="p-public-message__user-info">
                         <div className="p-public-message__name">
-                            {message.user.name.length > 10
-                                ? `${message.user.name.substring(0, 10)}...`
-                                : message.user.name}
+                            {message.user
+                                ? message.user.name.length > 10
+                                    ? `${message.user.name.substring(0, 10)}...`
+                                    : message.user.name
+                                : "削除されたユーザー"}
                         </div>
                         <div className="p-public-message__date">
                             {formatDate(message.created_at)}

@@ -203,21 +203,24 @@ export default function Index({
                                         <div className="p-messages__header">
                                             <div className="p-messages__person-info">
                                                 <div className="p-messages__avatar">
-                                                    {otherParticipant.avatar ? (
+                                                    {otherParticipant?.avatar ? (
                                                         <img
                                                             src={getAvatarUrl(
                                                                 otherParticipant.avatar
                                                             )}
                                                             alt={
-                                                                otherParticipant.name
+                                                                otherParticipant?.name ||
+                                                                "削除されたユーザー"
                                                             }
                                                             className="p-messages__avatar-image"
                                                         />
                                                     ) : (
                                                         <div className="p-messages__avatar-placeholder">
-                                                            {getInitials(
-                                                                otherParticipant.name
-                                                            )}
+                                                            {otherParticipant
+                                                                ? getInitials(
+                                                                      otherParticipant.name
+                                                                  )
+                                                                : "削"}
                                                         </div>
                                                     )}
                                                     {group.unread_count > 0 && (
@@ -228,17 +231,20 @@ export default function Index({
                                                 </div>
                                                 <div className="p-messages__person-details">
                                                     <div className="p-messages__person-name">
-                                                        {otherParticipant.name
-                                                            .length > 10
-                                                            ? `${otherParticipant.name.substring(
-                                                                  0,
-                                                                  10
-                                                              )}...`
-                                                            : otherParticipant.name}
+                                                        {otherParticipant
+                                                            ? otherParticipant
+                                                                  .name.length >
+                                                              10
+                                                                ? `${otherParticipant.name.substring(
+                                                                      0,
+                                                                      10
+                                                                  )}...`
+                                                                : otherParticipant.name
+                                                            : "削除されたユーザー"}
                                                     </div>
                                                     {group.job_listing && (
                                                         <div className="p-messages__person-job">
-                                                            案件：【
+                                                            案件【
                                                             {
                                                                 group
                                                                     .job_listing

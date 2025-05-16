@@ -1715,13 +1715,13 @@ function Index(_ref) {
                   className: "p-messages__person-info",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                     className: "p-messages__avatar",
-                    children: [otherParticipant.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                    children: [otherParticipant !== null && otherParticipant !== void 0 && otherParticipant.avatar ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
                       src: getAvatarUrl(otherParticipant.avatar),
-                      alt: otherParticipant.name,
+                      alt: (otherParticipant === null || otherParticipant === void 0 ? void 0 : otherParticipant.name) || "削除されたユーザー",
                       className: "p-messages__avatar-image"
                     }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                       className: "p-messages__avatar-placeholder",
-                      children: getInitials(otherParticipant.name)
+                      children: otherParticipant ? getInitials(otherParticipant.name) : "削"
                     }), group.unread_count > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
                       className: "p-messages__unread-badge",
                       children: group.unread_count
@@ -1730,10 +1730,10 @@ function Index(_ref) {
                     className: "p-messages__person-details",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                       className: "p-messages__person-name",
-                      children: otherParticipant.name.length > 10 ? "".concat(otherParticipant.name.substring(0, 10), "...") : otherParticipant.name
+                      children: otherParticipant ? otherParticipant.name.length > 10 ? "".concat(otherParticipant.name.substring(0, 10), "...") : otherParticipant.name : "削除されたユーザー"
                     }), group.job_listing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                       className: "p-messages__person-job",
-                      children: ["\u6848\u4EF6\uFF1A\u3010", group.job_listing.title, "\u3011"]
+                      children: ["\u6848\u4EF6\u3010", group.job_listing.title, "\u3011"]
                     })]
                   })]
                 })

@@ -356,7 +356,7 @@ export default function Show({
                             </span>
                             {conversationGroup.job_listing && (
                                 <span className="p-messages__header-job">
-                                    案件：【
+                                    案件【
                                     {windowWidth <= 768 &&
                                     conversationGroup.job_listing.title.length >
                                         15
@@ -501,7 +501,7 @@ export default function Show({
                                 </h3>
                                 {conversationGroup.job_listing && (
                                     <div className="p-messages__job-title">
-                                        案件：【
+                                        案件【
                                         {windowWidth <= 768 &&
                                         conversationGroup.job_listing.title
                                             .length > 15
