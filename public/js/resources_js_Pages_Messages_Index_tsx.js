@@ -1653,14 +1653,16 @@ function Index(_ref) {
     setSearchQuery = _useState2[1];
 
   // 検索処理の実装
-  var handleSearch = function handleSearch() {
+  var handleSearch = function handleSearch(e) {
+    e.preventDefault();
     var url = new URL(window.location.href);
     url.searchParams.set("search", searchQuery);
     url.searchParams["delete"]("page");
     _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get(url.pathname + url.search, {}, {
       preserveScroll: true,
       preserveState: true,
-      replace: false
+      replace: true,
+      only: ["conversationGroups", "filters"]
     });
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {

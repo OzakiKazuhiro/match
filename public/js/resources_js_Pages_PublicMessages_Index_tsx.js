@@ -1610,12 +1610,16 @@ function Index(_ref) {
     setSearchQuery = _useState2[1];
 
   // 検索処理の実装
-  var handleSearch = function handleSearch() {
+  var handleSearch = function handleSearch(e) {
+    e.preventDefault();
     var url = new URL(window.location.href);
     url.searchParams.set("search", searchQuery);
     url.searchParams["delete"]("page");
-    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.visit(url.pathname + url.search, {
-      method: "get"
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get(url.pathname + url.search, {}, {
+      preserveScroll: true,
+      preserveState: true,
+      replace: true,
+      only: ["jobListingsWithMessages", "pagination", "filters"]
     });
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_Layouts_AuthenticatedLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {

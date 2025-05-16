@@ -128,7 +128,8 @@ export default function Index({
     const [searchQuery, setSearchQuery] = useState(filters.search || "");
 
     // 検索処理の実装
-    const handleSearch = () => {
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
         const url = new URL(window.location.href);
         url.searchParams.set("search", searchQuery);
         url.searchParams.delete("page");
@@ -139,7 +140,8 @@ export default function Index({
             {
                 preserveScroll: true,
                 preserveState: true,
-                replace: false,
+                replace: true,
+                only: ["conversationGroups", "filters"],
             }
         );
     };
