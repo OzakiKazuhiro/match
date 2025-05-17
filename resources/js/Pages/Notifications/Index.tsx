@@ -156,15 +156,22 @@ export default function NotificationsIndex({
                                                         {details.actionText}
                                                     </a>
                                                     {!notification.read_at && (
-                                                        <a
-                                                            href={route(
-                                                                "notifications.mark-as-read",
-                                                                notification.id
-                                                            )}
+                                                        <button
+                                                            onClick={() =>
+                                                                patch(
+                                                                    route(
+                                                                        "notifications.mark-as-read",
+                                                                        notification.id
+                                                                    )
+                                                                )
+                                                            }
+                                                            disabled={
+                                                                processing
+                                                            }
                                                             className="p-notifications__item-mark-read"
                                                         >
                                                             既読にする
-                                                        </a>
+                                                        </button>
                                                     )}
                                                 </div>
                                             </div>

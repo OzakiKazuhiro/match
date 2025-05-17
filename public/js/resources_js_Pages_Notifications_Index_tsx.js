@@ -655,8 +655,11 @@ function NotificationsIndex(_ref) {
                       href: details.url,
                       className: "p-notifications__item-action",
                       children: details.actionText
-                    }), !notification.read_at && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("a", {
-                      href: route("notifications.mark-as-read", notification.id),
+                    }), !notification.read_at && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                      onClick: function onClick() {
+                        return patch(route("notifications.mark-as-read", notification.id));
+                      },
+                      disabled: processing,
                       className: "p-notifications__item-mark-read",
                       children: "\u65E2\u8AAD\u306B\u3059\u308B"
                     })]
