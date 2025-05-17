@@ -129,6 +129,12 @@ export default function PostJob() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // フォームのバリデーションを実行
+        if (!validateForm()) {
+            return; // バリデーションエラーがある場合は送信を中止
+        }
+
         setSubmitting(true);
 
         try {
@@ -198,13 +204,14 @@ export default function PostJob() {
             const minBudget = data.budget_min ? parseInt(data.budget_min) : 0;
             const maxBudget = data.budget_max ? parseInt(data.budget_max) : 0;
 
-            if (!data.budget_min && !data.budget_max) {
-                newErrors.budget_min = VALIDATION_MESSAGES.required.budget;
-            } else if (
-                minBudget > 0 &&
-                maxBudget > 0 &&
-                minBudget > maxBudget
-            ) {
+            if (!data.budget_min) {
+                newErrors.budget_min = VALIDATION_MESSAGES.required.budget_min;
+            }
+            if (!data.budget_max) {
+                newErrors.budget_max = VALIDATION_MESSAGES.required.budget_max;
+            }
+
+            if (minBudget > 0 && maxBudget > 0 && minBudget > maxBudget) {
                 newErrors.budget_max = VALIDATION_MESSAGES.invalid.budget_max;
             }
 

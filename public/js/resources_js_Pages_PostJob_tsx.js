@@ -2715,8 +2715,16 @@ function PostJob() {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             e.preventDefault();
+
+            // フォームのバリデーションを実行
+            if (validateForm()) {
+              _context2.next = 3;
+              break;
+            }
+            return _context2.abrupt("return");
+          case 3:
             setSubmitting(true);
-            _context2.prev = 2;
+            _context2.prev = 4;
             // 予算値を1000倍して実際の金額に変換
             submissionData = _objectSpread({}, data); // 単発案件で予算が入力されている場合のみ処理
             if (data.type === "one_time") {
@@ -2727,27 +2735,27 @@ function PostJob() {
                 submissionData.budget_max = (parseInt(data.budget_max) * 1000).toString();
               }
             }
-            _context2.next = 7;
+            _context2.next = 9;
             return axios__WEBPACK_IMPORTED_MODULE_9__["default"].post((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.store"), submissionData);
-          case 7:
+          case 9:
             response = _context2.sent;
             _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.visit(response.data.url);
-            _context2.next = 15;
+            _context2.next = 17;
             break;
-          case 11:
-            _context2.prev = 11;
-            _context2.t0 = _context2["catch"](2);
+          case 13:
+            _context2.prev = 13;
+            _context2.t0 = _context2["catch"](4);
             console.error("Error submitting job:", _context2.t0);
             _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.visit((0,ziggy_js__WEBPACK_IMPORTED_MODULE_4__.route)("job-listings.index"));
-          case 15:
-            _context2.prev = 15;
+          case 17:
+            _context2.prev = 17;
             setSubmitting(false);
-            return _context2.finish(15);
-          case 18:
+            return _context2.finish(17);
+          case 20:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[2, 11, 15, 18]]);
+      }, _callee2, null, [[4, 13, 17, 20]]);
     }));
     return function handleSubmit(_x) {
       return _ref3.apply(this, arguments);
@@ -2785,9 +2793,13 @@ function PostJob() {
     if (data.type === "one_time") {
       var minBudget = data.budget_min ? parseInt(data.budget_min) : 0;
       var maxBudget = data.budget_max ? parseInt(data.budget_max) : 0;
-      if (!data.budget_min && !data.budget_max) {
-        newErrors.budget_min = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.budget;
-      } else if (minBudget > 0 && maxBudget > 0 && minBudget > maxBudget) {
+      if (!data.budget_min) {
+        newErrors.budget_min = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.budget_min;
+      }
+      if (!data.budget_max) {
+        newErrors.budget_max = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.required.budget_max;
+      }
+      if (minBudget > 0 && maxBudget > 0 && minBudget > maxBudget) {
         newErrors.budget_max = _constants_validationMessages__WEBPACK_IMPORTED_MODULE_7__.VALIDATION_MESSAGES.invalid.budget_max;
       }
 
@@ -3444,7 +3456,9 @@ var VALIDATION_MESSAGES = {
     title: "タイトルは必須です",
     description: "案件の説明は必須です",
     category: "カテゴリーを選択してください",
-    budget: "最小・最大予算を設定してください"
+    budget: "最小・最大予算を設定してください",
+    budget_min: "最小予算を設定してください",
+    budget_max: "最大予算を設定してください"
   },
   invalid: {
     email: "有効なメールアドレスを入力してください",

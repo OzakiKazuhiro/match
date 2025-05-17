@@ -181,7 +181,10 @@ export default function JobCard({
                 <div className="p-job-listings__card-footer-left">
                     {job.category && (
                         <div className="p-job-listings__card-category">
-                            {job.category.name}
+                            {typeof job.category === "object" &&
+                            job.category !== null
+                                ? job.category.name
+                                : ""}
                         </div>
                     )}
                     {auth?.user &&

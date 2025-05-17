@@ -20082,7 +20082,9 @@ var VALIDATION_MESSAGES = {
     title: "タイトルは必須です",
     description: "案件の説明は必須です",
     category: "カテゴリーを選択してください",
-    budget: "最小・最大予算を設定してください"
+    budget: "最小・最大予算を設定してください",
+    budget_min: "最小予算を設定してください",
+    budget_max: "最大予算を設定してください"
   },
   invalid: {
     email: "有効なメールアドレスを入力してください",
