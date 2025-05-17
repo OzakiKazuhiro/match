@@ -276,18 +276,18 @@ export default function JobListings({
      */
     const handleSearch = () => {
         const url = new URL(window.location.href);
-        url.searchParams.set("search", searchQuery);
+        if (searchQuery.trim()) {
+            url.searchParams.set("search", searchQuery.trim());
+        } else {
+            url.searchParams.delete("search");
+        }
         url.searchParams.delete("page");
 
-        router.get(
-            url.pathname + url.search,
-            {},
-            {
-                preserveScroll: true,
-                preserveState: true,
-                replace: false,
-            }
-        );
+        router.visit(url.pathname + url.search, {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        });
     };
 
     /**
@@ -396,7 +396,10 @@ export default function JobListings({
                         <div className="p-job-listings__search-box">
                             <form
                                 className="p-job-listings__search-form"
-                                onSubmit={handleSearch}
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    handleSearch();
+                                }}
                             >
                                 <input
                                     type="text"

@@ -1851,12 +1851,16 @@ function JobListings(_ref) {
    */
   var handleSearch = function handleSearch() {
     var url = new URL(window.location.href);
-    url.searchParams.set("search", searchQuery);
+    if (searchQuery.trim()) {
+      url.searchParams.set("search", searchQuery.trim());
+    } else {
+      url.searchParams["delete"]("search");
+    }
     url.searchParams["delete"]("page");
-    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.get(url.pathname + url.search, {}, {
+    _inertiajs_react__WEBPACK_IMPORTED_MODULE_1__.router.visit(url.pathname + url.search, {
       preserveScroll: true,
       preserveState: true,
-      replace: false
+      replace: true
     });
   };
 
@@ -1955,7 +1959,10 @@ function JobListings(_ref) {
             className: "p-job-listings__search-box",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
               className: "p-job-listings__search-form",
-              onSubmit: handleSearch,
+              onSubmit: function onSubmit(e) {
+                e.preventDefault();
+                handleSearch();
+              },
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                 type: "text",
                 className: "p-job-listings__search-input",
