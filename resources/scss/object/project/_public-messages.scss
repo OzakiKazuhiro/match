@@ -159,6 +159,16 @@
         margin-right: 12px;
         transition: color 0.2s;
 
+        @media (max-width: 768px) {
+            font-size: 1rem;
+            margin-right: 8px;
+            max-width: 70%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: inline-block;
+        }
+
         &:hover {
             color: darken(#0081cc, 10%);
             text-decoration: underline;
@@ -170,6 +180,12 @@
         padding: 4px 8px;
         border-radius: 4px;
         font-weight: 600;
+        white-space: nowrap;
+
+        @media (max-width: 768px) {
+            font-size: 10px;
+            padding: 3px 6px;
+        }
 
         &--onetime {
             background-color: #e6f4fa;

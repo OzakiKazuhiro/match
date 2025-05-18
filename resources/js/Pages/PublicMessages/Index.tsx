@@ -144,8 +144,8 @@ export default function Index({
                                         >
                                             {item.job_listing.type ===
                                             "one_time"
-                                                ? "単発案件"
-                                                : "レベニューシェア"}
+                                                ? "単発"
+                                                : "レベニュー"}
                                         </span>
                                     </div>
                                     <div className="p-public-messages__message">

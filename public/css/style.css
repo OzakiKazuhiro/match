@@ -6513,6 +6513,17 @@ textarea {
   margin-right: 12px;
   transition: color 0.2s;
 }
+@media (max-width: 768px) {
+  .p-public-messages__job-title {
+    font-size: 1rem;
+    margin-right: 8px;
+    max-width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+  }
+}
 .p-public-messages__job-title:hover {
   color: rgb(0, 96.75, 153);
   text-decoration: underline;
@@ -6522,6 +6533,13 @@ textarea {
   padding: 4px 8px;
   border-radius: 4px;
   font-weight: 600;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .p-public-messages__type {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
 }
 .p-public-messages__type--onetime {
   background-color: #e6f4fa;

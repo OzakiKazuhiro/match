@@ -1671,7 +1671,7 @@ function Index(_ref) {
                   children: item.job_listing.title
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
                   className: "p-public-messages__type p-public-messages__type--".concat(item.job_listing.type === "one_time" ? "onetime" : "revenue"),
-                  children: item.job_listing.type === "one_time" ? "単発案件" : "レベニューシェア"
+                  children: item.job_listing.type === "one_time" ? "単発" : "レベニュー"
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                 className: "p-public-messages__message",
