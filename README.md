@@ -1,91 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
--   [Simple, fast routing engine](https://laravel.com/docs/routing).
--   [Powerful dependency injection container](https://laravel.com/docs/container).
--   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
--   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
--   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
--   [Robust background job processing](https://laravel.com/docs/queues).
--   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
--   **[Vehikl](https://vehikl.com/)**
--   **[Tighten Co.](https://tighten.co)**
--   **[WebReinvent](https://webreinvent.com/)**
--   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
--   **[64 Robots](https://64robots.com)**
--   **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
--   **[Cyber-Duck](https://cyber-duck.co.uk)**
--   **[DevSquad](https://devsquad.com/hire-laravel-developers)**
--   **[Jump24](https://jump24.co.uk)**
--   **[Redberry](https://redberry.international/laravel/)**
--   **[Active Logic](https://activelogic.com)**
--   **[byte5](https://byte5.de)**
--   **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
 # match - エンジニア向け案件マッチングサービス
 
-「match」は、エンジニア向けの単発案件やサービス立ち上げ案を投稿・応募できるマッチングサービスです。
+## 📋 プロジェクト概要
 
-## 環境
+**match**は、エンジニア向けの単発案件やサービス立ち上げ案を投稿・応募できるマッチングサービスです。現在のランサーズなど既存サービスはオプションや入力項目が多すぎて分かりにくいため、簡単に案件を投稿し、簡単に応募・やり取りができるようにすることを目指しています。
 
--   Laravel 11
--   React + TypeScript
--   Inertia.js
--   SCSS (FLOCSS 設計)
+### 🎯 主な特徴
 
-## 機能
+-   **シンプルで直感的な UI/UX**: 主婦でも投稿できるくらいの手軽さ
+-   **エンジニア案件マッチング版のメルカリ**: 簡単な案件投稿・応募システム
+-   **リアルタイムメッセージング**: パブリックメッセージとダイレクトメッセージ
+-   **多様な案件タイプ**: 単発案件とレベニューシェア案件に対応
+-   **スマートなマッチング**: スキルとカテゴリーに基づく案件検索
 
--   ユーザー登録・認証
--   案件投稿・応募
--   パブリックメッセージ・ダイレクトメッセージ
--   プロフィール管理
+## 🏗️ システム構成
 
-## 定期メンテナンスタスク
+### 利用者
 
-このプロジェクトには以下の定期メンテナンスタスクがあります：
+-   **案件投稿者**: エンジニア案件を発注したい個人・企業
+-   **案件応募者**: エンジニアとして案件を受注したい個人
+-   **管理者**: システム全体の管理・運営
+
+### 案件設定
+
+-   **案件種別**: 単発案件またはレベニューシェア案件
+-   **予算設定**: 単発案件の場合、上限と下限の金額幅設定（千円単位）
+-   **カテゴリー**: ウェブ開発、アプリ開発、システム開発など
+-   **スキル要件**: HTML/CSS、JavaScript、PHP、Laravel など
+
+## 🚀 主要機能
+
+### 一般ユーザー向け機能
+
+-   **認証**: メールアドレス + パスワードでユーザー登録・ログイン
+-   **案件閲覧**: 案件一覧・詳細の確認、検索・フィルタリング
+-   **案件応募**: 案件への応募、応募状況の確認
+-   **メッセージング**: パブリックメッセージでのやり取り
+-   **ダイレクトメッセージ**: 案件投稿者との 1 対 1 のやり取り
+-   **お気に入り**: 興味のある案件をお気に入り登録
+
+### 案件投稿者向け機能
+
+-   **案件投稿**: タイトル、種別、予算、内容を簡単に入力
+-   **案件管理**: 投稿した案件の編集・削除・募集終了
+-   **応募管理**: 応募者の確認・承認・拒否
+-   **応募者とのやり取り**: ダイレクトメッセージでの詳細調整
+
+### 管理機能
+
+-   **ユーザー管理**: ユーザー登録・認証・プロフィール管理
+-   **案件管理**: 案件の投稿・編集・削除・ステータス管理
+-   **メッセージ管理**: パブリック・ダイレクトメッセージの管理
+-   **通知システム**: 応募・承認・メッセージ受信時の通知
+
+## 🛠️ 技術スタック
+
+### バックエンド
+
+-   **フレームワーク**: Laravel 11
+-   **データベース**: MySQL/PostgreSQL
+-   **認証**: Laravel Breeze
+-   **テストフレームワーク**: PHPUnit
+
+### フロントエンド
+
+-   **フレームワーク**: React + TypeScript
+-   **状態管理**: Inertia.js
+-   **スタイリング**: SCSS (FLOCSS 設計)
+-   **ビルドツール**: Webpack + Babel
+
+### 開発環境
+
+-   **サーバー**: LAMP 環境
+-   **パッケージ管理**: Composer (PHP), npm/yarn (JavaScript)
+-   **レスポンシブ対応**: スマートフォン・タブレット対応
+
+## 🗄️ データベース設計
+
+### 主要テーブル
+
+-   **ユーザー（Users）**: 認証情報、プロフィール、アバター等
+-   **案件（JobListings）**: タイトル、種別、予算、内容、カテゴリー等
+-   **応募（Applications）**: 応募者、案件、メッセージ、ステータス等
+-   **パブリックメッセージ（PublicMessages）**: 案件詳細での公開やり取り
+-   **ダイレクトメッセージ（DirectMessages）**: 1 対 1 のプライベートやり取り
+-   **会話グループ（ConversationGroups）**: ダイレクトメッセージの管理
+-   **カテゴリー（Categories）**: 案件カテゴリーの管理
+-   **お気に入り（Favorites）**: ユーザーのお気に入り案件
+
+## 🔐 テスト用ログイン情報
+
+開発環境では、以下のテストユーザーが利用可能です：
+
+-   **管理者**: システム全体の管理権限
+-   **一般ユーザー**: 案件投稿・応募・メッセージング機能
+-   **ゲスト**: 案件閲覧のみ（一部機能制限）
+
+## 📱 画面構成
+
+### 共通画面
+
+-   トップページ（サービス概要・訴求内容）
+-   ログイン・ユーザー登録画面
+-   パスワードリマインダー画面
+
+### 一般ユーザー向け画面
+
+-   案件一覧画面（検索・フィルタリング機能付き）
+-   案件詳細画面（応募・メッセージ投稿機能付き）
+-   応募画面（応募メッセージ入力）
+-   マイページ（投稿案件・応募案件・メッセージ一覧）
+-   プロフィール編集画面
+
+### 案件投稿者向け画面
+
+-   案件投稿画面
+-   案件編集画面
+-   応募管理画面（承認・拒否機能付き）
+
+### メッセージング画面
+
+-   パブリックメッセージ一覧・詳細
+-   ダイレクトメッセージ一覧・詳細
+-   通知一覧画面
+
+## 🔧 開発方針
+
+### 設計原則
+
+-   **シンプルで整理されたデザイン**: 直感的な操作性
+-   **保守性の高いコード**: 適切なコメント・命名規則
+-   **セキュリティファースト**: 認証・認可の適切な実装
+-   **レスポンシブ対応**: モバイルファーストの設計
+
+### 開発フェーズ
+
+1. **Phase 1**: 基本認証、案件投稿・応募機能
+2. **Phase 2**: メッセージングシステム、通知機能
+3. **Phase 3**: 検索・フィルタリング、お気に入り機能
+4. **Phase 4**: 管理機能、統計・分析機能
+
+## 📅 定期メンテナンスタスク
 
 ### 退会ユーザーデータの削除
 
@@ -94,82 +148,92 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 サーバー側では、以下のように毎月 1 日の午前 3 時に cron を実行するよう設定します：
 
-```
+```bash
 0 3 1 * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
 
-こうすることで、サーバーの負荷を最小限に抑えながら、必要なタスクを定期的に実行できます。
+## 🚀 開発環境のセットアップ
 
-## 開発環境のセットアップ
+### 1. リポジトリのクローン
 
-1. リポジトリをクローン
+```bash
+git clone <repository-url>
+cd match
+```
 
-    ```
-    git clone <repository-url>
-    cd match
-    ```
+### 2. 依存関係のインストール
 
-2. 依存関係のインストール
+```bash
+composer install
+npm install
+```
 
-    ```
-    composer install
-    npm install
-    ```
+### 3. 環境設定
 
-3. 環境設定
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-    ```
-    cp .env.example .env
-    php artisan key:generate
-    ```
+### 4. データベースのセットアップ
 
-4. データベースのセットアップ
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-    ```
-    php artisan migrate
-    php artisan db:seed
-    ```
+### 5. 開発サーバーの起動
 
-5. 開発サーバーの起動
-    ```
-    php artisan serve
-    npm run dev
-    ```
+```bash
+php artisan serve
+npm run dev
+```
 
-## デプロイ手順
+## 🚀 デプロイ手順
 
-本番環境へのデプロイ手順は以下の通りです：
+### 1. 最新コードの取得
 
-1. 最新のコードを取得
+```bash
+git pull origin main
+```
 
-    ```
-    git pull origin main
-    ```
+### 2. 依存関係の更新
 
-2. 依存関係の更新
+```bash
+composer install --optimize-autoloader --no-dev
+npm install
+npm run build
+```
 
-    ```
-    composer install --optimize-autoloader --no-dev
-    npm install
-    npm run build
-    ```
+### 3. データベースの更新
 
-3. データベースの更新
+```bash
+php artisan migrate --force
+```
 
-    ```
-    php artisan migrate --force
-    ```
+### 4. キャッシュのクリア
 
-4. キャッシュのクリア
+```bash
+php artisan optimize:clear
+php artisan optimize
+```
 
-    ```
-    php artisan optimize:clear
-    php artisan optimize
-    ```
+### 5. スケジューラの設定
 
-5. スケジューラの設定
-   サーバーの crontab に以下の行を追加：
-    ```
-    * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
-    ```
-    ※ `/path-to-your-project` は実際のプロジェクトパスに置き換えてください。
+サーバーの crontab に以下の行を追加：
+
+```bash
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
+※ `/path-to-your-project` は実際のプロジェクトパスに置き換えてください。
+
+## 📚 関連ドキュメント
+
+-   **技術仕様書**: 詳細な実装仕様
+-   **API 仕様書**: 外部連携用 API 仕様
+-   **運用マニュアル**: 本番環境での運用手順
+
+---
+
+**match** - エンジニア案件マッチングをシンプルに、効率的に。
